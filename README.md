@@ -26,25 +26,24 @@
 
 **iPhone:** this is an Android-only app for now.
 
-## What is in the app (v2.1.0)
+## What is in the app (v2.2.0)
 
-- **Resources** tab: 131 listings across food, housing, shelter, jobs, benefits, utilities, health, transportation, phone, legal, seniors and disability, families, veterans, education, and crisis. Search by name, need, or town.
-- **Jobs** tab: workforce center, vocational rehab, training, libraries, job boards.
-- **Housing** tab: rent help, vouchers, affordable housing, shelters, and utility-bill help, filterable by town.
+- **Resources** tab: 131 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide programs still show).
+- **Jobs** and **Housing** tabs use the same city pick.
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
-- **Dark mode:** tap the moon (or sun) in the top-right of the header. The app remembers your choice, or follows your phone if you never tap it.
+- **Dark mode:** tap the moon (or sun) in the top-right of the header.
 - Tap a number to call, tap a card for hours, address, website, and directions.
 
-No account, no sign-in, no income form, no tracking. The old planning / PDF page is gone.
+No account, no sign-in, no income form, no tracking.
 
 ## Privacy
 
-Nothing you tap is sent anywhere. The app is a local directory. Dark-mode preference stays on your phone.
+Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
 ## Questions or problems
 
 Open an issue on this repo, or reply on the Nextdoor post where you found it. Phone numbers and hours change; if something is wrong, tell us and we will fix the list.
 
-## Checksum (v2.1.0)
+## Checksum (v2.2.0)
 
-To verify your download: `sha256  ce88c54cac559871d4612f761bb89731c74959a79c94454997edc97009c30bcc`
+To verify your download: `sha256  fec37b8fa221fc0564aaa19aaa0dc3977e83238e83758130190440a72b9d4c00`
