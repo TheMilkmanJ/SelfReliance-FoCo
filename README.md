@@ -20,30 +20,31 @@
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo** from your home screen.
 
-**Already have Self-Reliance FoCo?** You can install this over v1 or v2.0.0. Same app, same key, just a new version.
+**Already have Self-Reliance FoCo?** You can install this over any earlier FoCo version. Same app, same key.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** this is an Android-only app for now.
 
-## What is in the app (v2.0.1)
+## What is in the app (v2.1.0)
 
 - **Resources** tab: 131 listings across food, housing, shelter, jobs, benefits, utilities, health, transportation, phone, legal, seniors and disability, families, veterans, education, and crisis. Search by name, need, or town.
 - **Jobs** tab: workforce center, vocational rehab, training, libraries, job boards.
 - **Housing** tab: rent help, vouchers, affordable housing, shelters, and utility-bill help, filterable by town.
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
+- **Dark mode:** tap the moon (or sun) in the top-right of the header. The app remembers your choice, or follows your phone if you never tap it.
 - Tap a number to call, tap a card for hours, address, website, and directions.
 
 No account, no sign-in, no income form, no tracking. The old planning / PDF page is gone.
 
 ## Privacy
 
-Nothing you tap is sent anywhere. The app is a local directory.
+Nothing you tap is sent anywhere. The app is a local directory. Dark-mode preference stays on your phone.
 
 ## Questions or problems
 
 Open an issue on this repo, or reply on the Nextdoor post where you found it. Phone numbers and hours change; if something is wrong, tell us and we will fix the list.
 
-## Checksum (v2.0.1)
+## Checksum (v2.1.0)
 
-To verify your download: `sha256  a7788c44f5a097e3ad44fe1e5645945b0aca12bb4a27f62f1c41e2441fdedfc8`
+To verify your download: `sha256  ce88c54cac559871d4612f761bb89731c74959a79c94454997edc97009c30bcc`
