@@ -20,15 +20,15 @@
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo** from your home screen.
 
-**Already have Self-Reliance FoCo v1?** You can install this over it. Same app, same key, just a new version.
+**Already have Self-Reliance FoCo?** You can install this over v1 or v2.0.0. Same app, same key, just a new version.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** this is an Android-only app for now.
 
-## What is in the app (v2.0.0)
+## What is in the app (v2.0.1)
 
-- **Resources** tab: 133 listings across food, housing, shelter, jobs, benefits, utilities, health, transportation, phone, legal, seniors and disability, families, veterans, education, and crisis. Search by name, need, or town.
+- **Resources** tab: 131 listings across food, housing, shelter, jobs, benefits, utilities, health, transportation, phone, legal, seniors and disability, families, veterans, education, and crisis. Search by name, need, or town.
 - **Jobs** tab: workforce center, vocational rehab, training, libraries, job boards.
 - **Housing** tab: rent help, vouchers, affordable housing, shelters, and utility-bill help, filterable by town.
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
@@ -44,6 +44,6 @@ Nothing you tap is sent anywhere. The app is a local directory.
 
 Open an issue on this repo, or reply on the Nextdoor post where you found it. Phone numbers and hours change; if something is wrong, tell us and we will fix the list.
 
-## Checksum (v2.0.0)
+## Checksum (v2.0.1)
 
-To verify your download: `sha256  e2e9a1668b9b20d97026c3f98bcf33f303a6defc471da6f1886240cb14902f0c`
+To verify your download: `sha256  a7788c44f5a097e3ad44fe1e5645945b0aca12bb4a27f62f1c41e2441fdedfc8`
