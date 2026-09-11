@@ -1,0 +1,30 @@
+name: publish-v2-3-0
+on:
+  push:
+    branches: [cursor/v230-ship-7eac]
+    paths:
+      - '.github/workflows/publish-v230.yml'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch signed APK
+        run: |
+          curl -sSL -o Self-Reliance-FoCo.apk https://litter.catbox.moe/dr99n6.apk
+          echo "2acfa7af7c627c2b1859b0bf7520aebf1d7d5158d4646def349da291320cf396  Self-Reliance-FoCo.apk" | sha256sum -c
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v2.3.0 Self-Reliance-FoCo.apk \
+            --repo TheMilkmanJ/SelfReliance-FoCo \
+            --title "Self-Reliance FoCo v2.3.0" \
+            --notes "Clothes tab, plus Food Not Bombs and Clothe the People.
+
+The new **Clothes** tab lists free clothing closets, kids and baby clothes, interview outfits, and pantries that also hand out clothes. Food Not Bombs and Clothe the People are on the list. Their old Oak Street church site is closed, so those cards point at Instagram / clothethepeople.com for the current park or pop-up spot.
+
+Installs over any earlier FoCo build.
+
+SHA-256: \`2acfa7af7c627c2b1859b0bf7520aebf1d7d5158d4646def349da291320cf396\`"
