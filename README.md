@@ -4,7 +4,7 @@
 
 <h1 align="center">Self-Reliance FoCo</h1>
 
-<p align="center">A free Android app that puts Larimer County help in one place: food, housing and rent assistance, emergency shelter, jobs, benefits, utility bills, health, transportation, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
+<p align="center">A free Android app that puts Larimer County help in one place: food, housing and rent assistance, emergency shelter, jobs, benefits, utility bills, health, transportation, clothes, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
@@ -26,10 +26,11 @@
 
 **iPhone:** this is an Android-only app for now.
 
-## What is in the app (v2.2.0)
+## What is in the app (v2.3.0)
 
-- **Resources** tab: 131 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide programs still show).
+- **Resources** tab: 133 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide programs still show).
 - **Jobs** and **Housing** tabs use the same city pick.
+- **Clothes** tab: free clothing closets, kids and baby clothes, interview outfits, and pantries that also hand out clothes. Includes Food Not Bombs and Clothe the People (Oak Street church is closed; those cards point at Instagram / clothethepeople.com).
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
 - **Dark mode:** tap the moon (or sun) in the top-right of the header.
 - Tap a number to call, tap a card for hours, address, website, and directions.
@@ -44,6 +45,6 @@ Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
 Open an issue on this repo, or reply on the Nextdoor post where you found it. Phone numbers and hours change; if something is wrong, tell us and we will fix the list.
 
-## Checksum (v2.2.0)
+## Checksum (v2.3.0)
 
-To verify your download: `sha256  fec37b8fa221fc0564aaa19aaa0dc3977e83238e83758130190440a72b9d4c00`
+To verify your download: `sha256  2acfa7af7c627c2b1859b0bf7520aebf1d7d5158d4646def349da291320cf396`
