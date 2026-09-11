@@ -1,0 +1,140 @@
+import type { Category, CategoryId } from './types';
+
+export const CATEGORIES: Category[] = [
+  {
+    id: 'food',
+    label: 'Food',
+    short: 'Food',
+    icon: 'basket-outline',
+    color: '#2E7D32',
+    blurb: 'Food banks, pantries, free meals, SNAP and WIC.',
+  },
+  {
+    id: 'housing',
+    label: 'Housing & Rent Help',
+    short: 'Housing',
+    icon: 'home-outline',
+    color: '#1565C0',
+    blurb: 'Affordable rentals, vouchers, rent assistance, homeownership.',
+  },
+  {
+    id: 'shelter',
+    label: 'Emergency Shelter',
+    short: 'Shelter',
+    icon: 'bed-outline',
+    color: '#6A1B9A',
+    blurb: 'Overnight shelter, day centers, safe housing from abuse.',
+  },
+  {
+    id: 'employment',
+    label: 'Jobs & Employment Help',
+    short: 'Jobs',
+    icon: 'briefcase-outline',
+    color: '#EF6C00',
+    blurb: 'Job search, resumes, training, workforce centers, apprenticeships.',
+  },
+  {
+    id: 'benefits',
+    label: 'Benefits & Cash Help',
+    short: 'Benefits',
+    icon: 'card-outline',
+    color: '#00838F',
+    blurb: 'SNAP, Medicaid, TANF, SSI/SSDI, tax credits, free tax prep.',
+  },
+  {
+    id: 'utilities',
+    label: 'Utilities & Bills',
+    short: 'Utilities',
+    icon: 'flash-outline',
+    color: '#F9A825',
+    blurb: 'Heating help, utility payment assistance, rebates.',
+  },
+  {
+    id: 'health',
+    label: 'Health & Mental License',
+    short: 'Health',
+    icon: 'medkit-outline',
+    color: '#C62828',
+    blurb: 'Clinics on a sliding scale, dental, counseling, enrollment help.',
+  },
+  {
+    id: 'transportation',
+    label: 'Transportation',
+    short: 'Rides',
+    icon: 'bus-outline',
+    color: '#4527A0',
+    blurb: 'Buses, Medicaid rides, volunteer drivers, bikes.',
+  },
+  {
+    id: 'phone',
+    label: 'Phone & Internet',
+    short: 'Phone',
+    icon: 'phone-portrait-outline',
+    color: '#00695C',
+    blurb: 'Free or low-cost cell service and internet.',
+  },
+  {
+    id: 'legal',
+    label: 'Legal Help',
+    short: 'Legal',
+    icon: 'document-text-outline',
+    color: '#37474F',
+    blurb: 'Free civil legal aid, eviction defense, benefits appeals.',
+  },
+  {
+    id: 'seniors_disability',
+    label: 'Seniors & Disability',
+    short: 'Seniors',
+    icon: 'accessibility-outline',
+    color: '#AD1457',
+    blurb: 'Independent living, in-home help, disability advocacy.',
+  },
+  {
+    id: 'family_children',
+    label: 'Families & Kids',
+    short: 'Families',
+    icon: 'people-outline',
+    color: '#D84315',
+    blurb: 'Child care help, school programs, parenting support.',
+  },
+  {
+    id: 'veterans',
+    label: 'Veterans',
+    short: 'Veterans',
+    icon: 'ribbon-outline',
+    color: '#283593',
+    blurb: 'VA benefits, claims help, veteran housing and jobs.',
+  },
+  {
+    id: 'education',
+    label: 'Education & Training',
+    short: 'Training',
+    icon: 'school-outline',
+    color: '#5D4037',
+    blurb: 'GED, community college, financial aid, libraries.',
+  },
+  {
+    id: 'crisis',
+    label: 'Crisis & Safety',
+    short: 'Crisis',
+    icon: 'alert-circle-outline',
+    color: '#B71C1C',
+    blurb: 'Someone to talk to right now, 24 hours a day.',
+  },
+  {
+    id: 'clothing',
+    label: 'Clothes & Hygiene',
+    short: 'Clothes',
+    icon: 'shirt-outline',
+    color: '#6D4C41',
+    blurb: 'Free clothing closets, kids clothes, interview outfits, hygiene.',
+  },
+];
+
+export const CATEGORY_MAP: Record<CategoryId, Category> = Object.fromEntries(
+  CATEGORIES.map((c) => [c.id, c]),
+) as Record<CategoryId, Category>;
+
+export const JOBS_CATEGORIES: CategoryId[] = ['employment', 'education'];
+export const HOUSING_CATEGORIES: CategoryId[] = ['housing', 'shelter', 'utilities'];
+export const CLOTHES_CATEGORIES: CategoryId[] = ['clothing'];
