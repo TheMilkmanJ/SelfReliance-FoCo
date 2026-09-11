@@ -16,13 +16,13 @@
 
 ## Install on your phone (about 2 minutes)
 
-1. On your Android phone, tap the <strong>Download v2.3.0 for Android</strong> button above (or scan the QR code). You should get <code>Self-Reliance-FoCo.apk</code> / <code>dr99n6.apk</code>, about 41 MB. That file is the Clothes-tab build.
+1. On your Android phone, tap the <strong>Download v2.3.0 for Android</strong> button above. That file is the Clothes-tab build, about 41 MB.
 2. When the download finishes, tap the notification (or open your <strong>Files</strong> / <strong>Downloads</strong> app and tap the file).
 3. Android will say something like <em>"For your security, your phone is not allowed to install unknown apps from this source."</em> Tap <strong>Settings</strong>, turn on <strong>Allow from this source</strong>, then go back.
 4. Tap <strong>Install</strong>. If Google Play Protect shows a warning, tap <strong>More details</strong> and then <strong>Install anyway</strong> (this happens for any app that is not from the Play Store).
-5. Open <strong>Self-Reliance FoCo</strong> from your home screen. The bottom tabs should be Resources, Jobs, Housing, and <strong>Clothes</strong>.
+5. Open <strong>Self-Reliance FoCo</strong>. The bottom tabs should be Resources, Jobs, Housing, and <strong>Clothes</strong>.
 
-<strong>Already have Self-Reliance FoCo?</strong> Install this over it. Same app, same key. If you still only see three tabs, you still have v2.2.0 — delete the old download and tap the purple button again.
+<strong>Already have Self-Reliance FoCo?</strong> Install this over it. Same app, same key. If you still only see three tabs, you still have v2.2.0 — delete the old APK from Downloads and tap the purple v2.3.0 button again.
 
 <strong>Have the older church Self-Reliance app?</strong> Uninstall that one first. Android will not let this install over it.
 
