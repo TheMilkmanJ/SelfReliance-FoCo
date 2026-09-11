@@ -51,7 +51,7 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: 'health',
-    label: 'Health & Mental License',
+    label: 'Health & Mental Health',
     short: 'Health',
     icon: 'medkit-outline',
     color: '#C62828',
