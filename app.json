@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Self-Reliance FoCo",
+    "slug": "self-reliance-foco",
+    "version": "2.3.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.foco.selfreliance"
+    },
+    "android": {
+      "package": "org.foco.selfreliance",
+      "versionCode": 6,
+      "adaptiveIcon": {
+        "backgroundColor": "#522f81",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "permissions": []
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#522f81"
+        }
+      ]
+    ]
+  }
+}
