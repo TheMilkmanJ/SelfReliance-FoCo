@@ -111,7 +111,7 @@ export const CATEGORIES: Category[] = [
     short: 'Training',
     icon: 'school-outline',
     color: '#5D4037',
-    blurb: 'GED, community college, financial aid, libraries.',
+    blurb: 'GED, free online certificates, community college, financial aid, libraries.',
   },
   {
     id: 'crisis',
