@@ -51,8 +51,8 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 
 ## What is in the app (v2.3.0)
 
-- **Resources** tab: 133 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide programs still show).
-- **Jobs** and **Housing** tabs use the same city pick.
+- **Resources** tab: 144 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show).
+- **Jobs** and **Housing** tabs use the same city pick. Jobs includes free national certificates (freeCodeCamp, Google Skillshop, HubSpot, IBM SkillsBuild, and others).
 - **Clothes** tab: free clothing closets, kids and baby clothes, interview outfits, and pantries that also hand out clothes. Includes Food Not Bombs and Clothe the People (Oak Street church is closed; those cards point at Instagram / clothethepeople.com).
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
 - **Dark mode:** tap the moon (or sun) in the top-right of the header.
