@@ -17,4 +17,6 @@ jobs:
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create v2.3.0 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title "Self-Reliance FoCo v2.3.0" --notes-file release-notes-v230.md --latest
+        run: |
+          gh release delete v2.3.0 --repo TheMilkmanJ/SelfReliance-FoCo --yes --cleanup-tag || true
+          gh release create v2.3.0 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title "Self-Reliance FoCo v2.3.0" --notes-file release-notes-v230.md --latest
