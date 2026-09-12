@@ -10,7 +10,7 @@
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.3.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
 </p>
 
-<p align="center"><strong>Current download: v2.3.0</strong> (Clothes tab). About 41 MB. Installs over any earlier FoCo build.</p>
+<p align="center"><strong>Current download: v2.3.0</strong> (Clothes tab + free certificates). About 41 MB. Installs over any earlier FoCo build (versionCode 7).</p>
 
 <p align="center">Or scan on your phone:<br/><img src="download-qr.svg" width="200" alt="QR code for the download link" /></p>
 
@@ -20,7 +20,7 @@ This repository is the application. Clone it, fork it, or download the ZIP.
 
 - App UI and logic: [`src/`](src/) (TypeScript / React Native / Expo)
 - Listings: [`src/data/resources.json`](src/data/resources.json)
-- App config (name, Android package `org.foco.selfreliance`, version **2.3.0** / versionCode **6**): [`app.json`](app.json)
+- App config (name, Android package `org.foco.selfreliance`, version **2.3.0** / versionCode **7**): [`app.json`](app.json)
 - License: [MIT](LICENSE)
 
 This is an Expo app, not a hand-written Kotlin project. The Gradle tree, `AndroidManifest.xml`, and native Android folders are generated from this source:
@@ -49,7 +49,7 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
 
-## What is in the app (v2.3.0)
+## What is in the app (v2.3.0, versionCode 7)
 
 - **Resources** tab: 144 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show).
 - **Jobs** and **Housing** tabs use the same city pick. Jobs includes free national certificates (freeCodeCamp, Google Skillshop, HubSpot, IBM SkillsBuild, and others).
@@ -112,7 +112,7 @@ Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
 ## Checksum (v2.3.0)
 
-To verify the published APK: `sha256  2acfa7af7c627c2b1859b0bf7520aebf1d7d5158d4646def349da291320cf396`
+To verify the published APK: `sha256  64f8d5a3a84cb62e1c8303c62f498a87cbc73f552efa09ed2fdf0e109c80be55`
 
 ## Questions or problems
 
