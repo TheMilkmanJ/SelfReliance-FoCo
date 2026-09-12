@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import type { Resource } from '../data/types';
 import { call, directions, open, prettyUrl } from '../lib/actions';
@@ -17,6 +18,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
   const { colors } = useTheme();
   if (!resource) return null;
   const cat = CATEGORY_MAP[resource.category];
+  const cert = resource.certGroup ? CERT_GROUP_MAP[resource.certGroup] : null;
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} presentationStyle="pageSheet">
@@ -24,7 +26,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${cat.color}1a` }]}>
             <Ionicons name={cat.icon as never} size={16} color={cat.color} />
-            <Text style={[styles.pillText, { color: cat.color }]}>{cat.label}</Text>
+            <Text style={[styles.pillText, { color: cat.color }]}>{cert ? `${cert.short} cert` : cat.label}</Text>
           </View>
           <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel="Close">
             <Ionicons name="close" size={28} color={colors.ink} />

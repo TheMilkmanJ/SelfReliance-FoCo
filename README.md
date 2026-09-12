@@ -7,10 +7,10 @@
 <p align="center">A free Android app that puts Larimer County help in one place: food, housing and rent assistance, emergency shelter, jobs, benefits, utility bills, health, transportation, clothes, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
-  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.3.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.4.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
 </p>
 
-<p align="center"><strong>Current download: v2.3.0</strong> (Clothes tab + free certificates). About 41 MB. Installs over any earlier FoCo build (versionCode 7).</p>
+<p align="center"><strong>Current download: v2.4.0</strong> (certificate types + government/business listings). About 41 MB. Installs over any earlier FoCo build (versionCode 8).</p>
 
 <p align="center">Or scan on your phone:<br/><img src="download-qr.svg" width="200" alt="QR code for the download link" /></p>
 
@@ -20,7 +20,7 @@ This repository is the application. Clone it, fork it, or download the ZIP.
 
 - App UI and logic: [`src/`](src/) (TypeScript / React Native / Expo)
 - Listings: [`src/data/resources.json`](src/data/resources.json)
-- App config (name, Android package `org.foco.selfreliance`, version **2.3.0** / versionCode **7**): [`app.json`](app.json)
+- App config (name, Android package `org.foco.selfreliance`, version **2.4.0** / versionCode **8**): [`app.json`](app.json)
 - License: [MIT](LICENSE)
 
 This is an Expo app, not a hand-written Kotlin project. The Gradle tree, `AndroidManifest.xml`, and native Android folders are generated from this source:
@@ -33,26 +33,26 @@ npx expo prebuild --platform android --no-install
 
 Read `src/` to see what the app does (no analytics, no account, listings plus tap-to-call / maps). The signed release APK on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) is built from this tree. A SHA-256 checksum lets you confirm you have that same file. It does not replace reading the source.
 
-The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.3.0 build needs that same key.
+The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.4.0 build needs that same key.
 
 ## Install on your phone (about 2 minutes)
 
-1. On your Android phone, tap the **Download v2.3.0 for Android** button above, or use the latest `Self-Reliance-FoCo.apk` on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
+1. On your Android phone, tap the **Download v2.4.0 for Android** button above, or use the latest `Self-Reliance-FoCo.apk` on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
 2. When the download finishes, tap the notification (or open **Files** / **Downloads** and tap the file).
 3. Android will say something like *"For your security, your phone is not allowed to install unknown apps from this source."* Tap **Settings**, turn on **Allow from this source**, then go back.
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo**. The bottom tabs should be Resources, Jobs, Housing, and **Clothes**.
 
-**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If you still only see three tabs, you still have v2.2.0 — delete the old APK from Downloads and grab v2.3.0 again.
+**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If Jobs has no certificate-type chips (Coding, Government, Marketing, …), you still have v2.3.0 or older — delete the old APK from Downloads and grab v2.4.0 again.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
 
-## What is in the app (v2.3.0, versionCode 7)
+## What is in the app (v2.4.0, versionCode 8)
 
-- **Resources** tab: 144 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show).
-- **Jobs** and **Housing** tabs use the same city pick. Jobs includes free national certificates (freeCodeCamp, Google Skillshop, HubSpot, IBM SkillsBuild, and others).
+- **Resources** tab: 155 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show).
+- **Jobs** and **Housing** tabs use the same city pick. Jobs splits free certificates by type: **Coding**, **IT & cloud**, **Marketing**, **Government**, **Business**, and **Computer basics**. The list is curated (real free credentials, not paid diploma mills). It is not every certificate on the internet.
 - **Clothes** tab: free clothing closets, kids and baby clothes, interview outfits, and pantries that also hand out clothes. Includes Food Not Bombs and Clothe the People (Oak Street church is closed; those cards point at Instagram / clothethepeople.com).
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
 - **Dark mode:** tap the moon (or sun) in the top-right of the header.
@@ -100,7 +100,8 @@ Edit `src/data/resources.json`. Each entry:
   "address": "street, city, CO zip or null",
   "hours": "short string or null",
   "area": "Fort Collins | Loveland | Estes Park | Berthoud | Wellington | Larimer County | Colorado (statewide) | National",
-  "tags": ["keywords", "for", "search"]
+  "tags": ["keywords", "for", "search"],
+  "certGroup": "optional: coding | it_cloud | marketing | government | business | digital_basics"
 }
 ```
 
@@ -110,9 +111,9 @@ Run `npm run validate` after editing. Phone numbers and hours change. If somethi
 
 Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
-## Checksum (v2.3.0)
+## Checksum (v2.4.0)
 
-To verify the published APK: `sha256  64f8d5a3a84cb62e1c8303c62f498a87cbc73f552efa09ed2fdf0e109c80be55`
+To verify the published APK: `sha256  6c78951f2aeb396581784d0ff4567c8e7bceaf09394db37aa8b9f42714a896b6`
 
 ## Questions or problems
 

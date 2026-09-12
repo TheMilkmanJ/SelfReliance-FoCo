@@ -26,6 +26,9 @@ export type Area =
   | 'Colorado (statewide)'
   | 'National';
 
+/** Free certificate / badge tracks shown as type chips on the Jobs tab. */
+export type CertGroup = 'coding' | 'it_cloud' | 'marketing' | 'government' | 'business' | 'digital_basics';
+
 export interface Resource {
   id: string;
   name: string;
@@ -37,6 +40,7 @@ export interface Resource {
   hours: string | null;
   area: Area;
   tags: string[];
+  certGroup?: CertGroup;
 }
 
 export interface Category {

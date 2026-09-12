@@ -7,6 +7,7 @@ import { Chip } from '../components/Chip';
 import { Header } from '../components/Header';
 import { ResourceCard } from '../components/ResourceCard';
 import { SearchBar } from '../components/SearchBar';
+import { CERT_GROUP_IDS, CERT_GROUPS } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import {
   RESOURCES,
@@ -15,8 +16,10 @@ import {
   searchResources,
   type AreaFilter as AreaFilterId,
 } from '../data/resources';
-import type { CategoryId, Resource } from '../data/types';
+import type { CategoryId, CertGroup, Resource } from '../data/types';
 import { spacing, useTheme } from '../theme';
+
+type JobFilter = 'all' | 'employment' | 'certs' | 'classes' | CertGroup;
 
 type Props = {
   title: string;
@@ -28,6 +31,8 @@ type Props = {
   onAreaChange: (area: AreaFilterId) => void;
   /** Also include listings from other categories that match (used by the Clothes tab). */
   alsoInclude?: (resource: Resource) => boolean;
+  /** Jobs tab: split free certificates by type (coding, government, marketing, …). */
+  showCertGroups?: boolean;
 };
 
 export function ResourceListScreen({
@@ -39,10 +44,12 @@ export function ResourceListScreen({
   area,
   onAreaChange,
   alsoInclude,
+  showCertGroups = false,
 }: Props) {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const [activeCat, setActiveCat] = useState<CategoryId | 'all'>('all');
+  const [jobFilter, setJobFilter] = useState<JobFilter>('all');
 
   const pool = useMemo(() => {
     const fromCats = byCategories(categories);
@@ -53,9 +60,18 @@ export function ResourceListScreen({
   }, [categories, area, alsoInclude]);
   const results = useMemo(() => {
     let list = searchResources(query, pool);
-    if (activeCat !== 'all') list = list.filter((r) => r.category === activeCat);
+    if (showCertGroups) {
+      if (jobFilter === 'employment') list = list.filter((r) => r.category === 'employment');
+      else if (jobFilter === 'certs') list = list.filter((r) => Boolean(r.certGroup));
+      else if (jobFilter === 'classes') list = list.filter((r) => r.category === 'education' && !r.certGroup);
+      else if (CERT_GROUP_IDS.has(jobFilter as CertGroup)) {
+        list = list.filter((r) => r.certGroup === jobFilter);
+      }
+    } else if (activeCat !== 'all') {
+      list = list.filter((r) => r.category === activeCat);
+    }
     return list;
-  }, [query, pool, activeCat]);
+  }, [query, pool, activeCat, jobFilter, showCertGroups]);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -69,7 +85,43 @@ export function ResourceListScreen({
         ListHeaderComponent={
           <View style={styles.controls}>
             <SearchBar value={query} onChange={setQuery} />
-            {categories.length > 1 && !alsoInclude ? (
+            {showCertGroups ? (
+              <>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                  <Chip label="All" active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />
+                  <Chip
+                    label="Job help"
+                    icon="briefcase-outline"
+                    active={jobFilter === 'employment'}
+                    onPress={() => setJobFilter('employment')}
+                  />
+                  <Chip
+                    label="Certificates"
+                    icon="ribbon-outline"
+                    active={jobFilter === 'certs'}
+                    onPress={() => setJobFilter('certs')}
+                  />
+                  <Chip
+                    label="GED & college"
+                    icon="school-outline"
+                    active={jobFilter === 'classes'}
+                    onPress={() => setJobFilter('classes')}
+                  />
+                </ScrollView>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                  {CERT_GROUPS.map((g) => (
+                    <Chip
+                      key={g.id}
+                      label={g.short}
+                      icon={g.icon}
+                      small
+                      active={jobFilter === g.id}
+                      onPress={() => setJobFilter(g.id)}
+                    />
+                  ))}
+                </ScrollView>
+              </>
+            ) : categories.length > 1 && !alsoInclude ? (
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
                 <Chip label="All" active={activeCat === 'all'} onPress={() => setActiveCat('all')} />
                 {categories.map((id) => (

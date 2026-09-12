@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import type { Resource } from '../data/types';
 import { call } from '../lib/actions';
@@ -29,8 +30,9 @@ export function ResourceCard({ resource, onPress, showCategory = true }: Props) 
         <View style={styles.body}>
           <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
           <Text style={[styles.meta, { color: colors.muted }]}>
-            {showCategory ? `${cat.short} · ` : ''}
-            {resource.area}
+            {resource.certGroup
+              ? `${CERT_GROUP_MAP[resource.certGroup].short} cert · ${resource.area}`
+              : `${showCategory ? `${cat.short} · ` : ''}${resource.area}`}
           </Text>
           <Text style={[styles.desc, { color: colors.body }]} numberOfLines={3}>
             {resource.description}

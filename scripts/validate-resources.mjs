@@ -12,6 +12,7 @@ const AREAS = new Set([
   'Colorado (statewide)', 'National',
 ]);
 const PHONE = /^(\d{3}-\d{3}-\d{4}|1-\d{3}-\d{3}-\d{4}|211|988|911)$/;
+const CERT_GROUPS = new Set(['coding', 'it_cloud', 'marketing', 'government', 'business', 'digital_basics']);
 
 const { resources } = JSON.parse(readFileSync(new URL('../src/data/resources.json', import.meta.url), 'utf8'));
 const problems = [];
@@ -29,6 +30,9 @@ for (const r of resources) {
   if (r.url !== null && !/^https?:\/\//.test(r.url)) problems.push(`${where} url must start with http(s)://`);
   if (!AREAS.has(r.area)) problems.push(`${where} bad area "${r.area}"`);
   if (!Array.isArray(r.tags)) problems.push(`${where} tags must be an array`);
+  if (r.certGroup !== undefined && !CERT_GROUPS.has(r.certGroup)) {
+    problems.push(`${where} bad certGroup "${r.certGroup}"`);
+  }
   for (const k of ['address', 'hours']) if (r[k] !== null && typeof r[k] !== 'string') problems.push(`${where} ${k} must be a string or null`);
 }
 
