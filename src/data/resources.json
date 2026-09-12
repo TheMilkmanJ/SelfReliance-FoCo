@@ -1,1 +1,16 @@
-PLACEHOLDER_READ_FROM_WORKSPACE
+{
+  "resources": [
+    {
+      "id": "united-way-211",
+      "name": "2-1-1 Colorado (United Way of Larimer County)",
+      "category": "crisis",
+      "description": "Free, confidential help line that connects you with food, housing, utility help, health care and more anywhere in Larimer County. Call, text your ZIP code to 898-211, or search online.",
+      "phone": "211",
+      "url": "https://www.211colorado.org/",
+      "address": null,
+      "hours": "Mon-Fri 8am-5pm (online search 24/7)",
+      "area": "Larimer County",
+      "tags": ["information", "referrals", "help line", "united way"]
+    }
+  ]
+}
