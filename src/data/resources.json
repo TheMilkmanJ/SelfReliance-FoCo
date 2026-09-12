@@ -11,6 +11,18 @@
       "hours": "Mon-Fri 8am-5pm (online search 24/7)",
       "area": "Larimer County",
       "tags": ["information", "referrals", "help line", "united way"]
+    },
+    {
+      "id": "988-colorado",
+      "name": "988 Colorado Mental Health Line",
+      "category": "crisis",
+      "description": "Call or text 988 any time for free, confidential support with emotional, mental health or substance use concerns. The old Colorado Crisis Services number (1-844-493-8255) now routes here too.",
+      "phone": "988",
+      "url": "https://www.988colorado.com/",
+      "address": null,
+      "hours": "24/7",
+      "area": "Colorado (statewide)",
+      "tags": ["mental health", "suicide", "crisis line", "text"]
     }
   ]
 }
