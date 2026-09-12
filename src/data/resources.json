@@ -11,6 +11,31 @@
       "hours": "Mon-Fri 8am-5pm (online search 24/7)",
       "area": "Larimer County",
       "tags": ["information", "referrals", "help line", "united way"]
+    },
+    {
+      "id": "988-colorado",
+      "name": "988 Colorado Mental Health Line",
+      "category": "crisis",
+      "description": "Call or text 988 any time for free, confidential support with emotional, mental health or substance use concerns. The old Colorado Crisis Services number (1-844-493-8255) now routes here too.",
+      "phone": "988",
+      "url": "https://www.988colorado.com/",
+      "address": null,
+      "hours": "24/7",
+      "area": "Colorado (statewide)",
+      "tags": ["mental health", "suicide", "crisis line", "text"]
+    },
+    {
+      "id": "fema-independent-study",
+      "name": "FEMA Independent Study (emergency management)",
+      "category": "education",
+      "description": "Free official FEMA courses and certificates (IS-100, IS-200, IS-700, IS-800 and about 200 more). Used for emergency management, CERT, and some government or nonprofit jobs. You need a free FEMA Student ID.",
+      "phone": null,
+      "url": "https://training.fema.gov/is/",
+      "address": null,
+      "hours": "Online 24/7",
+      "area": "National",
+      "tags": ["certificates", "fema", "emergency management", "government", "free"],
+      "certGroup": "government"
     }
   ]
 }
