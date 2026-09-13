@@ -12,7 +12,9 @@
 
 <p align="center"><strong>Current download: v2.4.0</strong> (certificate types + government/business listings). About 41 MB. Installs over any earlier FoCo build (versionCode 8).</p>
 
-<p align="center">Or scan on your phone:<br/><img src="download-qr.svg" width="200" alt="QR code for the download link" /></p>
+<p align="center">Or scan on your phone:<br/>
+<img src="download-qr.svg" width="220" height="220" alt="QR code for the download link" />
+</p>
 
 ## Source
 
