@@ -35,55 +35,6 @@ export function matchesArea(resource: Resource, area: AreaFilter): boolean {
   );
 }
 
-export function filterByArea(pool: Resource[], area: AreaFilter): Resource[] {
+export function filterByArea(pool: Resource[], area: AreaFilter): boolean {
   return pool.filter((r) => matchesArea(r, area));
-}
-
-export function countByCategory(pool: Resource[]): Record<CategoryId, number> {
-  return pool.reduce(
-    (acc, r) => {
-      acc[r.category] = (acc[r.category] ?? 0) + 1;
-      return acc;
-    },
-    {} as Record<CategoryId, number>,
-  );
-}
-
-export const RESOURCE_COUNT_BY_CATEGORY: Record<CategoryId, number> = countByCategory(RESOURCES);
-
-export function byCategories(ids: CategoryId[]): Resource[] {
-  return RESOURCES.filter((r) => ids.includes(r.category));
-}
-
-const CLOTHING_TAG = /cloth|closet|hygiene|diaper|maternity/;
-
-/** Dedicated clothing programs plus pantries and closets that also hand out clothes. */
-export function isClothingResource(resource: Resource): boolean {
-  if (resource.category === 'clothing') return true;
-  return resource.tags.some((tag) => CLOTHING_TAG.test(tag.toLowerCase()));
-}
-
-export function clothingResources(): Resource[] {
-  return RESOURCES.filter(isClothingResource);
-}
-
-function normalize(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
-
-export function searchResources(query: string, pool: Resource[] = RESOURCES): Resource[] {
-  const q = normalize(query.trim());
-  if (!q) return pool;
-  const terms = q.split(/\s+/).filter(Boolean);
-  return pool.filter((r) => {
-    const certLabel = r.certGroup ? CERT_GROUP_MAP[r.certGroup].label : '';
-    const catLabel = CATEGORY_MAP[r.category]?.label ?? r.category.replace(/_/g, ' ');
-    const hay = normalize(
-      [r.name, r.description, r.area, r.address ?? '', r.tags.join(' '), catLabel, certLabel].join(' '),
-    );
-    return terms.every((t) => hay.includes(t));
-  });
 }
