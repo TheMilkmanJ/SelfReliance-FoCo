@@ -31,7 +31,7 @@ type Props = {
   onAreaChange: (area: AreaFilterId) => void;
   /** Also include listings from other categories that match (used by the Clothes tab). */
   alsoInclude?: (resource: Resource) => boolean;
-  /** Jobs tab: split free certificates by type (coding, government, marketing, …). */
+  /** Jobs tab: split certificates by type (work-ready, coding, government, …). */
   showCertGroups?: boolean;
 };
 
