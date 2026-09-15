@@ -23,6 +23,54 @@
       "hours": "24/7",
       "area": "Colorado (statewide)",
       "tags": ["mental health", "suicide", "crisis line", "text"]
+    },
+    {
+      "id": "summitstone-crisis",
+      "name": "SummitStone Health Partners - Crisis Services",
+      "category": "crisis",
+      "description": "Larimer County's community mental health provider. Walk-in crisis care at Longview Acute Care (2260 W Trilby Rd, Fort Collins) is open 24/7. Also offers counseling, substance use treatment and Medicaid-friendly outpatient care.",
+      "phone": "970-494-4200",
+      "url": "https://www.summitstonehealth.org/",
+      "address": "2260 W Trilby Rd, Fort Collins, CO 80526",
+      "hours": "Crisis walk-in 24/7",
+      "area": "Larimer County",
+      "tags": ["mental health", "substance use", "walk-in", "medicaid"]
+    },
+    {
+      "id": "crossroads-safehouse",
+      "name": "Crossroads Safehouse",
+      "category": "crisis",
+      "description": "24-hour help for anyone experiencing domestic violence: emergency shelter, safety planning, advocacy and legal help. Confidential and free.",
+      "phone": "970-482-3502",
+      "url": "https://www.crshs.org/",
+      "address": "421 Parker St, Fort Collins, CO 80525",
+      "hours": "Crisis line 24/7",
+      "area": "Fort Collins",
+      "tags": ["domestic violence", "shelter", "safety", "24/7"]
+    },
+    {
+      "id": "alternatives-to-violence",
+      "name": "Alternatives to Violence",
+      "category": "crisis",
+      "description": "Loveland's domestic violence and sexual assault agency. 24-hour crisis line (text 970-669-5157), emergency shelter, advocacy and counseling.",
+      "phone": "970-669-5150",
+      "url": "https://www.alternativestoviolence.org/",
+      "address": "541 E 8th St, Loveland, CO 80537",
+      "hours": "Crisis line 24/7",
+      "area": "Loveland",
+      "tags": ["domestic violence", "sexual assault", "shelter", "24/7"]
+    },
+    {
+      "id": "estes-valley-crisis-advocates",
+      "name": "Estes Valley Crisis Advocates",
+      "category": "crisis",
+      "description": "Support for victims of domestic violence, sexual assault and other crimes in the Estes Valley. After hours, call Estes Park Police dispatch at 970-586-4000 and ask for an advocate.",
+      "phone": "970-577-9781",
+      "url": "https://www.crisisadvocates.org/",
+      "address": "Estes Park, CO 80517",
+      "hours": "Office Mon-Fri; advocates on call 24/7",
+      "area": "Estes Park",
+      "tags": ["domestic violence", "victim advocacy", "safe house"]
     }
   ]
 }
