@@ -4,17 +4,29 @@
 
 <h1 align="center">Self-Reliance FoCo</h1>
 
-<p align="center">A free Android app that puts Larimer County help in one place: food, housing and rent assistance, emergency shelter, jobs, benefits, utility bills, health, transportation, clothes, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
+<p align="center">A free Android app that puts Larimer County help in one place: food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.4.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <br />
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
 </p>
 
-<p align="center"><strong>Current download: v2.4.0</strong> (certificate types + government/business listings). About 41 MB. Installs over any earlier FoCo build (versionCode 8).</p>
+<p align="center"><strong>Source: v2.6.0</strong> (work-ready certificates plus the seven new help tiles). The signed APK on GitHub Releases is still v2.4.0 until a new build is uploaded. About 41 MB. versionCode 10 will install over any earlier FoCo build.</p>
 
-<p align="center">Or scan on your phone:<br/>
-<img src="download-qr.svg" width="220" height="220" alt="QR code for the download link" />
+<p align="center">
+  Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>
+  or to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo">open this GitHub repo</a>:<br/>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img src="download-qr.svg" width="220" height="220" alt="QR code that downloads the Android APK" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img src="github-qr.svg" width="220" height="220" alt="QR code that opens the GitHub repository" /></a>
 </p>
+
+## Links
+
+- **Android APK:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk
+- **This repository:** https://github.com/TheMilkmanJ/SelfReliance-FoCo
+- **Releases:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest
 
 ## Source
 
@@ -22,7 +34,7 @@ This repository is the application. Clone it, fork it, or download the ZIP.
 
 - App UI and logic: [`src/`](src/) (TypeScript / React Native / Expo)
 - Listings: [`src/data/resources.json`](src/data/resources.json)
-- App config (name, Android package `org.foco.selfreliance`, version **2.4.0** / versionCode **8**): [`app.json`](app.json)
+- App config (name, Android package `org.foco.selfreliance`, version **2.6.0** / versionCode **10**): [`app.json`](app.json)
 - License: [MIT](LICENSE)
 
 This is an Expo app, not a hand-written Kotlin project. The Gradle tree, `AndroidManifest.xml`, and native Android folders are generated from this source:
@@ -35,26 +47,26 @@ npx expo prebuild --platform android --no-install
 
 Read `src/` to see what the app does (no analytics, no account, listings plus tap-to-call / maps). The signed release APK on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) is built from this tree. A SHA-256 checksum lets you confirm you have that same file. It does not replace reading the source.
 
-The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.4.0 build needs that same key.
+The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.4.0 APK needs that same key and versionCode 10.
 
 ## Install on your phone (about 2 minutes)
 
-1. On your Android phone, tap the **Download v2.4.0 for Android** button above, or use the latest `Self-Reliance-FoCo.apk` on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
+1. On your Android phone, tap the **Download for Android** button above, or use the latest `Self-Reliance-FoCo.apk` on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
 2. When the download finishes, tap the notification (or open **Files** / **Downloads** and tap the file).
 3. Android will say something like *"For your security, your phone is not allowed to install unknown apps from this source."* Tap **Settings**, turn on **Allow from this source**, then go back.
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo**. The bottom tabs should be Resources, Jobs, Housing, and **Clothes**.
 
-**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If Jobs has no certificate-type chips (Coding, Government, Marketing, …), you still have v2.3.0 or older — delete the old APK from Downloads and grab v2.4.0 again.
+**Already have Self-Reliance FoCo?** Install a v2.6.0 APK over it. Same app, same key. If Jobs has no **Work-ready** chip, you still have v2.5.0 or older.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
 
-## What is in the app (v2.4.0, versionCode 8)
+## What is in the app (v2.6.0, versionCode 10)
 
-- **Resources** tab: 155 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show).
-- **Jobs** and **Housing** tabs use the same city pick. Jobs splits free certificates by type: **Coding**, **IT & cloud**, **Marketing**, **Government**, **Business**, and **Computer basics**. The list is curated (real free credentials, not paid diploma mills). It is not every certificate on the internet.
+- **Resources** tab: 218 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show). Home tiles include **Child Care**, **Immigrants & Refugees**, **Addiction & Recovery**, **Kids with Special Needs**, **Holiday & Toys**, **Dental Care**, and **Disaster & Recovery**. 2-1-1 still covers everything this list does not.
+- **Jobs** and **Housing** tabs use the same city pick. Jobs splits certificates by type, with **Work-ready** first: food handler, OSHA-10, WIOA-paid training, CareerReady Colorado, child-care PDIS, Mental Health First Aid, peer-recovery (CPFS), QMAP, McDonald's Archways, and wildland S-190. Then **Coding**, **IT & cloud**, **Marketing**, **Government**, **Business**, and **Computer basics**. Real credentials only. Diploma mills and fake OSHA/forklift sites are not listed.
 - **Clothes** tab: free clothing closets, kids and baby clothes, interview outfits, and pantries that also hand out clothes. Includes Food Not Bombs and Clothe the People (Oak Street church is closed; those cards point at Instagram / clothethepeople.com).
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
 - **Dark mode:** tap the moon (or sun) in the top-right of the header.
@@ -95,7 +107,7 @@ Edit `src/data/resources.json`. Each entry:
 {
   "id": "unique-kebab-case",
   "name": "Organization or program",
-  "category": "food | housing | shelter | employment | benefits | utilities | health | transportation | phone | legal | seniors_disability | family_children | veterans | education | crisis | clothing",
+  "category": "food | housing | shelter | employment | benefits | utilities | health | transportation | phone | legal | seniors_disability | family_children | veterans | education | crisis | clothing | childcare | immigrant_refugee | addiction | special_needs | holiday | dental | disaster",
   "description": "One or two plain sentences.",
   "phone": "970-555-0100 or null",
   "url": "https://... or null",
@@ -103,7 +115,7 @@ Edit `src/data/resources.json`. Each entry:
   "hours": "short string or null",
   "area": "Fort Collins | Loveland | Estes Park | Berthoud | Wellington | Larimer County | Colorado (statewide) | National",
   "tags": ["keywords", "for", "search"],
-  "certGroup": "optional: coding | it_cloud | marketing | government | business | digital_basics"
+  "certGroup": "optional: work_ready | coding | it_cloud | marketing | government | business | digital_basics"
 }
 ```
 
@@ -113,9 +125,11 @@ Run `npm run validate` after editing. Phone numbers and hours change. If somethi
 
 Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
-## Checksum (v2.4.0)
+## Checksum (last published APK, v2.4.0)
 
-To verify the published APK: `sha256  6c78951f2aeb396581784d0ff4567c8e7bceaf09394db37aa8b9f42714a896b6`
+To verify the v2.4.0 APK still on Releases: `sha256  6c78951f2aeb396581784d0ff4567c8e7bceaf09394db37aa8b9f42714a896b6`
+
+A v2.5.0 APK will have a different checksum once it is signed and uploaded.
 
 ## Questions or problems
 
