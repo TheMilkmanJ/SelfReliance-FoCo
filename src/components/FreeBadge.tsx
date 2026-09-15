@@ -7,7 +7,7 @@ export function FreeBadge() {
   const { colors } = useTheme();
   return (
     <View
-      style={[styles.badge, { backgroundColor: `${colors.green}1f` }]
+      style={[styles.badge, { backgroundColor: `${colors.green}1f` }]}
       accessibilityRole="text"
       accessibilityLabel="Free"
     >
