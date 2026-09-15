@@ -71,6 +71,54 @@
       "hours": "Office Mon-Fri; advocates on call 24/7",
       "area": "Estes Park",
       "tags": ["domestic violence", "victim advocacy", "safe house"]
+    },
+    {
+      "id": "food-bank-larimer-fort-collins",
+      "name": "Food Bank for Larimer County - Fort Collins",
+      "category": "food",
+      "description": "Free groceries through the Fresh Food Share market. Shop like a grocery store, no cost. No paperwork needed for your first visit; bring an ID if you have one.",
+      "phone": "970-493-4477",
+      "url": "https://foodbanklarimer.org/",
+      "address": "1301 Blue Spruce Dr, Fort Collins, CO 80524",
+      "hours": "Tue, Thu, Fri, Sat 10am-3pm; Wed 12-3pm",
+      "area": "Fort Collins",
+      "tags": ["groceries", "pantry", "free food", "fresh food share"]
+    },
+    {
+      "id": "food-bank-larimer-loveland",
+      "name": "Food Bank for Larimer County - Loveland",
+      "category": "food",
+      "description": "Free groceries through the Fresh Food Share market in Loveland. Also the pickup point for senior food boxes (CSFP) for adults 60+.",
+      "phone": "970-493-4477",
+      "url": "https://foodbanklarimer.org/",
+      "address": "2600 N Lincoln Ave, Loveland, CO 80538",
+      "hours": "Tue, Thu, Fri, Sat 10am-3pm; Wed 12-3pm",
+      "area": "Loveland",
+      "tags": ["groceries", "pantry", "free food", "senior boxes"]
+    },
+    {
+      "id": "vindeket-foods",
+      "name": "Vindeket Foods",
+      "category": "food",
+      "description": "Pay-what-you-can grocery market that rescues surplus food. Everyone is welcome; pay nothing if you need to. No questions asked.",
+      "phone": "970-682-4631",
+      "url": "https://www.vindeketfoods.org/",
+      "address": "1317 Webster Ave, Fort Collins, CO 80524",
+      "hours": "Sun 12-3pm; Tue 2:30-7pm; Thu 9am-1pm",
+      "area": "Fort Collins",
+      "tags": ["groceries", "pay what you can", "no paperwork"]
+    },
+    {
+      "id": "foco-cafe",
+      "name": "FoCo Cafe",
+      "category": "food",
+      "description": "Pay-what-you-can restaurant serving a healthy lunch to everyone. Pay what you can afford, volunteer an hour for a meal, or eat free.",
+      "phone": "309-368-1659",
+      "url": "https://www.fococafe.org/",
+      "address": "225 Maple St, Fort Collins, CO 80521",
+      "hours": "Lunch Mon-Sat 11am-2pm",
+      "area": "Fort Collins",
+      "tags": ["hot meals", "pay what you can", "lunch"]
     }
   ]
 }
