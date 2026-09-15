@@ -13,13 +13,14 @@ import {
   RESOURCES,
   byCategories,
   filterByArea,
+  isFreeCertificate,
   searchResources,
   type AreaFilter as AreaFilterId,
 } from '../data/resources';
 import type { CategoryId, CertGroup, Resource } from '../data/types';
 import { spacing, useTheme } from '../theme';
 
-type JobFilter = 'all' | 'employment' | 'certs' | 'classes' | CertGroup;
+type JobFilter = 'all' | 'employment' | 'certs' | 'free' | 'classes' | CertGroup;
 
 type Props = {
   title: string;
@@ -63,9 +64,19 @@ export function ResourceListScreen({
     if (showCertGroups) {
       if (jobFilter === 'employment') list = list.filter((r) => r.category === 'employment');
       else if (jobFilter === 'certs') list = list.filter((r) => Boolean(r.certGroup));
+      else if (jobFilter === 'free') list = list.filter((r) => isFreeCertificate(r));
       else if (jobFilter === 'classes') list = list.filter((r) => r.category === 'education' && !r.certGroup);
       else if (CERT_GROUP_IDS.has(jobFilter as CertGroup)) {
         list = list.filter((r) => r.certGroup === jobFilter);
+      }
+      const certView =
+        jobFilter === 'certs' || jobFilter === 'free' || CERT_GROUP_IDS.has(jobFilter as CertGroup);
+      if (certView) {
+        list = list.slice().sort((a, b) => {
+          const freeDiff = Number(isFreeCertificate(b)) - Number(isFreeCertificate(a));
+          if (freeDiff !== 0) return freeDiff;
+          return a.name.localeCompare(b.name);
+        });
       }
     } else if (activeCat !== 'all') {
       list = list.filter((r) => r.category === activeCat);
@@ -100,6 +111,13 @@ export function ResourceListScreen({
                     icon="ribbon-outline"
                     active={jobFilter === 'certs'}
                     onPress={() => setJobFilter('certs')}
+                  />
+                  <Chip
+                    label="Free"
+                    icon="pricetag-outline"
+                    active={jobFilter === 'free'}
+                    onPress={() => setJobFilter('free')}
+                    accessibilityLabel="Free certificates"
                   />
                   <Chip
                     label="GED & college"
