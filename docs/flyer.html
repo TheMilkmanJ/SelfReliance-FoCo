@@ -137,9 +137,9 @@
 
     .scan {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.18in;
-      margin-top: 0.08in;
+      grid-template-columns: 1fr;
+      max-width: 3.4in;
+      margin: 0.08in auto 0;
     }
 
     .qr-card {
@@ -151,7 +151,7 @@
     }
 
     .qr-card.android { border-color: var(--gold); }
-    .qr-card img { width: 1.55in; height: 1.55in; display: block; margin: 6px auto 8px; }
+    .qr-card img { width: 1.85in; height: 1.85in; display: block; margin: 6px auto 8px; }
     .qr-card h3 { margin: 0; font-size: 16px; color: var(--purple-dark); }
     .qr-card p { margin: 6px 0 0; font-size: 12px; color: var(--muted); line-height: 1.35; }
     .badge {
@@ -290,12 +290,6 @@
           <h3>Download the app</h3>
           <img src="qr-android.svg" alt="QR code that downloads the Android APK" />
           <p>Opens the latest APK from GitHub Releases. After download, Android will ask you to allow installing from your browser. That is expected — this app is not on the Play Store.</p>
-        </div>
-        <div class="qr-card">
-          <span class="badge">iPhone &amp; source</span>
-          <h3>Open the GitHub page</h3>
-          <img src="qr-github.svg" alt="QR code that opens the GitHub repository" />
-          <p>There is no App Store listing yet. This code is ready for iPhone builds. Until then, use GitHub for the source, install notes, and a way to fork the project.</p>
         </div>
       </div>
 
