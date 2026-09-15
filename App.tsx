@@ -42,10 +42,10 @@ function AppShell() {
           {tab === 'jobs' ? (
             <ResourceListScreen
               title="Jobs & Employment"
-              subtitle="Work, training, and free certificates grouped by type"
+              subtitle="Work, training, and certificates: first-job cards through tech"
               categories={JOBS_CATEGORIES}
               onSelect={setSelected}
-              emptyHint="Try words like resume, certificate, coding, FEMA, or apprenticeship."
+              emptyHint="Try words like food handler, OSHA, peer, resume, certificate, or apprenticeship."
               area={area}
               onAreaChange={setArea}
               showCertGroups
