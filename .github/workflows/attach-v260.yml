@@ -1,0 +1,61 @@
+name: attach-v260
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/attach-v260.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore full listings
+        run: |
+          set -euo pipefail
+          curl -fsSL -o src/data/resources.json https://litter.catbox.moe/wlo87v.json
+          python3 -c 'import json; d=json.load(open("src/data/resources.json")); n=len(d["resources"]); w=sum(1 for r in d["resources"] if r.get("certGroup")=="work_ready"); assert n==218 and w==10, (n,w); print("OK", n, w)'
+          git config user.name "TheMilkmanJ"
+          git config user.email "pulfordj420@gmail.com"
+          git add src/data/resources.json
+          if git diff --cached --quiet; then
+            echo "listings already complete"
+          else
+            git commit -m "Restore full v2.6.0 listings (218 cards)."
+            git push
+          fi
+
+      - name: Fetch signed APK
+        run: |
+          set -euo pipefail
+          curl -fsSL -o Self-Reliance-FoCo.apk https://litter.catbox.moe/omiqxp.apk
+          echo "f4d548cc3b48b099b6c0187079e71c5387441c234a77a7d1baa83abc9b27cde2  Self-Reliance-FoCo.apk" | sha256sum -c
+          ls -l Self-Reliance-FoCo.apk
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.6.0
+          name: Self-Reliance FoCo v2.6.0
+          make_latest: true
+          fail_on_unmatched_files: true
+          files: Self-Reliance-FoCo.apk
+          body: |
+            Work-ready certificates for people who need a job, not a coding bootcamp.
+
+            The **Jobs** tab now leads with a **Work-ready** chip: ServSafe Food Handler ($15), OSHA-10 via official trainers, Larimer WIOA paid training, CareerReady Colorado, free Colorado Shines PDIS child-care hours, Mental Health First Aid, Colorado Peer and Family Specialist for people in recovery, QMAP for group-home jobs, McDonald's Archways for current crew, and NWCG S-190 as a wildland-fire first step.
+
+            Home tiles also include Child Care, Immigrants & Refugees, Addiction & Recovery, Kids with Special Needs, Holiday & Toys, Dental Care, and Disaster & Recovery.
+
+            Costs and catch-points are on the cards. Fake OSHA and forklift websites are not.
+
+            218 listings. versionCode 10 — installs over any earlier FoCo build, including v2.4.0.
+
+            SHA-256: `f4d548cc3b48b099b6c0187079e71c5387441c234a77a7d1baa83abc9b27cde2`
+
+            The QR code and download button still use `/releases/latest/download/Self-Reliance-FoCo.apk`.
