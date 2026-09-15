@@ -14,7 +14,14 @@ export type CategoryId =
   | 'veterans'
   | 'education'
   | 'crisis'
-  | 'clothing';
+  | 'clothing'
+  | 'childcare'
+  | 'immigrant_refugee'
+  | 'addiction'
+  | 'special_needs'
+  | 'holiday'
+  | 'dental'
+  | 'disaster';
 
 export type Area =
   | 'Fort Collins'
@@ -26,8 +33,15 @@ export type Area =
   | 'Colorado (statewide)'
   | 'National';
 
-/** Free certificate / badge tracks shown as type chips on the Jobs tab. */
-export type CertGroup = 'coding' | 'it_cloud' | 'marketing' | 'government' | 'business' | 'digital_basics';
+/** Certificate tracks shown as type chips on the Jobs tab. */
+export type CertGroup =
+  | 'work_ready'
+  | 'coding'
+  | 'it_cloud'
+  | 'marketing'
+  | 'government'
+  | 'business'
+  | 'digital_basics';
 
 export interface Resource {
   id: string;

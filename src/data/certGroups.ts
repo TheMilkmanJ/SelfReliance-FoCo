@@ -1,6 +1,7 @@
 import type { CertGroup } from './types';
 
 export const CERT_GROUPS: { id: CertGroup; label: string; short: string; icon: string }[] = [
+  { id: 'work_ready', label: 'Work-ready certificates', short: 'Work-ready', icon: 'construct-outline' },
   { id: 'coding', label: 'Coding certificates', short: 'Coding', icon: 'code-slash-outline' },
   { id: 'it_cloud', label: 'IT & cloud certificates', short: 'IT & cloud', icon: 'cloud-outline' },
   { id: 'marketing', label: 'Marketing certificates', short: 'Marketing', icon: 'megaphone-outline' },
