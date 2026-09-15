@@ -1,1 +1,7 @@
-SEE_LOCAL_FILE_/workspace/src/data/resources.json
+{
+  "resources": [
+    {
+      "id": "united-way-211"
+    }
+  ]
+}
