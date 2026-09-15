@@ -7,13 +7,13 @@
 <p align="center">A free Android app that puts Larimer County help in one place: food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
-  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.4.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.6.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
   <br />
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
 </p>
 
-<p align="center"><strong>Source: v2.6.0</strong> (work-ready certificates plus the seven new help tiles). The signed APK on GitHub Releases is still v2.4.0 until a new build is uploaded. About 41 MB. versionCode 10 will install over any earlier FoCo build.</p>
+<p align="center"><strong>Current download: v2.6.0</strong> (work-ready certificates plus the seven new help tiles). About 41 MB. Installs over any earlier FoCo build (versionCode 10).</p>
 
 <p align="center">
   Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>
@@ -47,7 +47,7 @@ npx expo prebuild --platform android --no-install
 
 Read `src/` to see what the app does (no analytics, no account, listings plus tap-to-call / maps). The signed release APK on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) is built from this tree. A SHA-256 checksum lets you confirm you have that same file. It does not replace reading the source.
 
-The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.4.0 APK needs that same key and versionCode 10.
+The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.6.0 APK needs that same key and versionCode 11+.
 
 ## Install on your phone (about 2 minutes)
 
@@ -57,7 +57,7 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo**. The bottom tabs should be Resources, Jobs, Housing, and **Clothes**.
 
-**Already have Self-Reliance FoCo?** Install a v2.6.0 APK over it. Same app, same key. If Jobs has no **Work-ready** chip, you still have v2.5.0 or older.
+**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If Jobs has no **Work-ready** chip, you still have v2.5.0 or older — delete the old APK from Downloads and grab v2.6.0 again.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
@@ -125,11 +125,9 @@ Run `npm run validate` after editing. Phone numbers and hours change. If somethi
 
 Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
-## Checksum (last published APK, v2.4.0)
+## Checksum (v2.6.0)
 
-To verify the v2.4.0 APK still on Releases: `sha256  6c78951f2aeb396581784d0ff4567c8e7bceaf09394db37aa8b9f42714a896b6`
-
-A v2.5.0 APK will have a different checksum once it is signed and uploaded.
+To verify the published APK: `sha256  f4d548cc3b48b099b6c0187079e71c5387441c234a77a7d1baa83abc9b27cde2`
 
 ## Questions or problems
 
