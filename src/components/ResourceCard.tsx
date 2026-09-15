@@ -3,9 +3,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
+import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
 import { call } from '../lib/actions';
 import { cardShadow, radius, spacing, useTheme } from '../theme';
+import { FreeBadge } from './FreeBadge';
 
 type Props = {
   resource: Resource;
@@ -16,24 +18,27 @@ type Props = {
 export function ResourceCard({ resource, onPress, showCategory = true }: Props) {
   const { colors, isDark } = useTheme();
   const cat = CATEGORY_MAP[resource.category];
+  const freeCert = isFreeCertificate(resource);
+  const certLine = resource.certGroup
+    ? `${freeCert ? 'Free · ' : ''}${CERT_GROUP_MAP[resource.certGroup].short} cert · ${resource.area}`
+    : `${showCategory ? `${cat.short} · ` : ''}${resource.area}`;
   return (
     <View style={[styles.card, { backgroundColor: colors.card }, cardShadow(isDark)]}>
       <Pressable
         onPress={() => onPress(resource)}
         style={({ pressed }) => [styles.row, pressed && styles.pressed]}
         accessibilityRole="button"
-        accessibilityLabel={`${resource.name}. ${resource.description}`}
+        accessibilityLabel={`${resource.name}${freeCert ? '. Free certificate' : ''}. ${resource.description}`}
       >
         <View style={[styles.iconWrap, { backgroundColor: `${cat.color}1a` }]}>
           <Ionicons name={cat.icon as never} size={22} color={cat.color} />
         </View>
         <View style={styles.body}>
-          <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
-          <Text style={[styles.meta, { color: colors.muted }]}>
-            {resource.certGroup
-              ? `${CERT_GROUP_MAP[resource.certGroup].short} cert · ${resource.area}`
-              : `${showCategory ? `${cat.short} · ` : ''}${resource.area}`}
-          </Text>
+          <View style={styles.headline}>
+            <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
+            {freeCert ? <FreeBadge /> : null}
+          </View>
+          <Text style={[styles.meta, { color: colors.muted }]}>{certLine}</Text>
           <Text style={[styles.desc, { color: colors.body }]} numberOfLines={3}>
             {resource.description}
           </Text>
@@ -72,7 +77,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   body: { flex: 1 },
-  name: { fontSize: 17, fontWeight: '700', lineHeight: 22 },
+  headline: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
+  name: { fontSize: 17, fontWeight: '700', lineHeight: 22, flexShrink: 1 },
   meta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
   desc: { fontSize: 15, lineHeight: 21 },
   callBtn: {
