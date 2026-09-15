@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Self-Reliance FoCo — print flyer</title>
+  <style>
+    :root {
+      --purple: #522f81;
+      --purple-dark: #3d2261;
+      --gold: #f5a623;
+      --ink: #1a1224;
+      --muted: #5a4d68;
+      --paper: #fbf8f2;
+      --card: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      background: #e8e0d4;
+      color: var(--ink);
+      font-family: "Segoe UI", "Liberation Sans", Helvetica, Arial, sans-serif;
+    }
+
+    .sheet {
+      width: 8.5in;
+      min-height: 11in;
+      margin: 24px auto;
+      background: var(--paper);
+      box-shadow: 0 12px 40px rgba(61, 34, 97, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner {
+      background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 62%, #6b3fa0 100%);
+      color: #fff;
+      padding: 0.42in 0.48in 0.38in;
+      display: grid;
+      grid-template-columns: 0.95in 1fr;
+      gap: 0.28in;
+      align-items: center;
+    }
+
+    .banner img {
+      width: 0.92in;
+      height: 0.92in;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 0 0 3px var(--gold);
+    }
+
+    .kicker {
+      color: var(--gold);
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      margin: 8px 0 0;
+      font-size: 15.5px;
+      color: rgba(255,255,255,0.92);
+      max-width: 6.2in;
+    }
+
+    .body {
+      padding: 0.32in 0.48in 0.28in;
+    }
+
+    .lede {
+      font-size: 16.5px;
+      line-height: 1.45;
+      margin: 0 0 0.22in;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0.22in;
+      margin-bottom: 0.22in;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .feat {
+      background: #fff;
+      border: 1px solid #eadfce;
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .feat strong { display: block; font-size: 14.5px; color: var(--purple-dark); }
+    .feat span { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+
+    .why {
+      background: #fff;
+      border: 1px solid #eadfce;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .why ul {
+      margin: 0;
+      padding-left: 1.05em;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    .why li { margin: 0 0 6px; }
+    .why li:last-child { margin: 0; }
+
+    .scan {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.18in;
+      margin-top: 0.08in;
+    }
+
+    .qr-card {
+      background: #fff;
+      border: 2px solid var(--purple);
+      border-radius: 12px;
+      padding: 12px 12px 14px;
+      text-align: center;
+    }
+
+    .qr-card.android { border-color: var(--gold); }
+    .qr-card img { width: 1.55in; height: 1.55in; display: block; margin: 6px auto 8px; }
+    .qr-card h3 { margin: 0; font-size: 16px; color: var(--purple-dark); }
+    .qr-card p { margin: 6px 0 0; font-size: 12px; color: var(--muted); line-height: 1.35; }
+    .badge {
+      display: inline-block;
+      background: var(--purple);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .android .badge { background: #1f6b3a; }
+
+    .hint {
+      margin: 0.18in 0 0;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.4;
+      background: #f3ece0;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .foot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--purple-dark);
+      color: rgba(255,255,255,0.9);
+      padding: 10px 0.48in;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .foot a { color: var(--gold); text-decoration: none; }
+
+    .screen-note {
+      max-width: 8.5in;
+      margin: 0 auto 18px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #3d2261;
+    }
+
+    .screen-note button {
+      background: var(--purple);
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .screen-note { display: none; }
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        width: 8.5in;
+        height: 11in;
+        min-height: 11in;
+      }
+      @page { size: letter; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-note">
+    Letter-size flyer for printing. Use your browser’s Print dialog, or open
+    <code>docs/flyer.pdf</code>.
+    <button type="button" onclick="window.print()">Print this page</button>
+  </div>
+
+  <article class="sheet">
+    <header class="banner">
+      <img src="../foco-logo.svg" alt="Self-Reliance FoCo logo" />
+      <div>
+        <p class="kicker">Larimer County · free · no sign-in</p>
+        <h1>Self-Reliance FoCo</h1>
+        <p class="tagline">A phone directory of food, jobs, housing, and clothing help for Fort Collins and nearby towns — so desks can stop reprinting paper lists.</p>
+      </div>
+    </header>
+
+    <div class="body">
+      <p class="lede">
+        Self-Reliance FoCo is a free app that puts 218 listings in one place.
+        Search by town, tap to call, and open a map. There is no account, no ads,
+        and no tracking. The source is public on GitHub so anyone can keep it going.
+      </p>
+
+      <div class="grid">
+        <div>
+          <h2>What’s in the app</h2>
+          <div class="features">
+            <div class="feat">
+              <strong>Resources</strong>
+              <span>Food, clinics, child care, dental, disaster recovery, and more — 23 categories.</span>
+            </div>
+            <div class="feat">
+              <strong>Jobs</strong>
+              <span>Workforce centers, work-ready certificates (food handler, OSHA, WIOA), and hiring help you can call today.</span>
+            </div>
+            <div class="feat">
+              <strong>Housing</strong>
+              <span>Shelter, rental help, and housing authorities in Larimer County.</span>
+            </div>
+            <div class="feat">
+              <strong>Clothes</strong>
+              <span>Free and low-cost clothing closets, including Fort Collins Rescue Mission.</span>
+            </div>
+          </div>
+        </div>
+        <div class="why">
+          <h2>Why scan this instead of a sheet</h2>
+          <ul>
+            <li>Paper lists go stale. The app is one download away from an updated list.</li>
+            <li>Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</li>
+            <li>Works offline after install. Tap a number to call.</li>
+            <li>MIT licensed. If the original maintainer steps away, someone else can fork it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Scan to get it on a phone</h2>
+      <div class="scan">
+        <div class="qr-card android">
+          <span class="badge">Android</span>
+          <h3>Download the app</h3>
+          <img src="qr-android.svg" alt="QR code that downloads the Android APK" />
+          <p>Opens the latest APK from GitHub Releases. After download, Android will ask you to allow installing from your browser. That is expected — this app is not on the Play Store.</p>
+        </div>
+        <div class="qr-card">
+          <span class="badge">iPhone &amp; source</span>
+          <h3>Open the GitHub page</h3>
+          <img src="qr-github.svg" alt="QR code that opens the GitHub repository" />
+          <p>There is no App Store listing yet. This code is ready for iPhone builds. Until then, use GitHub for the source, install notes, and a way to fork the project.</p>
+        </div>
+      </div>
+
+      <p class="hint">
+        Direct links if a scanner is not handy:
+        Android APK — github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk
+        · Project — github.com/TheMilkmanJ/SelfReliance-FoCo
+      </p>
+    </div>
+
+    <footer class="foot">
+      <div>Self-Reliance FoCo · community directory · not a county or church product</div>
+      <div>Questions: justinpulford92@gmail.com · Built in Fort Collins</div>
+    </footer>
+  </article>
+</body>
+</html>
