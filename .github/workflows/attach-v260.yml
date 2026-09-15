@@ -13,23 +13,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Restore full listings
-        run: |
-          set -euo pipefail
-          curl -fsSL -o src/data/resources.json https://litter.catbox.moe/wlo87v.json
-          python3 -c 'import json; d=json.load(open("src/data/resources.json")); n=len(d["resources"]); w=sum(1 for r in d["resources"] if r.get("certGroup")=="work_ready"); assert n==218 and w==10, (n,w); print("OK", n, w)'
-          git config user.name "TheMilkmanJ"
-          git config user.email "pulfordj420@gmail.com"
-          git add src/data/resources.json
-          if git diff --cached --quiet; then
-            echo "listings already complete"
-          else
-            git commit -m "Restore full v2.6.0 listings (218 cards)."
-            git push
-          fi
-
       - name: Fetch signed APK
         run: |
           set -euo pipefail
