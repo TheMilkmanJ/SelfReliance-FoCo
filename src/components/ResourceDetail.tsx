@@ -4,9 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
+import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
 import { call, directions, open, prettyUrl } from '../lib/actions';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { FreeBadge } from './FreeBadge';
 
 type Props = {
   resource: Resource | null;
@@ -19,6 +21,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
   if (!resource) return null;
   const cat = CATEGORY_MAP[resource.category];
   const cert = resource.certGroup ? CERT_GROUP_MAP[resource.certGroup] : null;
+  const freeCert = isFreeCertificate(resource);
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} presentationStyle="pageSheet">
@@ -26,7 +29,9 @@ export function ResourceDetail({ resource, onClose }: Props) {
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${cat.color}1a` }]}>
             <Ionicons name={cat.icon as never} size={16} color={cat.color} />
-            <Text style={[styles.pillText, { color: cat.color }]}>{cert ? `${cert.short} cert` : cat.label}</Text>
+            <Text style={[styles.pillText, { color: cat.color }]}>
+              {cert ? `${freeCert ? 'Free ' : ''}${cert.short} cert` : cat.label}
+            </Text>
           </View>
           <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel="Close">
             <Ionicons name="close" size={28} color={colors.ink} />
@@ -34,8 +39,13 @@ export function ResourceDetail({ resource, onClose }: Props) {
         </View>
 
         <ScrollView contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + spacing.xxl }]}>
-          <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
-          <Text style={[styles.area, { color: colors.muted }]}>{resource.area}</Text>
+          <View style={styles.headline}>
+            <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
+            {freeCert ? <FreeBadge /> : null}
+          </View>
+          <Text style={[styles.area, { color: colors.muted }]}>
+            {freeCert ? `Free · ${resource.area}` : resource.area}
+          </Text>
           <Text style={[styles.desc, { color: colors.body }]}>{resource.description}</Text>
 
           {resource.hours ? (
@@ -143,7 +153,8 @@ const styles = StyleSheet.create({
   },
   pillText: { fontWeight: '700', fontSize: 13 },
   content: { paddingHorizontal: spacing.lg },
-  name: { fontSize: 26, fontWeight: '800', lineHeight: 32 },
+  headline: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 10 },
+  name: { fontSize: 26, fontWeight: '800', lineHeight: 32, flexShrink: 1 },
   area: { fontSize: 15, marginTop: 4, marginBottom: spacing.lg },
   desc: { fontSize: 17, lineHeight: 25, marginBottom: spacing.lg },
   infoRow: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', marginBottom: spacing.md },
