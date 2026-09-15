@@ -118,7 +118,7 @@ export function HomeScreen({ onSelect, area, onAreaChange }: Props) {
               <Ionicons name="search-outline" size={40} color={colors.muted} />
               <Text style={[styles.emptyTitle, { color: colors.ink }]}>Nothing matched "{query.trim()}"</Text>
               <Text style={[styles.emptyText, { color: colors.muted }]}>
-                Try a simpler word like rent, food, job, or bus. Or call 2-1-1.
+                Try a simpler word like rent, food, child care, or dental. Or call 2-1-1.
               </Text>
             </View>
           ) : null
