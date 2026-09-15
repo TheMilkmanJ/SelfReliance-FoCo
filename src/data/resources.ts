@@ -1,3 +1,4 @@
+import { CATEGORY_MAP } from './categories';
 import { CERT_GROUP_MAP } from './certGroups';
 import raw from './resources.json';
 import type { Area, CategoryId, Resource } from './types';
@@ -79,10 +80,9 @@ export function searchResources(query: string, pool: Resource[] = RESOURCES): Re
   const terms = q.split(/\s+/).filter(Boolean);
   return pool.filter((r) => {
     const certLabel = r.certGroup ? CERT_GROUP_MAP[r.certGroup].label : '';
+    const catLabel = CATEGORY_MAP[r.category]?.label ?? r.category.replace(/_/g, ' ');
     const hay = normalize(
-      [r.name, r.description, r.area, r.address ?? '', r.tags.join(' '), r.category.replace('_', ' '), certLabel].join(
-        ' ',
-      ),
+      [r.name, r.description, r.area, r.address ?? '', r.tags.join(' '), catLabel, certLabel].join(' '),
     );
     return terms.every((t) => hay.includes(t));
   });

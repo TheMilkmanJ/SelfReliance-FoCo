@@ -5,14 +5,17 @@ import { readFileSync } from 'node:fs';
 const CATEGORIES = new Set([
   'food', 'housing', 'shelter', 'employment', 'benefits', 'utilities', 'health', 'transportation',
   'phone', 'legal', 'seniors_disability', 'family_children', 'veterans', 'education', 'crisis',
-  'clothing',
+  'clothing', 'childcare', 'immigrant_refugee', 'addiction', 'special_needs', 'holiday', 'dental',
+  'disaster',
 ]);
 const AREAS = new Set([
   'Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington', 'Larimer County',
   'Colorado (statewide)', 'National',
 ]);
 const PHONE = /^(\d{3}-\d{3}-\d{4}|1-\d{3}-\d{3}-\d{4}|211|988|911)$/;
-const CERT_GROUPS = new Set(['coding', 'it_cloud', 'marketing', 'government', 'business', 'digital_basics']);
+const CERT_GROUPS = new Set([
+  'work_ready', 'coding', 'it_cloud', 'marketing', 'government', 'business', 'digital_basics',
+]);
 
 const { resources } = JSON.parse(readFileSync(new URL('../src/data/resources.json', import.meta.url), 'utf8'));
 const problems = [];
