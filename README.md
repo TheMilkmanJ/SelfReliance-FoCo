@@ -16,10 +16,8 @@
 <p align="center"><strong>Current download: v2.6.0</strong> (work-ready certificates plus the seven new help tiles). About 41 MB. Installs over any earlier FoCo build (versionCode 10).</p>
 
 <p align="center">
-  Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>
-  or to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo">open this GitHub repo</a>:<br/>
+  Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>:<br/>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img src="download-qr.svg" width="220" height="220" alt="QR code that downloads the Android APK" /></a>
-  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img src="github-qr.svg" width="220" height="220" alt="QR code that opens the GitHub repository" /></a>
 </p>
 
 ## Links
