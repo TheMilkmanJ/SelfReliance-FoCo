@@ -23,6 +23,18 @@
       "hours": "24/7",
       "area": "Colorado (statewide)",
       "tags": ["mental health", "suicide", "crisis line", "text"]
+    },
+    {
+      "id": "summitstone-crisis",
+      "name": "SummitStone Health Partners - Crisis Services",
+      "category": "crisis",
+      "description": "Larimer County's community mental health provider. Walk-in crisis care at Longview Acute Care (2260 W Trilby Rd, Fort Collins) is open 24/7. Also offers counseling, substance use treatment and Medicaid-friendly outpatient care.",
+      "phone": "970-494-4200",
+      "url": "https://www.summitstonehealth.org/",
+      "address": "2260 W Trilby Rd, Fort Collins, CO 80526",
+      "hours": "Crisis walk-in 24/7",
+      "area": "Larimer County",
+      "tags": ["mental health", "substance use", "walk-in", "medicaid"]
     }
   ]
 }
