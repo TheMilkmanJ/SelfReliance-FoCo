@@ -1,0 +1,52 @@
+name: publish-v290
+
+on:
+  push:
+    paths:
+      - ".github/workflows/publish-v290.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overlay source, attach APK, delete this workflow
+        env:
+          SRC_PAGE: https://tmpfiles.org/wNwiqm3yngtt/foco-v290-src.tgz
+          APK_PAGE: https://tmpfiles.org/wLwCqt3kn7bv/self-reliance-foco.apk
+          EXPECT_SHA: bddbd9116677a92c2b7ca00ca1afbd707bdd60338657eb072a9594cc44a5f0eb
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | grep -oE "https://tmpfiles.org/dl/[^\"[:space:]]+" | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$SRC_PAGE" /tmp/src.tgz
+          tar xzf /tmp/src.tgz
+          download_tmp "$APK_PAGE" Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c
+          rm -f .github/workflows/publish-v290.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add App.tsx app.json README.md release-notes-v290.md docs/flyer.html \
+            src/components/TabBar.tsx src/screens/ResourceListScreen.tsx \
+            src/data/resources.ts src/data/resources.json
+          git add -u .github/workflows/publish-v290.yml
+          git commit -m "Release v2.9.0 Homeless tab overlay."
+          git push
+          gh release create v2.9.0 Self-Reliance-FoCo.apk \
+            --title "Self-Reliance FoCo v2.9.0" \
+            --notes-file release-notes-v290.md
