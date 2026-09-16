@@ -13,12 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Overlay v2.15.0 source and APK
+      - name: Download source tarball
         env:
           SRC_PAGE: https://tmpfiles.org/wUwwqGhQJFdl/foco-v2150-src.tgz
-          APK_PAGE: https://tmpfiles.org/w5wqqRhpJS0J/self-reliance-foco.apk
-          EXPECT_SHA: d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           download_tmp() {
@@ -26,6 +23,7 @@ jobs:
             for i in 1 2 3 4; do
               html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
               href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              echo "try $i href=$href"
               if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
                 return 0
               fi
@@ -35,17 +33,59 @@ jobs:
             return 1
           }
           download_tmp "$SRC_PAGE" /tmp/src.tgz
+          gzip -t /tmp/src.tgz
           tar xzf /tmp/src.tgz
-          grep -q '"version": "2.15.0"' app.json
-          grep -q '"versionCode": 21' app.json
-          grep -q 'Trash day' src/screens/TrashDayScreen.tsx
-          grep -q 'Carts out by 7am' src/components/HomeTools.tsx
-          grep -q 'lovelandcommunitykitchen.org' src/data/openNowPlaces.ts
-          grep -q 'Closed May 31, 2025' src/data/resources.json
-          grep -q "$EXPECT_SHA" README.md
+      - name: Verify overlay
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          app = json.loads(Path('app.json').read_text())
+          assert app['expo']['version'] == '2.15.0', app['expo']['version']
+          assert app['expo']['android']['versionCode'] == 21, app['expo']['android']['versionCode']
+          n = len(json.loads(Path('src/data/resources.json').read_text())['resources'])
+          assert n == 402, n
+          readme = Path('README.md').read_text()
+          assert 'd6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46' in readme
+          trash = Path('src/screens/TrashDayScreen.tsx').read_text()
+          assert 'Usual collection day' in trash
+          tools = Path('src/components/HomeTools.tsx').read_text()
+          assert 'Carts out by 7am' in tools
+          places = Path('src/data/openNowPlaces.ts').read_text()
+          assert 'lovelandcommunitykitchen.org' in places
+          resources = Path('src/data/resources.json').read_text()
+          assert 'Closed May 31, 2025' in resources
+          print('overlay ok')
+          PY
+      - name: Download APK
+        env:
+          APK_PAGE: https://tmpfiles.org/w5wqqRhpJS0J/self-reliance-foco.apk
+          EXPECT_SHA: d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              echo "try $i href=$href"
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
           download_tmp "$APK_PAGE" /tmp/Self-Reliance-FoCo.apk
           echo "$EXPECT_SHA  /tmp/Self-Reliance-FoCo.apk" | sha256sum -c
           cp /tmp/Self-Reliance-FoCo.apk Self-Reliance-FoCo.apk
+      - name: Commit source overlay
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
           rm -f .github/workflows/overlay-v2150.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -56,6 +96,12 @@ jobs:
           git add src/lib/denverClock.ts src/lib/openNowStatus.ts src/lib/trashCalendar.ts
           git add scripts/check-open.mjs scripts/check-trash.mjs
           git add -u .github/workflows/overlay-v2150.yml
+          git status
           git commit -m "Add trash day and open now (v2.15.0)."
           git push
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
           gh release create v2.15.0 Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
