@@ -1224,18 +1224,19 @@
     },
     {
       "id": "junior-league-career-closet",
-      "name": "Junior League Career Closet",
+      "name": "Junior League Career Closet (closed)",
       "category": "employment",
-      "description": "Free interview and work clothing for job seekers who are referred by a partner agency (Workforce Center, Murphy Center, DVR and others).",
+      "description": "This closet closed on May 31, 2025. For free work or interview clothes, ask at the Workforce Center (200 W Oak, 5th floor), the Murphy Center Gear Room on Conifer, or the Salvation Army Care Closet at 3901 S Mason. Call 2-1-1 if you need a current referral.",
       "phone": "970-482-0594",
       "url": "https://www.jlfc.org/",
       "address": "Fort Collins, CO",
-      "hours": "By referral and appointment",
+      "hours": "Closed May 31, 2025",
       "area": "Fort Collins",
       "tags": [
         "interview clothes",
         "work clothes",
-        "free"
+        "closed",
+        "referral"
       ]
     },
     {
@@ -6273,6 +6274,822 @@
         "directions",
         "google maps",
         "walking"
+      ]
+    },
+    {
+      "id": "sava-center",
+      "name": "SAVA Center (sexual assault advocacy)",
+      "category": "crisis",
+      "description": "24-hour line for anyone affected by sexual violence in Larimer County. Advocates can meet you at the hospital, the police station, or the Fort Collins office. Therapy is sliding-scale; advocacy is free. Ask for an advocate when you call.",
+      "phone": "970-472-4200",
+      "url": "https://www.savacenter.org/",
+      "address": "4812 S College Ave, Fort Collins, CO 80525",
+      "hours": "Crisis line 24/7. Office Mon-Fri 8:30am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "sexual assault",
+        "advocacy",
+        "24/7",
+        "crisis line"
+      ]
+    },
+    {
+      "id": "colorado-child-abuse-hotline",
+      "name": "Colorado Child Abuse & Neglect Hotline",
+      "category": "crisis",
+      "description": "Call if you are worried a child in Larimer County is being hurt or left without care. The statewide line routes you to Larimer Children, Youth & Family. If the child is in immediate danger, call 911 first.",
+      "phone": "1-844-264-5437",
+      "url": "https://co4kids.org/",
+      "address": null,
+      "hours": "24/7",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "child abuse",
+        "neglect",
+        "mandatory reporter",
+        "24/7"
+      ]
+    },
+    {
+      "id": "colorado-poison-center",
+      "name": "Colorado Poison Center",
+      "category": "crisis",
+      "description": "Free 24-hour line if someone swallowed medicine, cleaner, plants, or was bitten. Nurses and pharmacists tell you what to do at home versus the ER. Call 911 first if they cannot breathe.",
+      "phone": "1-800-222-1222",
+      "url": "https://www.copoisoncenter.org/",
+      "address": null,
+      "hours": "24/7",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "poison",
+        "overdose",
+        "24/7",
+        "kids"
+      ]
+    },
+    {
+      "id": "fcps-victim-services",
+      "name": "Fort Collins Police - Victim Services",
+      "category": "crisis",
+      "description": "If you were the victim of a crime in Fort Collins, this desk can sit with you after the report, explain the case, and help with victim compensation paperwork. For an emergency call 911. Non-emergency police is 970-419-3273.",
+      "phone": "970-224-6089",
+      "url": "https://www.fortcollins.gov/Services/Police-and-Public-Safety/Police-Services",
+      "address": "2221 S Timberline Rd, Fort Collins, CO 80525",
+      "hours": "Advocates on call 24/7; office during business hours",
+      "area": "Fort Collins",
+      "tags": [
+        "crime victim",
+        "advocacy",
+        "compensation",
+        "24/7"
+      ]
+    },
+    {
+      "id": "adult-protective-services-larimer",
+      "name": "Larimer County Adult Protective Services",
+      "category": "crisis",
+      "description": "Call to report abuse, neglect, or financial exploitation of an older adult or an adult with a disability who cannot protect themselves. You can stay anonymous. If they are in immediate danger, call 911.",
+      "phone": "970-498-7770",
+      "url": "https://www.larimer.gov/humanservices/aging/adult-protection",
+      "address": "1501 Blue Spruce Dr, Fort Collins, CO 80524",
+      "hours": "Intake 24/7; after hours emergencies still call 911",
+      "area": "Larimer County",
+      "tags": [
+        "elder abuse",
+        "adult protection",
+        "disability",
+        "neglect"
+      ]
+    },
+    {
+      "id": "salvation-army-care-closet",
+      "name": "Salvation Army Care Closet - Fort Collins",
+      "category": "clothing",
+      "description": "Free clothing and personal items. Shop when volunteers are on the floor — call ahead so you are not turned away. Same South Mason building as the pantry. Closed 12-12:30pm on days they are open.",
+      "phone": "970-207-4472",
+      "url": "https://fortcollins.salvationarmy.org/",
+      "address": "3901 S Mason St, Fort Collins, CO 80525",
+      "hours": "Mon, Wed, Thu 10am-2pm (closed 12-12:30pm); Fri 10am-noon. Call ahead.",
+      "area": "Fort Collins",
+      "tags": [
+        "clothing",
+        "hygiene",
+        "free",
+        "work clothes"
+      ]
+    },
+    {
+      "id": "hns-clothing-boutique",
+      "name": "House of Neighborly Service - clothing (Loveland)",
+      "category": "clothing",
+      "description": "Free clothing, shoes, bedding, and small household items after you meet a Resource Navigator. Come early; last sign-in is 30 minutes before close. Separate from Treasure Exchange, which is the paid thrift shop in the same building.",
+      "phone": "970-667-4939",
+      "url": "https://www.honservice.org/programs/overview.html",
+      "address": "1511 E 11th St, Suite 100, Loveland, CO 80537",
+      "hours": "Mon-Wed 9am-4pm; Thu 9am-6pm. Last clothing sign-in 30 min before close.",
+      "area": "Loveland",
+      "tags": [
+        "clothing",
+        "hygiene",
+        "free",
+        "household"
+      ]
+    },
+    {
+      "id": "hns-berthoud-clothing",
+      "name": "House of Neighborly Service - clothing (Berthoud)",
+      "category": "clothing",
+      "description": "Free clothing and emergency help at the Berthoud desk (hosted at Grace Place). Ask the Resource Navigator. Same site as the Berthoud pantry.",
+      "phone": "970-532-0161",
+      "url": "https://www.honservice.org/about-us/locations.html",
+      "address": "375 Meadowlark Dr, Berthoud, CO 80513",
+      "hours": "Tue and Thu 9am-5pm",
+      "area": "Berthoud",
+      "tags": [
+        "clothing",
+        "free",
+        "hygiene"
+      ]
+    },
+    {
+      "id": "salvation-army-loveland-clothing",
+      "name": "Salvation Army Loveland - clothes and hygiene",
+      "category": "clothing",
+      "description": "Clothes, hygiene kits, diapers, and snacks at the Loveland service desk. Ask Olga or the person at the front. Call first so they know what size and what you need.",
+      "phone": "970-699-8380",
+      "url": "https://loveland.salvationarmy.org/loveland_service_unit/",
+      "address": "840 N Lincoln Ave, Suite 101, Loveland, CO 80537",
+      "hours": "Mon-Fri 9am-3pm",
+      "area": "Loveland",
+      "tags": [
+        "clothing",
+        "hygiene",
+        "diapers",
+        "free"
+      ]
+    },
+    {
+      "id": "crossroads-ministry-clothing",
+      "name": "Crossroads Ministry - clothing help (Estes Park)",
+      "category": "clothing",
+      "description": "Not a walk-in closet. Call to set an intake. If you qualify, they issue a voucher for clothes and household goods, often used at Good Neighbor Thrift. Bring ID, proof you live in the Estes Valley, and proof of income if you have it.",
+      "phone": "970-577-0610",
+      "url": "https://www.crossroadsep.org/apply-for-assistance",
+      "address": "1753 Wildfire Rd, Estes Park, CO 80517",
+      "hours": "Mon-Thu 10am-4pm; Fri 10am-1pm. Call for an appointment.",
+      "area": "Estes Park",
+      "tags": [
+        "clothing",
+        "vouchers",
+        "intake"
+      ]
+    },
+    {
+      "id": "st-johns-clothing-closet",
+      "name": "St. John's Lutheran clothing closet",
+      "category": "clothing",
+      "description": "Free clothing closet next to the Tuesday pantry. No proof of income. Same church as the food pantry on Elizabeth Street.",
+      "phone": "970-482-5316",
+      "url": "https://www.stjohnsfc.org/",
+      "address": "305 E Elizabeth St, Fort Collins, CO 80524",
+      "hours": "Tue 9-11:30am",
+      "area": "Fort Collins",
+      "tags": [
+        "clothing",
+        "free",
+        "no paperwork"
+      ]
+    },
+    {
+      "id": "larimer-community-corrections",
+      "name": "Larimer County Community Corrections",
+      "category": "reentry",
+      "description": "Residential and day-reporting programs instead of, or after, jail or prison. Front desk can tell you how to report, visit, or drop belongings. Men's and women's residential units are in the same building. Ask the admin desk.",
+      "phone": "970-498-7530",
+      "url": "https://www.larimer.gov/cja/comcor",
+      "address": "2255 Midpoint Dr, Fort Collins, CO 80525",
+      "hours": "Admin desk business hours; facility staffed 24/7",
+      "area": "Larimer County",
+      "tags": [
+        "reentry",
+        "community corrections",
+        "day reporting"
+      ]
+    },
+    {
+      "id": "larimer-probation",
+      "name": "Larimer County Probation",
+      "category": "reentry",
+      "description": "8th Judicial District probation. Call the Prospect Park office first if you do not know which officer you have. Loveland reports at 810 E 10th inside the police/courts building (970-622-2150). Midpoint office is 970-494-3960.",
+      "phone": "970-494-3901",
+      "url": "https://www.coloradojudicial.gov/courts/trial-courts/larimer-county/larimer-county-probation",
+      "address": "1600 Prospect Park Way, Suite 109, Fort Collins, CO 80525",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "probation",
+        "reentry",
+        "court"
+      ]
+    },
+    {
+      "id": "colorado-parole-fort-collins",
+      "name": "Colorado Parole - Fort Collins office",
+      "category": "reentry",
+      "description": "State parole office for people releasing to Larimer County. After hours, call C-WISE at 1-800-426-9143 and leave a message for your officer. Bring your release papers the first time you report.",
+      "phone": "970-223-2232",
+      "url": "https://cdoc.colorado.gov/parole-and-re-entry-services/general-information/parole-offices",
+      "address": "3000 S College Ave, Suite 110, Fort Collins, CO 80525",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "parole",
+        "reentry",
+        "doc"
+      ]
+    },
+    {
+      "id": "cwise-parole-reentry",
+      "name": "C-WISE (parole & reentry line)",
+      "category": "reentry",
+      "description": "24-hour Colorado DOC line to reach a parole officer, ask about a release date, or ask for the Community Re-Entry Specialist at your parole office. They can help with housing, work clothes, and job leads after prison.",
+      "phone": "1-800-426-9143",
+      "url": "https://cdoc.colorado.gov/parole-and-re-entry-services/community-based-services/community-re-entry-specialists",
+      "address": null,
+      "hours": "24/7 message line",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "parole",
+        "reentry",
+        "housing",
+        "jobs"
+      ]
+    },
+    {
+      "id": "larimer-alternative-sentencing",
+      "name": "Larimer County Alternative Sentencing",
+      "category": "reentry",
+      "description": "Work release, electronic home detention, community service hours, and pretrial check-ins. Front desk is at Door 1, just west of the jail. Ask which program you were ordered into. Payments can be made at the same counter.",
+      "phone": "970-980-2600",
+      "url": "https://www.larimer.gov/cja/asd",
+      "address": "2307 Midpoint Dr, Fort Collins, CO 80525",
+      "hours": "Walk-in hours vary by unit; pretrial 9am-5pm daily",
+      "area": "Larimer County",
+      "tags": [
+        "work release",
+        "pretrial",
+        "community service",
+        "reentry"
+      ]
+    },
+    {
+      "id": "public-defender-fort-collins",
+      "name": "Colorado State Public Defender - Fort Collins",
+      "category": "reentry",
+      "description": "Free criminal defense if you cannot afford a lawyer in Larimer County. Call and press 0, or walk in and fill out an application. They do not take civil cases (eviction, benefits). Ask about record sealing after your case.",
+      "phone": "970-493-1212",
+      "url": "https://www.coloradodefenders.us/offices/fort-collins/",
+      "address": "1 Old Town Square, Suite 201, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "public defender",
+        "criminal defense",
+        "reentry",
+        "record sealing"
+      ]
+    },
+    {
+      "id": "arc-thrift-loveland",
+      "name": "Arc Thrift Stores - Loveland",
+      "category": "household",
+      "description": "Used furniture, dishes, clothes, and household goods. Proceeds support people with developmental disabilities. Donation drop-off at the same lot.",
+      "phone": "970-667-7015",
+      "url": "https://arcthrift.org/",
+      "address": "3131 N Garfield Ave, Loveland, CO 80538",
+      "hours": "Call for current store hours",
+      "area": "Loveland",
+      "tags": [
+        "furniture",
+        "thrift",
+        "household",
+        "disability"
+      ]
+    },
+    {
+      "id": "hns-treasure-exchange",
+      "name": "Treasure Exchange (HNS thrift)",
+      "category": "household",
+      "description": "Low-cost clothing, shoes, and home goods open to anyone. This is the paid shop; free clothing for HNS clients is the boutique after you see a navigator. Purchases support the pantry next door.",
+      "phone": "970-667-4939",
+      "url": "https://www.honservice.org/thrift-store/treasure-exchange.html",
+      "address": "1511 E 11th St, Suite 100, Loveland, CO 80537",
+      "hours": "Mon-Wed 9am-4pm; Thu 9am-6pm",
+      "area": "Loveland",
+      "tags": [
+        "thrift",
+        "clothing",
+        "household"
+      ]
+    },
+    {
+      "id": "good-neighbor-thrift-estes",
+      "name": "Good Neighbor Thrift (Estes Park)",
+      "category": "household",
+      "description": "Used clothes, furniture, and household goods. Run by Crossroads Ministry; sales help Estes Valley neighbors. If you need a voucher instead of paying, start with a Crossroads intake on Wildfire Road.",
+      "phone": "970-577-0610",
+      "url": "https://www.crossroadsep.org/thrift",
+      "address": "1138 Manford Ave, Unit A, Estes Park, CO 80517",
+      "hours": "Wed-Sat 11am-3pm",
+      "area": "Estes Park",
+      "tags": [
+        "thrift",
+        "furniture",
+        "clothing",
+        "household"
+      ]
+    },
+    {
+      "id": "eco-thrift-fort-collins",
+      "name": "Eco-Thrift - Fort Collins",
+      "category": "household",
+      "description": "Used furniture, household goods, and clothes on Howes Street downtown. Call before you haul a couch so they can tell you what they will take.",
+      "phone": "970-484-4224",
+      "url": "https://eco-thrift.com/",
+      "address": "314 N Howes St, Fort Collins, CO 80521",
+      "hours": "Call for current hours",
+      "area": "Fort Collins",
+      "tags": [
+        "thrift",
+        "furniture",
+        "household"
+      ]
+    },
+    {
+      "id": "energy-resource-center-wap",
+      "name": "Energy Resource Center - weatherization",
+      "category": "utilities",
+      "description": "Free insulation, furnace, and energy-saving work for income-qualified homes in Larimer County. If you already get LEAP, SNAP, SSI, TANF, AND, or OAP you may skip extra income paperwork. Mail or drop the application at the Berthoud office.",
+      "phone": "970-617-2801",
+      "url": "https://erc-co.org/get-services/",
+      "address": "320 Gateway Dr, Unit B, Berthoud, CO 80513",
+      "hours": "Mon-Fri business hours; call before you drive out",
+      "area": "Larimer County",
+      "tags": [
+        "weatherization",
+        "furnace",
+        "leap",
+        "bills"
+      ]
+    },
+    {
+      "id": "poudre-valley-rea-assistance",
+      "name": "Poudre Valley REA - bill help",
+      "category": "utilities",
+      "description": "Electric co-op for Wellington, rural Fort Collins, and nearby lines. Ask a member-service person for a payment plan or LEAP/Energy Outreach referral. Press 3 for a person. Lobby is on REA Parkway.",
+      "phone": "1-800-432-1012",
+      "url": "https://pvrea.coop/for-members/account-management/payment-assistance/",
+      "address": "7649 REA Pkwy, Fort Collins, CO 80528",
+      "hours": "Lobby Mon-Thu 7:30am-5pm; Fri 7:30am-4:30pm",
+      "area": "Larimer County",
+      "tags": [
+        "electric",
+        "payment plan",
+        "rural",
+        "wellington"
+      ]
+    },
+    {
+      "id": "estes-park-utility-billing",
+      "name": "Estes Park Utility Billing",
+      "category": "utilities",
+      "description": "Town electric and water bills. Ask billing about a payment plan. For shutoff help, also call Crossroads Ministry (970-577-0610) or Energy Outreach Colorado. This desk does not run a separate grant of its own.",
+      "phone": "970-577-4800",
+      "url": "https://estespark.colorado.gov/utilitybilling",
+      "address": "170 MacGregor Ave, Estes Park, CO 80517",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Estes Park",
+      "tags": [
+        "electric",
+        "water",
+        "payment plan",
+        "bills"
+      ]
+    },
+    {
+      "id": "va-clinic-fort-collins",
+      "name": "Fort Collins VA Clinic",
+      "category": "veterans",
+      "description": "VA primary care at Research Boulevard. Press 2 for your care team, 4 to enroll, 3 for a nurse. Labs, mental health, women's health, and X-ray are not at this clinic — those are at the Loveland VA clinic. Mental health emergency: 988, then press 1.",
+      "phone": "970-224-1550",
+      "url": "https://www.va.gov/cheyenne-health-care/locations/fort-collins-va-clinic/",
+      "address": "2509 Research Blvd, Fort Collins, CO 80526",
+      "hours": "Mon-Fri 7am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "va",
+        "primary care",
+        "veterans",
+        "enrollment"
+      ]
+    },
+    {
+      "id": "va-clinic-loveland",
+      "name": "Northern Colorado VA Clinic (Loveland)",
+      "category": "veterans",
+      "description": "Larger VA clinic on Byrd Drive: primary care plus labs, mental health, women's health, and imaging. Fort Collins VA patients are often sent here for those services. DAV vans can ride you to appointments; ask the Larimer Veterans Service Office.",
+      "phone": "970-593-3300",
+      "url": "https://www.va.gov/cheyenne-health-care/locations/northern-colorado-va-clinic/",
+      "address": "4575 Byrd Dr, Loveland, CO 80538",
+      "hours": "Mon-Fri 7am-5pm",
+      "area": "Loveland",
+      "tags": [
+        "va",
+        "mental health",
+        "labs",
+        "veterans",
+        "disability"
+      ]
+    },
+    {
+      "id": "vfw-post-1781",
+      "name": "VFW Post 1781 (Fort Collins)",
+      "category": "veterans",
+      "description": "Veterans of Foreign Wars post. Stop by or call if you need a veteran to point you to claims help, honor guard, or local veteran groups. Meetings first Tuesday at 7pm. Claims paperwork still starts at the county Veterans Service Office on Oak Street.",
+      "phone": "970-493-9909",
+      "url": "https://www.larimer.gov/veterans/services/northern-colorado-veterans-service-organizations",
+      "address": "603 Lesser Dr, Fort Collins, CO 80524",
+      "hours": "Call; meetings first Tuesday 7pm",
+      "area": "Fort Collins",
+      "tags": [
+        "veterans",
+        "vfw",
+        "peer support"
+      ]
+    },
+    {
+      "id": "veterans-crisis-line",
+      "name": "Veterans Crisis Line",
+      "category": "veterans",
+      "description": "24-hour line for veterans, service members, and their families. Call 988 and press 1. You do not have to be enrolled in VA care. If you cannot speak, text 838255 (that is a text number, not this call button).",
+      "phone": "988",
+      "url": "https://www.veteranscrisisline.net/",
+      "address": null,
+      "hours": "24/7",
+      "area": "National",
+      "tags": [
+        "veterans",
+        "suicide",
+        "crisis line",
+        "24/7",
+        "mental health"
+      ]
+    },
+    {
+      "id": "dentaquest-health-first",
+      "name": "DentaQuest - Health First Colorado dental",
+      "category": "dental",
+      "description": "If you have Health First Colorado (Medicaid) or CHP+, this line finds a dentist who takes your card and explains what is covered. Ask them to search Fort Collins or Loveland. Not a clinic — they book you somewhere that is.",
+      "phone": "1-855-225-1729",
+      "url": "https://hcpf.colorado.gov/dental-benefits",
+      "address": null,
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "medicaid",
+        "chp+",
+        "dentist",
+        "insurance"
+      ]
+    },
+    {
+      "id": "colorado-mission-of-mercy",
+      "name": "Colorado Mission of Mercy (free dental clinic)",
+      "category": "dental",
+      "description": "Volunteer dentists run free two-day clinics around Colorado for people who cannot afford care. Locations move each year. Call the hotline for the next date, what to bring, and whether they are taking denture patients. First come, first served the morning of.",
+      "phone": "720-648-0919",
+      "url": "https://comom.org/patient-information/",
+      "address": null,
+      "hours": "Seasonal two-day clinics; call the hotline",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "free dental",
+        "extractions",
+        "dentures",
+        "uninsured"
+      ]
+    },
+    {
+      "id": "trans-lifeline",
+      "name": "Trans Lifeline",
+      "category": "lgbtq",
+      "description": "Peer line run by trans people. Call if you need someone trans to talk to, even if you are not in a crisis. Spanish: press 2. This is not 988; for medical emergencies still call 911.",
+      "phone": "877-565-8860",
+      "url": "https://translifeline.org/hotline/",
+      "address": null,
+      "hours": "See site for current hours (peer operators)",
+      "area": "National",
+      "tags": [
+        "trans",
+        "peer support",
+        "lgbtq",
+        "hotline"
+      ]
+    },
+    {
+      "id": "one-colorado",
+      "name": "One Colorado",
+      "category": "lgbtq",
+      "description": "Statewide LGBTQ+ advocacy desk. They can point you to health, school, and legal resources in Colorado, including Northern Colorado Pride groups. Not a 24-hour crisis line.",
+      "phone": "303-396-6170",
+      "url": "https://www.one-colorado.org/",
+      "address": "303 E 17th Ave, Suite 400, Denver, CO 80203",
+      "hours": "Mon-Fri; call or email info@one-colorado.org",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "lgbtq",
+        "advocacy",
+        "policy"
+      ]
+    },
+    {
+      "id": "lgbt-national-hotline",
+      "name": "LGBT National Hotline",
+      "category": "lgbtq",
+      "description": "Confidential peer support for lesbian, gay, bisexual, transgender, and questioning people, plus family members. Use this when local Pride offices are closed. Youth can also use The Trevor Project listing in this app.",
+      "phone": "1-888-843-4564",
+      "url": "https://www.lgbthotline.org/",
+      "address": null,
+      "hours": "Daily; see site for hours",
+      "area": "National",
+      "tags": [
+        "lgbtq",
+        "hotline",
+        "peer support"
+      ]
+    },
+    {
+      "id": "poudre-libraries-hotspots",
+      "name": "Poudre Libraries - Wi-Fi hotspot checkout",
+      "category": "phone",
+      "description": "Borrow a hotspot (and often a Chromebook) for a week with a library card. Ask at Old Town, Harmony, or Council Tree, or call the Answer Center to place a hold. Data is wiped after each loan. Guest Wi-Fi inside the buildings does not need a card.",
+      "phone": "970-221-6740",
+      "url": "https://poudrelibraries.org/computers/",
+      "address": "201 Peterson St, Fort Collins, CO 80524",
+      "hours": "See branch hours; holds via catalog or phone",
+      "area": "Fort Collins",
+      "tags": [
+        "hotspot",
+        "wifi",
+        "library",
+        "chromebook",
+        "internet"
+      ]
+    },
+    {
+      "id": "csu-early-childhood-center",
+      "name": "CSU Early Childhood Center",
+      "category": "childcare",
+      "description": "Licensed care from 6 weeks through pre-K in the old Washington School. Waitlist is open to CSU families and Fort Collins-area residents. Older preschool seats go through Colorado Universal Preschool. Email eccinfo@colostate.edu for the waitlist; tours only after an offer.",
+      "phone": "970-491-7082",
+      "url": "https://www.chhs.colostate.edu/ecc/",
+      "address": "223 S Shields St, Fort Collins, CO 80521",
+      "hours": "Mon-Fri about 7:30am-5:30pm; follows CSU holidays",
+      "area": "Fort Collins",
+      "tags": [
+        "child care",
+        "preschool",
+        "infant",
+        "csu",
+        "upk"
+      ]
+    },
+    {
+      "id": "casa-larimer",
+      "name": "CASA of Larimer County",
+      "category": "family_children",
+      "description": "Court Appointed Special Advocates for children in the dependency and neglect system. Also Family Connections: supervised visits and safe exchanges at Harmony House. If you need a CASA volunteer or a supervised visit slot, call the office, not the courthouse line first.",
+      "phone": "970-488-1630",
+      "url": "https://www.casalarimer.com/contact/",
+      "address": "3105 E Harmony Rd, Fort Collins, CO 80528",
+      "hours": "Office Mon-Fri 8am-4pm",
+      "area": "Larimer County",
+      "tags": [
+        "casa",
+        "foster",
+        "supervised visitation",
+        "kids",
+        "court"
+      ]
+    },
+    {
+      "id": "project-self-sufficiency",
+      "name": "Project Self-Sufficiency of Northern Colorado",
+      "category": "family_children",
+      "description": "Coaching, school, and career help for low-income single parents in Larimer County. Apply online or walk into the Loveland office Mon-Thu. If you are not sure you qualify, call and ask for an advisor before you fill the long form.",
+      "phone": "970-635-5912",
+      "url": "https://bringthepower.org/apply/",
+      "address": "1810 Boise Ave, Loveland, CO 80538",
+      "hours": "Mon-Thu 9am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "single parents",
+        "career",
+        "school",
+        "families"
+      ]
+    },
+    {
+      "id": "nurse-family-partnership-larimer",
+      "name": "Nurse-Family Partnership (Larimer County)",
+      "category": "family_children",
+      "description": "Free nurse visits for first-time moms, starting in pregnancy through the child's second birthday. Ask for the Nurse-Family Partnership supervisor at Larimer County Health. Voluntary — you can say no.",
+      "phone": "970-498-6888",
+      "url": "https://www.larimer.gov/health/maternal-child-and-family-health/nurse-family-partnership-program",
+      "address": "1525 Blue Spruce Dr, Fort Collins, CO 80524",
+      "hours": "Mon-Fri business hours",
+      "area": "Larimer County",
+      "tags": [
+        "pregnancy",
+        "newborn",
+        "home visiting",
+        "first-time mom"
+      ]
+    },
+    {
+      "id": "poudre-libraries-esl",
+      "name": "Poudre Libraries - Conversations in English",
+      "category": "immigrant_refugee",
+      "description": "Free English conversation groups for adults at all levels. Register by calling the Answer Center, at any branch desk, or on the library events calendar. Bring a library card if you have one; you can get a card the same day with ID.",
+      "phone": "970-221-6740",
+      "url": "https://poudrelibraries.org/",
+      "address": "201 Peterson St, Fort Collins, CO 80524",
+      "hours": "Class times change; call to register",
+      "area": "Fort Collins",
+      "tags": [
+        "esl",
+        "english",
+        "library",
+        "immigrants",
+        "adults"
+      ]
+    },
+    {
+      "id": "rmian-detention-hotline",
+      "name": "RMIAN detention hotline",
+      "category": "immigrant_refugee",
+      "description": "Rocky Mountain Immigrant Advocacy Network. Call if you or a family member is in immigration detention in Colorado (including Aurora). They do not take walk-ins. For a child's immigration case, use the main office line 303-433-2812.",
+      "phone": "303-866-9308",
+      "url": "https://www.rmian.org/contact",
+      "address": "7301 Federal Blvd, Suite 300, Westminster, CO 80030",
+      "hours": "Call the hotline; no walk-ins",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "detention",
+        "immigration court",
+        "legal",
+        "asylum"
+      ]
+    },
+    {
+      "id": "ncha-naloxone",
+      "name": "Free naloxone (Narcan) in Northern Colorado",
+      "category": "addiction",
+      "description": "North Colorado Health Alliance mails two doses to Larimer County addresses and maps free kiosks. No prescription. You can also ask any pharmacy. For overdose right now, call 911. Questions go to the Alliance (no public phone on that page — use the form).",
+      "phone": null,
+      "url": "https://northcoloradohealthalliance.org/naloxone",
+      "address": null,
+      "hours": "Mail and kiosks; pharmacies during store hours",
+      "area": "Larimer County",
+      "tags": [
+        "naloxone",
+        "narcan",
+        "overdose",
+        "harm reduction",
+        "fentanyl"
+      ]
+    },
+    {
+      "id": "colorado-real-id",
+      "name": "Colorado REAL ID - what to bring",
+      "category": "identification",
+      "description": "Star on a Colorado license or ID for flying domestically. Book a DMV appointment (Fort Collins or Loveland offices in this app). Bring original identity papers, your Social Security number, and two proofs of a Colorado street address from the last year. Call the DMV line if a document was rejected.",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/real-id-and-colorado",
+      "address": null,
+      "hours": "By appointment at a driver-license office",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "real id",
+        "dmv",
+        "tsa",
+        "identification"
+      ]
+    },
+    {
+      "id": "larimer-clerk-marriage",
+      "name": "Larimer County Clerk - marriage licenses",
+      "category": "identification",
+      "description": "Marriage and civil union licenses. Both people usually must come with photo ID. Fort Collins recording desk takes walk-ins; Loveland (200 Peridot) and Estes Park (1601 Brodie) are by appointment. Apply online first to save time. You will need the recorded license later for a name change at DMV and Social Security.",
+      "phone": "970-498-7860",
+      "url": "https://www.larimer.gov/clerk/recording/marriage",
+      "address": "200 W Oak St, First Floor, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "marriage license",
+        "civil union",
+        "name change",
+        "clerk"
+      ]
+    },
+    {
+      "id": "northside-aztlan-heat-cold",
+      "name": "Northside Aztlan Community Center - indoor heat and AC",
+      "category": "weather",
+      "description": "City rec center on Willow. Public lobby and gym hours are a place to warm up or cool off when libraries are packed. Ask the front desk which rooms you can sit in without a membership. Confirm today's hours at 970-221-6256. Call 2-1-1 on extreme-weather days for official cooling/warming sites.",
+      "phone": "970-221-6256",
+      "url": "https://www.fortcollins.gov/Venues/Northside-Aztlan-Community-Center",
+      "address": "112 E Willow St, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 6am-9pm; Sat-Sun 8am-5pm (confirm)",
+      "area": "Fort Collins",
+      "tags": [
+        "cooling",
+        "warming",
+        "recreation",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "salud-dental-estes-park",
+      "name": "Salud Family Health - Estes Park dental",
+      "category": "dental",
+      "description": "Sliding-scale dental in Estes Park. Kids from the Estes Valley may get free dental through the Estes Park Salud Foundation — ask the front desk. Medicaid, CHP+, and Delta Dental are taken. Same building as medical. Closed 8-9am the first and third Wednesday.",
+      "phone": "970-484-0999",
+      "url": "https://www.saludclinic.org/estes-park",
+      "address": "1950 Redtail Hawk Dr, Estes Park, CO 80517",
+      "hours": "Dental Mon-Fri 8am-5pm",
+      "area": "Estes Park",
+      "tags": [
+        "dental",
+        "sliding scale",
+        "kids",
+        "medicaid",
+        "spanish"
+      ]
+    },
+    {
+      "id": "frcc-ccampis",
+      "name": "FRCC child care help (CCAMPIS)",
+      "category": "childcare",
+      "description": "Front Range students with kids 11 and under can apply for help paying a licensed child care bill. Email CCAMPIS@frontrange.edu. There is no daycare on the Larimer campus. Ask the CCAMPIS team which providers they can pay.",
+      "phone": "970-226-2500",
+      "url": "https://www.frontrange.edu/student-experience/support-services/childcare/",
+      "address": "4616 S Shields St, Fort Collins, CO 80526",
+      "hours": "Mon-Thu 8:30am-5pm; Fri 8:30am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "child care",
+        "college",
+        "frcc",
+        "students",
+        "ccampis"
+      ]
+    },
+    {
+      "id": "estes-valley-library-hotspots",
+      "name": "Estes Valley Library - Wi-Fi hotspot checkout",
+      "category": "phone",
+      "description": "Borrow a hotspot for a week, plus public computers and free Wi-Fi in the building and parking lot (no password). Search the catalog for hotspot or ask the second-floor desk. You need a library card in good standing to take a hotspot home.",
+      "phone": "970-586-8116",
+      "url": "https://estesvalleylibrary.org/programs-services/computers-printing-wifi/",
+      "address": "335 E Elkhorn Ave, Estes Park, CO 80517",
+      "hours": "See library hours; Wi-Fi outside is 24/7",
+      "area": "Estes Park",
+      "tags": [
+        "hotspot",
+        "wifi",
+        "library",
+        "internet",
+        "computers"
+      ]
+    },
+    {
+      "id": "smart-recovery-fort-collins",
+      "name": "SMART Recovery - Fort Collins",
+      "category": "addiction",
+      "description": "Free secular recovery meetings (not AA) at the Fort Collins Senior Center. Tell the front desk you are going to the Lupine Room. Wednesday 5:30-7pm and Friday 6:30-8pm. Family and friends meet Mondays. Email info@nocopeerrecovery.org if the center is closed.",
+      "phone": "970-221-6644",
+      "url": "https://www.nocopeerrecovery.org/",
+      "address": "1200 Raintree Dr, Fort Collins, CO 80526",
+      "hours": "Wed 5:30-7pm; Fri 6:30-8pm (confirm on their site)",
+      "area": "Fort Collins",
+      "tags": [
+        "recovery",
+        "peer support",
+        "smart",
+        "addiction"
       ]
     }
   ]

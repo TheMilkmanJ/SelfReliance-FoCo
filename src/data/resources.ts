@@ -143,6 +143,13 @@ const DISABILITY_ALWAYS = new Set<string>([
   'csu-ram-scholars',
   'csu-ccp',
   'in-pathways-inclusive-higher-ed',
+  'adult-protective-services-larimer',
+  'va-clinic-fort-collins',
+  'va-clinic-loveland',
+  'dentaquest-health-first',
+  'energy-resource-center-wap',
+  'poudre-libraries-hotspots',
+  'ncha-naloxone',
 ]);
 
 const SENIOR_ONLY_IDS = new Set([
@@ -350,6 +357,12 @@ const STUDENT_ALWAYS = new Set<string>([
   'mcdonalds-archways-to-opportunity',
   'wioa-paid-certificates-larimer',
   'kind-kids-in-need-of-dentistry',
+  'poudre-libraries-esl',
+  'poudre-libraries-hotspots',
+  'csu-early-childhood-center',
+  'frcc-ccampis',
+  'sava-center',
+  'dentaquest-health-first',
 ]);
 
 const STUDENT_TAG =
@@ -428,7 +441,9 @@ export function matchesStudentChip(resource: Resource, chip: StudentChipId): boo
       resource.id === 'colorado-universal-preschool' ||
       resource.id === 'thompson-integrated-early-childhood' ||
       resource.id === 'larimer-ccap' ||
-      resource.id === 'kind-kids-in-need-of-dentistry'
+      resource.id === 'kind-kids-in-need-of-dentistry' ||
+      resource.id === 'csu-early-childhood-center' ||
+      resource.id === 'frcc-ccampis'
     );
   }
   if (chip === 'money') {
@@ -454,7 +469,8 @@ export function matchesStudentChip(resource: Resource, chip: StudentChipId): boo
       resource.id === 'mcdonalds-archways-to-opportunity' ||
       resource.id === 'wioa-paid-certificates-larimer' ||
       resource.id === 'larimer-ccap' ||
-      resource.id === 'xfinity-internet-essentials'
+      resource.id === 'xfinity-internet-essentials' ||
+      resource.id === 'frcc-ccampis'
     );
   }
   if (chip === 'food') {
@@ -486,7 +502,9 @@ export function matchesStudentChip(resource: Resource, chip: StudentChipId): boo
       resource.id === 'csu-health-network-dental' ||
       resource.id === 'csu-psychological-services-center' ||
       resource.id === 'frcc-counseling' ||
-      resource.id === 'kind-kids-in-need-of-dentistry'
+      resource.id === 'kind-kids-in-need-of-dentistry' ||
+      resource.id === 'sava-center' ||
+      resource.id === 'dentaquest-health-first'
     );
   }
   return true;
@@ -574,6 +592,16 @@ const HOMELESS_ALWAYS = new Set<string>([
   'four-paws-pet-pantry',
   'until-theyre-home',
   'homeward-alliance-wagees',
+  'salvation-army-care-closet',
+  'st-johns-clothing-closet',
+  'hns-clothing-boutique',
+  'sava-center',
+  'ncha-naloxone',
+  'poudre-libraries-hotspots',
+  'public-defender-fort-collins',
+  'colorado-parole-fort-collins',
+  'cwise-parole-reentry',
+  'larimer-community-corrections',
 ]);
 
 const HOMELESS_TAG =
@@ -628,7 +656,9 @@ export function matchesHomelessChip(resource: Resource, chip: HomelessChipId): b
       resource.id === 'matthews-house-fort-collins' ||
       resource.id === 'summitstone-murphy-clinic' ||
       resource.id === 'united-way-211' ||
-      resource.id === 'nococo-cahps'
+      resource.id === 'nococo-cahps' ||
+      resource.id === 'sava-center' ||
+      resource.id === 'salvation-army-care-closet'
     );
   }
   if (chip === 'food') {
@@ -663,7 +693,10 @@ export function matchesHomelessChip(resource: Resource, chip: HomelessChipId): b
       resource.id === 'thompson-mckinney-vento' ||
       resource.id === 'estes-mckinney-vento' ||
       resource.id === 'crossroads-safehouse' ||
-      resource.id === 'kids-closet-fort-collins'
+      resource.id === 'kids-closet-fort-collins' ||
+      resource.id === 'hns-clothing-boutique' ||
+      resource.id === 'casa-larimer' ||
+      resource.id === 'project-self-sufficiency'
     );
   }
   if (chip === 'youth') {
