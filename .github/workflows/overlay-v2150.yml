@@ -4,74 +4,23 @@ on:
   push:
     paths:
       - ".github/workflows/overlay-v2150.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  overlay:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download source tarball
-        env:
-          SRC_PAGE: https://tmpfiles.org/wUwwqGhQJFdl/foco-v2150-src.tgz
-        run: |
-          set -euo pipefail
-          download_tmp() {
-            local page="$1" out="$2" i html href
-            for i in 1 2 3 4; do
-              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
-              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
-              echo "try $i href=$href"
-              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
-                return 0
-              fi
-              sleep $((i * 4))
-            done
-            echo "failed to download $page" >&2
-            return 1
-          }
-          download_tmp "$SRC_PAGE" /tmp/src.tgz
-          gzip -t /tmp/src.tgz
-          tar xzf /tmp/src.tgz
-      - name: Verify overlay
-        run: |
-          set -euo pipefail
-          python3 -c 'import json; from pathlib import Path; app=json.loads(Path("app.json").read_text()); assert app["expo"]["version"]=="2.15.0", app["expo"]["version"]; assert app["expo"]["android"]["versionCode"]==21, app["expo"]["android"]["versionCode"]; n=len(json.loads(Path("src/data/resources.json").read_text())["resources"]); assert n==402, n; readme=Path("README.md").read_text(); assert "d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46" in readme; assert "Usual collection day" in Path("src/screens/TrashDayScreen.tsx").read_text(); assert "Carts out by 7am" in Path("src/components/HomeTools.tsx").read_text(); assert "lovelandcommunitykitchen.org" in Path("src/data/openNowPlaces.ts").read_text(); assert "Closed May 31, 2025" in Path("src/data/resources.json").read_text(); print("overlay ok")'
-      - name: Download APK
-        env:
-          APK_PAGE: https://tmpfiles.org/w5wqqRhpJS0J/self-reliance-foco.apk
-          EXPECT_SHA: d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46
-        run: |
-          set -euo pipefail
-          download_tmp() {
-            local page="$1" out="$2" i html href
-            for i in 1 2 3 4; do
-              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
-              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
-              echo "try $i href=$href"
-              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
-                return 0
-              fi
-              sleep $((i * 4))
-            done
-            echo "failed to download $page" >&2
-            return 1
-          }
-          download_tmp "$APK_PAGE" /tmp/Self-Reliance-FoCo.apk
-          echo "$EXPECT_SHA  /tmp/Self-Reliance-FoCo.apk" | sha256sum -c
-      - name: Publish GitHub release
+      - name: Remove leftover overlay workflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          gh release create v2.15.0 /tmp/Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
-      - name: Commit source overlay
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Add trash day and open now (v2.15.0).
-          commit_user_name: github-actions[bot]
-          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          file_pattern: '*.json *.md *.tsx *.ts *.mjs .gitignore docs/flyer.html .github/workflows/check-source.yml'
-          disable_globbing: true
+          git rm -f .github/workflows/overlay-v2150.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove leftover v2.15.0 overlay workflow."
+          git push
