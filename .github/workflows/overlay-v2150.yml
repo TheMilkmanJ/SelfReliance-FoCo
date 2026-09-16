@@ -61,28 +61,23 @@ jobs:
           }
           download_tmp "$APK_PAGE" /tmp/Self-Reliance-FoCo.apk
           echo "$EXPECT_SHA  /tmp/Self-Reliance-FoCo.apk" | sha256sum -c
-          cp /tmp/Self-Reliance-FoCo.apk Self-Reliance-FoCo.apk
+          cp /tmp/Self-Reliance-FoCo.apk /tmp/release-Self-Reliance-FoCo.apk
       - name: Commit source overlay
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          rm -f .github/workflows/overlay-v2150.yml
+          rm -f .github/workflows/overlay-v2150.yml Self-Reliance-FoCo.apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app.json README.md package.json App.tsx release-notes-v2150.md docs/flyer.html .github/workflows/check-source.yml .gitignore
-          git add src/screens/HomeScreen.tsx src/screens/TrashDayScreen.tsx src/screens/OpenNowScreen.tsx
-          git add src/components/HomeTools.tsx src/components/OpenNowCard.tsx src/components/OpenNowDetail.tsx
-          git add src/data/openNowNeeds.ts src/data/openNowPlaces.ts src/data/openNowTypes.ts
-          git add src/lib/denverClock.ts src/lib/openNowStatus.ts src/lib/trashCalendar.ts
-          git add scripts/check-open.mjs scripts/check-trash.mjs
-          git add -u .github/workflows/overlay-v2150.yml
+          git add -A
           git status
           git commit -m "Add trash day and open now (v2.15.0)."
-          git push
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/TheMilkmanJ/SelfReliance-FoCo.git"
+          git push origin HEAD:main
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          gh release create v2.15.0 Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
+          gh release create v2.15.0 /tmp/release-Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
