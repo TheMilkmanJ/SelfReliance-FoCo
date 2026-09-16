@@ -66,6 +66,7 @@ export function isClothingResource(resource: Resource): boolean {
 /** Shown first on the Have a disability? tab. */
 export const DISABILITY_PINNED_IDS = [
   'and-med-9',
+  'uchealth-fmc-med9-resources',
   'uchealth-family-medicine-center',
   'get-foco-recreation-pass',
   'lions-club-eyeglasses',
@@ -190,6 +191,7 @@ export function matchesDisabilityChip(resource: Resource, chip: DisabilityChipId
   if (chip === 'med9') {
     return (
       resource.id === 'and-med-9' ||
+      resource.id === 'uchealth-fmc-med9-resources' ||
       resource.id === 'uchealth-family-medicine-center' ||
       resource.id === 'salud-family-health-fort-collins' ||
       resource.id === 'sunrise-community-health-loveland' ||
@@ -206,6 +208,7 @@ export function matchesDisabilityChip(resource: Resource, chip: DisabilityChipId
   }
   if (chip === 'glasses') {
     return (
+      resource.id === 'uchealth-fmc-med9-resources' ||
       resource.id === 'lions-club-eyeglasses' ||
       resource.id === 'ensight-skills-center' ||
       resource.id === 'uchealth-family-medicine-center' ||
@@ -230,6 +233,7 @@ export function matchesDisabilityChip(resource: Resource, chip: DisabilityChipId
   }
   if (chip === 'rec') {
     return (
+      resource.id === 'uchealth-fmc-med9-resources' ||
       resource.id === 'get-foco' ||
       resource.id === 'get-foco-recreation-pass' ||
       resource.id === 'fc-adaptive-recreation' ||

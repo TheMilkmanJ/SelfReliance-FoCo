@@ -41,7 +41,7 @@ function AppShell() {
           {tab === 'disability' ? (
             <ResourceListScreen
               title="Have a disability?"
-              subtitle="Med-9, glasses, rec passes, rides, jobs, legal rights, college, and statewide programs. Jobs, housing, and clothes are still under Resources."
+              subtitle="Med-9, downstairs resource desk at Pennock Place (ask for Robert), glasses, rec passes, rides, jobs, legal rights, college, and statewide programs. Jobs, housing, and clothes are still under Resources."
               alsoInclude={isDisabilityResource}
               onSelect={setSelected}
               emptyHint="Try words like Med-9, glasses, pool, ride, DVR, or SSI."
