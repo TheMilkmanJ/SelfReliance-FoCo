@@ -4,13 +4,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HEADER_PURPLE, spacing, useTheme } from '../theme';
 
-export type TabId = 'home' | 'jobs' | 'housing' | 'clothes';
+export type TabId = 'home' | 'disability';
 
 const TABS: Array<{ id: TabId; label: string; icon: string; iconActive: string }> = [
   { id: 'home', label: 'Resources', icon: 'grid-outline', iconActive: 'grid' },
-  { id: 'jobs', label: 'Jobs', icon: 'briefcase-outline', iconActive: 'briefcase' },
-  { id: 'housing', label: 'Housing', icon: 'home-outline', iconActive: 'home' },
-  { id: 'clothes', label: 'Clothes', icon: 'shirt-outline', iconActive: 'shirt' },
+  {
+    id: 'disability',
+    label: 'Have a disability?',
+    icon: 'accessibility-outline',
+    iconActive: 'accessibility',
+  },
 ];
 
 type Props = {
@@ -40,7 +43,12 @@ export function TabBar({ active, onChange }: Props) {
             accessibilityLabel={t.label}
           >
             <Ionicons name={(isActive ? t.iconActive : t.icon) as never} size={24} color={isActive ? HEADER_PURPLE : colors.muted} />
-            <Text style={[styles.label, { color: isActive ? HEADER_PURPLE : colors.muted }]}>{t.label}</Text>
+            <Text
+              style={[styles.label, { color: isActive ? HEADER_PURPLE : colors.muted }]}
+              numberOfLines={2}
+            >
+              {t.label}
+            </Text>
           </Pressable>
         );
       })}
@@ -54,6 +62,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: spacing.sm,
   },
-  tab: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 4 },
-  label: { fontSize: 11, fontWeight: '600' },
+  tab: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 4, paddingHorizontal: 8 },
+  label: { fontSize: 11, fontWeight: '600', textAlign: 'center' },
 });

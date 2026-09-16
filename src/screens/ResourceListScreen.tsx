@@ -10,12 +10,16 @@ import { SearchBar } from '../components/SearchBar';
 import { CERT_GROUP_IDS, CERT_GROUPS } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import {
+  DISABILITY_CHIPS,
   RESOURCES,
   byCategories,
   filterByArea,
   isFreeCertificate,
+  matchesDisabilityChip,
   searchResources,
+  sortDisabilityResources,
   type AreaFilter as AreaFilterId,
+  type DisabilityChipId,
 } from '../data/resources';
 import type { CategoryId, CertGroup, Resource } from '../data/types';
 import { spacing, useTheme } from '../theme';
@@ -25,35 +29,39 @@ type JobFilter = 'all' | 'employment' | 'certs' | 'free' | 'classes' | CertGroup
 type Props = {
   title: string;
   subtitle: string;
-  categories: CategoryId[];
+  categories?: CategoryId[];
   onSelect: (r: Resource) => void;
   emptyHint: string;
   area: AreaFilterId;
   onAreaChange: (area: AreaFilterId) => void;
-  /** Also include listings from other categories that match (used by the Clothes tab). */
+  /** Also include listings from other categories that match. */
   alsoInclude?: (resource: Resource) => boolean;
   /** Jobs tab: split certificates by type (work-ready, coding, government, …). */
   showCertGroups?: boolean;
+  /** Have a disability? tab: Med-9, glasses, rec, rides, jobs, kids. */
+  showDisabilityFilters?: boolean;
 };
 
 export function ResourceListScreen({
   title,
   subtitle,
-  categories,
+  categories = [],
   onSelect,
   emptyHint,
   area,
   onAreaChange,
   alsoInclude,
   showCertGroups = false,
+  showDisabilityFilters = false,
 }: Props) {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const [activeCat, setActiveCat] = useState<CategoryId | 'all'>('all');
   const [jobFilter, setJobFilter] = useState<JobFilter>('all');
+  const [disabilityFilter, setDisabilityFilter] = useState<DisabilityChipId>('all');
 
   const pool = useMemo(() => {
-    const fromCats = byCategories(categories);
+    const fromCats = categories.length ? byCategories(categories) : [];
     if (!alsoInclude) return filterByArea(fromCats, area);
     const seen = new Set(fromCats.map((r) => r.id));
     const extras = RESOURCES.filter((r) => !seen.has(r.id) && alsoInclude(r));
@@ -61,6 +69,12 @@ export function ResourceListScreen({
   }, [categories, area, alsoInclude]);
   const results = useMemo(() => {
     let list = searchResources(query, pool);
+    if (showDisabilityFilters) {
+      if (disabilityFilter !== 'all') {
+        list = list.filter((r) => matchesDisabilityChip(r, disabilityFilter));
+      }
+      return sortDisabilityResources(list);
+    }
     if (showCertGroups) {
       if (jobFilter === 'employment') list = list.filter((r) => r.category === 'employment');
       else if (jobFilter === 'certs') list = list.filter((r) => Boolean(r.certGroup));
@@ -82,7 +96,7 @@ export function ResourceListScreen({
       list = list.filter((r) => r.category === activeCat);
     }
     return list;
-  }, [query, pool, activeCat, jobFilter, showCertGroups]);
+  }, [query, pool, activeCat, jobFilter, showCertGroups, showDisabilityFilters, disabilityFilter]);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -96,7 +110,19 @@ export function ResourceListScreen({
         ListHeaderComponent={
           <View style={styles.controls}>
             <SearchBar value={query} onChange={setQuery} />
-            {showCertGroups ? (
+            {showDisabilityFilters ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                {DISABILITY_CHIPS.map((chip) => (
+                  <Chip
+                    key={chip.id}
+                    label={chip.label}
+                    icon={chip.id === 'all' ? undefined : chip.icon}
+                    active={disabilityFilter === chip.id}
+                    onPress={() => setDisabilityFilter(chip.id)}
+                  />
+                ))}
+              </ScrollView>
+            ) : showCertGroups ? (
               <>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
                   <Chip label="All" active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />

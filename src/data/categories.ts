@@ -190,7 +190,3 @@ export const CATEGORIES: Category[] = [
 export const CATEGORY_MAP: Record<CategoryId, Category> = Object.fromEntries(
   CATEGORIES.map((c) => [c.id, c]),
 ) as Record<CategoryId, Category>;
-
-export const JOBS_CATEGORIES: CategoryId[] = ['employment', 'education'];
-export const HOUSING_CATEGORIES: CategoryId[] = ['housing', 'shelter', 'utilities'];
-export const CLOTHES_CATEGORIES: CategoryId[] = ['clothing'];

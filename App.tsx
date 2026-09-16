@@ -6,8 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ResourceDetail } from './src/components/ResourceDetail';
 import { TabBar, type TabId } from './src/components/TabBar';
-import { CLOTHES_CATEGORIES, HOUSING_CATEGORIES, JOBS_CATEGORIES } from './src/data/categories';
-import { isClothingResource, type AreaFilter } from './src/data/resources';
+import { isDisabilityResource, type AreaFilter } from './src/data/resources';
 import type { Resource } from './src/data/types';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
@@ -39,39 +38,16 @@ function AppShell() {
       <View style={[styles.root, { backgroundColor: colors.bg }]}>
         <View style={styles.body}>
           {tab === 'home' ? <HomeScreen onSelect={setSelected} area={area} onAreaChange={setArea} /> : null}
-          {tab === 'jobs' ? (
+          {tab === 'disability' ? (
             <ResourceListScreen
-              title="Jobs & Employment"
-              subtitle="Work, training, and certificates: first-job cards through tech. Free certificates say Free on the card."
-              categories={JOBS_CATEGORIES}
+              title="Have a disability?"
+              subtitle="Med-9, glasses, rec passes, rides, jobs, legal rights, college, and statewide programs. Jobs, housing, and clothes are still under Resources."
+              alsoInclude={isDisabilityResource}
               onSelect={setSelected}
-              emptyHint="Try words like free, food handler, OSHA, peer, resume, certificate, or apprenticeship."
+              emptyHint="Try words like Med-9, glasses, pool, ride, DVR, or SSI."
               area={area}
               onAreaChange={setArea}
-              showCertGroups
-            />
-          ) : null}
-          {tab === 'housing' ? (
-            <ResourceListScreen
-              title="Housing"
-              subtitle="Rent help, shelter, vouchers, and utility bills"
-              categories={HOUSING_CATEGORIES}
-              onSelect={setSelected}
-              emptyHint="Try words like rent, shelter, voucher, heating, or eviction."
-              area={area}
-              onAreaChange={setArea}
-            />
-          ) : null}
-          {tab === 'clothes' ? (
-            <ResourceListScreen
-              title="Clothes"
-              subtitle="Free clothing, kids clothes, interview outfits, and hygiene"
-              categories={CLOTHES_CATEGORIES}
-              alsoInclude={isClothingResource}
-              onSelect={setSelected}
-              emptyHint="Try words like clothes, kids, interview, or hygiene."
-              area={area}
-              onAreaChange={setArea}
+              showDisabilityFilters
             />
           ) : null}
         </View>
