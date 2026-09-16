@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   body: { flex: 1 },
   headline: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
-  name: { fontSize: 17, fontWeight: '700', lineHeight: 22, flexShrink: 1 },
+  name: { fontSize: 17, fontWeight: '700', flexShrink: 1 },
   meta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
   desc: { fontSize: 15, lineHeight: 21 },
   callBtn: {

@@ -11,7 +11,9 @@ export function FreeBadge() {
       accessibilityRole="text"
       accessibilityLabel="Free"
     >
-      <Text style={[styles.text, { color: colors.green }]}>Free</Text>
+      <Text style={[styles.text, { color: colors.green }]} maxFontSizeMultiplier={1.4}>
+        Free
+      </Text>
     </View>
   );
 }

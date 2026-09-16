@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, spacing, useTheme } from '../theme';
 
 type Props = {
@@ -16,8 +17,12 @@ export function Header({ title, subtitle }: Props) {
     <View style={[styles.wrap, { paddingTop: insets.top + spacing.md }]}>
       <Image source={require('../../assets/splash-icon.png')} style={styles.logo} accessibilityIgnoresInvertColors />
       <View style={styles.text}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <Text style={styles.title} maxFontSizeMultiplier={MAX_FONT.title}>
+          {title}
+        </Text>
+        <Text style={styles.subtitle} maxFontSizeMultiplier={MAX_FONT.chrome}>
+          {subtitle}
+        </Text>
       </View>
       <Pressable
         onPress={toggle}
@@ -38,13 +43,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.lg,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: spacing.md,
   },
-  logo: { width: 48, height: 48, borderRadius: 24 },
-  text: { flex: 1 },
+  logo: { width: 48, height: 48, borderRadius: 24, marginTop: 2 },
+  text: { flex: 1, minWidth: 0 },
   title: { color: '#fff', fontSize: 22, fontWeight: '800' },
-  subtitle: { color: '#e9dffb', fontSize: 14, marginTop: 2 },
+  subtitle: { color: '#e9dffb', fontSize: 14, marginTop: 4 },
   modeBtn: {
     width: 40,
     height: 40,
@@ -52,5 +57,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(255,255,255,0.16)',
+    marginTop: 2,
   },
 });

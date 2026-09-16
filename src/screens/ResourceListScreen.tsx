@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useMemo, useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Chip } from '../components/Chip';
+import { ChipRow } from '../components/ChipRow';
 import { Header } from '../components/Header';
 import { ResourceCard } from '../components/ResourceCard';
 import { SearchBar } from '../components/SearchBar';
@@ -151,7 +152,7 @@ export function ResourceListScreen({
           <View style={styles.controls}>
             <SearchBar value={query} onChange={setQuery} />
             {showDisabilityFilters ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+              <ChipRow>
                 {DISABILITY_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
@@ -161,9 +162,9 @@ export function ResourceListScreen({
                     onPress={() => setDisabilityFilter(chip.id)}
                   />
                 ))}
-              </ScrollView>
+              </ChipRow>
             ) : showStudentFilters ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+              <ChipRow>
                 {STUDENT_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
@@ -173,9 +174,9 @@ export function ResourceListScreen({
                     onPress={() => setStudentFilter(chip.id)}
                   />
                 ))}
-              </ScrollView>
+              </ChipRow>
             ) : showHomelessFilters ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+              <ChipRow>
                 {HOMELESS_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
@@ -185,10 +186,10 @@ export function ResourceListScreen({
                     onPress={() => setHomelessFilter(chip.id)}
                   />
                 ))}
-              </ScrollView>
+              </ChipRow>
             ) : showCertGroups ? (
               <>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                <ChipRow>
                   <Chip label="All" active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />
                   <Chip
                     label="Job help"
@@ -215,8 +216,8 @@ export function ResourceListScreen({
                     active={jobFilter === 'classes'}
                     onPress={() => setJobFilter('classes')}
                   />
-                </ScrollView>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                </ChipRow>
+                <ChipRow>
                   {CERT_GROUPS.map((g) => (
                     <Chip
                       key={g.id}
@@ -227,10 +228,10 @@ export function ResourceListScreen({
                       onPress={() => setJobFilter(g.id)}
                     />
                   ))}
-                </ScrollView>
+                </ChipRow>
               </>
             ) : categories.length > 1 && !alsoInclude ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+              <ChipRow>
                 <Chip label="All" active={activeCat === 'all'} onPress={() => setActiveCat('all')} />
                 {categories.map((id) => (
                   <Chip
@@ -241,7 +242,7 @@ export function ResourceListScreen({
                     onPress={() => setActiveCat(id)}
                   />
                 ))}
-              </ScrollView>
+              </ChipRow>
             ) : null}
             <AreaFilter value={area} onChange={onAreaChange} />
             <Text style={[styles.count, { color: colors.muted }]}>
@@ -266,9 +267,8 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   list: { paddingBottom: spacing.xxl },
   controls: { paddingTop: spacing.lg, gap: spacing.md, marginBottom: spacing.sm },
-  chips: { paddingHorizontal: spacing.lg, gap: spacing.sm },
   count: { paddingHorizontal: spacing.lg, fontSize: 13 },
   empty: { alignItems: 'center', padding: spacing.xxl, gap: spacing.sm },
   emptyTitle: { fontSize: 18, fontWeight: '700' },
-  emptyText: { textAlign: 'center', fontSize: 15, lineHeight: 21 },
+  emptyText: { textAlign: 'center', fontSize: 15 },
 });

@@ -16,6 +16,7 @@ import {
   type AreaFilter as AreaFilterId,
 } from '../data/resources';
 import type { Category, CategoryId, Resource } from '../data/types';
+import { useLargePrint } from '../lib/fontScale';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 type Props = {
@@ -26,6 +27,7 @@ type Props = {
 
 export function HomeScreen({ onSelect, area, onAreaChange }: Props) {
   const { colors } = useTheme();
+  const largePrint = useLargePrint();
   const [query, setQuery] = useState('');
   const [openCat, setOpenCat] = useState<CategoryId | null>(null);
 
@@ -77,7 +79,10 @@ export function HomeScreen({ onSelect, area, onAreaChange }: Props) {
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-      <Header title="Self-Reliance FoCo" subtitle="Larimer County help, all in one place" />
+      <Header
+        title="Self-Reliance FoCo"
+        subtitle={largePrint ? 'Larimer County help' : 'Larimer County help, all in one place'}
+      />
       <FlatList
         data={searching ? results : []}
         keyExtractor={(r) => r.id}
@@ -165,6 +170,7 @@ const styles = StyleSheet.create({
   },
   tile: {
     width: '47.5%',
+    maxWidth: '100%',
     flexGrow: 1,
     borderRadius: radius.lg,
     padding: spacing.lg,
@@ -178,7 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: spacing.md,
   },
-  tileLabel: { fontSize: 15, fontWeight: '700', lineHeight: 20 },
+  tileLabel: { fontSize: 15, fontWeight: '700' },
   tileCount: { fontSize: 13, marginTop: 4 },
   about: {
     paddingHorizontal: spacing.lg,
@@ -196,5 +202,5 @@ const styles = StyleSheet.create({
   backText: { fontWeight: '700', fontSize: 15 },
   empty: { alignItems: 'center', padding: spacing.xxl, gap: spacing.sm },
   emptyTitle: { fontSize: 18, fontWeight: '700', textAlign: 'center' },
-  emptyText: { textAlign: 'center', fontSize: 15, lineHeight: 21 },
+  emptyText: { textAlign: 'center', fontSize: 15 },
 });

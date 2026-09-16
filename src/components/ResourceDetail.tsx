@@ -127,9 +127,7 @@ function ActionButton({
       accessibilityLabel={label}
     >
       <Ionicons name={icon as never} size={20} color="#fff" />
-      <Text style={styles.actionText} numberOfLines={1}>
-        {label}
-      </Text>
+      <Text style={styles.actionText}>{label}</Text>
     </Pressable>
   );
 }
@@ -154,7 +152,7 @@ const styles = StyleSheet.create({
   pillText: { fontWeight: '700', fontSize: 13 },
   content: { paddingHorizontal: spacing.lg },
   headline: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 10 },
-  name: { fontSize: 26, fontWeight: '800', lineHeight: 32, flexShrink: 1 },
+  name: { fontSize: 26, fontWeight: '800', flexShrink: 1 },
   area: { fontSize: 15, marginTop: 4, marginBottom: spacing.lg },
   desc: { fontSize: 17, lineHeight: 25, marginBottom: spacing.lg },
   infoRow: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', marginBottom: spacing.md },
@@ -167,6 +165,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 18,
     borderRadius: radius.md,
+    flexWrap: 'wrap',
   },
   actionText: { color: '#fff', fontSize: 17, fontWeight: '700', flex: 1 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: spacing.xl },

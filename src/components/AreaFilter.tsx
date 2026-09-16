@@ -1,9 +1,7 @@
-import { ScrollView, StyleSheet } from 'react-native';
-
 import type { AreaFilter as AreaFilterId } from '../data/resources';
 import type { Area } from '../data/types';
-import { spacing } from '../theme';
 import { Chip } from './Chip';
+import { ChipRow } from './ChipRow';
 
 export const AREA_CHIPS: Array<{ id: AreaFilterId; label: string; a11y: string }> = [
   { id: 'All', label: 'All of Larimer', a11y: 'All of Larimer County' },
@@ -21,7 +19,7 @@ type Props = {
 
 export function AreaFilter({ value, onChange }: Props) {
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+    <ChipRow>
       {AREA_CHIPS.map((a) => (
         <Chip
           key={a.id}
@@ -32,7 +30,7 @@ export function AreaFilter({ value, onChange }: Props) {
           accessibilityLabel={a.a11y}
         />
       ))}
-    </ScrollView>
+    </ChipRow>
   );
 }
 
@@ -41,7 +39,3 @@ export function areaLabel(area: AreaFilterId): string {
   if (area === 'Fort Collins') return 'Fort Collins';
   return area as Area;
 }
-
-const styles = StyleSheet.create({
-  chips: { paddingHorizontal: spacing.lg, gap: spacing.sm },
-});

@@ -8,6 +8,7 @@ import { ResourceDetail } from './src/components/ResourceDetail';
 import { TabBar, type TabId } from './src/components/TabBar';
 import { isDisabilityResource, isHomelessResource, isStudentResource, type AreaFilter } from './src/data/resources';
 import type { Resource } from './src/data/types';
+import { useLargePrint } from './src/lib/fontScale';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
 import { ThemeProvider, useTheme } from './src/theme';
@@ -17,6 +18,7 @@ const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'B
 
 function AppShell() {
   const { colors } = useTheme();
+  const largePrint = useLargePrint();
   const [tab, setTab] = useState<TabId>('home');
   const [selected, setSelected] = useState<Resource | null>(null);
   const [area, setAreaState] = useState<AreaFilter>('All');
@@ -41,7 +43,11 @@ function AppShell() {
           {tab === 'students' ? (
             <ResourceListScreen
               title="Students"
-              subtitle="College, GED, FAFSA, campus pantries, K–12 meals, McKinney-Vento, libraries, and jobs. Certificates stay under Resources."
+              subtitle={
+                largePrint
+                  ? 'College, GED, FAFSA, pantries, and jobs.'
+                  : 'College, GED, FAFSA, pantries, school meals, and jobs. Certificates stay under Resources.'
+              }
               alsoInclude={isStudentResource}
               onSelect={setSelected}
               emptyHint="Try words like FAFSA, GED, pantry, McKinney, or CSU."
@@ -53,7 +59,11 @@ function AppShell() {
           {tab === 'homeless' ? (
             <ResourceListScreen
               title="Homeless"
-              subtitle="Overnight beds, day centers, meals, showers, rent help, youth shelter, and coordinated entry. Call 2-1-1 if you need a referral tonight."
+              subtitle={
+                largePrint
+                  ? 'Beds, day help, meals, showers, and rent.'
+                  : 'Beds, day help, meals, showers, and rent. Call 2-1-1 if you need a referral tonight.'
+              }
               alsoInclude={isHomelessResource}
               onSelect={setSelected}
               emptyHint="Try words like Murphy, shelter, shower, rent, or McKinney."
@@ -64,8 +74,12 @@ function AppShell() {
           ) : null}
           {tab === 'disability' ? (
             <ResourceListScreen
-              title="Have a disability?"
-              subtitle="Med-9, glasses, rec passes, rides, jobs, legal rights, college, and statewide programs. Jobs, housing, and clothes are still under Resources."
+              title={largePrint ? 'Disability' : 'Have a disability?'}
+              subtitle={
+                largePrint
+                  ? 'Med-9, glasses, rec, rides, and rights.'
+                  : 'Med-9, glasses, rec passes, rides, and rights. Jobs, housing, and clothes stay under Resources.'
+              }
               alsoInclude={isDisabilityResource}
               onSelect={setSelected}
               emptyHint="Try words like Med-9, glasses, pool, ride, DVR, or SSI."

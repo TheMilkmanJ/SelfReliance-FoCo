@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { MAX_FONT } from '../lib/fontScale';
 import { call } from '../lib/actions';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -25,9 +26,13 @@ export function QuickHelp() {
           accessibilityLabel={`Call ${l.label}, ${l.sub}`}
         >
           <Ionicons name="call" size={18} color={l.color} />
-          <View>
-            <Text style={[styles.label, { color: l.color }]}>{l.label}</Text>
-            <Text style={[styles.sub, { color: colors.muted }]}>{l.sub}</Text>
+          <View style={styles.copy}>
+            <Text style={[styles.label, { color: l.color }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+              {l.label}
+            </Text>
+            <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+              {l.sub}
+            </Text>
           </View>
         </Pressable>
       ))}
@@ -36,9 +41,10 @@ export function QuickHelp() {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', gap: spacing.md, paddingHorizontal: spacing.lg },
+  row: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, paddingHorizontal: spacing.lg },
   btn: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: 150,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
@@ -46,7 +52,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     paddingVertical: 12,
     paddingHorizontal: 14,
+    minHeight: 52,
   },
+  copy: { flex: 1, minWidth: 0 },
   label: { fontSize: 17, fontWeight: '800' },
   sub: { fontSize: 12 },
 });

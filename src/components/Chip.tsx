@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
+import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, useTheme } from '../theme';
 
 type Props = {
@@ -27,7 +28,10 @@ export function Chip({ label, icon, active, onPress, small, accessibilityLabel }
       accessibilityLabel={accessibilityLabel ?? label}
     >
       {icon ? <Ionicons name={icon as never} size={15} color={active ? '#fff' : colors.purple} /> : null}
-      <Text style={[styles.chipText, small && styles.chipTextSmall, { color: active ? '#fff' : colors.purpleDark }]}>
+      <Text
+        style={[styles.chipText, small && styles.chipTextSmall, { color: active ? '#fff' : colors.purpleDark }]}
+        maxFontSizeMultiplier={MAX_FONT.chrome}
+      >
         {label}
       </Text>
     </Pressable>
@@ -43,8 +47,10 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     borderRadius: radius.pill,
     borderWidth: 1,
+    maxWidth: '100%',
+    flexShrink: 0,
   },
   chipSmall: { paddingVertical: 6, paddingHorizontal: 12 },
-  chipText: { fontWeight: '700', fontSize: 14 },
+  chipText: { fontWeight: '700', fontSize: 14, flexShrink: 1 },
   chipTextSmall: { fontSize: 13 },
 });
