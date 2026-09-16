@@ -1,0 +1,60 @@
+name: overlay-v2160
+
+on:
+  push:
+    paths:
+      - ".github/workflows/overlay-v2160.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch Offline maps listing copy
+        env:
+          OLD: "This app cannot ship Google's map. Open the Google Maps app, search Fort Collins, tap the place name, then Download. Walking and driving directions can work with no signal. Bus and live traffic need data. In Self-Reliance FoCo, Get directions and Bus directions hand off to Maps."
+          NEW: "This app cannot ship Google's map. Use the Offline maps card on Resources home, or open Google Maps, search your town, tap the name, then Download. Walking and driving can work with no signal. Bus and live traffic need data. Get directions in this app still hands off to Maps."
+        run: |
+          python3 -c 'from pathlib import Path; import os; p=Path("src/data/resources.json"); t=p.read_text(); old=os.environ["OLD"]; new=os.environ["NEW"]; print("found old", old in t); print("found new", new in t); assert old in t or new in t, "description missing"; p.write_text(t.replace(old, new, 1) if old in t else t)'
+      - name: Download APK
+        env:
+          APK_PAGE: https://tmpfiles.org/wOwSq7kEw4AU/self-reliance-foco.apk
+          EXPECT_SHA: 4508192c2cb77528b49dbaa4aa1c53856cdb9ca8a0f922ccf1955e07355b3534
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              echo "try $i href=$href"
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$APK_PAGE" /tmp/Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  /tmp/Self-Reliance-FoCo.apk" | sha256sum -c
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release create v2.16.0 /tmp/Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.16.0" --notes-file release-notes-v2160.md
+      - name: Commit listing patch and remove this workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/resources.json
+          git rm -f .github/workflows/overlay-v2160.yml
+          git commit -m "Patch Google Maps listing copy and remove v2.16.0 overlay workflow."
+          git push
