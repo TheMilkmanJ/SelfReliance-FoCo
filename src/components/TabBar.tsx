@@ -4,10 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HEADER_PURPLE, spacing, useTheme } from '../theme';
 
-export type TabId = 'home' | 'disability';
+export type TabId = 'home' | 'students' | 'disability';
 
 const TABS: Array<{ id: TabId; label: string; icon: string; iconActive: string }> = [
   { id: 'home', label: 'Resources', icon: 'grid-outline', iconActive: 'grid' },
+  { id: 'students', label: 'Students', icon: 'school-outline', iconActive: 'school' },
   {
     id: 'disability',
     label: 'Have a disability?',
@@ -62,6 +63,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingTop: spacing.sm,
   },
-  tab: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 4, paddingHorizontal: 8 },
+  tab: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 4, paddingHorizontal: 4 },
   label: { fontSize: 11, fontWeight: '600', textAlign: 'center' },
 });

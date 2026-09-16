@@ -273,14 +273,231 @@ export function matchesDisabilityChip(resource: Resource, chip: DisabilityChipId
 }
 
 export function sortDisabilityResources(list: Resource[]): Resource[] {
-  const pinned: readonly string[] = DISABILITY_PINNED_IDS;
+  return sortPinnedResources(list, DISABILITY_PINNED_IDS);
+}
+
+/** Shown first on the Students tab. */
+export const STUDENT_PINNED_IDS = [
+  'fafsa',
+  'front-range-community-college',
+  'csu-rams-against-hunger',
+  'psd-mckinney-vento',
+  'poudre-libraries-adult-learning',
+  'csu-student-disability-center',
+  'transfort',
+] as const;
+
+const STUDENT_ALWAYS = new Set<string>([
+  ...STUDENT_PINNED_IDS,
+  'college-opportunity-fund',
+  'colorado-opportunity-scholarship',
+  'casfa',
+  'colorado-asset',
+  'csu-student-case-management',
+  'csu-health-network',
+  'csu-health-network-dental',
+  'csu-student-legal-services',
+  'csu-off-campus-life',
+  'csu-career-center',
+  'csu-financial-aid',
+  'csu-psychological-services-center',
+  'csu-access-center',
+  'csu-academic-advancement-center',
+  'csu-eoc',
+  'csu-alvs',
+  'csu-ramride',
+  'csu-ram-scholars',
+  'csu-ccp',
+  'frcc-wolf-pantry',
+  'frcc-financial-aid',
+  'frcc-ged-testing',
+  'frcc-disability-support',
+  'frcc-counseling',
+  'frcc-tutoring',
+  'aims-loveland',
+  'thompson-mckinney-vento',
+  'estes-mckinney-vento',
+  'psd-school-meals',
+  'thompson-school-meals',
+  'sun-bucks-summer-ebt',
+  'mcbackpack',
+  'boys-girls-clubs-larimer',
+  'poudre-libraries',
+  'poudre-libraries-job-center',
+  'loveland-public-library',
+  'estes-valley-library',
+  'cultural-enrichment-center',
+  'in-pathways-inclusive-higher-ed',
+  'psd-swap',
+  'thompson-swap',
+  'psd-child-find',
+  'thompson-child-find',
+  'bookshare',
+  'hunger-free-colorado',
+  'larimer-workforce-center',
+  'junior-league-career-closet',
+  'xfinity-internet-essentials',
+  'colorado-universal-preschool',
+  'thompson-integrated-early-childhood',
+  'head-start-larimer',
+  'larimer-ccap',
+  'mcdonalds-archways-to-opportunity',
+  'wioa-paid-certificates-larimer',
+  'kind-kids-in-need-of-dentistry',
+]);
+
+const STUDENT_TAG =
+  /\b(student|students|college|fafsa|casfa|ged|k-12|mckinney-vento|school meals|high school|work-study|scholarship|tuition)\b/;
+
+/** Listings useful to college, GED, and K–12 students (and the people helping them). */
+export function isStudentResource(resource: Resource): boolean {
+  if (STUDENT_ALWAYS.has(resource.id)) return true;
+  if (resource.certGroup) return false;
+  if (resource.category === 'education') return true;
+  return resource.tags.some((tag) => STUDENT_TAG.test(tag.toLowerCase()));
+}
+
+export type StudentChipId = 'all' | 'college' | 'k12' | 'money' | 'food' | 'jobs' | 'health';
+
+export const STUDENT_CHIPS: Array<{ id: StudentChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'college', label: 'College', icon: 'school-outline' },
+  { id: 'k12', label: 'K–12', icon: 'book-outline' },
+  { id: 'money', label: 'Money', icon: 'card-outline' },
+  { id: 'food', label: 'Food', icon: 'nutrition-outline' },
+  { id: 'jobs', label: 'Jobs', icon: 'briefcase-outline' },
+  { id: 'health', label: 'Health', icon: 'medkit-outline' },
+];
+
+function hasAnyTag(resource: Resource, tags: string[]): boolean {
+  const set = new Set(resource.tags.map((t) => t.toLowerCase()));
+  return tags.some((t) => set.has(t));
+}
+
+export function matchesStudentChip(resource: Resource, chip: StudentChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'college') {
+    return (
+      hasAnyTag(resource, ['college', 'csu', 'frcc', 'aims', 'fafsa', 'casfa', 'cof']) ||
+      resource.id.startsWith('csu-') ||
+      resource.id.startsWith('frcc-') ||
+      resource.id === 'front-range-community-college' ||
+      resource.id === 'aims-loveland' ||
+      resource.id === 'fafsa' ||
+      resource.id === 'college-opportunity-fund' ||
+      resource.id === 'colorado-opportunity-scholarship' ||
+      resource.id === 'casfa' ||
+      resource.id === 'colorado-asset' ||
+      resource.id === 'in-pathways-inclusive-higher-ed' ||
+      resource.id === 'transfort' ||
+      resource.id === 'csu-ramride'
+    );
+  }
+  if (chip === 'k12') {
+    return (
+      hasAnyTag(resource, [
+        'k-12',
+        'mckinney-vento',
+        'school meals',
+        'psd',
+        'after school',
+        'child find',
+        'preschool',
+        'youth',
+      ]) ||
+      resource.id === 'psd-mckinney-vento' ||
+      resource.id === 'thompson-mckinney-vento' ||
+      resource.id === 'estes-mckinney-vento' ||
+      resource.id === 'psd-school-meals' ||
+      resource.id === 'thompson-school-meals' ||
+      resource.id === 'sun-bucks-summer-ebt' ||
+      resource.id === 'mcbackpack' ||
+      resource.id === 'boys-girls-clubs-larimer' ||
+      resource.id === 'cultural-enrichment-center' ||
+      resource.id === 'psd-swap' ||
+      resource.id === 'thompson-swap' ||
+      resource.id === 'psd-child-find' ||
+      resource.id === 'thompson-child-find' ||
+      resource.id === 'head-start-larimer' ||
+      resource.id === 'colorado-universal-preschool' ||
+      resource.id === 'thompson-integrated-early-childhood' ||
+      resource.id === 'larimer-ccap' ||
+      resource.id === 'kind-kids-in-need-of-dentistry'
+    );
+  }
+  if (chip === 'money') {
+    return (
+      hasAnyTag(resource, [
+        'financial aid',
+        'fafsa',
+        'casfa',
+        'scholarship',
+        'tuition',
+        'cof',
+        'pell',
+        'work-study',
+        'ccap',
+      ]) ||
+      resource.id === 'fafsa' ||
+      resource.id === 'casfa' ||
+      resource.id === 'college-opportunity-fund' ||
+      resource.id === 'colorado-opportunity-scholarship' ||
+      resource.id === 'colorado-asset' ||
+      resource.id === 'csu-financial-aid' ||
+      resource.id === 'frcc-financial-aid' ||
+      resource.id === 'mcdonalds-archways-to-opportunity' ||
+      resource.id === 'wioa-paid-certificates-larimer' ||
+      resource.id === 'larimer-ccap' ||
+      resource.id === 'xfinity-internet-essentials'
+    );
+  }
+  if (chip === 'food') {
+    return (
+      resource.category === 'food' ||
+      hasAnyTag(resource, ['pantry', 'school meals', 'snap', 'meals', 'free lunch'])
+    );
+  }
+  if (chip === 'jobs') {
+    return (
+      resource.category === 'employment' ||
+      hasAnyTag(resource, ['jobs', 'resume', 'internships', 'career']) ||
+      resource.id === 'csu-career-center' ||
+      resource.id === 'poudre-libraries-job-center' ||
+      resource.id === 'larimer-workforce-center' ||
+      resource.id === 'junior-league-career-closet' ||
+      resource.id === 'psd-swap' ||
+      resource.id === 'thompson-swap' ||
+      resource.id === 'csu-ccp' ||
+      resource.id === 'wioa-paid-certificates-larimer'
+    );
+  }
+  if (chip === 'health') {
+    return (
+      resource.category === 'health' ||
+      resource.category === 'dental' ||
+      hasAnyTag(resource, ['counseling', 'clinic', 'health', 'dental']) ||
+      resource.id === 'csu-health-network' ||
+      resource.id === 'csu-health-network-dental' ||
+      resource.id === 'csu-psychological-services-center' ||
+      resource.id === 'frcc-counseling' ||
+      resource.id === 'kind-kids-in-need-of-dentistry'
+    );
+  }
+  return true;
+}
+
+export function sortStudentResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, STUDENT_PINNED_IDS);
+}
+
+function sortPinnedResources(list: Resource[], pinned: readonly string[]): Resource[] {
   const rank = (id: string) => {
     const i = pinned.indexOf(id);
     return i === -1 ? 1000 : i;
   };
   return list.slice().sort((a, b) => {
-    const pinned = rank(a.id) - rank(b.id);
-    if (pinned !== 0) return pinned;
+    const pin = rank(a.id) - rank(b.id);
+    if (pin !== 0) return pin;
     return a.name.localeCompare(b.name);
   });
 }

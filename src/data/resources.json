@@ -4644,6 +4644,626 @@
         "transition",
         "advocacy"
       ]
+    },
+    {
+      "id": "fafsa",
+      "name": "FAFSA (federal student aid)",
+      "category": "education",
+      "description": "Free Application for Federal Student Aid. One form for Pell Grants, work-study, and student loans at CSU, Front Range, Aims, and other colleges. Apply at studentaid.gov. Help line in English and Spanish.",
+      "phone": "1-800-433-3243",
+      "url": "https://studentaid.gov/h/apply-for-aid/fafsa",
+      "address": null,
+      "hours": "Phone hours on studentaid.gov; apply online 24/7",
+      "area": "National",
+      "tags": [
+        "fafsa",
+        "financial aid",
+        "pell",
+        "college",
+        "students",
+        "grants"
+      ]
+    },
+    {
+      "id": "college-opportunity-fund",
+      "name": "College Opportunity Fund (COF stipend)",
+      "category": "education",
+      "description": "Colorado stipend that pays part of in-state undergraduate tuition at public colleges, including CSU and Front Range. Create a COF account, then authorize it when you register for classes. Without it, tuition is billed at the full rate.",
+      "phone": "720-264-8553",
+      "url": "https://cof.college-assist.org/",
+      "address": null,
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "cof",
+        "tuition",
+        "college",
+        "financial aid",
+        "students",
+        "colorado"
+      ]
+    },
+    {
+      "id": "colorado-opportunity-scholarship",
+      "name": "Colorado Opportunity Scholarship Initiative (COSI)",
+      "category": "education",
+      "description": "State scholarships and support programs for Colorado students heading to college or finishing a credential. Ask financial aid at Front Range, Aims, or CSU, or start at the Colorado Department of Higher Education.",
+      "phone": "303-862-3001",
+      "url": "https://cdhe.colorado.gov/cosi",
+      "address": null,
+      "hours": "Mon-Fri; see CDHE website",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "scholarship",
+        "college",
+        "financial aid",
+        "students",
+        "cosi"
+      ]
+    },
+    {
+      "id": "csu-rams-against-hunger",
+      "name": "CSU Rams Against Hunger (campus pantry)",
+      "category": "food",
+      "description": "On-campus food pantry, meal swipes, and SNAP help for CSU students, staff, and faculty. Bring a CSU ID and bags. General Services Building, 1251 Mason Street. Hours change by semester \u2014 check the website.",
+      "phone": "970-219-7165",
+      "url": "https://basicneeds.colostate.edu/rams-against-hunger/",
+      "address": "1251 Mason St, Fort Collins, CO 80521",
+      "hours": "Check current hours on the Basic Needs website",
+      "area": "Fort Collins",
+      "tags": [
+        "pantry",
+        "food",
+        "csu",
+        "students",
+        "college",
+        "snap"
+      ]
+    },
+    {
+      "id": "csu-student-case-management",
+      "name": "CSU Student Case Management",
+      "category": "education",
+      "description": "Help for enrolled CSU students navigating a crisis, illness, housing, food, SNAP, or campus processes. Appointments in person or on Teams. Email help4rams@colostate.edu.",
+      "phone": "970-491-8051",
+      "url": "https://studentcasemanagement.colostate.edu/",
+      "address": "501 W Lake St, Suite B, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 9am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "case management",
+        "snap",
+        "crisis"
+      ]
+    },
+    {
+      "id": "csu-health-network",
+      "name": "CSU Health Network",
+      "category": "health",
+      "description": "Medical care, counseling, pharmacy, and related services for enrolled Colorado State University students. Health and Medical Center at College and Prospect. Not open to the public except the pharmacy.",
+      "phone": "970-491-7121",
+      "url": "https://health.colostate.edu/",
+      "address": "151 W Lake St, Fort Collins, CO 80523",
+      "hours": "Mon, Wed-Fri 8am-5pm; Tue 10am-5pm (hours follow the student calendar)",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "clinic",
+        "counseling",
+        "health"
+      ]
+    },
+    {
+      "id": "csu-student-legal-services",
+      "name": "CSU Student Legal Services",
+      "category": "legal",
+      "description": "Legal advice for enrolled CSU students who have paid the student fee: leases, deposits, tickets, employment, and other civil issues. Not for non-students. Lory Student Center 274.",
+      "phone": "970-491-1482",
+      "url": "https://sls.colostate.edu/",
+      "address": "Lory Student Center 274, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 9am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "legal",
+        "housing",
+        "lease"
+      ]
+    },
+    {
+      "id": "csu-off-campus-life",
+      "name": "CSU Off-Campus Life",
+      "category": "housing",
+      "description": "Rental listings, roommate help, and tenant information for CSU students living off campus. Lory Student Center 281. Email ocl@colostate.edu.",
+      "phone": "970-491-2248",
+      "url": "https://ocl.colostate.edu/",
+      "address": "Lory Student Center 281, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 9am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "housing",
+        "rentals"
+      ]
+    },
+    {
+      "id": "csu-career-center",
+      "name": "CSU Career Center",
+      "category": "employment",
+      "description": "Resumes, Handshake jobs, internships, and drop-in career help for CSU students and recent alumni. Lower level of the Lory Student Center, room 120.",
+      "phone": "970-491-5707",
+      "url": "https://career.colostate.edu/",
+      "address": "Lory Student Center 120, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 9am-4:30pm; drop-in hours on the website",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "jobs",
+        "resume",
+        "internships"
+      ]
+    },
+    {
+      "id": "csu-financial-aid",
+      "name": "CSU Office of Financial Aid",
+      "category": "education",
+      "description": "Pell Grants, work-study, loans, scholarships, and the College Opportunity Fund for Colorado State University students. Centennial Hall. Bring questions about FAFSA and billing.",
+      "phone": "970-491-6321",
+      "url": "https://financialaid.colostate.edu/",
+      "address": "Centennial Hall, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 9am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "financial aid",
+        "fafsa",
+        "work-study"
+      ]
+    },
+    {
+      "id": "frcc-wolf-pantry",
+      "name": "FRCC WOLF Pantry (Larimer Campus)",
+      "category": "food",
+      "description": "Free food and essentials for enrolled Front Range Community College students, faculty, and staff. Longs Peak Student Center. Register in PantrySoft before the first visit. About once a week.",
+      "phone": "970-226-2500",
+      "url": "https://www.frontrange.edu/student-experience/support-services/food-assistance.html",
+      "address": "4616 S Shields St, Longs Peak Student Center, Fort Collins, CO 80526",
+      "hours": "Mon-Thu during campus hours; closed campus breaks",
+      "area": "Fort Collins",
+      "tags": [
+        "pantry",
+        "food",
+        "frcc",
+        "students",
+        "college"
+      ]
+    },
+    {
+      "id": "frcc-financial-aid",
+      "name": "Front Range Community College Financial Aid (Larimer)",
+      "category": "education",
+      "description": "FAFSA help, grants, work-study, and scholarships for Front Range students at the Larimer campus. Appointments on campus or remote.",
+      "phone": "970-204-8376",
+      "url": "https://www.frontrange.edu/admissions-aid/paying-for-college/financial-aid/contact.html",
+      "address": "4616 S Shields St, Fort Collins, CO 80526",
+      "hours": "Mon and Thu 8:30am-6pm; Tue-Wed 8:30am-5pm; Fri 8:30am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "frcc",
+        "students",
+        "college",
+        "financial aid",
+        "fafsa"
+      ]
+    },
+    {
+      "id": "frcc-ged-testing",
+      "name": "FRCC Larimer Testing Center (GED and HiSET)",
+      "category": "education",
+      "description": "Take the GED or HiSET high-school equivalency exams at Front Range Community College's Larimer Testing Center. Schedule the GED at GED.com first; the center cannot book it for you. Colorado residents 17 and older (16 with a waiver).",
+      "phone": "970-204-8188",
+      "url": "https://www.frontrange.edu/programs-courses/ged-testing/",
+      "address": "4616 S Shields St, Fort Collins, CO 80526",
+      "hours": "Testing center hours on the FRCC website",
+      "area": "Fort Collins",
+      "tags": [
+        "ged",
+        "hiset",
+        "high school diploma",
+        "students",
+        "frcc",
+        "testing"
+      ]
+    },
+    {
+      "id": "aims-loveland",
+      "name": "Aims Community College - Loveland Campus",
+      "category": "education",
+      "description": "Community college classes, certificates, and advising in downtown Loveland. Financial aid and GED testing options through Aims. Small campus; call for advising hours.",
+      "phone": "970-667-4611",
+      "url": "https://www.aims.edu/locations/loveland-campus",
+      "address": "104 E 4th St, Loveland, CO 80537",
+      "hours": "Call for campus and advising hours",
+      "area": "Loveland",
+      "tags": [
+        "college",
+        "students",
+        "aims",
+        "financial aid",
+        "certificates"
+      ]
+    },
+    {
+      "id": "psd-mckinney-vento",
+      "name": "Poudre School District McKinney-Vento",
+      "category": "education",
+      "description": "School enrollment, transportation, and supplies for PSD students (birth to 21) who do not have a fixed, regular place to sleep. Ask any school or email mckinneyteam@psdschools.org.",
+      "phone": "970-490-3609",
+      "url": "https://www.psdschools.org/programs-services/federal-programs/mckinney-vento-homeless-education",
+      "address": "2407 LaPorte Ave, Fort Collins, CO 80521",
+      "hours": "School year; Mon-Fri",
+      "area": "Fort Collins",
+      "tags": [
+        "mckinney-vento",
+        "homeless",
+        "k-12",
+        "school",
+        "students",
+        "psd"
+      ]
+    },
+    {
+      "id": "thompson-mckinney-vento",
+      "name": "Thompson School District McKinney-Vento",
+      "category": "education",
+      "description": "School enrollment and support for Thompson students in Loveland and Berthoud who lack stable housing. Ask the school or call the district liaison.",
+      "phone": "970-613-6787",
+      "url": "https://www.tsd.org/departments/learning-services/federal-programs/mckinney-vento",
+      "address": "800 S Taft Ave, Loveland, CO 80537",
+      "hours": "School year; Mon-Fri",
+      "area": "Loveland",
+      "tags": [
+        "mckinney-vento",
+        "homeless",
+        "k-12",
+        "school",
+        "students",
+        "thompson"
+      ]
+    },
+    {
+      "id": "estes-mckinney-vento",
+      "name": "Estes Park School District McKinney-Vento",
+      "category": "education",
+      "description": "School support for Estes Park students who lack a stable place to stay. Ask the school counselor or the district social worker / homeless liaison.",
+      "phone": "970-586-1108",
+      "url": "https://www.estesschools.org/resources/mckinney-vento",
+      "address": "1605 Brodie Ave, Estes Park, CO 80517",
+      "hours": "School year; Mon-Fri",
+      "area": "Estes Park",
+      "tags": [
+        "mckinney-vento",
+        "homeless",
+        "k-12",
+        "school",
+        "students"
+      ]
+    },
+    {
+      "id": "psd-school-meals",
+      "name": "Poudre School District school meals",
+      "category": "food",
+      "description": "Breakfast and lunch at PSD schools. Most students receive no-cost meals; households should still submit the annual free/reduced application for funding, Summer EBT, and other benefits. Apply at myschoolapps.com or ask Child Nutrition.",
+      "phone": "970-490-3557",
+      "url": "https://www.psdschools.org/programs-services/school-meals/free-and-reduced-meals",
+      "address": "1502 S Timberline Rd, Fort Collins, CO 80524",
+      "hours": "School year",
+      "area": "Fort Collins",
+      "tags": [
+        "school meals",
+        "k-12",
+        "food",
+        "students",
+        "psd",
+        "free lunch"
+      ]
+    },
+    {
+      "id": "boys-girls-clubs-larimer",
+      "name": "Boys & Girls Clubs of Larimer County",
+      "category": "family_children",
+      "description": "After-school and summer programs for ages 6-18, with meals, homework help, and recreation. Fort Collins Club 970-484-5198; Loveland Pulliam 970-663-5450; Wellington 970-568-7338; Estes Park 970-817-4943. Membership fees are low; ask about scholarships.",
+      "phone": "970-223-1709",
+      "url": "https://www.begreatlarimer.org/",
+      "address": "1608 Lancer Dr, Fort Collins, CO 80521",
+      "hours": "School days typically 2:30-6:30pm; summer hours vary by club",
+      "area": "Larimer County",
+      "tags": [
+        "after school",
+        "k-12",
+        "youth",
+        "students",
+        "meals",
+        "homework"
+      ]
+    },
+    {
+      "id": "poudre-libraries",
+      "name": "Poudre River Public Library District",
+      "category": "education",
+      "description": "Free library cards for Larimer County residents: computers, Wi-Fi, printing, homework help, and online tutors. Old Town Library is at 201 Peterson Street. Also Harmony and Council Tree branches.",
+      "phone": "970-221-6740",
+      "url": "https://poudrelibraries.org/",
+      "address": "201 Peterson St, Fort Collins, CO 80524",
+      "hours": "See branch hours on the website",
+      "area": "Fort Collins",
+      "tags": [
+        "library",
+        "students",
+        "wifi",
+        "tutoring",
+        "homework",
+        "computers"
+      ]
+    },
+    {
+      "id": "loveland-public-library",
+      "name": "Loveland Public Library",
+      "category": "education",
+      "description": "Free library card for Loveland-area residents: computers, Wi-Fi, study space, and homework resources. 300 N Adams Avenue.",
+      "phone": "970-962-2665",
+      "url": "https://www.lovelandpubliclibrary.org/",
+      "address": "300 N Adams Ave, Loveland, CO 80537",
+      "hours": "See website for branch hours",
+      "area": "Loveland",
+      "tags": [
+        "library",
+        "students",
+        "wifi",
+        "homework",
+        "computers"
+      ]
+    },
+    {
+      "id": "casfa",
+      "name": "CASFA (Colorado Application for State Financial Aid)",
+      "category": "education",
+      "description": "State aid application for students who cannot file a FAFSA, including undocumented students and mixed-status families. Use it for Colorado grants at CSU, Front Range, Aims, and other public colleges. For account problems email CASFA@dhe.state.co.us. Ask the college financial aid office about your award.",
+      "phone": "303-974-2668",
+      "url": "https://cdhe.colorado.gov/colorado-application-for-state-financial-aid",
+      "address": null,
+      "hours": "Weekdays; apply online",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "casfa",
+        "financial aid",
+        "undocumented",
+        "college",
+        "students",
+        "asset"
+      ]
+    },
+    {
+      "id": "colorado-asset",
+      "name": "Colorado ASSET (in-state tuition)",
+      "category": "education",
+      "description": "In-state tuition at Colorado public colleges for students who attended a Colorado high school for at least one year (or completed a Colorado GED/HiSET) and lived in Colorado for the 12 months before college. Complete the COF affidavit and ask admissions at Front Range, Aims, or CSU. Pair with CASFA for state aid.",
+      "phone": "303-862-3001",
+      "url": "https://cdhe.colorado.gov/college-opportunity-fund-cof-stipend",
+      "address": null,
+      "hours": "Mon-Fri; CDHE main line",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "asset",
+        "tuition",
+        "undocumented",
+        "college",
+        "students",
+        "in-state"
+      ]
+    },
+    {
+      "id": "csu-access-center",
+      "name": "CSU Access Center (TRIO college prep)",
+      "category": "education",
+      "description": "Free college advising, tutoring, and FAFSA help for first-generation and income-eligible students in grades 6-12 and for adults heading back to school. Student Services Building 304. You do not have to be a CSU student to ask about Access Center programs.",
+      "phone": "970-491-6473",
+      "url": "https://accesscenter.colostate.edu/",
+      "address": "Student Services Building 304, Fort Collins, CO 80523",
+      "hours": "Mon-Fri; call for appointments",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "trio",
+        "college",
+        "first generation",
+        "students",
+        "k-12",
+        "fafsa"
+      ]
+    },
+    {
+      "id": "csu-academic-advancement-center",
+      "name": "CSU Academic Advancement Center (TRIO SSS)",
+      "category": "education",
+      "description": "Advising, tutoring, and community for enrolled CSU students who are first-generation, income-eligible, or have a disability. L.L. Gibbons Building room 117. Email aac_sss@colostate.edu.",
+      "phone": "970-491-0086",
+      "url": "https://aac.colostate.edu/",
+      "address": "850 Oval Dr, Gibbons 117, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-4:30pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "trio",
+        "college",
+        "students",
+        "tutoring",
+        "disability",
+        "first generation"
+      ]
+    },
+    {
+      "id": "csu-eoc",
+      "name": "CSU Educational Opportunity Center (Larimer)",
+      "category": "education",
+      "description": "Free help for adults in Larimer County who want to finish a GED, apply to college, or file FAFSA or CASFA. You do not have to be a CSU student. Paul B. Thayer TRIO House, 1405 S College Avenue.",
+      "phone": "970-491-2521",
+      "url": "https://accesscenter.colostate.edu/educational-opportunity-center/",
+      "address": "1405 S College Ave, Fort Collins, CO 80524",
+      "hours": "Mon-Fri; call for an appointment",
+      "area": "Fort Collins",
+      "tags": [
+        "college",
+        "ged",
+        "fafsa",
+        "casfa",
+        "students",
+        "adults",
+        "trio"
+      ]
+    },
+    {
+      "id": "csu-alvs",
+      "name": "CSU Adult Learner and Veteran Services",
+      "category": "education",
+      "description": "Drop-in space and advising for CSU student parents, veterans, transfers, and other adult learners. Lory Student Center 282.",
+      "phone": "970-491-3977",
+      "url": "https://alvs.colostate.edu/",
+      "address": "Lory Student Center 282, Fort Collins, CO 80523",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "veterans",
+        "students",
+        "college",
+        "adult learners",
+        "student parents"
+      ]
+    },
+    {
+      "id": "sun-bucks-summer-ebt",
+      "name": "Colorado SUN Bucks (Summer EBT)",
+      "category": "food",
+      "description": "Grocery money for school-age kids when school meals stop for summer. Most eligible students are enrolled automatically. Check status at cdhs.colorado.gov/summer-ebt. Support line: press option 8. Card PIN and balance: 1-888-328-2656.",
+      "phone": "1-800-536-5298",
+      "url": "https://cdhs.colorado.gov/summer-ebt",
+      "address": null,
+      "hours": "Seasonal; see CDHS for the current application window",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "sun bucks",
+        "summer ebt",
+        "school meals",
+        "k-12",
+        "food",
+        "students"
+      ]
+    },
+    {
+      "id": "thompson-school-meals",
+      "name": "Thompson School District school meals",
+      "category": "food",
+      "description": "Breakfast and lunch at Thompson schools in Loveland and Berthoud. Colorado's Healthy School Meals for All program covers student meals; still submit the annual free/reduced application for fee waivers and Summer EBT. Apply at linqconnect.com.",
+      "phone": "970-613-5144",
+      "url": "https://www.tsd.org/departments/operations/nutrition-services",
+      "address": "800 S Taft Ave, Loveland, CO 80537",
+      "hours": "School year",
+      "area": "Loveland",
+      "tags": [
+        "school meals",
+        "k-12",
+        "food",
+        "students",
+        "thompson",
+        "free lunch"
+      ]
+    },
+    {
+      "id": "csu-ramride",
+      "name": "CSU RamRide",
+      "category": "transportation",
+      "description": "Free safe rides for CSU students and employees on Friday and Saturday nights during the school year, about 10pm-2:30am in Fort Collins. Call or use the RamRide app. Office shares Off-Campus Life in Lory Student Center 281.",
+      "phone": "970-491-3333",
+      "url": "https://ramride.colostate.edu/",
+      "address": "Lory Student Center 281, Fort Collins, CO 80523",
+      "hours": "Night rides Fri-Sat during the academic year; office Mon-Fri 9am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "csu",
+        "students",
+        "college",
+        "rides",
+        "safe ride"
+      ]
+    },
+    {
+      "id": "frcc-counseling",
+      "name": "FRCC Mental Health Counseling (Larimer)",
+      "category": "health",
+      "description": "Short-term counseling for enrolled Front Range students. Larimer desk in Mount Antero 200. Email MHCounseling@frontrange.edu. After hours call 988.",
+      "phone": "970-204-8210",
+      "url": "https://www.frontrange.edu/student-experience/support-services/mental-health-counseling/index.html",
+      "address": "4616 S Shields St, Mount Antero 200, Fort Collins, CO 80526",
+      "hours": "Campus hours; call to request a session",
+      "area": "Fort Collins",
+      "tags": [
+        "frcc",
+        "students",
+        "college",
+        "counseling",
+        "health",
+        "mental health"
+      ]
+    },
+    {
+      "id": "frcc-tutoring",
+      "name": "FRCC Academic Success Center (Larimer tutoring)",
+      "category": "education",
+      "description": "Free tutoring, writing and math help, and study space for Front Range students. Mount Antero 350. Email frcclcasc@frontrange.edu.",
+      "phone": "970-204-8112",
+      "url": "https://www.frontrange.edu/student-experience/academic-support/academic-success-centers/",
+      "address": "4616 S Shields St, Mount Antero 350, Fort Collins, CO 80526",
+      "hours": "Campus hours during the term",
+      "area": "Fort Collins",
+      "tags": [
+        "frcc",
+        "students",
+        "college",
+        "tutoring",
+        "homework"
+      ]
+    },
+    {
+      "id": "estes-valley-library",
+      "name": "Estes Valley Library",
+      "category": "education",
+      "description": "Free library card for Estes Park-area residents: computers, Wi-Fi, homework help, and study space. 335 E Elkhorn Avenue.",
+      "phone": "970-586-8116",
+      "url": "https://estesvalleylibrary.org/",
+      "address": "335 E Elkhorn Ave, Estes Park, CO 80517",
+      "hours": "Mon-Thu 10am-8pm; Fri-Sat 10am-6pm; Sun 1pm-5pm",
+      "area": "Estes Park",
+      "tags": [
+        "library",
+        "students",
+        "wifi",
+        "homework",
+        "computers"
+      ]
     }
   ]
 }

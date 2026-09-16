@@ -12,14 +12,18 @@ import { CATEGORY_MAP } from '../data/categories';
 import {
   DISABILITY_CHIPS,
   RESOURCES,
+  STUDENT_CHIPS,
   byCategories,
   filterByArea,
   isFreeCertificate,
   matchesDisabilityChip,
+  matchesStudentChip,
   searchResources,
   sortDisabilityResources,
+  sortStudentResources,
   type AreaFilter as AreaFilterId,
   type DisabilityChipId,
+  type StudentChipId,
 } from '../data/resources';
 import type { CategoryId, CertGroup, Resource } from '../data/types';
 import { spacing, useTheme } from '../theme';
@@ -40,6 +44,8 @@ type Props = {
   showCertGroups?: boolean;
   /** Have a disability? tab: Med-9, glasses, rec, rides, jobs, kids. */
   showDisabilityFilters?: boolean;
+  /** Students tab: college, K–12, money, food, jobs, health. */
+  showStudentFilters?: boolean;
 };
 
 export function ResourceListScreen({
@@ -53,12 +59,14 @@ export function ResourceListScreen({
   alsoInclude,
   showCertGroups = false,
   showDisabilityFilters = false,
+  showStudentFilters = false,
 }: Props) {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const [activeCat, setActiveCat] = useState<CategoryId | 'all'>('all');
   const [jobFilter, setJobFilter] = useState<JobFilter>('all');
   const [disabilityFilter, setDisabilityFilter] = useState<DisabilityChipId>('all');
+  const [studentFilter, setStudentFilter] = useState<StudentChipId>('all');
 
   const pool = useMemo(() => {
     const fromCats = categories.length ? byCategories(categories) : [];
@@ -74,6 +82,12 @@ export function ResourceListScreen({
         list = list.filter((r) => matchesDisabilityChip(r, disabilityFilter));
       }
       return sortDisabilityResources(list);
+    }
+    if (showStudentFilters) {
+      if (studentFilter !== 'all') {
+        list = list.filter((r) => matchesStudentChip(r, studentFilter));
+      }
+      return sortStudentResources(list);
     }
     if (showCertGroups) {
       if (jobFilter === 'employment') list = list.filter((r) => r.category === 'employment');
@@ -96,7 +110,17 @@ export function ResourceListScreen({
       list = list.filter((r) => r.category === activeCat);
     }
     return list;
-  }, [query, pool, activeCat, jobFilter, showCertGroups, showDisabilityFilters, disabilityFilter]);
+  }, [
+    query,
+    pool,
+    activeCat,
+    jobFilter,
+    showCertGroups,
+    showDisabilityFilters,
+    disabilityFilter,
+    showStudentFilters,
+    studentFilter,
+  ]);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -119,6 +143,18 @@ export function ResourceListScreen({
                     icon={chip.id === 'all' ? undefined : chip.icon}
                     active={disabilityFilter === chip.id}
                     onPress={() => setDisabilityFilter(chip.id)}
+                  />
+                ))}
+              </ScrollView>
+            ) : showStudentFilters ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                {STUDENT_CHIPS.map((chip) => (
+                  <Chip
+                    key={chip.id}
+                    label={chip.label}
+                    icon={chip.id === 'all' ? undefined : chip.icon}
+                    active={studentFilter === chip.id}
+                    onPress={() => setStudentFilter(chip.id)}
                   />
                 ))}
               </ScrollView>

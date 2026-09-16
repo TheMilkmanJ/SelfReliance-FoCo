@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ResourceDetail } from './src/components/ResourceDetail';
 import { TabBar, type TabId } from './src/components/TabBar';
-import { isDisabilityResource, type AreaFilter } from './src/data/resources';
+import { isDisabilityResource, isStudentResource, type AreaFilter } from './src/data/resources';
 import type { Resource } from './src/data/types';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
@@ -38,6 +38,18 @@ function AppShell() {
       <View style={[styles.root, { backgroundColor: colors.bg }]}>
         <View style={styles.body}>
           {tab === 'home' ? <HomeScreen onSelect={setSelected} area={area} onAreaChange={setArea} /> : null}
+          {tab === 'students' ? (
+            <ResourceListScreen
+              title="Students"
+              subtitle="College, GED, FAFSA, campus pantries, K–12 meals, McKinney-Vento, libraries, and jobs. Certificates stay under Resources."
+              alsoInclude={isStudentResource}
+              onSelect={setSelected}
+              emptyHint="Try words like FAFSA, GED, pantry, McKinney, or CSU."
+              area={area}
+              onAreaChange={setArea}
+              showStudentFilters
+            />
+          ) : null}
           {tab === 'disability' ? (
             <ResourceListScreen
               title="Have a disability?"
