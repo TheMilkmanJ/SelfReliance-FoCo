@@ -24,14 +24,14 @@ jobs:
           download_tmp() {
             local page="$1" out="$2" i html href
             for i in 1 2 3 4; do
-              html=$(curl -fsSL -A Mozilla/5.0 "$page") || true
-              href=$(python3 -c "import re,sys; m=re.search(r'https://tmpfiles.org/dl/\S+', sys.stdin.read()); print(m.group(0) if m else '')" <<<"$html")
-              if [ -n "$href" ] && curl -fsSL -A Mozilla/5.0 -o "$out" "$href"; then
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
                 return 0
               fi
               sleep $((i * 4))
             done
-            echo failed to download "$page" >&2
+            echo "failed to download $page" >&2
             return 1
           }
           download_tmp "$SRC_PAGE" /tmp/src.tgz
