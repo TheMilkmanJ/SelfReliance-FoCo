@@ -6262,7 +6262,7 @@
       "id": "google-maps-offline-foco",
       "name": "Download Fort Collins in Google Maps",
       "category": "transportation",
-      "description": "This app cannot ship Google's map. Open the Google Maps app, search Fort Collins, tap the place name, then Download. Walking and driving directions can work with no signal. Bus and live traffic need data. In Self-Reliance FoCo, Get directions and Bus directions hand off to Maps.",
+      "description": "This app cannot ship Google's map. Use the Offline maps card on Resources home, or open Google Maps, search your town, tap the name, then Download. Walking and driving can work with no signal. Bus and live traffic need data. Get directions in this app still hands off to Maps.",
       "phone": null,
       "url": "https://support.google.com/maps/answer/6292498",
       "address": null,
