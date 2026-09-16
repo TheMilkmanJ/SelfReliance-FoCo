@@ -4,6 +4,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Header } from '../components/Header';
+import { HomeTools } from '../components/HomeTools';
 import { QuickHelp } from '../components/QuickHelp';
 import { ResourceCard } from '../components/ResourceCard';
 import { SearchBar } from '../components/SearchBar';
@@ -23,9 +24,11 @@ type Props = {
   onSelect: (r: Resource) => void;
   area: AreaFilterId;
   onAreaChange: (area: AreaFilterId) => void;
+  onTrashDay: () => void;
+  onOpenNow: () => void;
 };
 
-export function HomeScreen({ onSelect, area, onAreaChange }: Props) {
+export function HomeScreen({ onSelect, area, onAreaChange, onTrashDay, onOpenNow }: Props) {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
   const [query, setQuery] = useState('');
@@ -101,6 +104,7 @@ export function HomeScreen({ onSelect, area, onAreaChange }: Props) {
             ) : (
               <>
                 <QuickHelp />
+                <HomeTools onTrash={onTrashDay} onOpenNow={onOpenNow} />
                 <Text style={[styles.sectionTitle, { color: colors.ink }]}>
                   {area === 'All' ? 'What do you need?' : `What do you need in ${areaLabel(area)}?`}
                 </Text>
