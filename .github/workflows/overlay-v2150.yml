@@ -38,26 +38,7 @@ jobs:
       - name: Verify overlay
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          app = json.loads(Path('app.json').read_text())
-          assert app['expo']['version'] == '2.15.0', app['expo']['version']
-          assert app['expo']['android']['versionCode'] == 21, app['expo']['android']['versionCode']
-          n = len(json.loads(Path('src/data/resources.json').read_text())['resources'])
-          assert n == 402, n
-          readme = Path('README.md').read_text()
-          assert 'd6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46' in readme
-          trash = Path('src/screens/TrashDayScreen.tsx').read_text()
-          assert 'Usual collection day' in trash
-          tools = Path('src/components/HomeTools.tsx').read_text()
-          assert 'Carts out by 7am' in tools
-          places = Path('src/data/openNowPlaces.ts').read_text()
-          assert 'lovelandcommunitykitchen.org' in places
-          resources = Path('src/data/resources.json').read_text()
-          assert 'Closed May 31, 2025' in resources
-          print('overlay ok')
-          PY
+          python3 -c 'import json; from pathlib import Path; app=json.loads(Path("app.json").read_text()); assert app["expo"]["version"]=="2.15.0", app["expo"]["version"]; assert app["expo"]["android"]["versionCode"]==21, app["expo"]["android"]["versionCode"]; n=len(json.loads(Path("src/data/resources.json").read_text())["resources"]); assert n==402, n; readme=Path("README.md").read_text(); assert "d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46" in readme; assert "Usual collection day" in Path("src/screens/TrashDayScreen.tsx").read_text(); assert "Carts out by 7am" in Path("src/components/HomeTools.tsx").read_text(); assert "lovelandcommunitykitchen.org" in Path("src/data/openNowPlaces.ts").read_text(); assert "Closed May 31, 2025" in Path("src/data/resources.json").read_text(); print("overlay ok")'
       - name: Download APK
         env:
           APK_PAGE: https://tmpfiles.org/w5wqqRhpJS0J/self-reliance-foco.apk
