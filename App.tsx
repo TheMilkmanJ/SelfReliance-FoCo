@@ -4,14 +4,22 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { OpenNowDetail } from './src/components/OpenNowDetail';
 import { ResourceDetail } from './src/components/ResourceDetail';
 import { TabBar, type TabId } from './src/components/TabBar';
+import type { OpenPlace } from './src/data/openNowTypes';
 import { isDisabilityResource, isHomelessResource, isStudentResource, type AreaFilter } from './src/data/resources';
 import type { Resource } from './src/data/types';
+import { useDenverNow } from './src/lib/denverClock';
 import { useLargePrint } from './src/lib/fontScale';
+import { statusFor } from './src/lib/openNowStatus';
 import { HomeScreen } from './src/screens/HomeScreen';
+import { OpenNowScreen } from './src/screens/OpenNowScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
+import { TrashDayScreen } from './src/screens/TrashDayScreen';
 import { ThemeProvider, useTheme } from './src/theme';
+
+type HomeTool = 'trash' | 'openNow' | null;
 
 const AREA_KEY = 'foco-area-filter';
 const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington'];
@@ -19,8 +27,11 @@ const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'B
 function AppShell() {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
+  const now = useDenverNow();
   const [tab, setTab] = useState<TabId>('home');
+  const [tool, setTool] = useState<HomeTool>(null);
   const [selected, setSelected] = useState<Resource | null>(null);
+  const [openPlace, setOpenPlace] = useState<OpenPlace | null>(null);
   const [area, setAreaState] = useState<AreaFilter>('All');
 
   useEffect(() => {
@@ -39,7 +50,26 @@ function AppShell() {
       <StatusBar style="light" />
       <View style={[styles.root, { backgroundColor: colors.bg }]}>
         <View style={styles.body}>
-          {tab === 'home' ? <HomeScreen onSelect={setSelected} area={area} onAreaChange={setArea} /> : null}
+          {tab === 'home' && tool === 'trash' ? (
+            <TrashDayScreen area={area} onAreaChange={setArea} onBack={() => setTool(null)} />
+          ) : null}
+          {tab === 'home' && tool === 'openNow' ? (
+            <OpenNowScreen
+              area={area}
+              onAreaChange={setArea}
+              onBack={() => setTool(null)}
+              onSelect={setOpenPlace}
+            />
+          ) : null}
+          {tab === 'home' && !tool ? (
+            <HomeScreen
+              onSelect={setSelected}
+              area={area}
+              onAreaChange={setArea}
+              onTrashDay={() => setTool('trash')}
+              onOpenNow={() => setTool('openNow')}
+            />
+          ) : null}
           {tab === 'students' ? (
             <ResourceListScreen
               title="Students"
@@ -89,9 +119,20 @@ function AppShell() {
             />
           ) : null}
         </View>
-        <TabBar active={tab} onChange={setTab} />
+        <TabBar
+          active={tab}
+          onChange={(id) => {
+            setTab(id);
+            setTool(null);
+          }}
+        />
       </View>
       <ResourceDetail resource={selected} onClose={() => setSelected(null)} />
+      <OpenNowDetail
+        place={openPlace}
+        status={openPlace ? statusFor(openPlace, now) : null}
+        onClose={() => setOpenPlace(null)}
+      />
     </>
   );
 }
