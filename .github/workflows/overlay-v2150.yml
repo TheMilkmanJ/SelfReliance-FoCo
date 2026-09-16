@@ -1,0 +1,57 @@
+name: overlay-v2150
+
+on:
+  push:
+    paths:
+      - ".github/workflows/overlay-v2150.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overlay v2.15.0 source and APK
+        env:
+          SRC_PAGE: https://tmpfiles.org/wUwwqGhQJFdl/foco-v2150-src.tgz
+          APK_PAGE: https://tmpfiles.org/w5wqqRhpJS0J/self-reliance-foco.apk
+          EXPECT_SHA: d6e0465864d0cb382895f529d2b003230305ebe263e642334659f7f7888ebd46
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$SRC_PAGE" /tmp/src.tgz
+          tar xzf /tmp/src.tgz
+          grep -q '"version": "2.15.0"' app.json
+          grep -q '"versionCode": 21' app.json
+          grep -q 'Trash day' src/screens/TrashDayScreen.tsx
+          grep -q 'Carts out by 7am' src/components/HomeTools.tsx
+          grep -q 'lovelandcommunitykitchen.org' src/data/openNowPlaces.ts
+          grep -q 'Closed May 31, 2025' src/data/resources.json
+          grep -q "$EXPECT_SHA" README.md
+          download_tmp "$APK_PAGE" Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c -
+          rm -f .github/workflows/overlay-v2150.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git add -u .github/workflows/overlay-v2150.yml
+          git commit -m "Add trash day and open now (v2.15.0)."
+          git push
+          gh release create v2.15.0 Self-Reliance-FoCo.apk \
+            --title "Self-Reliance FoCo v2.15.0" \
+            --notes-file release-notes-v2150.md
