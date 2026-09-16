@@ -6,7 +6,7 @@ import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
-import { call, directions, open, prettyUrl } from '../lib/actions';
+import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 import { FreeBadge } from './FreeBadge';
 
@@ -86,7 +86,20 @@ export function ResourceDetail({ resource, onClose }: Props) {
                 onPress={() => directions(resource.address as string)}
               />
             ) : null}
+            {resource.address && hasStreetAddress(resource.address) ? (
+              <ActionButton
+                icon="bus-outline"
+                label="Bus directions"
+                color={colors.purple}
+                onPress={() => directions(resource.address as string, 'transit')}
+              />
+            ) : null}
           </View>
+          {resource.address ? (
+            <Text style={[styles.footnote, { color: colors.muted, marginTop: spacing.md }]}>
+              Opens Google Maps from where you are. This app does not store a map. Bus times need a signal.
+            </Text>
+          ) : null}
 
           {resource.tags.length ? (
             <View style={styles.tags}>

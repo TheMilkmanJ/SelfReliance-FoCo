@@ -71,7 +71,7 @@ export const CATEGORIES: Category[] = [
     short: 'Rides',
     icon: 'bus-outline',
     color: '#4527A0',
-    blurb: 'Buses, Medicaid rides, volunteer drivers, bikes.',
+    blurb: 'Buses, trip planner, route maps, Medicaid rides, volunteer drivers.',
   },
   {
     id: 'phone',

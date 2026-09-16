@@ -7,13 +7,13 @@
 <p align="center">A free Android app that puts Larimer County help in one place: food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
-  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.12.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.13.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
   <br />
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
 </p>
 
-<p align="center"><strong>Current download: v2.12.0</strong> (Pets tile filled out: Until They’re Home, NOCO Humane, CSU ER, and more). About 41 MB. Installs over any earlier FoCo build (versionCode 18).</p>
+<p align="center"><strong>Current download: v2.13.0</strong> (Get directions and Bus directions open Google Maps; Transfort trip planner and route maps). About 41 MB. Installs over any earlier FoCo build (versionCode 19).</p>
 
 <p align="center">
   Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>:<br/>
@@ -32,7 +32,7 @@ This repository is the application. Clone it, fork it, or download the ZIP.
 
 - App UI and logic: [`src/`](src/) (TypeScript / React Native / Expo)
 - Listings: [`src/data/resources.json`](src/data/resources.json)
-- App config (name, Android package `org.foco.selfreliance`, version **2.12.0** / versionCode **18**): [`app.json`](app.json)
+- App config (name, Android package `org.foco.selfreliance`, version **2.13.0** / versionCode **19**): [`app.json`](app.json)
 - License: [MIT](LICENSE)
 
 This is an Expo app, not a hand-written Kotlin project. The Gradle tree, `AndroidManifest.xml`, and native Android folders are generated from this source:
@@ -45,7 +45,7 @@ npx expo prebuild --platform android --no-install
 
 Read `src/` to see what the app does (no analytics, no account, listings plus tap-to-call / maps). The signed release APK on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) is built from this tree. A SHA-256 checksum lets you confirm you have that same file. It does not replace reading the source.
 
-The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.12.0 APK needs that same key and versionCode 19+.
+The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.13.0 APK needs that same key and versionCode 20+.
 
 ## Install on your phone (about 2 minutes)
 
@@ -55,22 +55,22 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo**. The bottom tabs should be **Resources**, **Students**, **Homeless**, and **Have a disability?** Identification, pets, LGBTQ+, heat and cold, reentry, and furniture are on the Resources home tiles.
 
-**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If the bottom tabs still say Jobs, Housing, and Clothes, you still have v2.6.0 or older — delete the old APK from Downloads and grab v2.12.0 again. If Pets still has only four cards (no Until They’re Home), you are on v2.11.x or older — install this over it.
+**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If the bottom tabs still say Jobs, Housing, and Clothes, you still have v2.6.0 or older — delete the old APK from Downloads and grab v2.13.0 again. If a listing has no **Bus directions** button, you are on v2.12.x or older — install this over it.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
 
-## What is in the app (v2.12.0, versionCode 18)
+## What is in the app (v2.13.0, versionCode 19)
 
-- **Resources** tab: 348 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show). Home tiles include **Identification**, **Pets**, **LGBTQ+**, **Heat & Cold**, **Reentry**, and **Furniture & Household**, plus the older tiles for jobs, housing, clothes, child care, immigrants, recovery, special needs, holiday, dental, and disaster. **Pets** now includes Until They’re Home, Animal Friends’ Taft Hill adoptions, NOCO Humane lost-pet shelter, CSU’s 24/7 ER, TNR for community cats, and Estes Park animal help. Certificates you can finish at no cost show a **Free** label next to the title. 2-1-1 still covers everything this list does not.
-- **Students** tab: FAFSA and CASFA, College Opportunity Fund, CSU and Front Range pantries, McKinney-Vento school liaisons, school meals, SUN Bucks, GED testing, campus health and counseling, TRIO / Access Center, libraries, Transfort, and RamRide. Filter by College, K–12, Money, Food, Jobs, or Health.
-- **Homeless** tab: Murphy Center day services, Rescue Mission and Catholic Charities overnight beds, Family Housing Network, Loveland Resource Center, Matthews House youth shelter, Outreach Fort Collins, Coordinated Entry, Neighbor to Neighbor rent help, pantries, and McKinney-Vento school liaisons. Filter by Overnight, Day help, Food, Housing, Families, or Youth.
+- **Resources** tab: 354 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show). Home tiles include **Identification**, **Pets**, **LGBTQ+**, **Heat & Cold**, **Reentry**, and **Furniture & Household**, plus the older tiles for jobs, housing, clothes, child care, immigrants, recovery, special needs, holiday, dental, and disaster. **Pets** includes Until They’re Home, Animal Friends’ Taft Hill adoptions, NOCO Humane lost-pet shelter, CSU’s 24/7 ER, TNR for community cats, and Estes Park animal help. **Rides** includes Transfort’s trip planner, route maps you can save, MAX, FLEX to Boulder, and how to download Fort Collins inside Google Maps. Certificates you can finish at no cost show a **Free** label next to the title. 2-1-1 still covers everything this list does not.
+- **Students** tab: FAFSA and CASFA, College Opportunity Fund, CSU and Front Range pantries, McKinney-Vento school liaisons, school meals, SUN Bucks, GED testing, campus health and counseling, TRIO / Access Center, libraries, Transfort, FLEX, MAX, and RamRide. Filter by College, K–12, Money, Food, Jobs, or Health.
+- **Homeless** tab: Murphy Center day services, Rescue Mission and Catholic Charities overnight beds, Family Housing Network, Loveland Resource Center, Matthews House youth shelter, Outreach Fort Collins, Coordinated Entry, Neighbor to Neighbor rent help, pantries, Transfort / FLEX, and McKinney-Vento school liaisons. Filter by Overnight, Day help, Food, Housing, Families, or Youth.
 - **Have a disability?** tab: Med-9 / Aid to the Needy Disabled, glasses, Get FoCo therapy-pool rec passes, the resource desk downstairs at UCHealth Family Medicine on Pennock Place, Adaptive Recreation (Fort Collins and Loveland), Dial-A-Ride, DVR, SWAP, SSI/SSDI, Colorado ABLE, HCBS waivers, Medicaid Buy-In, Home Care Allowance, Deaf/hard-of-hearing phones, talking books, Aftersight/NEWSLINE, Hearts & Horses, Disability Law Colorado, Civil Rights Division, ADA line, parking placards, CSU RAM Scholars, FRCC DSS, and kids' special-needs programs.
 - **Large print:** headers, search, town chips, and filters wrap onto the next line instead of getting cut off when the phone’s font size is turned up. The bottom tab still says **Have a disability?** for screen readers; on large print it shows **Disability** so it fits.
 - Quick-dial **2-1-1** and **9-8-8** on the home screen.
 - **Dark mode:** tap the moon (or sun) in the top-right of the header.
-- Tap a number to call, tap a card for hours, address, website, and directions.
+- Tap a number to call. Tap a card for hours, address, website, **Get directions** (Google Maps from where you are), and **Bus directions** when there is a street address. This app does not store Google’s map. Bus times need a signal.
 
 No account, no sign-in, no income form, no tracking.
 
@@ -125,9 +125,9 @@ Run `npm run validate` after editing. Phone numbers and hours change. If somethi
 
 Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
-## Checksum (v2.12.0)
+## Checksum (v2.13.0)
 
-To verify the published APK: `sha256  b03deabaeec820dd6464daada641b2d095c832098008f71045351d7190980860`
+To verify the published APK: `sha256  04c2810e4a111ab87e8e5ca014dae5b776ca45a6e2caaf9a6c93b85185e0ab8b`
 
 ## Questions or problems
 
