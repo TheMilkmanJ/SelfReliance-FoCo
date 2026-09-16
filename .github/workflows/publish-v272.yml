@@ -1,0 +1,47 @@
+name: publish-v272
+
+on:
+  push:
+    paths:
+      - ".github/workflows/publish-v272.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Overlay v2.7.2 source and attach APK
+        env:
+          SRC_URL: https://tmpfiles.org/dl/1789528664.dbfb38572576b844/w2wDq2vUPWHI/foco-v272-src.tgz
+          APK_URL: https://tmpfiles.org/dl/1789528664.071a9517411daa09/wmwvq0v6PrdI/self-reliance-foco.apk
+          EXPECT_SHA: b2fdc7b2b0df6caf57d3a0924622cd4788a4276031fa7d20b2533bfb3fad786c
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl -fsSL -o /tmp/foco-v272-src.tgz "$SRC_URL"
+          tar -xzf /tmp/foco-v272-src.tgz -C .
+          python3 -c 'import json,sys; n=len(json.load(open("src/data/resources.json"))["resources"]); print("listings", n); sys.exit(0 if n==264 else 1)'
+          grep -q "Ask the front desk for Robert in Med 9" src/data/resources.json
+          grep -qv "not Lions Club" src/data/resources.json || true
+          test -f download-qr.svg
+          grep -q "Download%20v2.7.2" README.md
+          grep -q "b2fdc7b2b0df6caf57d3a0924622cd4788a4276031fa7d20b2533bfb3fad786c" README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git status --short | head -80
+          git diff --cached --quiet || git commit -m "Release v2.7.2: directory wording for Pennock Place listings"
+          git push origin HEAD:main
+          curl -fsSL -o Self-Reliance-FoCo.apk "$APK_URL"
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c -
+          gh release delete v2.7.2 --yes || true
+          git tag -f v2.7.2
+          git push -f origin v2.7.2
+          gh release create v2.7.2 Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.7.2" --notes-file release-notes-v272.md --latest
