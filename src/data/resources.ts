@@ -490,6 +490,184 @@ export function sortStudentResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, STUDENT_PINNED_IDS);
 }
 
+/** Shown first on the Homeless tab. */
+export const HOMELESS_PINNED_IDS = [
+  'murphy-center',
+  'united-way-211',
+  'fort-collins-rescue-mission',
+  'catholic-charities-samaritan-house',
+  'family-housing-network',
+  'loveland-resource-center',
+  'neighbor-to-neighbor-fort-collins',
+] as const;
+
+const HOMELESS_ALWAYS = new Set<string>([
+  ...HOMELESS_PINNED_IDS,
+  'outreach-fort-collins',
+  'nococo-cahps',
+  'murphy-center-gear',
+  'summitstone-murphy-clinic',
+  'matthews-house-landing',
+  'matthews-house-fort-collins',
+  'homeward-alliance-housing',
+  'loveland-south-railroad-shelter',
+  'family-promise-larimer',
+  'harvest-farm-new-life',
+  'homeward-alliance-family-services',
+  'neighbor-to-neighbor-loveland',
+  'volunteers-of-america-noco',
+  'voa-ssvf-veterans-housing',
+  'housing-catalyst',
+  'colorado-housing-search',
+  'larimer-csbg-housing-assistance',
+  'crossroads-safehouse',
+  'alternatives-to-violence',
+  'estes-valley-crisis-advocates',
+  'food-bank-larimer-fort-collins',
+  'food-bank-larimer-loveland',
+  'foco-cafe',
+  'food-not-bombs-fort-collins',
+  'vindeket-foods',
+  'salvation-army-fort-collins',
+  'house-of-neighborly-service-loveland',
+  'lovelands-community-kitchen',
+  'crossroads-ministry-estes-park',
+  'hunger-free-colorado',
+  'colorado-peak',
+  'larimer-human-services-benefits',
+  'transfort',
+  'clothe-the-people-fort-collins',
+  'kids-closet-fort-collins',
+  'lifeline-phone-program',
+  'leap-heating-assistance',
+  'fort-collins-utilities-payment-assistance',
+  'colorado-legal-services-fort-collins',
+  'colorado-poverty-law-project',
+  'psd-mckinney-vento',
+  'thompson-mckinney-vento',
+  'estes-mckinney-vento',
+  'wioa-paid-certificates-larimer',
+  'larimer-workforce-center',
+  'junior-league-career-closet',
+  'health-district-northern-larimer',
+  'summitstone-crisis',
+  'turning-point-fort-collins',
+  'disabled-resource-services-fort-collins',
+  'disabled-resource-services-loveland',
+  'noco-community-store',
+  'st-johns-lutheran-pantry',
+  'wellington-food-pantry',
+  'house-of-neighborly-service-berthoud',
+]);
+
+const HOMELESS_TAG =
+  /\b(homeless|homelessness|overnight shelter|day shelter|eviction prevention|unhoused|coordinated entry)\b/;
+
+/** Listings useful tonight or this week if you do not have a stable place to stay. */
+export function isHomelessResource(resource: Resource): boolean {
+  if (HOMELESS_ALWAYS.has(resource.id)) return true;
+  if (resource.certGroup) return false;
+  if (resource.category === 'shelter') return true;
+  return resource.tags.some((tag) => HOMELESS_TAG.test(tag.toLowerCase()));
+}
+
+export type HomelessChipId = 'all' | 'shelter' | 'day' | 'food' | 'housing' | 'families' | 'youth';
+
+export const HOMELESS_CHIPS: Array<{ id: HomelessChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'shelter', label: 'Overnight', icon: 'bed-outline' },
+  { id: 'day', label: 'Day help', icon: 'sunny-outline' },
+  { id: 'food', label: 'Food', icon: 'nutrition-outline' },
+  { id: 'housing', label: 'Housing', icon: 'home-outline' },
+  { id: 'families', label: 'Families', icon: 'people-outline' },
+  { id: 'youth', label: 'Youth', icon: 'happy-outline' },
+];
+
+export function matchesHomelessChip(resource: Resource, chip: HomelessChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'shelter') {
+    return (
+      resource.category === 'shelter' ||
+      hasAnyTag(resource, ['overnight shelter', 'shelter']) ||
+      resource.id === 'fort-collins-rescue-mission' ||
+      resource.id === 'catholic-charities-samaritan-house' ||
+      resource.id === 'loveland-south-railroad-shelter' ||
+      resource.id === 'loveland-resource-center' ||
+      resource.id === 'family-housing-network' ||
+      resource.id === 'family-promise-larimer' ||
+      resource.id === 'harvest-farm-new-life' ||
+      resource.id === 'matthews-house-landing' ||
+      resource.id === 'crossroads-safehouse' ||
+      resource.id === 'alternatives-to-violence'
+    );
+  }
+  if (chip === 'day') {
+    return (
+      hasAnyTag(resource, ['day shelter', 'showers', 'laundry', 'mail', 'outreach']) ||
+      resource.id === 'murphy-center' ||
+      resource.id === 'murphy-center-gear' ||
+      resource.id === 'loveland-resource-center' ||
+      resource.id === 'family-housing-network' ||
+      resource.id === 'outreach-fort-collins' ||
+      resource.id === 'matthews-house-fort-collins' ||
+      resource.id === 'summitstone-murphy-clinic' ||
+      resource.id === 'united-way-211' ||
+      resource.id === 'nococo-cahps'
+    );
+  }
+  if (chip === 'food') {
+    return (
+      resource.category === 'food' ||
+      hasAnyTag(resource, ['pantry', 'meals', 'snap', 'kitchen'])
+    );
+  }
+  if (chip === 'housing') {
+    return (
+      resource.category === 'housing' ||
+      hasAnyTag(resource, ['rent help', 'eviction prevention', 'housing', 'coordinated entry']) ||
+      resource.id === 'nococo-cahps' ||
+      resource.id === 'homeward-alliance-housing' ||
+      resource.id === 'neighbor-to-neighbor-fort-collins' ||
+      resource.id === 'neighbor-to-neighbor-loveland' ||
+      resource.id === 'voa-ssvf-veterans-housing' ||
+      resource.id === 'housing-catalyst' ||
+      resource.id === 'colorado-housing-search' ||
+      resource.id === 'larimer-csbg-housing-assistance' ||
+      resource.id === 'volunteers-of-america-noco'
+    );
+  }
+  if (chip === 'families') {
+    return (
+      hasAnyTag(resource, ['families', 'kids', 'mckinney-vento']) ||
+      resource.id === 'family-housing-network' ||
+      resource.id === 'family-promise-larimer' ||
+      resource.id === 'catholic-charities-samaritan-house' ||
+      resource.id === 'homeward-alliance-family-services' ||
+      resource.id === 'psd-mckinney-vento' ||
+      resource.id === 'thompson-mckinney-vento' ||
+      resource.id === 'estes-mckinney-vento' ||
+      resource.id === 'crossroads-safehouse' ||
+      resource.id === 'kids-closet-fort-collins'
+    );
+  }
+  if (chip === 'youth') {
+    return (
+      resource.id === 'matthews-house-landing' ||
+      resource.id === 'matthews-house-fort-collins' ||
+      resource.id === 'turning-point-fort-collins' ||
+      resource.id === 'psd-mckinney-vento' ||
+      resource.id === 'thompson-mckinney-vento' ||
+      resource.id === 'estes-mckinney-vento' ||
+      resource.id === 'family-housing-network'
+    );
+  }
+  return true;
+}
+
+export function sortHomelessResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, HOMELESS_PINNED_IDS);
+}
+
 function sortPinnedResources(list: Resource[], pinned: readonly string[]): Resource[] {
   const rank = (id: string) => {
     const i = pinned.indexOf(id);

@@ -5264,6 +5264,129 @@
         "homework",
         "computers"
       ]
+    },
+    {
+      "id": "outreach-fort-collins",
+      "name": "Outreach Fort Collins",
+      "category": "shelter",
+      "description": "Street outreach team that finds people who are unhoused downtown, midtown, and north Fort Collins and helps them get to shelter, the Murphy Center, and other help. Call if you need a worker to come to you. Not 911.",
+      "phone": "970-658-0088",
+      "url": "https://outreachfortcollins.org/",
+      "address": "19 Old Town Square, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-6pm",
+      "area": "Fort Collins",
+      "tags": [
+        "outreach",
+        "homeless",
+        "street outreach",
+        "unhoused"
+      ]
+    },
+    {
+      "id": "nococo-cahps",
+      "name": "Northern Colorado Coordinated Entry (CAHPS)",
+      "category": "housing",
+      "description": "The housing waitlist for Larimer and Weld County homeless programs. Ask at the Murphy Center for an intake and coordinated assessment, or tell any shelter or outreach worker you want Coordinated Entry. Call 2-1-1 if you are not sure where to start.",
+      "phone": "211",
+      "url": "https://www.nocococ.org/cahps",
+      "address": null,
+      "hours": "Ask a navigator during agency hours",
+      "area": "Larimer County",
+      "tags": [
+        "coordinated entry",
+        "homeless",
+        "housing",
+        "waitlist",
+        "cahps"
+      ]
+    },
+    {
+      "id": "murphy-center-gear",
+      "name": "Murphy Center Gear Room",
+      "category": "clothing",
+      "description": "Sleeping bags, tents, coats, and other outdoor gear for people using the Murphy Center. Sign up at the front desk between 8am and 9:30am; pickup is 9:30-11:30am weekdays. You need a current Murphy Center intake.",
+      "phone": "970-494-9940",
+      "url": "https://www.homewardalliance.org/hwa/distribution/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 9:30am-11:30am; sign up 8am-9:30am",
+      "area": "Fort Collins",
+      "tags": [
+        "homeless",
+        "gear",
+        "tents",
+        "coats",
+        "day shelter"
+      ]
+    },
+    {
+      "id": "summitstone-murphy-clinic",
+      "name": "SummitStone clinic at the Murphy Center",
+      "category": "health",
+      "description": "Walk-up mental health, substance-use, and basic medical care for people who are homeless or at risk of it, at the Murphy Center. No insurance required. Check in at the front desk or call the clinic line.",
+      "phone": "970-494-4306",
+      "url": "https://www.homewardalliance.org/murphy-center/hours-faqs/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Weekdays during Murphy Center hours; ask the front desk",
+      "area": "Fort Collins",
+      "tags": [
+        "homeless",
+        "clinic",
+        "mental health",
+        "counseling",
+        "health"
+      ]
+    },
+    {
+      "id": "matthews-house-landing",
+      "name": "The Matthews House - The Landing (Loveland)",
+      "category": "shelter",
+      "description": "24/7 overnight and day shelter for youth ages 15-20 who do not have a safe place to stay. Meals, basic needs, and help finding longer-term housing. Call before you go if you can.",
+      "phone": "970-699-3886",
+      "url": "https://www.thematthewshouse.org/shelter/",
+      "address": "814 E 16th St, Loveland, CO 80538",
+      "hours": "Open 24/7",
+      "area": "Loveland",
+      "tags": [
+        "homeless",
+        "youth",
+        "overnight shelter",
+        "day shelter",
+        "ages 15-20"
+      ]
+    },
+    {
+      "id": "matthews-house-fort-collins",
+      "name": "The Matthews House - Fort Collins drop-in",
+      "category": "shelter",
+      "description": "Day drop-in for youth who need a safe place, food, and help connecting to The Landing or other housing. Mondays and Wednesdays. Under 18: staff will help you find the right next step.",
+      "phone": "970-699-3886",
+      "url": "https://www.thematthewshouse.org/shelter/",
+      "address": "415 Mason Ct #1, Fort Collins, CO 80524",
+      "hours": "Mon and Wed 12pm-6pm",
+      "area": "Fort Collins",
+      "tags": [
+        "homeless",
+        "youth",
+        "day shelter",
+        "drop-in"
+      ]
+    },
+    {
+      "id": "homeward-alliance-housing",
+      "name": "Homeward Alliance housing navigation",
+      "category": "housing",
+      "description": "Help using a housing voucher, staying housed after a lease warning, and getting on Coordinated Entry. Does not hand out apartments or overnight beds. Start with a Resource Navigator at the Murphy Center, or call the housing line if you already have a voucher.",
+      "phone": "970-672-1727",
+      "url": "https://www.homewardalliance.org/hwa/housing-first-initiative/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Weekdays; navigators at Murphy Center 8am-11:30am",
+      "area": "Fort Collins",
+      "tags": [
+        "homeless",
+        "housing",
+        "voucher",
+        "coordinated entry"
+      ]
     }
   ]
 }

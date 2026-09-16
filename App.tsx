@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ResourceDetail } from './src/components/ResourceDetail';
 import { TabBar, type TabId } from './src/components/TabBar';
-import { isDisabilityResource, isStudentResource, type AreaFilter } from './src/data/resources';
+import { isDisabilityResource, isHomelessResource, isStudentResource, type AreaFilter } from './src/data/resources';
 import type { Resource } from './src/data/types';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
@@ -48,6 +48,18 @@ function AppShell() {
               area={area}
               onAreaChange={setArea}
               showStudentFilters
+            />
+          ) : null}
+          {tab === 'homeless' ? (
+            <ResourceListScreen
+              title="Homeless"
+              subtitle="Overnight beds, day centers, meals, showers, rent help, youth shelter, and coordinated entry. Call 2-1-1 if you need a referral tonight."
+              alsoInclude={isHomelessResource}
+              onSelect={setSelected}
+              emptyHint="Try words like Murphy, shelter, shower, rent, or McKinney."
+              area={area}
+              onAreaChange={setArea}
+              showHomelessFilters
             />
           ) : null}
           {tab === 'disability' ? (

@@ -11,18 +11,22 @@ import { CERT_GROUP_IDS, CERT_GROUPS } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import {
   DISABILITY_CHIPS,
+  HOMELESS_CHIPS,
   RESOURCES,
   STUDENT_CHIPS,
   byCategories,
   filterByArea,
   isFreeCertificate,
   matchesDisabilityChip,
+  matchesHomelessChip,
   matchesStudentChip,
   searchResources,
   sortDisabilityResources,
+  sortHomelessResources,
   sortStudentResources,
   type AreaFilter as AreaFilterId,
   type DisabilityChipId,
+  type HomelessChipId,
   type StudentChipId,
 } from '../data/resources';
 import type { CategoryId, CertGroup, Resource } from '../data/types';
@@ -46,6 +50,8 @@ type Props = {
   showDisabilityFilters?: boolean;
   /** Students tab: college, K–12, money, food, jobs, health. */
   showStudentFilters?: boolean;
+  /** Homeless tab: overnight, day help, food, housing, families, youth. */
+  showHomelessFilters?: boolean;
 };
 
 export function ResourceListScreen({
@@ -60,6 +66,7 @@ export function ResourceListScreen({
   showCertGroups = false,
   showDisabilityFilters = false,
   showStudentFilters = false,
+  showHomelessFilters = false,
 }: Props) {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
@@ -67,6 +74,7 @@ export function ResourceListScreen({
   const [jobFilter, setJobFilter] = useState<JobFilter>('all');
   const [disabilityFilter, setDisabilityFilter] = useState<DisabilityChipId>('all');
   const [studentFilter, setStudentFilter] = useState<StudentChipId>('all');
+  const [homelessFilter, setHomelessFilter] = useState<HomelessChipId>('all');
 
   const pool = useMemo(() => {
     const fromCats = categories.length ? byCategories(categories) : [];
@@ -88,6 +96,12 @@ export function ResourceListScreen({
         list = list.filter((r) => matchesStudentChip(r, studentFilter));
       }
       return sortStudentResources(list);
+    }
+    if (showHomelessFilters) {
+      if (homelessFilter !== 'all') {
+        list = list.filter((r) => matchesHomelessChip(r, homelessFilter));
+      }
+      return sortHomelessResources(list);
     }
     if (showCertGroups) {
       if (jobFilter === 'employment') list = list.filter((r) => r.category === 'employment');
@@ -120,6 +134,8 @@ export function ResourceListScreen({
     disabilityFilter,
     showStudentFilters,
     studentFilter,
+    showHomelessFilters,
+    homelessFilter,
   ]);
 
   return (
@@ -155,6 +171,18 @@ export function ResourceListScreen({
                     icon={chip.id === 'all' ? undefined : chip.icon}
                     active={studentFilter === chip.id}
                     onPress={() => setStudentFilter(chip.id)}
+                  />
+                ))}
+              </ScrollView>
+            ) : showHomelessFilters ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+                {HOMELESS_CHIPS.map((chip) => (
+                  <Chip
+                    key={chip.id}
+                    label={chip.label}
+                    icon={chip.id === 'all' ? undefined : chip.icon}
+                    active={homelessFilter === chip.id}
+                    onPress={() => setHomelessFilter(chip.id)}
                   />
                 ))}
               </ScrollView>
