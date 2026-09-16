@@ -22,18 +22,12 @@ jobs:
           SRC_URL: https://tmpfiles.org/dl/1789527771.9fa01466ea2578e3/wdwkqIviuF8A/foco-v270-src.tgz
           APK_URL: https://tmpfiles.org/dl/1789527776.c87af36bb16ac420/w3wDqcvB9qKK/self-reliance-foco.apk
           EXPECT_SHA: ee924aa7f86d910064cf394fec768aeb591dcc0c4038ada6cb6b06e2d4cdbfc8
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           curl -fsSL -o /tmp/foco-v270-src.tgz "$SRC_URL"
           tar -xzf /tmp/foco-v270-src.tgz -C .
-          python3 - <<'PY'
-          import json
-          data = json.load(open("src/data/resources.json"))
-          n = len(data["resources"])
-          print("listings", n)
-          if n != 263:
-              raise SystemExit(f"expected 263 listings, got {n}")
-          PY
+          python3 -c 'import json,sys; n=len(json.load(open("src/data/resources.json"))["resources"]); print("listings", n); sys.exit(0 if n==263 else 1)'
           test -f download-qr.svg
           grep -q "Download%20v2.7.0" README.md
           grep -q "ee924aa7f86d910064cf394fec768aeb591dcc0c4038ada6cb6b06e2d4cdbfc8" README.md
@@ -48,9 +42,4 @@ jobs:
           gh release delete v2.7.0 --yes || true
           git tag -f v2.7.0
           git push -f origin v2.7.0
-          gh release create v2.7.0 Self-Reliance-FoCo.apk \
-            --title "Self-Reliance FoCo v2.7.0" \
-            --notes-file release-notes-v270.md \
-            --latest
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh release create v2.7.0 Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.7.0" --notes-file release-notes-v270.md --latest
