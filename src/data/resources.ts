@@ -565,6 +565,7 @@ const HOMELESS_ALWAYS = new Set<string>([
   'murphy-inclement-weather',
   'animal-friends-kibble',
   'four-paws-pet-pantry',
+  'until-theyre-home',
   'homeward-alliance-wagees',
 ]);
 

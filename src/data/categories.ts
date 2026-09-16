@@ -159,7 +159,7 @@ export const CATEGORIES: Category[] = [
     short: 'Pets',
     icon: 'paw-outline',
     color: '#00796B',
-    blurb: 'Pet food pantries and low-cost spay, neuter, and vaccines.',
+    blurb: 'Pet food, lost pets, low-cost clinic, rehoming help, and 24/7 emergency vet.',
   },
   {
     id: 'childcare',
