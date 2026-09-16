@@ -61,23 +61,17 @@ jobs:
           }
           download_tmp "$APK_PAGE" /tmp/Self-Reliance-FoCo.apk
           echo "$EXPECT_SHA  /tmp/Self-Reliance-FoCo.apk" | sha256sum -c
-          cp /tmp/Self-Reliance-FoCo.apk /tmp/release-Self-Reliance-FoCo.apk
-      - name: Commit source overlay
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          rm -f .github/workflows/overlay-v2150.yml Self-Reliance-FoCo.apk
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git status
-          git commit -m "Add trash day and open now (v2.15.0)."
-          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/TheMilkmanJ/SelfReliance-FoCo.git"
-          git push origin HEAD:main
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          gh release create v2.15.0 /tmp/release-Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
+          gh release create v2.15.0 /tmp/Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.15.0" --notes-file release-notes-v2150.md
+      - name: Commit source overlay
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Add trash day and open now (v2.15.0).
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          file_pattern: '*.json *.md *.tsx *.ts *.mjs .gitignore docs/flyer.html .github/workflows/check-source.yml'
+          disable_globbing: true
