@@ -1,0 +1,56 @@
+name: publish-v213
+
+on:
+  push:
+    paths:
+      - ".github/workflows/publish-v213.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overlay source, attach APK, delete this workflow
+        env:
+          SRC_PAGE: https://tmpfiles.org/wwwCqSBoxKsu/foco-v213-src.tgz
+          APK_PAGE: https://tmpfiles.org/wfw1qFB1xoxV/self-reliance-foco.apk
+          EXPECT_SHA: 04c2810e4a111ab87e8e5ca014dae5b776ca45a6e2caaf9a6c93b85185e0ab8b
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$SRC_PAGE" /tmp/src.tgz
+          tar xzf /tmp/src.tgz
+          python3 -c 'import json,sys; n=len(json.load(open("src/data/resources.json"))["resources"]); print("listings", n); sys.exit(0 if n==354 else 1)'
+          grep -q transfort-trip-planner src/data/resources.json
+          grep -q transfort-flex src/data/resources.json
+          grep -q google-maps-offline-foco src/data/resources.json
+          grep -q "Bus directions" src/components/ResourceDetail.tsx
+          grep -q maps/dir src/lib/actions.ts
+          grep -q Download%20v2.13.0 README.md
+          grep -q 04c2810e4a111ab87e8e5ca014dae5b776ca45a6e2caaf9a6c93b85185e0ab8b README.md
+          download_tmp "$APK_PAGE" Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c
+          rm -f .github/workflows/publish-v213.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.json README.md release-notes-v2130.md docs/flyer.html src/lib/actions.ts src/components/ResourceDetail.tsx src/data/categories.ts src/data/resources.ts src/data/resources.json
+          git add -u .github/workflows/publish-v213.yml
+          git commit -m "Release v2.13.0 directions and Transfort overlay."
+          git push
+          gh release create v2.13.0 Self-Reliance-FoCo.apk --title "Self-Reliance FoCo v2.13.0" --notes-file release-notes-v2130.md
