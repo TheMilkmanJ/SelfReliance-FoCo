@@ -307,6 +307,7 @@ const STUDENT_ALWAYS = new Set<string>([
   'csu-alvs',
   'csu-ramride',
   'csu-ram-scholars',
+  'csu-pride-resource-center',
   'csu-ccp',
   'frcc-wolf-pantry',
   'frcc-financial-aid',
@@ -558,6 +559,13 @@ const HOMELESS_ALWAYS = new Set<string>([
   'st-johns-lutheran-pantry',
   'wellington-food-pantry',
   'house-of-neighborly-service-berthoud',
+  'murphy-dmv-mail-letter',
+  'colorado-necessary-documents',
+  '211-heat-and-cold',
+  'murphy-inclement-weather',
+  'animal-friends-kibble',
+  'four-paws-pet-pantry',
+  'homeward-alliance-wagees',
 ]);
 
 const HOMELESS_TAG =

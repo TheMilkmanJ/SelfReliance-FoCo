@@ -34,6 +34,14 @@ export const CATEGORIES: Category[] = [
     blurb: 'Job search, resumes, training, workforce centers, apprenticeships.',
   },
   {
+    id: 'reentry',
+    label: 'Reentry',
+    short: 'Reentry',
+    icon: 'walk-outline',
+    color: '#546E7A',
+    blurb: 'Help after jail or prison: ID, jobs, housing, and sealing a record.',
+  },
+  {
     id: 'benefits',
     label: 'Benefits & Cash Help',
     short: 'Benefits',
@@ -80,6 +88,14 @@ export const CATEGORIES: Category[] = [
     icon: 'document-text-outline',
     color: '#37474F',
     blurb: 'Free civil legal aid, eviction defense, benefits appeals.',
+  },
+  {
+    id: 'identification',
+    label: 'Identification',
+    short: 'ID',
+    icon: 'id-card-outline',
+    color: '#455A64',
+    blurb: 'Birth certificates, Colorado ID, DMV, Social Security cards, passports.',
   },
   {
     id: 'seniors_disability',
@@ -130,6 +146,22 @@ export const CATEGORIES: Category[] = [
     blurb: 'Free clothing closets, kids clothes, interview outfits, hygiene.',
   },
   {
+    id: 'household',
+    label: 'Furniture & Household',
+    short: 'Household',
+    icon: 'cube-outline',
+    color: '#795548',
+    blurb: 'Beds, furniture, dishes, and thrift stores with used household goods.',
+  },
+  {
+    id: 'pets',
+    label: 'Pets',
+    short: 'Pets',
+    icon: 'paw-outline',
+    color: '#00796B',
+    blurb: 'Pet food pantries and low-cost spay, neuter, and vaccines.',
+  },
+  {
     id: 'childcare',
     label: 'Child Care',
     short: 'Child care',
@@ -144,6 +176,14 @@ export const CATEGORIES: Category[] = [
     icon: 'globe-outline',
     color: '#0277BD',
     blurb: 'English classes, citizenship help, immigration legal aid, Spanish hotline.',
+  },
+  {
+    id: 'lgbtq',
+    label: 'LGBTQ+',
+    short: 'LGBTQ+',
+    icon: 'heart-circle-outline',
+    color: '#8E24AA',
+    blurb: 'Local Pride groups, family support, campus center, and 24/7 youth lines.',
   },
   {
     id: 'addiction',
@@ -184,6 +224,14 @@ export const CATEGORIES: Category[] = [
     icon: 'thunderstorm-outline',
     color: '#37474F',
     blurb: 'Wildfire and flood recovery, Red Cross, alerts, FEMA after a declaration.',
+  },
+  {
+    id: 'weather',
+    label: 'Heat & Cold',
+    short: 'Weather',
+    icon: 'thermometer-outline',
+    color: '#01579B',
+    blurb: 'Warming and cooling places, libraries, Murphy Center extra hours, 2-1-1.',
   },
 ];
 

@@ -21,7 +21,13 @@ export type CategoryId =
   | 'special_needs'
   | 'holiday'
   | 'dental'
-  | 'disaster';
+  | 'disaster'
+  | 'identification'
+  | 'pets'
+  | 'lgbtq'
+  | 'weather'
+  | 'reentry'
+  | 'household';
 
 export type Area =
   | 'Fort Collins'

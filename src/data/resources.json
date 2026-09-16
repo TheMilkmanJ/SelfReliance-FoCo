@@ -1581,7 +1581,7 @@
       "id": "coursera-financial-aid",
       "name": "Coursera (Google Career Certificates + financial aid)",
       "category": "education",
-      "description": "Google Career Certificates (IT Support, Data Analytics, UX, Project Management and more) live here. Lessons can be audited free. The shareable certificate usually needs Coursera financial aid \u2014 apply on the course page \u2014 or a workforce program that pays.",
+      "description": "Google Career Certificates (IT Support, Data Analytics, UX, Project Management and more) live here. Lessons can be audited free. The shareable certificate usually needs Coursera financial aid — apply on the course page — or a workforce program that pays.",
       "phone": null,
       "url": "https://www.coursera.org/",
       "address": null,
@@ -1639,7 +1639,7 @@
       "id": "colorado-mandatory-reporter",
       "name": "Colorado Mandatory Reporter Training",
       "category": "education",
-      "description": "Free official Colorado Child Welfare Training System course (about 2 hours, English or Spanish). Many school, child-care, health, and social-service jobs require this certificate. Save or print it at the end \u2014 the site does not store it. Do not create an account; use Public Training.",
+      "description": "Free official Colorado Child Welfare Training System course (about 2 hours, English or Spanish). Many school, child-care, health, and social-service jobs require this certificate. Save or print it at the end — the site does not store it. Do not create an account; use Public Training.",
       "phone": "800-390-9619",
       "url": "https://coloradocwts.com/public-training/mandated-reporter-training/",
       "address": null,
@@ -1714,7 +1714,7 @@
       "id": "intuit-academy",
       "name": "Intuit Academy (bookkeeping)",
       "category": "education",
-      "description": "Free bookkeeping and tax courses on Intuit's own Academy site, including the Intuit Bookkeeping Certification for U.S. residents. Use academy.intuit.com \u2014 the Coursera version of this program is a paid subscription.",
+      "description": "Free bookkeeping and tax courses on Intuit's own Academy site, including the Intuit Bookkeeping Certification for U.S. residents. Use academy.intuit.com — the Coursera version of this program is a paid subscription.",
       "phone": null,
       "url": "https://academy.intuit.com/",
       "address": null,
@@ -1842,7 +1842,7 @@
       "id": "and-med-9",
       "name": "Aid to the Needy Disabled (AND / Med-9)",
       "category": "benefits",
-      "description": "Colorado cash help for adults 18-59 with a disability who are waiting on SSI. A Colorado-licensed provider completes the Med-9 form \u2014 doctor, PA, NP, RN, psychologist, counselor, or clinical social worker. UCHealth Family Medicine at 1025 Pennock Place, Salud Family Health, Sunrise Community Health, SummitStone, and other licensed clinics can complete it. Apply at Larimer County Human Services (970-498-6300) or Colorado PEAK, then have a provider fill out the Med-9.",
+      "description": "Colorado cash help for adults 18-59 with a disability who are waiting on SSI. A Colorado-licensed provider completes the Med-9 form — doctor, PA, NP, RN, psychologist, counselor, or clinical social worker. UCHealth Family Medicine at 1025 Pennock Place, Salud Family Health, Sunrise Community Health, SummitStone, and other licensed clinics can complete it. Apply at Larimer County Human Services (970-498-6300) or Colorado PEAK, then have a provider fill out the Med-9.",
       "phone": "970-498-6300",
       "url": "https://cdhs.colorado.gov/adult-financial-programs",
       "address": "1501 Blue Spruce Dr, Fort Collins, CO 80524",
@@ -3696,7 +3696,7 @@
       "id": "osha-10-outreach",
       "name": "OSHA 10-Hour card (construction or general industry)",
       "category": "education",
-      "description": "The safety card warehouses, construction, and manufacturing often want. Use OSHA's official trainer list only \u2014 fake 'OSHA certified' sites will not give you a real card. The course is not free; ask WIOA at the Workforce Center to pay. A forklift 'certificate' sold online is not OSHA training; your employer has to train you on the lift.",
+      "description": "The safety card warehouses, construction, and manufacturing often want. Use OSHA's official trainer list only — fake 'OSHA certified' sites will not give you a real card. The course is not free; ask WIOA at the Workforce Center to pay. A forklift 'certificate' sold online is not OSHA training; your employer has to train you on the lift.",
       "phone": null,
       "url": "https://www.osha.gov/training/outreach/find-a-trainer/",
       "address": null,
@@ -3716,7 +3716,7 @@
       "id": "wioa-paid-certificates-larimer",
       "name": "Workforce Center paid job training (WIOA)",
       "category": "education",
-      "description": "If you are homeless, in recovery, on SNAP or TANF, or otherwise struggling to work, Larimer's Career Transition team can often pay for a real certificate: food handler or ServSafe Manager, OSHA-10, CNA, CDL, and similar. This is the same Workforce Center as the Jobs card \u2014 ask specifically for training money, not just resume help.",
+      "description": "If you are homeless, in recovery, on SNAP or TANF, or otherwise struggling to work, Larimer's Career Transition team can often pay for a real certificate: food handler or ServSafe Manager, OSHA-10, CNA, CDL, and similar. This is the same Workforce Center as the Jobs card — ask specifically for training money, not just resume help.",
       "phone": "970-498-6694",
       "url": "https://www.larimer.gov/ewd/programs/career-transition-and-training-services",
       "address": "200 W Oak St, Suite 5000, Fort Collins, CO 80521",
@@ -3737,7 +3737,7 @@
       "id": "careerready-colorado-certificate",
       "name": "CareerReady Colorado Certificate (WorkKeys)",
       "category": "education",
-      "description": "A skills certificate signed by the governor: applied math, workplace documents, and graphic literacy. Many employers treat it as proof you can handle a first job even without a long work history. Ask the Workforce Center (970-498-6600) to schedule it \u2014 do not pay a random website for a fake NCRC.",
+      "description": "A skills certificate signed by the governor: applied math, workplace documents, and graphic literacy. Many employers treat it as proof you can handle a first job even without a long work history. Ask the Workforce Center (970-498-6600) to schedule it — do not pay a random website for a fake NCRC.",
       "phone": "970-498-6600",
       "url": "https://cdle.colorado.gov/jobs-training/career-help/skills-assessment/career-ready-certificate",
       "address": "200 W Oak St, Suite 5000, Fort Collins, CO 80521",
@@ -3776,7 +3776,7 @@
       "id": "mental-health-first-aid-colorado",
       "name": "Mental Health First Aid (Colorado classes)",
       "category": "education",
-      "description": "One-day certificate in spotting a mental-health or substance-use crisis and getting someone help. SummitStone often runs it free in Fort Collins. Useful for peer work, shelters, restaurants, and any job that deals with people in crisis. Search the Colorado class calendar \u2014 do not pay a random online knockoff.",
+      "description": "One-day certificate in spotting a mental-health or substance-use crisis and getting someone help. SummitStone often runs it free in Fort Collins. Useful for peer work, shelters, restaurants, and any job that deals with people in crisis. Search the Colorado class calendar — do not pay a random online knockoff.",
       "phone": null,
       "url": "https://www.mhfaco.org/find-a-class",
       "address": "4856 Innovation Dr, Fort Collins, CO 80525",
@@ -3814,7 +3814,7 @@
       "id": "qmap-colorado",
       "name": "Colorado QMAP (medication administration)",
       "category": "education",
-      "description": "State qualification to give meds in assisted living, group homes, and some disability programs. Start with the free CDPHE prep course on CO.TRAIN, then take an approved class (often $90\u2013$120 locally). Must be 18. Group homes and Foothills Gateway-type jobs ask for this.",
+      "description": "State qualification to give meds in assisted living, group homes, and some disability programs. Start with the free CDPHE prep course on CO.TRAIN, then take an approved class (often $90–$120 locally). Must be 18. Group homes and Foothills Gateway-type jobs ask for this.",
       "phone": null,
       "url": "https://cdphe.colorado.gov/health-facilities/medication-administration/qmap",
       "address": null,
@@ -3833,7 +3833,7 @@
       "id": "mcdonalds-archways-to-opportunity",
       "name": "McDonald's Archways to Opportunity",
       "category": "education",
-      "description": "If you already work at a participating McDonald's: free high-school diploma, English classes, and college tuition help. Crew usually need 90 days and about 15 hours a week. Ask your GM \u2014 this is how a fast-food job turns into a raise or a diploma, not a public food-handler class.",
+      "description": "If you already work at a participating McDonald's: free high-school diploma, English classes, and college tuition help. Crew usually need 90 days and about 15 hours a week. Ask your GM — this is how a fast-food job turns into a raise or a diploma, not a public food-handler class.",
       "phone": null,
       "url": "https://www.archwaystoopportunity.com/",
       "address": null,
@@ -3853,7 +3853,7 @@
       "id": "nwcg-s190-wildland-fire",
       "name": "NWCG S-190 Introduction to Wildland Fire Behavior",
       "category": "education",
-      "description": "Free federal intro course used for seasonal wildland-fire and conservation-crew jobs. Take it on the Wildland Fire Learning Portal. An official firefighter card still needs S-130 plus a fire department or crew \u2014 this class alone is the usual first step, not a job offer.",
+      "description": "Free federal intro course used for seasonal wildland-fire and conservation-crew jobs. Take it on the Wildland Fire Learning Portal. An official firefighter card still needs S-130 plus a fire department or crew — this class alone is the usual first step, not a job offer.",
       "phone": null,
       "url": "https://www.nwcg.gov/publications/training-courses/s-190",
       "address": null,
@@ -4500,7 +4500,7 @@
       "id": "colorado-civil-rights-division",
       "name": "Colorado Civil Rights Division (disability discrimination)",
       "category": "legal",
-      "description": "Free state complaints for disability discrimination in jobs, housing, and public places. File online through CaseConnect or call. Deadlines are short \u2014 do not wait. Relay 711. Spanish 720-432-4294. Not the same as Disability Law Colorado.",
+      "description": "Free state complaints for disability discrimination in jobs, housing, and public places. File online through CaseConnect or call. Deadlines are short — do not wait. Relay 711. Spanish 720-432-4294. Not the same as Disability Law Colorado.",
       "phone": "303-894-2997",
       "url": "https://ccrd.colorado.gov/the-complaint-process",
       "address": "1560 Broadway, Suite 825, Denver, CO 80202",
@@ -4556,7 +4556,7 @@
       "id": "csu-student-disability-center",
       "name": "CSU Student Disability Center",
       "category": "education",
-      "description": "Academic accommodations for Colorado State University students with disabilities (exams, housing, access). Appointments in TILT room 121, phone, or Teams. Not a community clinic \u2014 you must be a CSU student. Email sdc_csu@colostate.edu.",
+      "description": "Academic accommodations for Colorado State University students with disabilities (exams, housing, access). Appointments in TILT room 121, phone, or Teams. Not a community clinic — you must be a CSU student. Email sdc_csu@colostate.edu.",
       "phone": "970-491-6385",
       "url": "https://accessibility.colostate.edu/disabilitycenter/connect/",
       "address": "TILT Room 121, Fort Collins, CO 80523",
@@ -4630,7 +4630,7 @@
       "id": "in-pathways-inclusive-higher-ed",
       "name": "IN! Pathways to Inclusive Higher Education",
       "category": "special_needs",
-      "description": "Statewide advocacy for college options for students with intellectual disability (including CSU RAM Scholars). IN! does not enroll students directly \u2014 they explain the pathways. Free webinars and modules on the website.",
+      "description": "Statewide advocacy for college options for students with intellectual disability (including CSU RAM Scholars). IN! does not enroll students directly — they explain the pathways. Free webinars and modules on the website.",
       "phone": "720-629-0196",
       "url": "https://inclusivehighered.org/",
       "address": null,
@@ -4705,7 +4705,7 @@
       "id": "csu-rams-against-hunger",
       "name": "CSU Rams Against Hunger (campus pantry)",
       "category": "food",
-      "description": "On-campus food pantry, meal swipes, and SNAP help for CSU students, staff, and faculty. Bring a CSU ID and bags. General Services Building, 1251 Mason Street. Hours change by semester \u2014 check the website.",
+      "description": "On-campus food pantry, meal swipes, and SNAP help for CSU students, staff, and faculty. Bring a CSU ID and bags. General Services Building, 1251 Mason Street. Hours change by semester — check the website.",
       "phone": "970-219-7165",
       "url": "https://basicneeds.colostate.edu/rams-against-hunger/",
       "address": "1251 Mason St, Fort Collins, CO 80521",
@@ -5386,6 +5386,612 @@
         "housing",
         "voucher",
         "coordinated entry"
+      ]
+    },
+    {
+      "id": "larimer-vital-records",
+      "name": "Larimer County Vital Records - birth certificates",
+      "category": "identification",
+      "description": "Certified Colorado birth certificates (1900-present). Fort Collins is the only vital-records office in Larimer County; Loveland and Estes Park do not issue them. In-person visits are by appointment. Bring photo ID. Spanish: same number.",
+      "phone": "970-498-6710",
+      "url": "https://www.larimer.gov/health/health-department-general-info/birth-and-death-records/requesting-birth-certificate",
+      "address": "1525 Blue Spruce Dr, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-12pm and 12:30-4:15pm; appointment required",
+      "area": "Larimer County",
+      "tags": [
+        "birth certificate",
+        "vital records",
+        "id",
+        "identification"
+      ]
+    },
+    {
+      "id": "colorado-dmv-fort-collins",
+      "name": "Colorado DMV - Fort Collins (driver license and ID)",
+      "category": "identification",
+      "description": "State driver-license office for a new or replacement Colorado ID or license, written tests, and reinstatement. This is not the county vehicle-registration desk on Oak Street. If you have no home address, bring a letter from an agency that will accept your mail (Murphy Center can write that).",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/locations",
+      "address": "3030 S College Ave, Suite 100, Fort Collins, CO 80526",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "dmv",
+        "colorado id",
+        "driver license",
+        "identification",
+        "homeless"
+      ]
+    },
+    {
+      "id": "colorado-dmv-loveland",
+      "name": "Colorado DMV - Loveland (driver license and ID)",
+      "category": "identification",
+      "description": "State driver-license office for a new or replacement Colorado ID or license, written tests, and reinstatement. Not the county vehicle-licensing office. Same statewide DMV phone as Fort Collins.",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/locations",
+      "address": "118 E 29th St, Suite F, Loveland, CO 80538",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Loveland",
+      "tags": [
+        "dmv",
+        "colorado id",
+        "driver license",
+        "identification"
+      ]
+    },
+    {
+      "id": "colorado-necessary-documents",
+      "name": "Colorado Necessary Documents Program (ID vouchers)",
+      "category": "identification",
+      "description": "State program that can waive the fee for a Colorado ID, driver license, or birth certificate if you are homeless, low-income, 60+, disabled, a disaster survivor, or a survivor of domestic violence. Vouchers are handed out by Metro Caring (Denver) and partner sites. Ask at the Murphy Center or call 2-1-1 for a closer partner. Metro Caring walk-in ID vouchers are Tuesdays. Not for reinstatement fees.",
+      "phone": "303-860-7200",
+      "url": "https://cdphe.colorado.gov/necessary-documents",
+      "address": "1100 E 18th Ave, Denver, CO 80218",
+      "hours": "ID vouchers Tue during Fresh Foods Market hours; birth-certificate vouchers Mon-Thu",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "id voucher",
+        "birth certificate",
+        "homeless",
+        "identification",
+        "dmv"
+      ]
+    },
+    {
+      "id": "ssa-card-replacement",
+      "name": "Replace a Social Security card",
+      "category": "identification",
+      "description": "Request a replacement Social Security card online at ssa.gov if you can, or call for an appointment at the Fort Collins office. Bring original ID. Appointments are strongly recommended. National line 1-800-772-1213.",
+      "phone": "866-336-7385",
+      "url": "https://www.ssa.gov/number-card",
+      "address": "301 S Howes St, 4th Floor, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 9am-4pm; call first",
+      "area": "Fort Collins",
+      "tags": [
+        "social security",
+        "ssn",
+        "identification",
+        "id"
+      ]
+    },
+    {
+      "id": "mycolorado-digital-id",
+      "name": "myColorado app (digital ID)",
+      "category": "identification",
+      "description": "Official State of Colorado app. If you already have a Colorado driver license or ID, you can add a Digital ID for in-state proof of identity. It does not replace a physical card at every desk. Download only from the App Store or Google Play.",
+      "phone": null,
+      "url": "https://mycolorado.state.co.us/",
+      "address": null,
+      "hours": "Anytime on a phone",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "digital id",
+        "mycolorado",
+        "identification",
+        "driver license"
+      ]
+    },
+    {
+      "id": "larimer-clerk-passports",
+      "name": "Larimer County Clerk - passports",
+      "category": "identification",
+      "description": "Passport acceptance office. Staff take the application and photos. Appointments required; up to 3 applications per appointment. This is not a Colorado ID. Press 1 for a recording technician.",
+      "phone": "970-498-7860",
+      "url": "https://www.larimer.gov/clerk/recording/passport",
+      "address": "200 W Oak St, First Floor, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 8am-5pm; appointment required",
+      "area": "Larimer County",
+      "tags": [
+        "passport",
+        "identification",
+        "clerk"
+      ]
+    },
+    {
+      "id": "murphy-dmv-mail-letter",
+      "name": "Murphy Center - DMV mail letter",
+      "category": "identification",
+      "description": "If you have no home address, the Colorado DMV needs a letter on agency letterhead saying the agency will accept your mail. Ask at the Murphy Center front desk for that letter, then go to the College Ave DMV. Navigators can also help with ID questions during day hours.",
+      "phone": "970-494-9940",
+      "url": "https://www.homewardalliance.org/murphy-center/hours-faqs/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "homeless",
+        "dmv",
+        "identification",
+        "mail",
+        "unhoused"
+      ]
+    },
+    {
+      "id": "animal-friends-kibble",
+      "name": "Animal Friends Alliance - Kibble Supply pantry",
+      "category": "pets",
+      "description": "Drive-thru dog and cat food for people who need help keeping a pet. First visit can be without an application; apply after that. First Sunday and third Monday each month, 9am-12pm. Come once a month. SNAP or Medicaid usually qualifies. Call ext. 5133 for the application.",
+      "phone": "970-484-8516",
+      "url": "https://www.savinganimalstoday.org/community-pet-resources/pet-food-assistance",
+      "address": "2321 E Mulberry St, Unit 12A, Fort Collins, CO 80524",
+      "hours": "First Sunday and third Monday 9am-12pm",
+      "area": "Fort Collins",
+      "tags": [
+        "pet food",
+        "dogs",
+        "cats",
+        "homeless",
+        "pantry"
+      ]
+    },
+    {
+      "id": "four-paws-pet-pantry",
+      "name": "4 Paws Pet Pantry",
+      "category": "pets",
+      "description": "Pet food for people who bring recent proof of help such as SNAP, Medicaid, a Murphy Center or Crossroads referral, or a disability placard. Inside Spa 4 Paws on the south side of the Rollerland parking lot. If you do not qualify, a small donation can still get a bag of food.",
+      "phone": "970-484-7297",
+      "url": "https://4pawspetpantry.org/need_assistance",
+      "address": "328 S Link Ln #2B, Fort Collins, CO 80524",
+      "hours": "Tue-Sat 9am-3pm",
+      "area": "Fort Collins",
+      "tags": [
+        "pet food",
+        "dogs",
+        "cats",
+        "homeless",
+        "pantry"
+      ]
+    },
+    {
+      "id": "colorado-pet-pantry-loveland",
+      "name": "Colorado Pet Pantry - Food Bank Loveland",
+      "category": "pets",
+      "description": "Pet food distribution at the Food Bank for Larimer County in Loveland. Fourth Saturday of most months, 9-11am, outdoors. You can use Colorado Pet Pantry once every three months at any of their sites. Register through their site if asked.",
+      "phone": "303-818-0618",
+      "url": "https://coloradopetpantry.org/",
+      "address": "2600 N Lincoln Ave, Loveland, CO 80538",
+      "hours": "Fourth Saturday of the month 9am-11am",
+      "area": "Loveland",
+      "tags": [
+        "pet food",
+        "dogs",
+        "cats",
+        "pantry"
+      ]
+    },
+    {
+      "id": "animal-friends-pal-clinic",
+      "name": "Animal Friends Alliance PAL+ clinic",
+      "category": "pets",
+      "description": "Low-cost spay/neuter, core vaccines, and microchips for qualifying low-income households. PAL+ clients often pay about $35 per cat and $60 per dog for surgery. By appointment at the Mulberry clinic. Public clinic pricing is also posted if you do not qualify for PAL+.",
+      "phone": "970-484-1861",
+      "url": "https://www.savinganimalstoday.org/",
+      "address": "2321 E Mulberry St, Unit 3, Fort Collins, CO 80524",
+      "hours": "By appointment",
+      "area": "Fort Collins",
+      "tags": [
+        "spay",
+        "neuter",
+        "vaccines",
+        "veterinary",
+        "pets"
+      ]
+    },
+    {
+      "id": "noco-equality",
+      "name": "Northern Colorado Equality",
+      "category": "lgbtq",
+      "description": "Local LGBTQ+ nonprofit for events, Pride, advocacy, and connections in Larimer County. Not a drop-in shelter. Call or email for the next event and who else can help.",
+      "phone": "970-818-2303",
+      "url": "https://nocoequality.org/",
+      "address": null,
+      "hours": "Call or email; no public walk-in desk",
+      "area": "Larimer County",
+      "tags": [
+        "lgbtq",
+        "pride",
+        "community"
+      ]
+    },
+    {
+      "id": "pflag-fort-collins",
+      "name": "PFLAG Fort Collins",
+      "category": "lgbtq",
+      "description": "Support groups for LGBTQ+ people and their families. Fort Collins meets the second Monday at 6:30pm (Foxtail 2 at the Senior Center or a confidential room — email first). Also Loveland (fourth Monday), Estes Park (second Wednesday), and Longmont.",
+      "phone": "970-541-1680",
+      "url": "https://pflagfortcollins.org/find-support/",
+      "address": "1200 Raintree Dr, Fort Collins, CO 80526",
+      "hours": "Fort Collins: second Monday 6:30-8pm; email for the room",
+      "area": "Larimer County",
+      "tags": [
+        "lgbtq",
+        "families",
+        "support group",
+        "pflag"
+      ]
+    },
+    {
+      "id": "voa-rainbow-respite",
+      "name": "VOA Rainbow Respite (LGBTQ+ older adults)",
+      "category": "lgbtq",
+      "description": "Free weekly in-home visits for LGBTQ+ older adults and a break for their caregivers. Volunteers of America Caring Companions. Not overnight care and not a drop-in center. Ask for Rainbow Respite or Caring Companions.",
+      "phone": "970-658-3188",
+      "url": "https://larimer.senioraccesspoints.colostate.edu/blog/2023/11/30/rainbow-respite/",
+      "address": "405 Canyon Ave, Fort Collins, CO 80521",
+      "hours": "Call weekdays to be matched with a volunteer",
+      "area": "Larimer County",
+      "tags": [
+        "lgbtq",
+        "seniors",
+        "respite",
+        "caregiver"
+      ]
+    },
+    {
+      "id": "csu-pride-resource-center",
+      "name": "CSU Pride Resource Center",
+      "category": "lgbtq",
+      "description": "Walk-in space for CSU students and community members: staff, referrals, and a place to sit. Lory Student Center Room 232, near Sweet Sinsations. No appointment needed.",
+      "phone": "970-491-4342",
+      "url": "https://prideresourcecenter.colostate.edu/",
+      "address": "Lory Student Center Room 232, Fort Collins, CO 80523",
+      "hours": "Walk-in Mon-Fri 9am-4pm",
+      "area": "Fort Collins",
+      "tags": [
+        "lgbtq",
+        "students",
+        "college",
+        "csu"
+      ]
+    },
+    {
+      "id": "trevor-project",
+      "name": "The Trevor Project",
+      "category": "lgbtq",
+      "description": "24/7 crisis line for LGBTQ+ young people. Call, text START to 678-678, or chat on the website. Not a local walk-in. If someone is in immediate danger, call 911.",
+      "phone": "1-866-488-7386",
+      "url": "https://www.thetrevorproject.org/",
+      "address": null,
+      "hours": "24/7",
+      "area": "National",
+      "tags": [
+        "lgbtq",
+        "crisis",
+        "youth",
+        "suicide"
+      ]
+    },
+    {
+      "id": "center-on-colfax",
+      "name": "The Center on Colfax (LGBTQ Colorado)",
+      "category": "lgbtq",
+      "description": "Statewide LGBTQ+ community center in Denver: health referrals, support, and advocacy. About an hour south on I-25 if you need a dedicated center. Call before you go.",
+      "phone": "303-733-7743",
+      "url": "https://lgbtqcolorado.org/",
+      "address": "1301 E Colfax Ave, Denver, CO 80218",
+      "hours": "Call for current visitor hours",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "lgbtq",
+        "denver",
+        "community center"
+      ]
+    },
+    {
+      "id": "211-heat-and-cold",
+      "name": "2-1-1 - today's warming or cooling center",
+      "category": "weather",
+      "description": "Warming and cooling sites change with the weather. Call 2-1-1 or text your ZIP to 898-211 and ask what is open today. Libraries, senior centers, and the Murphy Center are the usual indoor places when no extra site is listed.",
+      "phone": "211",
+      "url": "https://www.211colorado.org/",
+      "address": null,
+      "hours": "Call anytime; local 2-1-1 desk Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "warming center",
+        "cooling center",
+        "homeless",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "murphy-inclement-weather",
+      "name": "Murphy Center - heat and cold days",
+      "category": "weather",
+      "description": "Day shelter stays open on inclement-weather days, including holidays. Extreme heat: they may stay open until 7:30pm with AC, water, food, and restrooms. Winter: propane heaters on the west side when wind allows. Not overnight beds.",
+      "phone": "970-494-9940",
+      "url": "https://www.homewardalliance.org/murphy-center/hours-faqs/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-5pm; extra evening hours when they call an IWD",
+      "area": "Fort Collins",
+      "tags": [
+        "warming center",
+        "cooling center",
+        "homeless",
+        "day shelter",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "poudre-libraries-heat-cold",
+      "name": "Poudre Libraries - indoor heat and AC",
+      "category": "weather",
+      "description": "Free air-conditioned and heated public buildings: Old Town (201 Peterson), Harmony (4616 S Shields), and Council Tree (2733 Council Tree Ave). Sit, use restrooms and water, no purchase needed. Not an overnight shelter.",
+      "phone": "970-221-6740",
+      "url": "https://poudrelibraries.org/locations/",
+      "address": "201 Peterson St, Fort Collins, CO 80524",
+      "hours": "Most branches Mon-Thu 9am-8pm; Fri 9am-6pm; Sat 9am-5pm; Sun 12-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "library",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "loveland-library-heat-cold",
+      "name": "Loveland Public Library - indoor heat and AC",
+      "category": "weather",
+      "description": "Public library with heat, AC, restrooms, and water. A reliable indoor place on hot or cold days when no extra cooling center is posted. Not overnight.",
+      "phone": "970-962-2665",
+      "url": "https://www.lovelandpubliclibrary.org/",
+      "address": "300 N Adams Ave, Loveland, CO 80537",
+      "hours": "See website for branch hours",
+      "area": "Loveland",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "library",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "estes-library-heat-cold",
+      "name": "Estes Valley Library - indoor heat and AC",
+      "category": "weather",
+      "description": "Public library with heat, AC, restrooms, and a place to sit during extreme weather in Estes Park.",
+      "phone": "970-586-8116",
+      "url": "https://estesvalleylibrary.org/",
+      "address": "335 E Elkhorn Ave, Estes Park, CO 80517",
+      "hours": "Mon-Thu 10am-8pm; Fri-Sat 10am-6pm; Sun 1pm-5pm",
+      "area": "Estes Park",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "library",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "fc-senior-center-heat-cold",
+      "name": "Fort Collins Senior Center - indoor heat and AC",
+      "category": "weather",
+      "description": "Climate-controlled building for adults 50+. Drop in during regular hours on heat or cold days. Accessible. Not a designated overnight warming shelter.",
+      "phone": "970-221-6644",
+      "url": "https://www.fcgov.com/recreation/seniorcenter",
+      "address": "1200 Raintree Dr, Fort Collins, CO 80526",
+      "hours": "Mon-Fri 6am-8pm; Sat 8am-5pm; Sun 12-5pm",
+      "area": "Fort Collins",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "seniors",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "chilson-heat-cold",
+      "name": "Chilson Senior Center - indoor heat and AC",
+      "category": "weather",
+      "description": "Loveland recreation center for adults 50+ with heat and AC during posted hours. Call before you go on a holiday.",
+      "phone": "970-962-2783",
+      "url": "https://www.lovgov.org/services/parks-recreation/chilson-center",
+      "address": "700 E 4th St, Loveland, CO 80537",
+      "hours": "Mon-Fri; call for hours",
+      "area": "Loveland",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "seniors",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "salvation-army-loveland-cooling",
+      "name": "Salvation Army Loveland - cool off and water",
+      "category": "weather",
+      "description": "Daytime place in Loveland to cool off, hydrate, and sit. Not overnight beds. Call for hours the day you need it.",
+      "phone": "970-699-8380",
+      "url": "https://loveland.salvationarmy.org/",
+      "address": "840 N Lincoln Ave, Suite 101, Loveland, CO 80537",
+      "hours": "Call for current daytime hours",
+      "area": "Loveland",
+      "tags": [
+        "cooling center",
+        "heat",
+        "homeless",
+        "water"
+      ]
+    },
+    {
+      "id": "homeward-alliance-wagees",
+      "name": "Homeward Alliance WAGEES reentry",
+      "category": "reentry",
+      "description": "Wraparound help if you are on parole or were released from prison in the last 12 months and live in Larimer or Jackson County, age 18+. Case management, jobs, ID fees, work clothes, bus help, and sometimes first-month rent. Call the reentry line.",
+      "phone": "970-439-1814",
+      "url": "https://www.homewardalliance.org/hwa/re-entry/",
+      "address": "242 Conifer St, Fort Collins, CO 80524",
+      "hours": "Weekdays; call to enroll",
+      "area": "Larimer County",
+      "tags": [
+        "reentry",
+        "parole",
+        "jobs",
+        "identification",
+        "homeless"
+      ]
+    },
+    {
+      "id": "larimer-record-sealing",
+      "name": "Seal a criminal record (Larimer courts)",
+      "category": "reentry",
+      "description": "Court Resource Center staff can point you to the sealing forms. They cannot give legal advice. Many eligible cases are sealed automatically; if yours was not, file in the court that heard the case. Fee waivers use JDF 205. Colorado Legal Services (970-493-2891) may take the case if you qualify.",
+      "phone": "970-494-3581",
+      "url": "https://www.coloradojudicial.gov/self-help",
+      "address": "201 Laporte Ave, 1st Floor, Fort Collins, CO 80521",
+      "hours": "Mon/Wed/Fri 8am-4pm; Tue/Thu 8am-2pm",
+      "area": "Larimer County",
+      "tags": [
+        "reentry",
+        "record sealing",
+        "court forms",
+        "expungement"
+      ]
+    },
+    {
+      "id": "workforce-reentry-jobs",
+      "name": "Workforce Center - jobs after incarceration",
+      "category": "reentry",
+      "description": "Same Workforce Center as the Jobs tile. Ask for a career advisor and WIOA training money. Tell them you have a record so they can point you to employers who hire and to certificates the center can pay for. Computers and printers on site.",
+      "phone": "970-498-6600",
+      "url": "https://www.larimer.gov/ewd",
+      "address": "200 W Oak St, Suite 5000, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "reentry",
+        "jobs",
+        "wioa",
+        "workforce center"
+      ]
+    },
+    {
+      "id": "connecting-colorado-reentry",
+      "name": "Connecting Colorado - job board",
+      "category": "reentry",
+      "description": "State job board used by the Workforce Center. Create a profile and search openings. Required if you are on unemployment. Does not hide a record; it is where the jobs are posted.",
+      "phone": null,
+      "url": "https://www.connectingcolorado.com/",
+      "address": null,
+      "hours": "Anytime online",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "reentry",
+        "jobs",
+        "job board"
+      ]
+    },
+    {
+      "id": "habitat-restore-fort-collins",
+      "name": "Habitat ReStore - Fort Collins",
+      "category": "household",
+      "description": "Used furniture, appliances, building supplies, and household goods at thrift prices. This ReStore is scheduled to close on or before December 1, 2026; shop Loveland after that. Not a free giveaway.",
+      "phone": "970-223-9909",
+      "url": "https://fortcollinshabitat.org/restore/",
+      "address": "4001 S Taft Hill Rd, Fort Collins, CO 80526",
+      "hours": "Tue-Sat 10am-6pm; closed Sun-Mon",
+      "area": "Fort Collins",
+      "tags": [
+        "furniture",
+        "household",
+        "thrift",
+        "restore"
+      ]
+    },
+    {
+      "id": "habitat-restore-loveland",
+      "name": "Habitat ReStore - Loveland",
+      "category": "household",
+      "description": "Used furniture, appliances, and household goods at thrift prices. Stays open after the Fort Collins ReStore closes. Not a free furniture bank; prices are low. Free donation pickup in FoCo, Loveland, Windsor, and Johnstown.",
+      "phone": "970-669-7343",
+      "url": "https://www.lovelandhabitat.org/restore/",
+      "address": "5250 N Garfield Ave, Loveland, CO 80538",
+      "hours": "Tue-Sat 10am-6pm; closed Sun-Mon",
+      "area": "Loveland",
+      "tags": [
+        "furniture",
+        "household",
+        "thrift",
+        "restore"
+      ]
+    },
+    {
+      "id": "goodwill-fort-collins",
+      "name": "Goodwill - Fort Collins",
+      "category": "household",
+      "description": "Used furniture, dishes, clothes, and household goods. Regular thrift prices, long hours. Not a voucher program; bring cash or a card.",
+      "phone": "970-223-1042",
+      "url": "https://goodwillcolorado.org/shop/locations/",
+      "address": "315 Pavilion Ln, Fort Collins, CO 80525",
+      "hours": "Mon-Sat 9am-9pm; Sun 9am-8pm",
+      "area": "Fort Collins",
+      "tags": [
+        "furniture",
+        "household",
+        "thrift",
+        "clothes"
+      ]
+    },
+    {
+      "id": "goodwill-loveland",
+      "name": "Goodwill - Loveland",
+      "category": "household",
+      "description": "Used furniture, dishes, clothes, and household goods on Eisenhower. Regular thrift prices.",
+      "phone": "970-593-1032",
+      "url": "https://goodwillcolorado.org/shop/locations/",
+      "address": "935 E Eisenhower Blvd, Loveland, CO 80537",
+      "hours": "Mon-Sat 9am-9pm; Sun 9am-8pm",
+      "area": "Loveland",
+      "tags": [
+        "furniture",
+        "household",
+        "thrift",
+        "clothes"
+      ]
+    },
+    {
+      "id": "arc-thrift-fort-collins",
+      "name": "Arc Thrift Stores - Fort Collins",
+      "category": "household",
+      "description": "Used furniture, household goods, and clothes. Sales support The Arc of Colorado. Regular thrift prices, open late most nights.",
+      "phone": "970-267-8870",
+      "url": "https://arcthrift.org/",
+      "address": "2701 S College Ave, Fort Collins, CO 80525",
+      "hours": "Mon-Fri 9am-9pm; Sat 8am-9pm; Sun 10am-6pm",
+      "area": "Fort Collins",
+      "tags": [
+        "furniture",
+        "household",
+        "thrift",
+        "clothes"
       ]
     }
   ]

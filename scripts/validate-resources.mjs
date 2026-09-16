@@ -6,7 +6,7 @@ const CATEGORIES = new Set([
   'food', 'housing', 'shelter', 'employment', 'benefits', 'utilities', 'health', 'transportation',
   'phone', 'legal', 'seniors_disability', 'family_children', 'veterans', 'education', 'crisis',
   'clothing', 'childcare', 'immigrant_refugee', 'addiction', 'special_needs', 'holiday', 'dental',
-  'disaster',
+  'disaster', 'identification', 'pets', 'lgbtq', 'weather', 'reentry', 'household',
 ]);
 const AREAS = new Set([
   'Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington', 'Larimer County',
