@@ -17,6 +17,11 @@ export function mapsSearchUrl(address: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
+/** Opens the Google Maps search for a town so the person can tap Download. */
+export function mapsTownUrl(town: string): string {
+  return mapsSearchUrl(`${town}, CO`);
+}
+
 /** Opens Google Maps (or Apple Maps on iOS) with this address as the destination. */
 export function mapsDirectionsUrl(address: string, mode?: TravelMode): string {
   const q = encodeURIComponent(address);

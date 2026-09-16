@@ -7,9 +7,10 @@ import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 type Props = {
   onTrash: () => void;
   onOpenNow: () => void;
+  onOfflineMaps: () => void;
 };
 
-export function HomeTools({ onTrash, onOpenNow }: Props) {
+export function HomeTools({ onTrash, onOpenNow, onOfflineMaps }: Props) {
   const { colors, isDark } = useTheme();
   return (
     <View style={styles.row}>
@@ -45,6 +46,28 @@ export function HomeTools({ onTrash, onOpenNow }: Props) {
           Meals, showers, beds
         </Text>
       </Pressable>
+      <Pressable
+        onPress={onOfflineMaps}
+        style={({ pressed }) => [
+          styles.btn,
+          styles.wide,
+          { backgroundColor: colors.card },
+          cardShadow(isDark),
+          pressed && { opacity: 0.88 },
+        ]}
+        accessibilityRole="button"
+        accessibilityLabel="Offline maps, download your town in Google Maps"
+      >
+        <View style={[styles.icon, { backgroundColor: isDark ? '#1e3a5f' : '#e3f2fd' }]}>
+          <Ionicons name="map-outline" size={26} color={isDark ? '#90caf9' : '#1565c0'} />
+        </View>
+        <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+          Offline maps
+        </Text>
+        <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+          Download your town in Google Maps. This app does not store Google’s map.
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -58,6 +81,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     minHeight: 120,
   },
+  wide: { flexBasis: '100%', minWidth: '100%' },
   icon: {
     width: 44,
     height: 44,
@@ -67,5 +91,5 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   label: { fontSize: 18, fontWeight: '800' },
-  sub: { fontSize: 13, marginTop: 4 },
+  sub: { fontSize: 13, marginTop: 4, lineHeight: 18 },
 });
