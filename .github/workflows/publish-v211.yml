@@ -1,0 +1,55 @@
+name: publish-v211
+
+on:
+  push:
+    paths:
+      - ".github/workflows/publish-v211.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overlay source, attach APK, delete this workflow
+        env:
+          SRC_PAGE: https://tmpfiles.org/wKw3qyYR93Hk/foco-v211-src.tgz
+          APK_PAGE: https://tmpfiles.org/wAwYqRYt9HJr/self-reliance-foco.apk
+          EXPECT_SHA: 798d653666747d8cdeb561337e26f912ea9a61ea8f7d30466d95ae7d3da66a22
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | grep -oE "https://tmpfiles.org/dl/[^\"[:space:]]+" | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$SRC_PAGE" /tmp/src.tgz
+          tar xzf /tmp/src.tgz
+          download_tmp "$APK_PAGE" Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c
+          rm -f .github/workflows/publish-v211.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add App.tsx app.json README.md release-notes-v2110.md \
+            src/lib/fontScale.ts src/components/ChipRow.tsx \
+            src/components/Header.tsx src/components/TabBar.tsx src/components/SearchBar.tsx \
+            src/components/Chip.tsx src/components/AreaFilter.tsx src/components/QuickHelp.tsx \
+            src/components/ResourceCard.tsx src/components/ResourceDetail.tsx src/components/FreeBadge.tsx \
+            src/screens/HomeScreen.tsx src/screens/ResourceListScreen.tsx
+          git add -u .github/workflows/publish-v211.yml
+          git commit -m "Release v2.11.0 large-print layout overlay."
+          git push
+          gh release create v2.11.0 Self-Reliance-FoCo.apk \
+            --title "Self-Reliance FoCo v2.11.0" \
+            --notes-file release-notes-v2110.md
