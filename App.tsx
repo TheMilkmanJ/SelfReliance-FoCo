@@ -13,6 +13,7 @@ import type { Resource } from './src/data/types';
 import { useDenverNow } from './src/lib/denverClock';
 import { useLargePrint } from './src/lib/fontScale';
 import { statusFor } from './src/lib/openNowStatus';
+import { GiveNeedScreen } from './src/screens/GiveNeedScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { OfflineMapsScreen } from './src/screens/OfflineMapsScreen';
 import { OpenNowScreen } from './src/screens/OpenNowScreen';
@@ -20,7 +21,7 @@ import { ResourceListScreen } from './src/screens/ResourceListScreen';
 import { TrashDayScreen } from './src/screens/TrashDayScreen';
 import { ThemeProvider, useTheme } from './src/theme';
 
-type HomeTool = 'trash' | 'openNow' | 'offlineMaps' | null;
+type HomeTool = 'trash' | 'openNow' | 'giveNeed' | 'offlineMaps' | null;
 
 const AREA_KEY = 'foco-area-filter';
 const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington'];
@@ -62,6 +63,14 @@ function AppShell() {
               onSelect={setOpenPlace}
             />
           ) : null}
+          {tab === 'home' && tool === 'giveNeed' ? (
+            <GiveNeedScreen
+              area={area}
+              onAreaChange={setArea}
+              onBack={() => setTool(null)}
+              onSelect={setSelected}
+            />
+          ) : null}
           {tab === 'home' && tool === 'offlineMaps' ? (
             <OfflineMapsScreen area={area} onAreaChange={setArea} onBack={() => setTool(null)} />
           ) : null}
@@ -72,6 +81,7 @@ function AppShell() {
               onAreaChange={setArea}
               onTrashDay={() => setTool('trash')}
               onOpenNow={() => setTool('openNow')}
+              onGiveNeed={() => setTool('giveNeed')}
               onOfflineMaps={() => setTool('offlineMaps')}
             />
           ) : null}

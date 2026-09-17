@@ -26,10 +26,19 @@ type Props = {
   onAreaChange: (area: AreaFilterId) => void;
   onTrashDay: () => void;
   onOpenNow: () => void;
+  onGiveNeed: () => void;
   onOfflineMaps: () => void;
 };
 
-export function HomeScreen({ onSelect, area, onAreaChange, onTrashDay, onOpenNow, onOfflineMaps }: Props) {
+export function HomeScreen({
+  onSelect,
+  area,
+  onAreaChange,
+  onTrashDay,
+  onOpenNow,
+  onGiveNeed,
+  onOfflineMaps,
+}: Props) {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
   const [query, setQuery] = useState('');
@@ -105,7 +114,12 @@ export function HomeScreen({ onSelect, area, onAreaChange, onTrashDay, onOpenNow
             ) : (
               <>
                 <QuickHelp />
-                <HomeTools onTrash={onTrashDay} onOpenNow={onOpenNow} onOfflineMaps={onOfflineMaps} />
+                <HomeTools
+                  onTrash={onTrashDay}
+                  onOpenNow={onOpenNow}
+                  onGiveNeed={onGiveNeed}
+                  onOfflineMaps={onOfflineMaps}
+                />
                 <Text style={[styles.sectionTitle, { color: colors.ink }]}>
                   {area === 'All' ? 'What do you need?' : `What do you need in ${areaLabel(area)}?`}
                 </Text>

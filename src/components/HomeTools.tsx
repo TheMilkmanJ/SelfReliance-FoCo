@@ -7,10 +7,11 @@ import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 type Props = {
   onTrash: () => void;
   onOpenNow: () => void;
+  onGiveNeed: () => void;
   onOfflineMaps: () => void;
 };
 
-export function HomeTools({ onTrash, onOpenNow, onOfflineMaps }: Props) {
+export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Props) {
   const { colors, isDark } = useTheme();
   return (
     <View style={styles.row}>
@@ -44,6 +45,28 @@ export function HomeTools({ onTrash, onOpenNow, onOfflineMaps }: Props) {
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
           Meals, showers, beds
+        </Text>
+      </Pressable>
+      <Pressable
+        onPress={onGiveNeed}
+        style={({ pressed }) => [
+          styles.btn,
+          styles.wide,
+          { backgroundColor: colors.card },
+          cardShadow(isDark),
+          pressed && { opacity: 0.88 },
+        ]}
+        accessibilityRole="button"
+        accessibilityLabel="Give, need, or volunteer. Furniture, clothes, food, and hands."
+      >
+        <View style={[styles.icon, { backgroundColor: isDark ? '#3d2c34' : '#fce4ec' }]}>
+          <Ionicons name="people-outline" size={26} color={isDark ? '#f48fb1' : '#ad1457'} />
+        </View>
+        <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+          Give, need, volunteer
+        </Text>
+        <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+          Call Suzanne for furniture, or pick a desk that takes donations, gives things away, or needs hands.
         </Text>
       </Pressable>
       <Pressable
