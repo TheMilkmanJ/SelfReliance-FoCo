@@ -6,6 +6,9 @@ on:
     paths:
       - '.github/workflows/ingest-v2230.yml'
 
+permissions:
+  contents: write
+
 jobs:
   ingest:
     runs-on: ubuntu-latest
@@ -17,6 +20,7 @@ jobs:
       - name: Overlay language source
         run: |
           set -euo pipefail
+          echo retry=2
           curl -fsSL -A 'Mozilla/5.0' -o overlay.tgz 'https://tmpfiles.org/dl/1789677510.ac0fff92f5744d5e/wKwhN8LRhPkv/foco-overlay-2230.tgz'
           file overlay.tgz
           tar -tzf overlay.tgz | head
@@ -24,7 +28,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add App.tsx README.md app.json package.json scripts/check-language.mjs src
-          git status
+          git status --short
           git pull --rebase origin main
           if git diff --cached --quiet; then
             echo 'no overlay changes'
