@@ -14,29 +14,19 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Fetch APK
         run: |
-          set -euo pipefail
-          echo retry=4
+          echo retry=5
           curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789679313.fcf5170c041155b8/wYwGN7HlH0Mj/self-reliance-foco.apk'
-          python3 - <<'PY'
-          import hashlib, os, zipfile, pathlib
-          p = pathlib.Path('Self-Reliance-FoCo.apk')
-          raw = p.read_bytes()[:4]
-          if raw[:2] != b'PK':
-              raise SystemExit('downloaded file is not a zip/APK (got HTML or garbage)')
-          if not zipfile.is_zipfile(p):
-              raise SystemExit('downloaded file is not an APK zip')
-          h = hashlib.sha256(p.read_bytes()).hexdigest()
-          print(h, os.path.getsize(p))
-          if h != '2abcc9905c871c1b445fac2d852f4b81b5f8e0e3386fdfd102d9c11609bfb282':
-              raise SystemExit('sha256 mismatch')
-          PY
+          ls -lah Self-Reliance-FoCo.apk
+          echo '2abcc9905c871c1b445fac2d852f4b81b5f8e0e3386fdfd102d9c11609bfb282  Self-Reliance-FoCo.apk' | sha256sum -c
+          python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
           cat > notes.md <<'EOF'
           # Self-Reliance FoCo v2.23.0
 
@@ -44,11 +34,11 @@ jobs:
 
           SHA-256: 2abcc9905c871c1b445fac2d852f4b81b5f8e0e3386fdfd102d9c11609bfb282
           EOF
-          gh release create v2.23.0 Self-Reliance-FoCo.apk --title 'Self-Reliance FoCo v2.23.0' --notes-file notes.md
+          gh release delete v2.23.0 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.23.0 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.23.0' --notes-file notes.md
       - name: Delete this workflow
         if: success()
         run: |
-          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           rm -f .github/workflows/publish-v2230.yml
