@@ -10,6 +10,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Unpack overlay
         run: |
           set -eux
@@ -31,6 +33,7 @@ jobs:
             echo 'no overlay changes'
           else
             git commit -m 'Put Poudre Valley Early Head Start first on Families and Child Care.'
+            git pull --rebase origin main
             git push
           fi
       - name: Remove this workflow
@@ -44,4 +47,5 @@ jobs:
             exit 0
           fi
           git commit -m 'Remove one-shot ingest workflow.'
+          git pull --rebase origin main
           git push
