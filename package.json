@@ -30,6 +30,7 @@
     "check:open": "node scripts/check-open.mjs",
     "check:give": "node scripts/check-give.mjs",
     "check:ehs": "node scripts/check-ehs.mjs",
+    "check:language": "node scripts/check-language.mjs",
     "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease"
   },
   "private": true
