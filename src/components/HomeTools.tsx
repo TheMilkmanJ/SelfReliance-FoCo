@@ -19,7 +19,7 @@ export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Pro
         onPress={onTrash}
         style={({ pressed }) => [styles.btn, { backgroundColor: colors.card }, cardShadow(isDark), pressed && { opacity: 0.88 }]}
         accessibilityRole="button"
-        accessibilityLabel="Trash day, when to put carts out"
+        accessibilityLabel="Trash day, pick Highlander Heights or another neighborhood"
       >
         <View style={[styles.icon, { backgroundColor: isDark ? '#3d342c' : '#efe6d6' }]}>
           <Ionicons name="trash-outline" size={26} color={isDark ? '#e0c3a8' : '#6d4c41'} />
@@ -28,7 +28,7 @@ export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Pro
           Trash day
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          Carts out by 7am
+          Highlander Heights is Friday
         </Text>
       </Pressable>
       <Pressable

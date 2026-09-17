@@ -115,4 +115,16 @@ assert(xmas && xmas.dow === 5, 'Christmas 2026 Friday');
 assert(actualPickupDow(5, { year: 2026, month: 12, date: 25, dow: 5 }) === 6, 'Christmas Friday → Saturday');
 assert(actualPickupDow(4, { year: 2026, month: 12, date: 24, dow: 4 }) === 4, 'Christmas Eve Thursday unchanged');
 
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const zoneFile = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/data/trashZones.json'), 'utf8'));
+const hh = zoneFile.zones.find((z) => z.id === 'highlander-heights');
+assert(hh && hh.dow === 5, 'Highlander Heights is Friday on the 2026 map');
+assert(zoneFile.zones.find((z) => z.id === 'old-town')?.dow === 4, 'Old Town is Thursday');
+assert(zoneFile.zones.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
+assert(new Set(zoneFile.zones.map((z) => z.id)).size === zoneFile.zones.length, 'unique zone ids');
+assert([1, 2, 3, 4, 5].every((d) => zoneFile.zones.some((z) => z.dow === d)), 'all weekdays have a zone');
+
 console.log('OK: trash-day holiday bump');
