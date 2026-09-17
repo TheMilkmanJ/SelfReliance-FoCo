@@ -12,19 +12,36 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unpack overlay
         run: |
+          set -eux
           curl -fsSL -o /tmp/pack.tgz 'https://tmpfiles.org/dl/1789674425.fdbbf45d8f38fe37/wBwxNbVgmKqo/foco-v2221.tgz'
+          tar tzf /tmp/pack.tgz
           tar xzf /tmp/pack.tgz
+          test -f src/data/resources.ts
+          test -f scripts/check-ehs.mjs
+          test -f src/screens/HomeScreen.tsx
       - name: Commit overlay
         run: |
+          set -eux
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add README.md app.json package.json scripts/check-ehs.mjs .github/workflows/check-source.yml src/data/resources.json src/data/resources.ts src/screens/HomeScreen.tsx release-notes-v2221.md
-          git diff --cached --quiet && echo 'no overlay changes' || git commit -m 'Put Poudre Valley Early Head Start first on Families and Child Care.'
-          git push
+          git status
+          git diff --cached --stat
+          if git diff --cached --quiet; then
+            echo 'no overlay changes'
+          else
+            git commit -m 'Put Poudre Valley Early Head Start first on Families and Child Care.'
+            git push
+          fi
       - name: Remove this workflow
         run: |
+          set -eux
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           rm -f .github/workflows/ingest-v2221.yml
           git add .github/workflows/ingest-v2221.yml
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            exit 0
+          fi
           git commit -m 'Remove one-shot ingest workflow.'
           git push
