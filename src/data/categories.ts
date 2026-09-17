@@ -98,6 +98,14 @@ export const CATEGORIES: Category[] = [
     blurb: 'Birth certificates, Colorado ID, DMV, Social Security cards, passports.',
   },
   {
+    id: 'voting',
+    label: 'Voters',
+    short: 'Voters',
+    icon: 'checkbox-outline',
+    color: '#1A237E',
+    blurb: 'Register, mail ballots, drop boxes, vote centers, and rides to go vote.',
+  },
+  {
     id: 'seniors_disability',
     label: 'Seniors & Disability',
     short: 'Seniors',
@@ -134,7 +142,7 @@ export const CATEGORIES: Category[] = [
     label: 'Education & Training',
     short: 'Training',
     icon: 'school-outline',
-    color: '#5D4037',
+    color: '#5E4037',
     blurb: 'GED, work-ready cards (food handler, OSHA, peer recovery), free tech certificates, community college, libraries.',
   },
   {
