@@ -19,6 +19,7 @@ import { OfflineMapsScreen } from './src/screens/OfflineMapsScreen';
 import { OpenNowScreen } from './src/screens/OpenNowScreen';
 import { ResourceListScreen } from './src/screens/ResourceListScreen';
 import { TrashDayScreen } from './src/screens/TrashDayScreen';
+import { LanguageProvider, useI18n } from './src/i18n';
 import { ThemeProvider, useTheme } from './src/theme';
 
 type HomeTool = 'trash' | 'openNow' | 'giveNeed' | 'offlineMaps' | null;
@@ -29,6 +30,7 @@ const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'B
 function AppShell() {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
+  const { t } = useI18n();
   const now = useDenverNow();
   const [tab, setTab] = useState<TabId>('home');
   const [tool, setTool] = useState<HomeTool>(null);
@@ -87,15 +89,11 @@ function AppShell() {
           ) : null}
           {tab === 'students' ? (
             <ResourceListScreen
-              title="Students"
-              subtitle={
-                largePrint
-                  ? 'College, GED, FAFSA, pantries, and jobs.'
-                  : 'College, GED, FAFSA, pantries, school meals, and jobs. Certificates stay under Resources.'
-              }
+              title={t('students.title')}
+              subtitle={t(largePrint ? 'students.subtitleShort' : 'students.subtitle')}
               alsoInclude={isStudentResource}
               onSelect={setSelected}
-              emptyHint="Try words like FAFSA, GED, pantry, McKinney, or CSU."
+              emptyHint={t('students.empty')}
               area={area}
               onAreaChange={setArea}
               showStudentFilters
@@ -103,15 +101,11 @@ function AppShell() {
           ) : null}
           {tab === 'homeless' ? (
             <ResourceListScreen
-              title="Homeless"
-              subtitle={
-                largePrint
-                  ? 'Beds, day help, meals, showers, and rent.'
-                  : 'Beds, day help, meals, showers, and rent. Call 2-1-1 if you need a referral tonight.'
-              }
+              title={t('homeless.title')}
+              subtitle={t(largePrint ? 'homeless.subtitleShort' : 'homeless.subtitle')}
               alsoInclude={isHomelessResource}
               onSelect={setSelected}
-              emptyHint="Try words like Murphy, shelter, shower, rent, or McKinney."
+              emptyHint={t('homeless.empty')}
               area={area}
               onAreaChange={setArea}
               showHomelessFilters
@@ -119,15 +113,11 @@ function AppShell() {
           ) : null}
           {tab === 'disability' ? (
             <ResourceListScreen
-              title={largePrint ? 'Disability' : 'Have a disability?'}
-              subtitle={
-                largePrint
-                  ? 'Med-9, glasses, rec, rides, and rights.'
-                  : 'Med-9, glasses, rec passes, rides, and rights. Jobs, housing, and clothes stay under Resources.'
-              }
+              title={t(largePrint ? 'disability.titleShort' : 'disability.title')}
+              subtitle={t(largePrint ? 'disability.subtitleShort' : 'disability.subtitle')}
               alsoInclude={isDisabilityResource}
               onSelect={setSelected}
-              emptyHint="Try words like Med-9, glasses, pool, ride, DVR, or SSI."
+              emptyHint={t('disability.empty')}
               area={area}
               onAreaChange={setArea}
               showDisabilityFilters
@@ -145,7 +135,7 @@ function AppShell() {
       <ResourceDetail resource={selected} onClose={() => setSelected(null)} />
       <OpenNowDetail
         place={openPlace}
-        status={openPlace ? statusFor(openPlace, now) : null}
+        status={openPlace ? statusFor(openPlace, now, t) : null}
         onClose={() => setOpenPlace(null)}
       />
     </>
@@ -156,7 +146,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <AppShell />
+        <LanguageProvider>
+          <AppShell />
+        </LanguageProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

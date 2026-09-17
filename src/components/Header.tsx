@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, spacing, useTheme } from '../theme';
 
@@ -13,6 +14,7 @@ type Props = {
 export function Header({ title, subtitle }: Props) {
   const insets = useSafeAreaInsets();
   const { isDark, toggle } = useTheme();
+  const { language, cycle, t } = useI18n();
   return (
     <View style={[styles.wrap, { paddingTop: insets.top + spacing.md }]}>
       <Image source={require('../../assets/splash-icon.png')} style={styles.logo} accessibilityIgnoresInvertColors />
@@ -25,11 +27,20 @@ export function Header({ title, subtitle }: Props) {
         </Text>
       </View>
       <Pressable
+        onPress={cycle}
+        hitSlop={10}
+        style={styles.modeBtn}
+        accessibilityRole="button"
+        accessibilityLabel={language === 'en' ? t('header.switchToEs') : t('header.switchToEn')}
+      >
+        <Text style={styles.langCode}>{t('header.otherCode')}</Text>
+      </Pressable>
+      <Pressable
         onPress={toggle}
         hitSlop={10}
         style={styles.modeBtn}
         accessibilityRole="button"
-        accessibilityLabel={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        accessibilityLabel={isDark ? t('header.darkToLight') : t('header.darkToDark')}
       >
         <Ionicons name={isDark ? 'sunny' : 'moon'} size={22} color="#fff" />
       </Pressable>
@@ -44,7 +55,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.lg,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: spacing.md,
+    gap: spacing.sm,
   },
   logo: { width: 48, height: 48, borderRadius: 24, marginTop: 2 },
   text: { flex: 1, minWidth: 0 },
@@ -59,4 +70,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.16)',
     marginTop: 2,
   },
+  langCode: { color: '#fff', fontSize: 13, fontWeight: '800' },
 });

@@ -23,6 +23,7 @@ export type CategoryId =
   | 'dental'
   | 'disaster'
   | 'identification'
+  | 'language'
   | 'pets'
   | 'lgbtq'
   | 'weather'

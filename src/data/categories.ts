@@ -98,6 +98,14 @@ export const CATEGORIES: Category[] = [
     blurb: 'Birth certificates, Colorado ID, DMV, Social Security cards, passports.',
   },
   {
+    id: 'language',
+    label: 'Language',
+    short: 'Language',
+    icon: 'language-outline',
+    color: '#3949AB',
+    blurb: 'Switch English and Spanish, plus interpreters, English classes, and Spanish hotlines.',
+  },
+  {
     id: 'voting',
     label: 'Voters',
     short: 'Voters',
