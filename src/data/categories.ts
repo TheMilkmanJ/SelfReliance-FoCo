@@ -142,7 +142,7 @@ export const CATEGORIES: Category[] = [
     label: 'Education & Training',
     short: 'Training',
     icon: 'school-outline',
-    color: '#5E4037',
+    color: '#5D4037',
     blurb: 'GED, work-ready cards (food handler, OSHA, peer recovery), free tech certificates, community college, libraries.',
   },
   {
