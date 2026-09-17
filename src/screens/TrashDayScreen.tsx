@@ -75,7 +75,13 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
       ...Object.values(DAY_STORAGE_KEY).map((key) => AsyncStorage.getItem(key)),
     ]).then(([regionSaved, zoneSaved, recycleSaved, ...daySaved]) => {
       const region = regionById(regionSaved) ?? regionById(zoneSaved);
-      if (region) setRegionId(region.id);
+      if (region) {
+        setRegionId(region.id);
+        if (regionSaved !== region.id || zoneSaved !== region.id) {
+          void AsyncStorage.setItem(REGION_KEY, region.id);
+          void AsyncStorage.setItem(FOCO_ZONE_KEY, region.id);
+        }
+      }
       const next: DayMap = {};
       (Object.keys(DAY_STORAGE_KEY) as TrashTown[]).forEach((town, i) => {
         const n = Number(daySaved[i]);
@@ -152,7 +158,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         title: `Next pickup: ${formatYmd(pickup.when)}`,
         sub: pickup.delayed
           ? `${pickup.holiday?.name ?? 'A holiday'} delays this week by one day.`
-          : `${place} usual day is ${DOW_LABEL[regular]}.`,
+          : `${place} — usual day is ${DOW_LABEL[regular]}.`,
       };
     }
     return null;
@@ -241,7 +247,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         ))}
 
         {town === 'Loveland' && region?.id !== 'uninc-landfill' ? (
-          <View style={[styles.action, { borderColor: colors.line, backgroundColor: colors.card }]}>
+          <View style={[styles.action, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}>
             <Ionicons name="reload-outline" size={20} color={HEADER_PURPLE} />
             <View style={{ flex: 1 }}>
               <Text style={[styles.actionText, { color: colors.ink }]}>Recycling week</Text>
@@ -314,14 +320,14 @@ function footnoteFor(town: TrashTown, region: TrashRegion | null): string {
   return 'Atlas Unlimited covers a lot of north county (Red Feather, Livermore, Laporte, Bellvue). Republic and WM also take some rural addresses.';
 }
 
-function recyclingNote(kind: RecyclingKind, todayIs: boolean, lovelandRecycle: boolean, town: TrashTown): string {
+function recyclingNote(kind: RecyclingKind, lovelandRecycle: boolean, town: TrashTown): string {
   if (kind === 'none') return 'No curbside recycling on a county landfill trip — use the recycle drop-off on site.';
   if (kind === 'ask') return 'Ask your hauler if recycling is the same day.';
   if (kind === 'every-other' && town === 'Loveland') {
     return lovelandRecycle ? 'Every other week — this is a recycle week.' : 'Every other week — skip the recycle cart this week.';
   }
   if (kind === 'every-other') return 'Usually every other week on trash day. Confirm on your bill.';
-  return todayIs ? 'Same day as trash' : 'Same day as trash — not today';
+  return 'Same day as trash · weekly';
 }
 
 function yardNote(kind: YardKind, yard: boolean, town: TrashTown): string {
@@ -363,7 +369,7 @@ function serviceCopy(
     {
       icon: 'reload-outline',
       title: 'Recycling',
-      note: recyclingNote(recycling, todayIs, lovelandRecycle, town),
+      note: recyclingNote(recycling, lovelandRecycle, town),
       status: recycleStatus,
     },
     {
@@ -439,15 +445,21 @@ function actionsFor(town: TrashTown, region: TrashRegion | null): Array<{ icon: 
 function ServiceRow({ icon, title, note, status }: { icon: string; title: string; note: string; status: string }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.action, { borderColor: colors.line, backgroundColor: colors.card }]} accessibilityRole="text" accessibilityLabel={`${title}. ${status}. ${note}`}>
-      <Ionicons name={icon as never} size={20} color={HEADER_PURPLE} />
+    <View
+      style={[styles.action, styles.service, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}
+      accessibilityRole="text"
+      accessibilityLabel={`${title}. ${status}. ${note}`}
+    >
+      <Ionicons name={icon as never} size={20} color={HEADER_PURPLE} style={styles.serviceIcon} />
       <View style={{ flex: 1 }}>
-        <Text style={[styles.actionText, { color: colors.ink }]}>{title}</Text>
+        <View style={styles.serviceHead}>
+          <Text style={[styles.actionText, { color: colors.purple, flex: 1 }]}>{title}</Text>
+          <Text style={[styles.status, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            {status}
+          </Text>
+        </View>
         <Text style={[styles.rowNote, { color: colors.muted }]}>{note}</Text>
       </View>
-      <Text style={[styles.status, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-        {status}
-      </Text>
     </View>
   );
 }
@@ -500,6 +512,9 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   actionText: { fontWeight: '800', fontSize: 16 },
+  service: { alignItems: 'flex-start' },
+  serviceIcon: { marginTop: 2 },
+  serviceHead: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
   rowNote: { fontSize: 13, marginTop: 3, lineHeight: 18 },
-  status: { fontWeight: '800', fontSize: 13, maxWidth: 90, textAlign: 'right' },
+  status: { fontWeight: '800', fontSize: 13 },
 });

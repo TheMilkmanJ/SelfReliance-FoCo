@@ -129,6 +129,8 @@ const zoneFile = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.
 const regions = zoneFile.regions;
 const hh = regions.find((z) => z.id === 'highlander-heights');
 assert(hh && hh.dow === 5 && hh.town === 'Fort Collins', 'Highlander Heights is Friday on the 2026 map');
+assert(/east of College/i.test(hh.where) && /Drake|Pitkin|Emigh/.test(hh.where), 'Highlander Heights covers east of College');
+assert(!regions.some((z) => z.id === 'east-college-north'), 'generic Friday east blob is folded into Highlander Heights');
 assert(regions.find((z) => z.id === 'old-town')?.dow === 4, 'Old Town is Thursday');
 assert(regions.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
 assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
