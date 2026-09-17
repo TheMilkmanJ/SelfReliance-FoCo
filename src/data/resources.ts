@@ -865,6 +865,128 @@ export function sortPregnancyResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, PREGNANCY_PINNED_IDS);
 }
 
+/** Shown first on the Voters tile. Transfort / COLT / SAINT stay in Rides. */
+export const VOTING_PINNED_IDS = [
+  'larimer-elections-office',
+  'govote-colorado',
+  'larimer-where-to-vote',
+  'transfort',
+  'colorado-ballottrax',
+  'ride-noco',
+] as const;
+
+const VOTING_ALWAYS = new Set<string>([
+  ...VOTING_PINNED_IDS,
+  'colorado-sos-elections',
+  'colorado-language-assistance-hotline',
+  'larimer-military-overseas',
+  'vote411-colorado',
+  'lwv-larimer',
+  'larimer-election-judges',
+  'colorado-know-your-rights',
+  'transfort-dial-a-ride',
+  'transfort-trip-planner',
+  'transfort-flex',
+  'transfort-max',
+  'transfort-routes-map',
+  'colt-loveland',
+  'saint-senior-transport',
+  'the-peak-estes-park',
+  'colorado-dmv-fort-collins',
+  'colorado-dmv-loveland',
+  'relay-colorado',
+]);
+
+export type VotingChipId =
+  | 'all'
+  | 'register'
+  | 'drop'
+  | 'inperson'
+  | 'rides'
+  | 'help'
+  | 'military'
+  | 'ballot';
+
+export const VOTING_CHIPS: Array<{ id: VotingChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'register', label: 'Register', icon: 'create-outline' },
+  { id: 'drop', label: 'Ballot boxes', icon: 'file-tray-outline' },
+  { id: 'inperson', label: 'Vote in person', icon: 'business-outline' },
+  { id: 'rides', label: 'Rides', icon: 'bus-outline' },
+  { id: 'help', label: 'ADA & language', icon: 'accessibility-outline' },
+  { id: 'military', label: 'Military / overseas', icon: 'globe-outline' },
+  { id: 'ballot', label: "What's on the ballot", icon: 'newspaper-outline' },
+];
+
+export function isVotingResource(resource: Resource): boolean {
+  if (resource.category === 'voting') return true;
+  return VOTING_ALWAYS.has(resource.id);
+}
+
+export function matchesVotingChip(resource: Resource, chip: VotingChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'register') {
+    return (
+      resource.id === 'larimer-elections-office' ||
+      resource.id === 'govote-colorado' ||
+      resource.id === 'colorado-sos-elections' ||
+      resource.id === 'colorado-dmv-fort-collins' ||
+      resource.id === 'colorado-dmv-loveland'
+    );
+  }
+  if (chip === 'drop') {
+    return resource.id === 'larimer-where-to-vote' || resource.id === 'larimer-elections-office';
+  }
+  if (chip === 'inperson') {
+    return (
+      resource.id === 'larimer-where-to-vote' ||
+      resource.id === 'larimer-elections-office' ||
+      resource.id === 'govote-colorado'
+    );
+  }
+  if (chip === 'rides') {
+    return (
+      resource.id === 'transfort' ||
+      resource.id === 'transfort-dial-a-ride' ||
+      resource.id === 'transfort-trip-planner' ||
+      resource.id === 'transfort-flex' ||
+      resource.id === 'transfort-max' ||
+      resource.id === 'transfort-routes-map' ||
+      resource.id === 'colt-loveland' ||
+      resource.id === 'saint-senior-transport' ||
+      resource.id === 'ride-noco' ||
+      resource.id === 'the-peak-estes-park' ||
+      resource.id === 'larimer-where-to-vote'
+    );
+  }
+  if (chip === 'help') {
+    return (
+      resource.id === 'larimer-elections-office' ||
+      resource.id === 'colorado-language-assistance-hotline' ||
+      resource.id === 'colorado-know-your-rights' ||
+      resource.id === 'transfort-dial-a-ride' ||
+      resource.id === 'saint-senior-transport' ||
+      resource.id === 'relay-colorado'
+    );
+  }
+  if (chip === 'military') {
+    return resource.id === 'larimer-military-overseas' || resource.id === 'colorado-sos-elections';
+  }
+  if (chip === 'ballot') {
+    return (
+      resource.id === 'vote411-colorado' ||
+      resource.id === 'lwv-larimer' ||
+      resource.id === 'govote-colorado' ||
+      resource.id === 'colorado-know-your-rights'
+    );
+  }
+  return true;
+}
+
+export function sortVotingResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, VOTING_PINNED_IDS);
+}
+
 function normalize(s: string): string {
   return s
     .toLowerCase()
