@@ -28,7 +28,8 @@ export type CategoryId =
   | 'weather'
   | 'reentry'
   | 'household'
-  | 'pregnancy';
+  | 'pregnancy'
+  | 'voting';
 
 export type Area =
   | 'Fort Collins'
