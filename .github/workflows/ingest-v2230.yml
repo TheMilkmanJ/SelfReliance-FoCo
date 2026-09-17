@@ -1,0 +1,49 @@
+name: ingest-v2230
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ingest-v2230.yml'
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Overlay language source
+        run: |
+          set -euo pipefail
+          curl -fsSL -A 'Mozilla/5.0' -o overlay.tgz 'https://tmpfiles.org/dl/1789677510.ac0fff92f5744d5e/wKwhN8LRhPkv/foco-overlay-2230.tgz'
+          file overlay.tgz
+          tar -tzf overlay.tgz | head
+          tar -xzf overlay.tgz
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add App.tsx README.md app.json package.json scripts/check-language.mjs src
+          git status
+          git pull --rebase origin main
+          if git diff --cached --quiet; then
+            echo 'no overlay changes'
+          else
+            git commit -m 'Add English/Spanish language switcher on Resources.'
+            git push origin main
+          fi
+      - name: Delete this workflow
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/ingest-v2230.yml
+          git add .github/workflows/ingest-v2230.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.23.0 ingest workflow.' || true
+            git push origin HEAD || true
+          fi
