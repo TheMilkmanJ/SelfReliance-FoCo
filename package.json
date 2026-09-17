@@ -28,6 +28,7 @@
     "typecheck": "tsc --noEmit",
     "check:trash": "node scripts/check-trash.mjs",
     "check:open": "node scripts/check-open.mjs",
+    "check:give": "node scripts/check-give.mjs",
     "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease"
   },
   "private": true
