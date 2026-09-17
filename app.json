@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "org.foco.selfreliance",
-      "versionCode": 30,
+      "versionCode": 31,
       "adaptiveIcon": {
         "backgroundColor": "#522f81",
         "foregroundImage": "./assets/android-icon-foreground.png",
