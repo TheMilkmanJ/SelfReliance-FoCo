@@ -14,14 +14,19 @@ import { CATEGORIES, CATEGORY_MAP } from '../data/categories';
 import {
   PREGNANCY_CHIPS,
   RESOURCES,
+  VOTING_CHIPS,
   countByCategory,
   filterByArea,
   isPregnancyResource,
+  isVotingResource,
   matchesPregnancyChip,
+  matchesVotingChip,
   searchResources,
   sortPregnancyResources,
+  sortVotingResources,
   type AreaFilter as AreaFilterId,
   type PregnancyChipId,
+  type VotingChipId,
 } from '../data/resources';
 import type { Category, CategoryId, Resource } from '../data/types';
 import { useLargePrint } from '../lib/fontScale';
@@ -51,12 +56,14 @@ export function HomeScreen({
   const [query, setQuery] = useState('');
   const [openCat, setOpenCat] = useState<CategoryId | null>(null);
   const [pregnancyFilter, setPregnancyFilter] = useState<PregnancyChipId>('all');
+  const [votingFilter, setVotingFilter] = useState<VotingChipId>('all');
 
   const searching = query.trim().length > 0;
   const inArea = useMemo(() => filterByArea(RESOURCES, area), [area]);
   const counts = useMemo(() => {
     const next = countByCategory(inArea);
     next.pregnancy = inArea.filter(isPregnancyResource).length;
+    next.voting = inArea.filter(isVotingResource).length;
     return next;
   }, [inArea]);
   const results = useMemo(() => (searching ? searchResources(query, inArea) : []), [query, searching, inArea]);
@@ -69,8 +76,15 @@ export function HomeScreen({
       }
       return sortPregnancyResources(list);
     }
+    if (openCat === 'voting') {
+      let list = inArea.filter(isVotingResource);
+      if (votingFilter !== 'all') {
+        list = list.filter((r) => matchesVotingChip(r, votingFilter));
+      }
+      return sortVotingResources(list);
+    }
     return inArea.filter((r) => r.category === openCat);
-  }, [openCat, inArea, pregnancyFilter]);
+  }, [openCat, inArea, pregnancyFilter, votingFilter]);
 
   if (openCat) {
     const cat = CATEGORY_MAP[openCat];
@@ -87,6 +101,7 @@ export function HomeScreen({
               <Pressable
                 onPress={() => {
                   setPregnancyFilter('all');
+                  setVotingFilter('all');
                   setOpenCat(null);
                 }}
                 style={styles.back}
@@ -109,6 +124,19 @@ export function HomeScreen({
                   ))}
                 </ChipRow>
               ) : null}
+              {openCat === 'voting' ? (
+                <ChipRow>
+                  {VOTING_CHIPS.map((chip) => (
+                    <Chip
+                      key={chip.id}
+                      label={chip.label}
+                      icon={chip.id === 'all' ? undefined : chip.icon}
+                      active={votingFilter === chip.id}
+                      onPress={() => setVotingFilter(chip.id)}
+                    />
+                  ))}
+                </ChipRow>
+              ) : null}
               <AreaFilter value={area} onChange={onAreaChange} />
               <Text style={[styles.count, { color: colors.muted, paddingTop: spacing.md }]}>
                 {catResources.length} {catResources.length === 1 ? 'resource' : 'resources'}
@@ -123,7 +151,9 @@ export function HomeScreen({
               <Text style={[styles.emptyText, { color: colors.muted }]}>
                 {openCat === 'pregnancy'
                   ? 'Try All on the birth-option chips, pick All of Larimer, or call 2-1-1.'
-                  : 'Try All of Larimer, or call 2-1-1 for a referral closer to you.'}
+                  : openCat === 'voting'
+                    ? 'Try All on the voter chips, pick All of Larimer, or call Elections at 970-498-7820.'
+                    : 'Try All of Larimer, or call 2-1-1 for a referral closer to you.'}
               </Text>
             </View>
           }
@@ -173,6 +203,7 @@ export function HomeScreen({
                       count={counts[c.id] ?? 0}
                       onPress={() => {
                         setPregnancyFilter('all');
+                        setVotingFilter('all');
                         setOpenCat(c.id);
                       }}
                     />
