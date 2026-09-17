@@ -2,7 +2,7 @@
   "expo": {
     "name": "Self-Reliance FoCo",
     "slug": "self-reliance-foco",
-    "version": "2.18.0",
+    "version": "2.19.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "org.foco.selfreliance",
-      "versionCode": 24,
+      "versionCode": 25,
       "adaptiveIcon": {
         "backgroundColor": "#522f81",
         "foregroundImage": "./assets/android-icon-foreground.png",

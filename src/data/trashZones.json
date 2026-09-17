@@ -1,0 +1,52 @@
+{
+  "zones": [
+    {
+      "id": "highlander-heights",
+      "label": "Highlander Heights",
+      "where": "Lemay, Prospect, Pitkin, and Emigh — east of College",
+      "dow": 5
+    },
+    {
+      "id": "east-college-north",
+      "label": "East of College, north of Drake",
+      "where": "Lemay north, toward Mulberry. Still Friday on the 2026 map.",
+      "dow": 5
+    },
+    {
+      "id": "i25-northeast",
+      "label": "I-25 / northeast Fort Collins",
+      "where": "The blue area east toward I-25, north of Drake",
+      "dow": 5
+    },
+    {
+      "id": "old-town",
+      "label": "Old Town",
+      "where": "West of College, north of Prospect",
+      "dow": 4
+    },
+    {
+      "id": "west-college-north",
+      "label": "West of College, north of Prospect",
+      "where": "Mulberry and Prospect west of College Avenue",
+      "dow": 4
+    },
+    {
+      "id": "taft-drake",
+      "label": "Taft Hill and west Drake",
+      "where": "West of College between Prospect and Harmony",
+      "dow": 3
+    },
+    {
+      "id": "east-horsetooth",
+      "label": "East of College around Horsetooth",
+      "where": "Timberline between Drake and Harmony",
+      "dow": 2
+    },
+    {
+      "id": "south-harmony",
+      "label": "South of Harmony",
+      "where": "Trilby, south Lemay, and south Shields",
+      "dow": 1
+    }
+  ]
+}
