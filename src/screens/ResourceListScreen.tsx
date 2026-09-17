@@ -31,6 +31,7 @@ import {
   type StudentChipId,
 } from '../data/resources';
 import type { CategoryId, CertGroup, Resource } from '../data/types';
+import { catKey, certKey, useI18n, type MessageKey } from '../i18n';
 import { spacing, useTheme } from '../theme';
 
 type JobFilter = 'all' | 'employment' | 'certs' | 'free' | 'classes' | CertGroup;
@@ -70,6 +71,7 @@ export function ResourceListScreen({
   showHomelessFilters = false,
 }: Props) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const [query, setQuery] = useState('');
   const [activeCat, setActiveCat] = useState<CategoryId | 'all'>('all');
   const [jobFilter, setJobFilter] = useState<JobFilter>('all');
@@ -156,7 +158,7 @@ export function ResourceListScreen({
                 {DISABILITY_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
-                    label={chip.label}
+                    label={chip.id === 'all' ? t('chip.all') : t(`chip.disability.${chip.id}` as MessageKey)}
                     icon={chip.id === 'all' ? undefined : chip.icon}
                     active={disabilityFilter === chip.id}
                     onPress={() => setDisabilityFilter(chip.id)}
@@ -168,7 +170,7 @@ export function ResourceListScreen({
                 {STUDENT_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
-                    label={chip.label}
+                    label={chip.id === 'all' ? t('chip.all') : t(`chip.student.${chip.id}` as MessageKey)}
                     icon={chip.id === 'all' ? undefined : chip.icon}
                     active={studentFilter === chip.id}
                     onPress={() => setStudentFilter(chip.id)}
@@ -180,7 +182,7 @@ export function ResourceListScreen({
                 {HOMELESS_CHIPS.map((chip) => (
                   <Chip
                     key={chip.id}
-                    label={chip.label}
+                    label={chip.id === 'all' ? t('chip.all') : t(`chip.homeless.${chip.id}` as MessageKey)}
                     icon={chip.id === 'all' ? undefined : chip.icon}
                     active={homelessFilter === chip.id}
                     onPress={() => setHomelessFilter(chip.id)}
@@ -190,28 +192,28 @@ export function ResourceListScreen({
             ) : showCertGroups ? (
               <>
                 <ChipRow>
-                  <Chip label="All" active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />
+                  <Chip label={t('chip.all')} active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />
                   <Chip
-                    label="Job help"
+                    label={t('chip.jobs.help')}
                     icon="briefcase-outline"
                     active={jobFilter === 'employment'}
                     onPress={() => setJobFilter('employment')}
                   />
                   <Chip
-                    label="Certificates"
+                    label={t('chip.jobs.certs')}
                     icon="ribbon-outline"
                     active={jobFilter === 'certs'}
                     onPress={() => setJobFilter('certs')}
                   />
                   <Chip
-                    label="Free"
+                    label={t('chip.jobs.free')}
                     icon="pricetag-outline"
                     active={jobFilter === 'free'}
                     onPress={() => setJobFilter('free')}
-                    accessibilityLabel="Free certificates"
+                    accessibilityLabel={t('chip.jobs.free')}
                   />
                   <Chip
-                    label="GED & college"
+                    label={t('chip.jobs.ged')}
                     icon="school-outline"
                     active={jobFilter === 'classes'}
                     onPress={() => setJobFilter('classes')}
@@ -221,7 +223,7 @@ export function ResourceListScreen({
                   {CERT_GROUPS.map((g) => (
                     <Chip
                       key={g.id}
-                      label={g.short}
+                      label={t(certKey(g.id, 'short'))}
                       icon={g.icon}
                       small
                       active={jobFilter === g.id}
@@ -232,11 +234,11 @@ export function ResourceListScreen({
               </>
             ) : categories.length > 1 && !alsoInclude ? (
               <ChipRow>
-                <Chip label="All" active={activeCat === 'all'} onPress={() => setActiveCat('all')} />
+                <Chip label={t('chip.all')} active={activeCat === 'all'} onPress={() => setActiveCat('all')} />
                 {categories.map((id) => (
                   <Chip
                     key={id}
-                    label={CATEGORY_MAP[id].short}
+                    label={t(catKey(id, 'short'))}
                     icon={CATEGORY_MAP[id].icon}
                     active={activeCat === id}
                     onPress={() => setActiveCat(id)}
@@ -246,15 +248,15 @@ export function ResourceListScreen({
             ) : null}
             <AreaFilter value={area} onChange={onAreaChange} />
             <Text style={[styles.count, { color: colors.muted }]}>
-              {results.length} {results.length === 1 ? 'resource' : 'resources'}
-              {area === 'All' ? '' : ` in ${areaLabel(area)}`}
+              {t(results.length === 1 ? 'home.countOne' : 'home.countMany', { n: results.length })}
+              {area === 'All' ? '' : t('home.inArea', { area: areaLabel(area, t) })}
             </Text>
           </View>
         }
         ListEmptyComponent={
           <View style={styles.empty}>
             <Ionicons name="search-outline" size={40} color={colors.muted} />
-            <Text style={[styles.emptyTitle, { color: colors.ink }]}>Nothing matched</Text>
+            <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('list.nothingMatched')}</Text>
             <Text style={[styles.emptyText, { color: colors.muted }]}>{emptyHint}</Text>
           </View>
         }
