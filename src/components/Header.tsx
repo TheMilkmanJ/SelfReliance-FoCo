@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useI18n } from '../i18n';
+import { useI18n, nextLanguage } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, spacing, useTheme } from '../theme';
 
@@ -15,6 +15,7 @@ export function Header({ title, subtitle }: Props) {
   const insets = useSafeAreaInsets();
   const { isDark, toggle } = useTheme();
   const { language, cycle, t } = useI18n();
+  const upcoming = nextLanguage(language);
   return (
     <View style={[styles.wrap, { paddingTop: insets.top + spacing.md }]}>
       <Image source={require('../../assets/splash-icon.png')} style={styles.logo} accessibilityIgnoresInvertColors />
@@ -31,9 +32,9 @@ export function Header({ title, subtitle }: Props) {
         hitSlop={10}
         style={styles.modeBtn}
         accessibilityRole="button"
-        accessibilityLabel={language === 'en' ? t('header.switchToEs') : t('header.switchToEn')}
+        accessibilityLabel={t('header.switchToLang', { name: upcoming.nativeName })}
       >
-        <Text style={styles.langCode}>{t('header.otherCode')}</Text>
+        <Text style={styles.langCode}>{upcoming.code}</Text>
       </Pressable>
       <Pressable
         onPress={toggle}

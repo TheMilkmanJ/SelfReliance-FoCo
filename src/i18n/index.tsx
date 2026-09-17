@@ -6,6 +6,7 @@ import {
   LANGUAGE_STORAGE_KEY,
   deviceLanguage,
   isAppLanguage,
+  nextLanguage,
   translate as translateLang,
   type AppLanguage,
   type MessageKey,
@@ -14,7 +15,17 @@ import {
 } from './translate';
 
 export type { AppLanguage, MessageKey, Translate, Vars };
-export { holidayLabel, dowKey, dowShortKey, monthKey, deviceLanguage, LANGUAGE_STORAGE_KEY } from './translate';
+export {
+  APP_LANGUAGES,
+  holidayLabel,
+  dowKey,
+  dowShortKey,
+  monthKey,
+  deviceLanguage,
+  languageOption,
+  nextLanguage,
+  LANGUAGE_STORAGE_KEY,
+} from './translate';
 
 type LanguageContextValue = {
   language: AppLanguage;
@@ -40,7 +51,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const cycle = useCallback(() => {
-    setLanguage(language === 'en' ? 'es' : 'en');
+    setLanguage(nextLanguage(language).id);
   }, [language, setLanguage]);
 
   const t = useCallback<Translate>((key, vars) => translateLang(language, key, vars), [language]);

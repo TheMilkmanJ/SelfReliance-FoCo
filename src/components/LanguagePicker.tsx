@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useI18n, type AppLanguage } from '../i18n';
+import { APP_LANGUAGES, useI18n, type AppLanguage } from '../i18n';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 export function LanguagePicker() {
@@ -9,34 +9,22 @@ export function LanguagePicker() {
   const { language, setLanguage, t } = useI18n();
   return (
     <View style={styles.wrap}>
-      <LangRow
-        code="en"
-        title={t('lang.englishName')}
-        meta={t('lang.englishMeta')}
-        note={t('lang.englishNote')}
-        selected={language === 'en'}
-        a11y={t('lang.a11yEn')}
-        onPress={() => setLanguage('en')}
-        isDark={isDark}
-        ink={colors.ink}
-        muted={colors.muted}
-        body={colors.body}
-        card={colors.card}
-      />
-      <LangRow
-        code="es"
-        title={t('lang.spanishName')}
-        meta={t('lang.spanishMeta')}
-        note={t('lang.spanishNote')}
-        selected={language === 'es'}
-        a11y={t('lang.a11yEs')}
-        onPress={() => setLanguage('es')}
-        isDark={isDark}
-        ink={colors.ink}
-        muted={colors.muted}
-        body={colors.body}
-        card={colors.card}
-      />
+      {APP_LANGUAGES.map((opt) => (
+        <LangRow
+          key={opt.id}
+          code={opt.id}
+          title={opt.nativeName}
+          meta={opt.englishName}
+          selected={language === opt.id}
+          a11y={t('lang.a11yUse', { name: opt.nativeName })}
+          onPress={() => setLanguage(opt.id)}
+          isDark={isDark}
+          ink={colors.ink}
+          muted={colors.muted}
+          body={colors.body}
+          card={colors.card}
+        />
+      ))}
       <Text style={[styles.honest, { color: colors.muted }]}>{t('lang.honest')}</Text>
     </View>
   );
@@ -46,7 +34,6 @@ function LangRow({
   code,
   title,
   meta,
-  note,
   selected,
   a11y,
   onPress,
@@ -59,7 +46,6 @@ function LangRow({
   code: AppLanguage;
   title: string;
   meta: string;
-  note: string;
   selected: boolean;
   a11y: string;
   onPress: () => void;
@@ -80,19 +66,23 @@ function LangRow({
     >
       <View style={styles.listingRow}>
         <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-          <Ionicons name={code === 'es' ? 'language' : 'chatbubble-ellipses-outline'} size={22} color={HEADER_PURPLE} />
+          <Ionicons name={languageIcon(code)} size={22} color={HEADER_PURPLE} />
         </View>
         <View style={styles.listingBody}>
           <Text style={[styles.listingName, { color: ink }]}>{title}</Text>
           <Text style={[styles.listingMeta, { color: muted }]}>
-            {selected ? t('lang.selected') : meta}
+            {selected ? t('lang.selected') : `${meta} · ${t('lang.menusMeta')}`}
           </Text>
-          <Text style={[styles.listingDesc, { color: body }]}>{note}</Text>
+          {selected ? <Text style={[styles.listingDesc, { color: body }]}>{t('lang.menusNote')}</Text> : null}
         </View>
         {selected ? <Ionicons name="checkmark" size={22} color={HEADER_PURPLE} /> : null}
       </View>
     </Pressable>
   );
+}
+
+function languageIcon(code: AppLanguage): 'chatbubble-ellipses-outline' | 'language' {
+  return code === 'en' ? 'chatbubble-ellipses-outline' : 'language';
 }
 
 const styles = StyleSheet.create({
@@ -113,7 +103,7 @@ const styles = StyleSheet.create({
   },
   listingBody: { flex: 1 },
   listingName: { fontSize: 17, fontWeight: '700', flexShrink: 1 },
-  listingMeta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
+  listingMeta: { fontSize: 13, marginTop: 2, marginBottom: 4 },
   listingDesc: { fontSize: 15, lineHeight: 21 },
   honest: {
     paddingHorizontal: spacing.lg,
