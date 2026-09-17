@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { OPEN_NEED_MAP, OPEN_NEEDS } from '../data/openNowNeeds';
 import type { OpenPlace } from '../data/openNowTypes';
+import { useI18n, type MessageKey } from '../i18n';
 import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
 import { MAX_FONT } from '../lib/fontScale';
 import type { PlaceStatus } from '../lib/openNowStatus';
@@ -18,6 +19,7 @@ type Props = {
 export function OpenNowDetail({ place, status, onClose }: Props) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
+  const { t } = useI18n();
   if (!place) return null;
   const need = OPEN_NEED_MAP[place.needs[0]] ?? OPEN_NEEDS[0];
   const statusColor =
@@ -29,9 +31,9 @@ export function OpenNowDetail({ place, status, onClose }: Props) {
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${need.color}1a` }]}>
             <Ionicons name={need.icon as never} size={16} color={need.color} />
-            <Text style={[styles.pillText, { color: need.color }]}>{need.label}</Text>
+            <Text style={[styles.pillText, { color: need.color }]}>{t(`open.${need.id}Full` as MessageKey)}</Text>
           </View>
-          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel="Close">
+          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
             <Ionicons name="close" size={28} color={colors.ink} />
           </Pressable>
         </View>
@@ -46,9 +48,7 @@ export function OpenNowDetail({ place, status, onClose }: Props) {
           </Text>
           <Text style={[styles.who, { color: colors.muted }]}>{place.who}</Text>
           {place.confirm ? (
-            <Text style={[styles.warn, { color: '#b45309' }]}>
-              Hours change. Call or ask the desk before you walk a long way.
-            </Text>
+            <Text style={[styles.warn, { color: '#b45309' }]}>{t('open.warnHours')}</Text>
           ) : null}
           <Text style={[styles.desc, { color: colors.body }]}>{place.description}</Text>
           <View style={styles.infoRow}>
@@ -63,7 +63,7 @@ export function OpenNowDetail({ place, status, onClose }: Props) {
           ) : null}
           <View style={styles.actions}>
             {place.phone ? (
-              <ActionButton icon="call" label={`Call ${place.phone}`} color={colors.green} onPress={() => call(place.phone as string)} />
+              <ActionButton icon="call" label={t('detail.call', { phone: place.phone })} color={colors.green} onPress={() => call(place.phone as string)} />
             ) : null}
             {place.url ? (
               <ActionButton
@@ -77,13 +77,13 @@ export function OpenNowDetail({ place, status, onClose }: Props) {
               <>
                 <ActionButton
                   icon="navigate-outline"
-                  label="Get directions"
+                  label={t('detail.directions')}
                   color={HEADER_PURPLE}
                   onPress={() => directions(place.address as string)}
                 />
                 <ActionButton
                   icon="bus-outline"
-                  label="Bus directions"
+                  label={t('detail.bus')}
                   color={HEADER_PURPLE}
                   onPress={() => directions(place.address as string, 'transit')}
                 />

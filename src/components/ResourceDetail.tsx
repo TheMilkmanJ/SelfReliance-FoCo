@@ -6,6 +6,7 @@ import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
+import { areaMessage, catKey, certKey, useI18n } from '../i18n';
 import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 import { FreeBadge } from './FreeBadge';
@@ -18,10 +19,15 @@ type Props = {
 export function ResourceDetail({ resource, onClose }: Props) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
+  const { t } = useI18n();
   if (!resource) return null;
   const cat = CATEGORY_MAP[resource.category];
   const cert = resource.certGroup ? CERT_GROUP_MAP[resource.certGroup] : null;
   const freeCert = isFreeCertificate(resource);
+  const area = t(areaMessage(resource.area));
+  const pill = cert
+    ? t(freeCert ? 'detail.freeCert' : 'detail.cert', { short: t(certKey(cert.id, 'short')) })
+    : t(catKey(resource.category, 'label'));
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} presentationStyle="pageSheet">
@@ -29,11 +35,9 @@ export function ResourceDetail({ resource, onClose }: Props) {
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${cat.color}1a` }]}>
             <Ionicons name={cat.icon as never} size={16} color={cat.color} />
-            <Text style={[styles.pillText, { color: cat.color }]}>
-              {cert ? `${freeCert ? 'Free ' : ''}${cert.short} cert` : cat.label}
-            </Text>
+            <Text style={[styles.pillText, { color: cat.color }]}>{pill}</Text>
           </View>
-          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel="Close">
+          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
             <Ionicons name="close" size={28} color={colors.ink} />
           </Pressable>
         </View>
@@ -44,7 +48,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
             {freeCert ? <FreeBadge /> : null}
           </View>
           <Text style={[styles.area, { color: colors.muted }]}>
-            {freeCert ? `Free · ${resource.area}` : resource.area}
+            {freeCert ? t('detail.freeMeta', { area }) : area}
           </Text>
           <Text style={[styles.desc, { color: colors.body }]}>{resource.description}</Text>
 
@@ -65,7 +69,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
             {resource.phone ? (
               <ActionButton
                 icon="call"
-                label={`Call ${resource.phone}`}
+                label={t('detail.call', { phone: resource.phone })}
                 color={colors.green}
                 onPress={() => call(resource.phone as string)}
               />
@@ -81,7 +85,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
             {resource.address ? (
               <ActionButton
                 icon="navigate-outline"
-                label="Get directions"
+                label={t('detail.directions')}
                 color={colors.actionInk}
                 onPress={() => directions(resource.address as string)}
               />
@@ -89,32 +93,27 @@ export function ResourceDetail({ resource, onClose }: Props) {
             {resource.address && hasStreetAddress(resource.address) ? (
               <ActionButton
                 icon="bus-outline"
-                label="Bus directions"
+                label={t('detail.bus')}
                 color={colors.purple}
                 onPress={() => directions(resource.address as string, 'transit')}
               />
             ) : null}
           </View>
           {resource.address ? (
-            <Text style={[styles.footnote, { color: colors.muted, marginTop: spacing.md }]}>
-              Opens Google Maps from where you are. This app does not store a map. Bus times need a signal.
-            </Text>
+            <Text style={[styles.footnote, { color: colors.muted, marginTop: spacing.md }]}>{t('detail.footnoteMaps')}</Text>
           ) : null}
 
           {resource.tags.length ? (
             <View style={styles.tags}>
-              {resource.tags.map((t) => (
-                <View key={t} style={[styles.tag, { backgroundColor: colors.purpleLight }]}>
-                  <Text style={[styles.tagText, { color: colors.purpleDark }]}>{t}</Text>
+              {resource.tags.map((tag) => (
+                <View key={tag} style={[styles.tag, { backgroundColor: colors.purpleLight }]}>
+                  <Text style={[styles.tagText, { color: colors.purpleDark }]}>{tag}</Text>
                 </View>
               ))}
             </View>
           ) : null}
 
-          <Text style={[styles.footnote, { color: colors.muted }]}>
-            Details change. If a number or hours look wrong, call 2-1-1 for the latest, or tell us on the app's
-            GitHub page.
-          </Text>
+          <Text style={[styles.footnote, { color: colors.muted }]}>{t('detail.footnoteChange')}</Text>
         </ScrollView>
       </View>
     </Modal>

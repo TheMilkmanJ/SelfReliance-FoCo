@@ -5,6 +5,7 @@ import { CERT_GROUP_MAP } from '../data/certGroups';
 import { CATEGORY_MAP } from '../data/categories';
 import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
+import { areaMessage, catKey, certKey, useI18n } from '../i18n';
 import { call } from '../lib/actions';
 import { cardShadow, radius, spacing, useTheme } from '../theme';
 import { FreeBadge } from './FreeBadge';
@@ -17,18 +18,24 @@ type Props = {
 
 export function ResourceCard({ resource, onPress, showCategory = true }: Props) {
   const { colors, isDark } = useTheme();
+  const { t } = useI18n();
   const cat = CATEGORY_MAP[resource.category];
   const freeCert = isFreeCertificate(resource);
+  const area = t(areaMessage(resource.area));
   const certLine = resource.certGroup
-    ? `${freeCert ? 'Free · ' : ''}${CERT_GROUP_MAP[resource.certGroup].short} cert · ${resource.area}`
-    : `${showCategory ? `${cat.short} · ` : ''}${resource.area}`;
+    ? t(freeCert ? 'card.freeCertLine' : 'card.certLine', {
+        short: t(certKey(resource.certGroup, 'short')),
+        area,
+      })
+    : `${showCategory ? `${t(catKey(resource.category, 'short'))} · ` : ''}${area}`;
+  const a11yExtra = freeCert ? t('card.freeCertA11y') : '';
   return (
     <View style={[styles.card, { backgroundColor: colors.card }, cardShadow(isDark)]}>
       <Pressable
         onPress={() => onPress(resource)}
         style={({ pressed }) => [styles.row, pressed && styles.pressed]}
         accessibilityRole="button"
-        accessibilityLabel={`${resource.name}${freeCert ? '. Free certificate' : ''}. ${resource.description}`}
+        accessibilityLabel={`${resource.name}${a11yExtra ? `. ${a11yExtra}` : ''}. ${resource.description}`}
       >
         <View style={[styles.iconWrap, { backgroundColor: `${cat.color}1a` }]}>
           <Ionicons name={cat.icon as never} size={22} color={cat.color} />
@@ -49,7 +56,7 @@ export function ResourceCard({ resource, onPress, showCategory = true }: Props) 
           onPress={() => call(resource.phone as string)}
           style={({ pressed }) => [styles.callBtn, { backgroundColor: colors.green }, pressed && styles.callPressed]}
           accessibilityRole="button"
-          accessibilityLabel={`Call ${resource.name} at ${resource.phone}`}
+          accessibilityLabel={t('card.callA11y', { name: resource.name, phone: resource.phone })}
           hitSlop={8}
         >
           <Ionicons name="call" size={16} color="#fff" />
