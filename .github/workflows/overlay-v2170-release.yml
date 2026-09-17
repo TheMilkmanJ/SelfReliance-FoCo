@@ -1,0 +1,63 @@
+name: overlay-v2170-release
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/overlay-v2170-release.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish v2.17.0 APK
+        env:
+          APK_PAGE: https://tmpfiles.org/wzwUqlqa4nhD/self-reliance-foco.apk
+          EXPECT_SHA: 9eb3a1117af776741acc446a9d5f1b5f30ac080c7ae45f4ad574b95f3df14675
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          download_tmp() {
+            local page="$1" out="$2" i html href
+            for i in 1 2 3 4; do
+              html=$(curl -fsSL -A "Mozilla/5.0" "$page") || true
+              href=$(printf "%s" "$html" | tr '"' '\n' | grep -E '^https://tmpfiles.org/dl/' | head -n1)
+              if [ -n "$href" ] && curl -fsSL -A "Mozilla/5.0" -o "$out" "$href"; then
+                return 0
+              fi
+              sleep $((i * 4))
+            done
+            echo "failed to download $page" >&2
+            return 1
+          }
+          download_tmp "$APK_PAGE" Self-Reliance-FoCo.apk
+          echo "$EXPECT_SHA  Self-Reliance-FoCo.apk" | sha256sum -c -
+          grep -q "$EXPECT_SHA" README.md
+          grep -q 'Give, need, volunteer' src/components/HomeTools.tsx
+          grep -q 'people-helping-people' src/data/resources.json
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('docs/flyer.html')
+          t = p.read_text()
+          t = t.replace('puts 402 listings in one place.', 'puts 403 listings in one place.')
+          old = 'Open now shows meals, showers, and beds that are supposed to be open. Offline maps walks you'
+          new = 'Open now shows meals, showers, and beds that are supposed to be open. Give, need, volunteer\n        points neighbors to desks that take donations, give things away, or need hands \u2014 including People Helping People\n        for furniture. Offline maps walks you'
+          t = t.replace(old, new)
+          t = t.replace('Trash day, Open now, and Offline maps sit on this home screen.', 'Trash day, Open now, Give/need/volunteer, and Offline maps sit on this home screen.')
+          p.write_text(t)
+          print('flyer patched')
+          PY
+          rm -f .github/workflows/overlay-v2170-release.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/flyer.html
+          git add -u .github/workflows/overlay-v2170-release.yml
+          git diff --cached --quiet || git commit -m "Patch flyer for Give, need, volunteer and remove v2.17.0 overlay."
+          git push
+          gh release create v2.17.0 Self-Reliance-FoCo.apk \
+            --title "Self-Reliance FoCo v2.17.0" \
+            --notes-file release-notes-v2170.md
