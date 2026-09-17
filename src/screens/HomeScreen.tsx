@@ -17,11 +17,14 @@ import {
   VOTING_CHIPS,
   countByCategory,
   filterByArea,
+  isChildcareResource,
   isPregnancyResource,
   isVotingResource,
   matchesPregnancyChip,
   matchesVotingChip,
   searchResources,
+  sortChildcareResources,
+  sortFamilyResources,
   sortPregnancyResources,
   sortVotingResources,
   type AreaFilter as AreaFilterId,
@@ -64,6 +67,7 @@ export function HomeScreen({
     const next = countByCategory(inArea);
     next.pregnancy = inArea.filter(isPregnancyResource).length;
     next.voting = inArea.filter(isVotingResource).length;
+    next.childcare = inArea.filter(isChildcareResource).length;
     return next;
   }, [inArea]);
   const results = useMemo(() => (searching ? searchResources(query, inArea) : []), [query, searching, inArea]);
@@ -82,6 +86,12 @@ export function HomeScreen({
         list = list.filter((r) => matchesVotingChip(r, votingFilter));
       }
       return sortVotingResources(list);
+    }
+    if (openCat === 'family_children') {
+      return sortFamilyResources(inArea.filter((r) => r.category === 'family_children'));
+    }
+    if (openCat === 'childcare') {
+      return sortChildcareResources(inArea.filter(isChildcareResource));
     }
     return inArea.filter((r) => r.category === openCat);
   }, [openCat, inArea, pregnancyFilter, votingFilter]);

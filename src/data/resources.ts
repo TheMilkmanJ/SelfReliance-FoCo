@@ -353,6 +353,8 @@ const STUDENT_ALWAYS = new Set<string>([
   'colorado-universal-preschool',
   'thompson-integrated-early-childhood',
   'head-start-larimer',
+  'poudre-valley-early-head-start',
+  'el-nidito-early-head-start',
   'larimer-ccap',
   'mcdonalds-archways-to-opportunity',
   'wioa-paid-certificates-larimer',
@@ -438,6 +440,8 @@ export function matchesStudentChip(resource: Resource, chip: StudentChipId): boo
       resource.id === 'psd-child-find' ||
       resource.id === 'thompson-child-find' ||
       resource.id === 'head-start-larimer' ||
+      resource.id === 'poudre-valley-early-head-start' ||
+      resource.id === 'el-nidito-early-head-start' ||
       resource.id === 'colorado-universal-preschool' ||
       resource.id === 'thompson-integrated-early-childhood' ||
       resource.id === 'larimer-ccap' ||
@@ -572,6 +576,8 @@ const HOMELESS_ALWAYS = new Set<string>([
   'psd-mckinney-vento',
   'thompson-mckinney-vento',
   'estes-mckinney-vento',
+  'poudre-valley-early-head-start',
+  'el-nidito-early-head-start',
   'wioa-paid-certificates-larimer',
   'larimer-workforce-center',
   'junior-league-career-closet',
@@ -697,7 +703,10 @@ export function matchesHomelessChip(resource: Resource, chip: HomelessChipId): b
       resource.id === 'kids-closet-fort-collins' ||
       resource.id === 'hns-clothing-boutique' ||
       resource.id === 'casa-larimer' ||
-      resource.id === 'project-self-sufficiency'
+      resource.id === 'project-self-sufficiency' ||
+      resource.id === 'poudre-valley-early-head-start' ||
+      resource.id === 'el-nidito-early-head-start' ||
+      resource.id === 'head-start-larimer'
     );
   }
   if (chip === 'youth') {
@@ -863,6 +872,33 @@ export function matchesPregnancyChip(resource: Resource, chip: PregnancyChipId):
 
 export function sortPregnancyResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, PREGNANCY_PINNED_IDS);
+}
+
+/** Shown first on Families & Kids. Head Start preschool stays on its original card. */
+export const FAMILY_PINNED_IDS = [
+  'poudre-valley-early-head-start',
+  'el-nidito-early-head-start',
+  'head-start-larimer',
+] as const;
+
+export function sortFamilyResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, FAMILY_PINNED_IDS);
+}
+
+/** Child Care tile also shows Early Head Start by id — do not recategorize those listings. */
+const CHILDCARE_ALWAYS = new Set<string>([
+  'poudre-valley-early-head-start',
+  'el-nidito-early-head-start',
+  'head-start-larimer',
+]);
+
+export function isChildcareResource(resource: Resource): boolean {
+  if (resource.category === 'childcare') return true;
+  return CHILDCARE_ALWAYS.has(resource.id);
+}
+
+export function sortChildcareResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, FAMILY_PINNED_IDS);
 }
 
 /** Shown first on the Voters tile. Transfort / COLT / SAINT stay in Rides. */
