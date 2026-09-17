@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
@@ -13,38 +14,39 @@ type Props = {
 
 export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Props) {
   const { colors, isDark } = useTheme();
+  const { t } = useI18n();
   return (
     <View style={styles.row}>
       <Pressable
         onPress={onTrash}
         style={({ pressed }) => [styles.btn, { backgroundColor: colors.card }, cardShadow(isDark), pressed && { opacity: 0.88 }]}
         accessibilityRole="button"
-        accessibilityLabel="Trash day, pick Highlander Heights or another neighborhood"
+        accessibilityLabel={t('tool.trashA11y')}
       >
         <View style={[styles.icon, { backgroundColor: isDark ? '#3d342c' : '#efe6d6' }]}>
           <Ionicons name="trash-outline" size={26} color={isDark ? '#e0c3a8' : '#6d4c41'} />
         </View>
         <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-          Trash day
+          {t('tool.trash')}
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          Highlander Heights is Friday
+          {t('tool.trashSub')}
         </Text>
       </Pressable>
       <Pressable
         onPress={onOpenNow}
         style={({ pressed }) => [styles.btn, { backgroundColor: colors.card }, cardShadow(isDark), pressed && { opacity: 0.88 }]}
         accessibilityRole="button"
-        accessibilityLabel="Open now, meals showers and beds open today"
+        accessibilityLabel={t('tool.openA11y')}
       >
         <View style={[styles.icon, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
           <Ionicons name="time-outline" size={26} color={HEADER_PURPLE} />
         </View>
         <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-          Open now
+          {t('tool.open')}
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          Meals, showers, beds
+          {t('tool.openSub')}
         </Text>
       </Pressable>
       <Pressable
@@ -57,16 +59,16 @@ export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Pro
           pressed && { opacity: 0.88 },
         ]}
         accessibilityRole="button"
-        accessibilityLabel="Give, need, or volunteer. Furniture, clothes, food, and hands."
+        accessibilityLabel={t('tool.giveA11y')}
       >
         <View style={[styles.icon, { backgroundColor: isDark ? '#3d2c34' : '#fce4ec' }]}>
           <Ionicons name="people-outline" size={26} color={isDark ? '#f48fb1' : '#ad1457'} />
         </View>
         <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-          Give, need, volunteer
+          {t('tool.give')}
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          Call Suzanne for furniture, or pick a desk that takes donations, gives things away, or needs hands.
+          {t('tool.giveSub')}
         </Text>
       </Pressable>
       <Pressable
@@ -79,16 +81,16 @@ export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Pro
           pressed && { opacity: 0.88 },
         ]}
         accessibilityRole="button"
-        accessibilityLabel="Offline maps, download your town in Google Maps"
+        accessibilityLabel={t('tool.mapsA11y')}
       >
         <View style={[styles.icon, { backgroundColor: isDark ? '#1e3a5f' : '#e3f2fd' }]}>
           <Ionicons name="map-outline" size={26} color={isDark ? '#90caf9' : '#1565c0'} />
         </View>
         <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-          Offline maps
+          {t('tool.maps')}
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          Download your town in Google Maps. This app does not store Google’s map.
+          {t('tool.mapsSub')}
         </Text>
       </Pressable>
     </View>

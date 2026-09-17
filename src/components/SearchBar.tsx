@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 
+import { useI18n } from '../i18n';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import { radius, spacing, useTheme } from '../theme';
 
@@ -13,7 +14,8 @@ type Props = {
 export function SearchBar({ value, onChange, placeholder }: Props) {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
-  const hint = placeholder ?? (largePrint ? 'Search' : 'Search by need, name, or town');
+  const { t } = useI18n();
+  const hint = placeholder ?? t(largePrint ? 'search.placeholderShort' : 'search.placeholder');
   return (
     <View style={[styles.wrap, { backgroundColor: colors.card, borderColor: colors.line }]}>
       <Ionicons name="search" size={20} color={colors.muted} />
@@ -25,11 +27,11 @@ export function SearchBar({ value, onChange, placeholder }: Props) {
         style={[styles.input, { color: colors.ink }]}
         returnKeyType="search"
         autoCorrect={false}
-        accessibilityLabel="Search resources"
+        accessibilityLabel={t('search.a11y')}
         maxFontSizeMultiplier={MAX_FONT.chrome}
       />
       {value ? (
-        <Pressable onPress={() => onChange('')} hitSlop={10} accessibilityRole="button" accessibilityLabel="Clear search">
+        <Pressable onPress={() => onChange('')} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('search.clear')}>
           <Ionicons name="close-circle" size={20} color={colors.muted} />
         </Pressable>
       ) : null}

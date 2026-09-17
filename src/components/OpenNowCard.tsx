@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { OpenPlace } from '../data/openNowTypes';
+import { useI18n } from '../i18n';
 import { call } from '../lib/actions';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import type { PlaceStatus } from '../lib/openNowStatus';
@@ -15,6 +16,7 @@ type Props = {
 
 export function OpenNowCard({ place, status, onPress }: Props) {
   const { colors, isDark } = useTheme();
+  const { t } = useI18n();
   const largePrint = useLargePrint();
   const statusColor =
     status.kind === 'open' ? colors.green : status.kind === 'later' ? '#b45309' : colors.muted;
@@ -56,7 +58,7 @@ export function OpenNowCard({ place, status, onPress }: Props) {
           onPress={() => call(place.phone as string)}
           style={[styles.call, { backgroundColor: colors.green }]}
           accessibilityRole="button"
-          accessibilityLabel={`Call ${place.name} at ${place.phone}`}
+          accessibilityLabel={t('card.callA11y', { name: place.name, phone: place.phone })}
         >
           <Ionicons name="call" size={18} color="#fff" />
           <Text style={styles.callText} maxFontSizeMultiplier={MAX_FONT.chrome}>

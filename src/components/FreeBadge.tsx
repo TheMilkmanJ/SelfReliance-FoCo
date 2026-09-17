@@ -1,18 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useI18n } from '../i18n';
 import { radius, useTheme } from '../theme';
 
 /** Shown next to a certificate title when the listed credential does not cost money. */
 export function FreeBadge() {
   const { colors } = useTheme();
+  const { t } = useI18n();
   return (
     <View
       style={[styles.badge, { backgroundColor: `${colors.green}1f` }]}
       accessibilityRole="text"
-      accessibilityLabel="Free"
+      accessibilityLabel={t('detail.free')}
     >
       <Text style={[styles.text, { color: colors.green }]} maxFontSizeMultiplier={1.4}>
-        Free
+        {t('detail.free')}
       </Text>
     </View>
   );
