@@ -1,0 +1,36 @@
+name: overlay-v2180
+
+on:
+  push:
+    paths:
+      - '.github/workflows/overlay-v2180.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download signed APK
+        run: |
+          curl -L --fail -o Self-Reliance-FoCo.apk "https://tmpfiles.org/dl/1789624022.4ea88d2b57fe35ac/wUwZqo8wfevu/self-reliance-foco.apk"
+          echo "c23b9a2f41abe3df270b8f739f64d2e2428b8972605a71da69ee026fe9e4f318  Self-Reliance-FoCo.apk" | sha256sum -c
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.18.0
+          name: Self-Reliance FoCo v2.18.0
+          files: Self-Reliance-FoCo.apk
+          fail_on_unmatched_files: true
+          body: |
+            Trash day checked against Republic’s 2026 Fort Collins collection map and holiday calendar. College Avenue is the Thursday / Friday line (east of College, including Highlander Heights, is Friday). Look up an address at republicservices.com/schedule. After a holiday week the screen says last week was the one-day delay, so a Friday truck after Labor Day is still a Thursday house. Same 403 listings. versionCode 24 — installs over v2.17.0.
+      - name: Remove overlay workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/overlay-v2180.yml
+          git commit -m "Remove one-shot v2.18.0 overlay workflow"
+          git push
