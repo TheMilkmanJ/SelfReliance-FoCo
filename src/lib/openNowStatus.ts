@@ -1,5 +1,6 @@
 import type { AreaFilter } from '../data/resources';
 import type { DaySchedule, HourWindow, OpenPlace } from '../data/openNowTypes';
+import { translate, type Translate } from '../i18n/translate';
 import { formatMinutes, minutesFromHHMM, type DenverNow } from './denverClock';
 
 export type StatusKind = 'open' | 'later' | 'closed' | 'unknown';
@@ -23,35 +24,38 @@ export function windowContains(nowMinutes: number, start: string, end: string): 
   return nowMinutes >= s && nowMinutes < e;
 }
 
-function windowEndLabel(start: string, end: string, nowMinutes: number): string {
+function windowEndLabel(start: string, end: string, nowMinutes: number, t: Translate): string {
   const s = minutesFromHHMM(start);
   const e = minutesFromHHMM(end);
-  if (e <= s && nowMinutes >= s) return `${formatMinutes(e)} (overnight)`;
-  return formatMinutes(e);
+  const time = formatMinutes(e);
+  if (e <= s && nowMinutes >= s) return t('open.status.overnight', { time });
+  return time;
 }
 
-export function statusFor(place: OpenPlace, now: DenverNow): PlaceStatus {
+const englishT: Translate = (key, vars) => translate('en', key, vars);
+
+export function statusFor(place: OpenPlace, now: DenverNow, t: Translate = englishT): PlaceStatus {
   if (place.alwaysOpen) {
-    return { kind: 'open', label: place.confirm ? 'Usually 24/7 — still call' : 'Open now', sort: 0 };
+    return { kind: 'open', label: t(place.confirm ? 'open.status.usually247' : 'open.status.now'), sort: 0 };
   }
 
   const today = windowsOf(place.schedule?.[now.day]);
   if (today === 'missing') {
-    return { kind: 'unknown', label: place.confirm ? 'Call to confirm' : 'See hours', sort: 3 };
+    return { kind: 'unknown', label: t(place.confirm ? 'open.status.confirm' : 'open.status.seeHours'), sort: 3 };
   }
   if (today === 'closed') {
-    return { kind: 'closed', label: 'Closed today', sort: 4 };
+    return { kind: 'closed', label: t('open.status.closedToday'), sort: 4 };
   }
   if (today === 'all-day') {
-    return { kind: 'open', label: place.confirm ? 'Open today — call to confirm' : 'Open all day', sort: 0 };
+    return { kind: 'open', label: t(place.confirm ? 'open.status.openTodayConfirm' : 'open.status.allDay'), sort: 0 };
   }
 
   for (const w of today) {
     if (windowContains(now.minutes, w.start, w.end)) {
-      const until = windowEndLabel(w.start, w.end, now.minutes);
+      const until = windowEndLabel(w.start, w.end, now.minutes, t);
       return {
         kind: 'open',
-        label: place.confirm ? `Open now — confirm · until ${until}` : `Open now · until ${until}`,
+        label: t(place.confirm ? 'open.status.untilConfirm' : 'open.status.until', { until }),
         sort: 0,
       };
     }
@@ -65,12 +69,12 @@ export function statusFor(place: OpenPlace, now: DenverNow): PlaceStatus {
   if (later) {
     return {
       kind: 'later',
-      label: `Opens ${formatMinutes(later.start)}`,
+      label: t('open.status.opens', { time: formatMinutes(later.start) }),
       sort: 1,
     };
   }
 
-  return { kind: 'closed', label: 'Closed for today', sort: 4 };
+  return { kind: 'closed', label: t('open.status.closedForToday'), sort: 4 };
 }
 
 export function matchesOpenTown(place: OpenPlace, town: AreaFilter): boolean {

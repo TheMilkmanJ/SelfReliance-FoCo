@@ -8,11 +8,11 @@ import {
   ZONE_DOW_ORDER,
   regionById,
   regionsForTown,
-  zoneDayLabel,
   type TrashRegion,
   type TrashTown,
 } from '../data/trashZones';
-import { DOW_LABEL, type ServiceDow } from '../lib/trashCalendar';
+import { dowKey, useI18n } from '../i18n';
+import { type ServiceDow } from '../lib/trashCalendar';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -25,6 +25,7 @@ type Props = {
 
 export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const selected = regionById(value);
   const [open, setOpen] = useState(!selected);
 
@@ -36,16 +37,14 @@ export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) 
   return (
     <View style={styles.wrap}>
       <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-        Trash day region
+        {t('trash.region')}
       </Text>
       <Pressable
         onPress={() => setOpen((was) => !was)}
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
         accessibilityLabel={
-          selected
-            ? `Region ${zoneDayLabel(selected)}. Tap to change.`
-            : 'Choose a Larimer County trash day region'
+          selected ? t('trash.regionA11y', { label: selected.label }) : t('trash.chooseA11y')
         }
         style={[
           styles.bar,
@@ -54,14 +53,14 @@ export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) 
       >
         <View style={{ flex: 1 }}>
           <Text style={[styles.barTitle, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-            {selected ? selected.label : 'Choose your area'}
+            {selected ? selected.label : t('trash.choose')}
           </Text>
           <Text style={[styles.barSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
             {selected
               ? selected.dow
-                ? `${selected.town} · ${DOW_LABEL[selected.dow]} pickup`
-                : `${selected.town} · ${selected.hauler}`
-              : 'Fort Collins, Loveland, Estes Park, Berthoud, Wellington, and unincorporated'}
+                ? t('trash.pickup', { town: selected.town, day: t(dowKey(selected.dow)) })
+                : t('trash.haulerLine', { town: selected.town, hauler: selected.hauler })
+              : t('trash.townsHint')}
           </Text>
         </View>
         <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={22} color={HEADER_PURPLE} />
@@ -87,10 +86,10 @@ export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) 
                 setOpen(true);
               }}
               accessibilityRole="button"
-              accessibilityLabel="Clear region"
+              accessibilityLabel={t('trash.clear')}
               style={styles.clear}
             >
-              <Text style={[styles.clearText, { color: colors.purple }]}>Clear region</Text>
+              <Text style={[styles.clearText, { color: colors.purple }]}>{t('trash.clear')}</Text>
             </Pressable>
           ) : null}
         </View>
@@ -109,6 +108,7 @@ function TownGroup({
   onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const rows = regionsForTown(town);
   if (rows.length === 0) return null;
 
@@ -117,7 +117,7 @@ function TownGroup({
   return (
     <View>
       <Text style={[styles.town, { color: HEADER_PURPLE, borderBottomColor: colors.line }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-        {town === 'Unincorporated' ? 'Unincorporated Larimer' : town}
+        {town === 'Unincorporated' ? t('area.unincorporated') : town}
       </Text>
       {focoByDow
         ? ZONE_DOW_ORDER.map((dow) => (
@@ -140,12 +140,13 @@ function DowGroup({
   onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const rows = TRASH_REGIONS.filter((z) => z.town === 'Fort Collins' && z.dow === dow);
   if (rows.length === 0) return null;
   return (
     <View>
       <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-        {DOW_LABEL[dow]}
+        {t(dowKey(dow))}
       </Text>
       {rows.map((region) => (
         <RegionRow key={region.id} region={region} selectedId={selectedId} onPick={onPick} />
@@ -164,8 +165,9 @@ function RegionRow({
   onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const on = region.id === selectedId;
-  const day = region.dow ? `${DOW_LABEL[region.dow]} · ` : '';
+  const day = region.dow ? `${t(dowKey(region.dow))} · ` : '';
   return (
     <Pressable
       onPress={() => onPick(region)}
