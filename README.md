@@ -7,13 +7,13 @@
 <p align="center">A free Android app that puts Larimer County help in one place: food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
 
 <p align="center">
-  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.18.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.19.0%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
   <br />
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
 </p>
 
-<p align="center"><strong>Current download: v2.18.0</strong> (Trash day matches the 2026 Republic map). About 71 MB. Installs over any earlier FoCo build (versionCode 24).</p>
+<p align="center"><strong>Current download: v2.19.0</strong> (Trash day neighborhood dropdown). About 71 MB. Installs over any earlier FoCo build (versionCode 25).</p>
 
 <p align="center">
   Scan to <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk">download the APK</a>:<br/>
@@ -32,7 +32,7 @@ This repository is the application. Clone it, fork it, or download the ZIP.
 
 - App UI and logic: [`src/`](src/) (TypeScript / React Native / Expo)
 - Listings: [`src/data/resources.json`](src/data/resources.json)
-- App config (name, Android package `org.foco.selfreliance`, version **2.18.0** / versionCode **24**): [`app.json`](app.json)
+- App config (name, Android package `org.foco.selfreliance`, version **2.19.0** / versionCode **25**): [`app.json`](app.json)
 - License: [MIT](LICENSE)
 
 This is an Expo app, not a hand-written Kotlin project. The Gradle tree, `AndroidManifest.xml`, and native Android folders are generated from this source:
@@ -45,7 +45,7 @@ npx expo prebuild --platform android --no-install
 
 Read `src/` to see what the app does (no analytics, no account, listings plus tap-to-call / maps). The signed release APK on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) is built from this tree. A SHA-256 checksum lets you confirm you have that same file. It does not replace reading the source.
 
-The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.18.0 APK needs that same key and versionCode 25+.
+The release keystore is **not** in this repo. Anyone can build a debug APK. A Play-style upgrade over the public v2.19.0 APK needs that same key and versionCode 26+.
 
 ## Install on your phone (about 2 minutes)
 
@@ -55,16 +55,16 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 4. Tap **Install**. If Google Play Protect shows a warning, tap **More details** and then **Install anyway** (this happens for any app that is not from the Play Store).
 5. Open **Self-Reliance FoCo**. The bottom tabs should be **Resources**, **Students**, **Homeless**, and **Have a disability?** Identification, pets, LGBTQ+, heat and cold, reentry, and furniture are on the Resources home tiles.
 
-**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If the bottom tabs still say Jobs, Housing, and Clothes, you still have v2.6.0 or older — delete the old APK from Downloads and grab v2.18.0 again. If Clothes only shows three cards, you are on v2.13.x or older — install this over it. If there is no Trash day card on Resources home, you are on v2.14.0 or older. If there is no Offline maps card, you are on v2.15.0 or older. If there is no Give, need, volunteer card, you are on v2.16.0 or older. If Trash day still sends you to Republic’s municipality page instead of the address lookup, you are on v2.17.0 or older.
+**Already have Self-Reliance FoCo?** Install this over it. Same app, same key. If the bottom tabs still say Jobs, Housing, and Clothes, you still have v2.6.0 or older — delete the old APK from Downloads and grab v2.19.0 again. If Clothes only shows three cards, you are on v2.13.x or older — install this over it. If there is no Trash day card on Resources home, you are on v2.14.0 or older. If there is no Offline maps card, you are on v2.15.0 or older. If there is no Give, need, volunteer card, you are on v2.16.0 or older. If Trash day has weekday chips but no Highlander Heights dropdown, you are on v2.18.0 or older.
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
 
-## What is in the app (v2.18.0, versionCode 24)
+## What is in the app (v2.19.0, versionCode 25)
 
 - **Resources** tab: 403 listings. Search by name, need, or town. Pick **FoCo**, **Loveland**, **Estes Park**, **Berthoud**, or **Wellington** to narrow everything (county-wide, statewide, and national programs still show). Home tiles include **Identification**, **Pets**, **LGBTQ+**, **Heat & Cold**, **Reentry**, and **Furniture & Household**, plus the older tiles for jobs, housing, clothes, child care, immigrants, recovery, special needs, holiday, dental, and disaster. Thin tiles now have a working group of desks (about 9–11 each) instead of two or three cards: Salvation Army and HNS clothing, Community Corrections / parole / probation, VA clinics, SAVA, Adult Protective Services, weatherization in Berthoud, library hotspots, and Salud dental in Estes Park. **Pets** includes Until They’re Home, Animal Friends’ Taft Hill adoptions, NOCO Humane lost-pet shelter, CSU’s 24/7 ER, TNR for community cats, and Estes Park animal help. **Rides** includes Transfort’s trip planner, route maps you can save, MAX, FLEX to Boulder, and how to download Fort Collins inside Google Maps. Certificates you can finish at no cost show a **Free** label next to the title. 2-1-1 still covers everything this list does not.
-- **Trash day** (Resources home): Fort Collins city-contracted homes pick a usual Republic weekday. The phone remembers it and delays one day for the six observed weekday holidays. After a holiday week it tells you last week was the delay, so a Friday truck after Labor Day is still a Thursday house. On the 2026 city map, College Avenue splits Thursday (west) and Friday (east — Lemay, Highlander Heights, toward I-25). Carts out by 7am. Recycling same day. Yard trimmings April–November. Look up the address at republicservices.com/schedule or call 970-416-2012. Loveland has Recollect plus a recycling-week switch. Estes Park, Berthoud, and Wellington show hauler numbers.
+- **Trash day** (Resources home): Pick a Fort Collins neighborhood from a dropdown drawn from Republic’s 2026 collection map. **Highlander Heights is Friday.** Old Town is Thursday. The phone remembers the neighborhood and delays one day for the six observed weekday holidays. Carts out by 7am. Recycling same day. Yard trimmings April–November. Look up a house on the College Avenue line at republicservices.com/schedule or call 970-416-2012. Loveland has Recollect plus a recycling-week switch. Estes Park, Berthoud, and Wellington show hauler numbers.
 - **Open now** (Resources home): Meals, showers, beds, indoor heat/AC, and crisis lines with clock hours. Filter by what you need and by Open now / Later today. Call to confirm; hours change.
 - **Give, need, volunteer** (Resources home): Three chips for people who need something, have something to donate, or can show up and help. Not a classifieds feed — these are desks already in the directory. **People Helping People** (Suzanne Barslund, 970-391-9039) is first for free furniture, donations, and volunteer lifting. Clothes closets, food banks, Habitat ReStore donation pickup, and FoCo Cafe sit on the matching chip.
 - **Offline maps** (Resources home): Google does not let this app store Google’s map. The card walks you through downloading your town inside the Google Maps app so walking and driving can work with no signal. Transfort route PDFs are the bus fallback. The 403 listings, trash day, open now, and give/need already work offline after install.
@@ -132,9 +132,9 @@ Run `npm run validate` after editing. Phone numbers and hours change. If somethi
 
 Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
-## Checksum (v2.18.0)
+## Checksum (v2.19.0)
 
-To verify the published APK: `sha256 c23b9a2f41abe3df270b8f739f64d2e2428b8972605a71da69ee026fe9e4f318`
+To verify the published APK: `sha256 002e760aeef1a2f91dd5aa0875bc05c4499af7163a0088ce5ca18bf96c5b5532`
 
 ## Questions or problems
 
