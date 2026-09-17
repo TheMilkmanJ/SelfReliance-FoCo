@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
+import { Chip } from '../components/Chip';
+import { ChipRow } from '../components/ChipRow';
 import { Header } from '../components/Header';
 import { HomeTools } from '../components/HomeTools';
 import { QuickHelp } from '../components/QuickHelp';
@@ -10,11 +12,16 @@ import { ResourceCard } from '../components/ResourceCard';
 import { SearchBar } from '../components/SearchBar';
 import { CATEGORIES, CATEGORY_MAP } from '../data/categories';
 import {
+  PREGNANCY_CHIPS,
   RESOURCES,
   countByCategory,
   filterByArea,
+  isPregnancyResource,
+  matchesPregnancyChip,
   searchResources,
+  sortPregnancyResources,
   type AreaFilter as AreaFilterId,
+  type PregnancyChipId,
 } from '../data/resources';
 import type { Category, CategoryId, Resource } from '../data/types';
 import { useLargePrint } from '../lib/fontScale';
@@ -43,15 +50,27 @@ export function HomeScreen({
   const largePrint = useLargePrint();
   const [query, setQuery] = useState('');
   const [openCat, setOpenCat] = useState<CategoryId | null>(null);
+  const [pregnancyFilter, setPregnancyFilter] = useState<PregnancyChipId>('all');
 
   const searching = query.trim().length > 0;
   const inArea = useMemo(() => filterByArea(RESOURCES, area), [area]);
-  const counts = useMemo(() => countByCategory(inArea), [inArea]);
+  const counts = useMemo(() => {
+    const next = countByCategory(inArea);
+    next.pregnancy = inArea.filter(isPregnancyResource).length;
+    return next;
+  }, [inArea]);
   const results = useMemo(() => (searching ? searchResources(query, inArea) : []), [query, searching, inArea]);
-  const catResources = useMemo(
-    () => (openCat ? inArea.filter((r) => r.category === openCat) : []),
-    [openCat, inArea],
-  );
+  const catResources = useMemo(() => {
+    if (!openCat) return [];
+    if (openCat === 'pregnancy') {
+      let list = inArea.filter(isPregnancyResource);
+      if (pregnancyFilter !== 'all') {
+        list = list.filter((r) => matchesPregnancyChip(r, pregnancyFilter));
+      }
+      return sortPregnancyResources(list);
+    }
+    return inArea.filter((r) => r.category === openCat);
+  }, [openCat, inArea, pregnancyFilter]);
 
   if (openCat) {
     const cat = CATEGORY_MAP[openCat];
@@ -65,10 +84,31 @@ export function HomeScreen({
           contentContainerStyle={styles.list}
           ListHeaderComponent={
             <View>
-              <Pressable onPress={() => setOpenCat(null)} style={styles.back} accessibilityRole="button" hitSlop={8}>
+              <Pressable
+                onPress={() => {
+                  setPregnancyFilter('all');
+                  setOpenCat(null);
+                }}
+                style={styles.back}
+                accessibilityRole="button"
+                hitSlop={8}
+              >
                 <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
                 <Text style={[styles.backText, { color: colors.purple }]}>All categories</Text>
               </Pressable>
+              {openCat === 'pregnancy' ? (
+                <ChipRow>
+                  {PREGNANCY_CHIPS.map((chip) => (
+                    <Chip
+                      key={chip.id}
+                      label={chip.label}
+                      icon={chip.id === 'all' ? undefined : chip.icon}
+                      active={pregnancyFilter === chip.id}
+                      onPress={() => setPregnancyFilter(chip.id)}
+                    />
+                  ))}
+                </ChipRow>
+              ) : null}
               <AreaFilter value={area} onChange={onAreaChange} />
               <Text style={[styles.count, { color: colors.muted, paddingTop: spacing.md }]}>
                 {catResources.length} {catResources.length === 1 ? 'resource' : 'resources'}
@@ -81,7 +121,9 @@ export function HomeScreen({
               <Ionicons name="map-outline" size={40} color={colors.muted} />
               <Text style={[styles.emptyTitle, { color: colors.ink }]}>Nothing for {areaLabel(area)}</Text>
               <Text style={[styles.emptyText, { color: colors.muted }]}>
-                Try All of Larimer, or call 2-1-1 for a referral closer to you.
+                {openCat === 'pregnancy'
+                  ? 'Try All on the birth-option chips, pick All of Larimer, or call 2-1-1.'
+                  : 'Try All of Larimer, or call 2-1-1 for a referral closer to you.'}
               </Text>
             </View>
           }
@@ -125,7 +167,15 @@ export function HomeScreen({
                 </Text>
                 <View style={styles.grid}>
                   {CATEGORIES.map((c) => (
-                    <CategoryTile key={c.id} category={c} count={counts[c.id] ?? 0} onPress={() => setOpenCat(c.id)} />
+                    <CategoryTile
+                      key={c.id}
+                      category={c}
+                      count={counts[c.id] ?? 0}
+                      onPress={() => {
+                        setPregnancyFilter('all');
+                        setOpenCat(c.id);
+                      }}
+                    />
                   ))}
                 </View>
                 <Text style={[styles.about, { color: colors.muted }]}>
