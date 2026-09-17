@@ -739,6 +739,132 @@ export function clothingResources(): Resource[] {
   return RESOURCES.filter(isClothingResource);
 }
 
+/** Shown first on the Pregnancy & Birth tile. Existing WIC / NFP / Birthline stay in their own categories. */
+export const PREGNANCY_PINNED_IDS = [
+  'poudre-valley-prenatal',
+  'wic-larimer',
+  'uchealth-birth-center-pvh',
+  'peaceful-birth-company',
+  'true-north-birth-wellness',
+  'nurse-family-partnership-larimer',
+] as const;
+
+const PREGNANCY_ALWAYS = new Set<string>([
+  ...PREGNANCY_PINNED_IDS,
+  'uchealth-birth-center-mcr',
+  'banner-fort-collins-birth',
+  'golden-hour-midwifery',
+  'jodias-midwifery',
+  'north-colorado-midwifery',
+  'salud-mamas-prenatal',
+  'colorado-medicaid-doula',
+  'colorado-midwives-association',
+  'maternal-mental-health-hotline',
+  'birthline-loveland',
+  'gabriel-house-marisol',
+  'salud-family-health-fort-collins',
+  'sunrise-community-health-loveland',
+  'colorado-peak',
+  'united-way-211',
+  'kids-closet-fort-collins',
+  'health-district-connections-sud',
+  'summitstone-crisis',
+]);
+
+export type PregnancyChipId =
+  | 'all'
+  | 'hospital'
+  | 'water'
+  | 'hypno'
+  | 'midwife'
+  | 'doula'
+  | 'prenatal'
+  | 'supplies';
+
+export const PREGNANCY_CHIPS: Array<{ id: PregnancyChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'hospital', label: 'Hospital', icon: 'medkit-outline' },
+  { id: 'water', label: 'Water birth', icon: 'water-outline' },
+  { id: 'hypno', label: 'HypnoBirthing', icon: 'moon-outline' },
+  { id: 'midwife', label: 'Midwife / home', icon: 'home-outline' },
+  { id: 'doula', label: 'Doula', icon: 'people-outline' },
+  { id: 'prenatal', label: 'Prenatal & WIC', icon: 'nutrition-outline' },
+  { id: 'supplies', label: 'Diapers & clothes', icon: 'shirt-outline' },
+];
+
+/** Pregnancy tile plus related desks (WIC, diapers) that stay in their original categories. */
+export function isPregnancyResource(resource: Resource): boolean {
+  if (resource.category === 'pregnancy') return true;
+  return PREGNANCY_ALWAYS.has(resource.id);
+}
+
+export function matchesPregnancyChip(resource: Resource, chip: PregnancyChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'hospital') {
+    return (
+      resource.id === 'uchealth-birth-center-pvh' ||
+      resource.id === 'uchealth-birth-center-mcr' ||
+      resource.id === 'banner-fort-collins-birth' ||
+      resource.id === 'poudre-valley-prenatal'
+    );
+  }
+  if (chip === 'water') {
+    return (
+      resource.id === 'true-north-birth-wellness' ||
+      resource.id === 'golden-hour-midwifery' ||
+      hasAnyTag(resource, ['water birth', 'waterbirth'])
+    );
+  }
+  if (chip === 'hypno') {
+    return resource.id === 'peaceful-birth-company' || hasAnyTag(resource, ['hypnobirthing', 'hypnobabies']);
+  }
+  if (chip === 'midwife') {
+    return (
+      resource.id === 'true-north-birth-wellness' ||
+      resource.id === 'golden-hour-midwifery' ||
+      resource.id === 'jodias-midwifery' ||
+      resource.id === 'north-colorado-midwifery' ||
+      resource.id === 'colorado-midwives-association' ||
+      hasAnyTag(resource, ['midwife', 'home birth'])
+    );
+  }
+  if (chip === 'doula') {
+    return (
+      resource.id === 'peaceful-birth-company' ||
+      resource.id === 'colorado-medicaid-doula' ||
+      hasAnyTag(resource, ['doula'])
+    );
+  }
+  if (chip === 'prenatal') {
+    return (
+      resource.id === 'poudre-valley-prenatal' ||
+      resource.id === 'salud-mamas-prenatal' ||
+      resource.id === 'wic-larimer' ||
+      resource.id === 'nurse-family-partnership-larimer' ||
+      resource.id === 'salud-family-health-fort-collins' ||
+      resource.id === 'sunrise-community-health-loveland' ||
+      resource.id === 'colorado-peak' ||
+      resource.id === 'maternal-mental-health-hotline' ||
+      resource.id === 'health-district-connections-sud' ||
+      hasAnyTag(resource, ['prenatal', 'pregnancy', 'wic'])
+    );
+  }
+  if (chip === 'supplies') {
+    return (
+      resource.id === 'wic-larimer' ||
+      resource.id === 'birthline-loveland' ||
+      resource.id === 'gabriel-house-marisol' ||
+      resource.id === 'kids-closet-fort-collins' ||
+      hasAnyTag(resource, ['diapers', 'baby supplies', 'maternity'])
+    );
+  }
+  return true;
+}
+
+export function sortPregnancyResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, PREGNANCY_PINNED_IDS);
+}
+
 function normalize(s: string): string {
   return s
     .toLowerCase()
