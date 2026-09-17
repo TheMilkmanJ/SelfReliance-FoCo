@@ -591,6 +591,7 @@ const HOMELESS_ALWAYS = new Set<string>([
   'animal-friends-kibble',
   'four-paws-pet-pantry',
   'until-theyre-home',
+  'people-helping-people',
   'homeward-alliance-wagees',
   'salvation-army-care-closet',
   'st-johns-clothing-closet',

@@ -151,7 +151,7 @@ export const CATEGORIES: Category[] = [
     short: 'Household',
     icon: 'cube-outline',
     color: '#795548',
-    blurb: 'Beds, furniture, dishes, and thrift stores with used household goods.',
+    blurb: 'Beds, free furniture giveaways, dishes, and thrift stores with used household goods.',
   },
   {
     id: 'pets',
