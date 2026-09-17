@@ -1,27 +1,42 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { FOCO_TRASH_ZONES, ZONE_DOW_ORDER, zoneDayLabel, type TrashZone, zonesForDow } from '../data/trashZones';
+import {
+  TOWN_ORDER,
+  TRASH_REGIONS,
+  ZONE_DOW_ORDER,
+  regionById,
+  regionsForTown,
+  zoneDayLabel,
+  type TrashRegion,
+  type TrashTown,
+} from '../data/trashZones';
 import { DOW_LABEL, type ServiceDow } from '../lib/trashCalendar';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
 type Props = {
   value: string | null;
-  onChange: (zone: TrashZone) => void;
+  focusTown: TrashTown | null;
+  onChange: (region: TrashRegion) => void;
   onClear: () => void;
 };
 
-export function TrashZoneSelect({ value, onChange, onClear }: Props) {
+export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) {
   const { colors } = useTheme();
-  const selected = FOCO_TRASH_ZONES.find((z) => z.id === value) ?? null;
+  const selected = regionById(value);
   const [open, setOpen] = useState(!selected);
+
+  const towns = useMemo(() => {
+    if (!focusTown) return TOWN_ORDER;
+    return [focusTown, ...TOWN_ORDER.filter((t) => t !== focusTown)];
+  }, [focusTown]);
 
   return (
     <View style={styles.wrap}>
       <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-        Neighborhood
+        Trash day region
       </Text>
       <Pressable
         onPress={() => setOpen((was) => !was)}
@@ -29,8 +44,8 @@ export function TrashZoneSelect({ value, onChange, onClear }: Props) {
         accessibilityState={{ expanded: open }}
         accessibilityLabel={
           selected
-            ? `Neighborhood ${zoneDayLabel(selected)}. Tap to change.`
-            : 'Choose a Fort Collins neighborhood for trash day'
+            ? `Region ${zoneDayLabel(selected)}. Tap to change.`
+            : 'Choose a Larimer County trash day region'
         }
         style={[
           styles.bar,
@@ -42,7 +57,11 @@ export function TrashZoneSelect({ value, onChange, onClear }: Props) {
             {selected ? selected.label : 'Choose your area'}
           </Text>
           <Text style={[styles.barSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-            {selected ? `${DOW_LABEL[selected.dow]} pickup · ${selected.where}` : 'Highlander Heights is on this list'}
+            {selected
+              ? selected.dow
+                ? `${selected.town} · ${DOW_LABEL[selected.dow]} pickup`
+                : `${selected.town} · ${selected.hauler}`
+              : 'Fort Collins, Loveland, Estes Park, Berthoud, Wellington, and unincorporated'}
           </Text>
         </View>
         <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={22} color={HEADER_PURPLE} />
@@ -50,13 +69,13 @@ export function TrashZoneSelect({ value, onChange, onClear }: Props) {
 
       {open ? (
         <View style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.line }]}>
-          {ZONE_DOW_ORDER.map((dow) => (
-            <DowGroup
-              key={dow}
-              dow={dow}
+          {towns.map((town) => (
+            <TownGroup
+              key={town}
+              town={town}
               selectedId={value}
-              onPick={(zone) => {
-                onChange(zone);
+              onPick={(region) => {
+                onChange(region);
                 setOpen(false);
               }}
             />
@@ -68,14 +87,45 @@ export function TrashZoneSelect({ value, onChange, onClear }: Props) {
                 setOpen(true);
               }}
               accessibilityRole="button"
-              accessibilityLabel="Clear neighborhood"
+              accessibilityLabel="Clear region"
               style={styles.clear}
             >
-              <Text style={[styles.clearText, { color: colors.purple }]}>Clear neighborhood</Text>
+              <Text style={[styles.clearText, { color: colors.purple }]}>Clear region</Text>
             </Pressable>
           ) : null}
         </View>
       ) : null}
+    </View>
+  );
+}
+
+function TownGroup({
+  town,
+  selectedId,
+  onPick,
+}: {
+  town: TrashTown;
+  selectedId: string | null;
+  onPick: (region: TrashRegion) => void;
+}) {
+  const { colors } = useTheme();
+  const rows = regionsForTown(town);
+  if (rows.length === 0) return null;
+
+  const focoByDow = town === 'Fort Collins';
+
+  return (
+    <View>
+      <Text style={[styles.town, { color: HEADER_PURPLE, borderBottomColor: colors.line }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+        {town === 'Unincorporated' ? 'Unincorporated Larimer' : town}
+      </Text>
+      {focoByDow
+        ? ZONE_DOW_ORDER.map((dow) => (
+            <DowGroup key={`${town}-${dow}`} dow={dow} selectedId={selectedId} onPick={onPick} />
+          ))
+        : rows.map((region) => (
+            <RegionRow key={region.id} region={region} selectedId={selectedId} onPick={onPick} />
+          ))}
     </View>
   );
 }
@@ -87,40 +137,54 @@ function DowGroup({
 }: {
   dow: ServiceDow;
   selectedId: string | null;
-  onPick: (zone: TrashZone) => void;
+  onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
-  const rows = zonesForDow(dow);
+  const rows = TRASH_REGIONS.filter((z) => z.town === 'Fort Collins' && z.dow === dow);
   if (rows.length === 0) return null;
   return (
     <View>
       <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
         {DOW_LABEL[dow]}
       </Text>
-      {rows.map((zone) => {
-        const on = zone.id === selectedId;
-        return (
-          <Pressable
-            key={zone.id}
-            onPress={() => onPick(zone)}
-            accessibilityRole="button"
-            accessibilityState={{ selected: on }}
-            accessibilityLabel={`${zone.label}, ${DOW_LABEL[zone.dow]} trash day. ${zone.where}`}
-            style={[styles.row, on && { backgroundColor: `${HEADER_PURPLE}14` }]}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.rowTitle, { color: on ? HEADER_PURPLE : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-                {zone.label}
-              </Text>
-              <Text style={[styles.rowSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-                {zone.where}
-              </Text>
-            </View>
-            {on ? <Ionicons name="checkmark" size={20} color={HEADER_PURPLE} /> : null}
-          </Pressable>
-        );
-      })}
+      {rows.map((region) => (
+        <RegionRow key={region.id} region={region} selectedId={selectedId} onPick={onPick} />
+      ))}
     </View>
+  );
+}
+
+function RegionRow({
+  region,
+  selectedId,
+  onPick,
+}: {
+  region: TrashRegion;
+  selectedId: string | null;
+  onPick: (region: TrashRegion) => void;
+}) {
+  const { colors } = useTheme();
+  const on = region.id === selectedId;
+  const day = region.dow ? `${DOW_LABEL[region.dow]} · ` : '';
+  return (
+    <Pressable
+      onPress={() => onPick(region)}
+      accessibilityRole="button"
+      accessibilityState={{ selected: on }}
+      accessibilityLabel={`${region.label}, ${region.town}. ${region.where}`}
+      style={[styles.row, on && { backgroundColor: `${HEADER_PURPLE}14` }]}
+    >
+      <View style={{ flex: 1 }}>
+        <Text style={[styles.rowTitle, { color: on ? HEADER_PURPLE : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+          {region.label}
+        </Text>
+        <Text style={[styles.rowSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+          {day}
+          {region.where}
+        </Text>
+      </View>
+      {on ? <Ionicons name="checkmark" size={20} color={HEADER_PURPLE} /> : null}
+    </Pressable>
   );
 }
 
@@ -145,6 +209,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.lg,
     overflow: 'hidden',
+  },
+  town: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.sm,
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   group: {
     paddingHorizontal: spacing.lg,

@@ -67,6 +67,12 @@ function holidayLastServiceWeek(ymd) {
   return holidayThisServiceWeek(addDays(ymd, -7));
 }
 
+function yardTrimmingsSeason(ymd, town) {
+  const md = ymd.month * 100 + ymd.date;
+  if (town === 'Loveland') return md >= 330 && md <= 1204;
+  return md >= 401 && md <= 1130;
+}
+
 function actualPickupDow(regular, ymd) {
   const hol = holidayThisServiceWeek(ymd);
   if (!hol || hol.dow < 1 || hol.dow > 5) return regular;
@@ -120,11 +126,23 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const zoneFile = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/data/trashZones.json'), 'utf8'));
-const hh = zoneFile.zones.find((z) => z.id === 'highlander-heights');
-assert(hh && hh.dow === 5, 'Highlander Heights is Friday on the 2026 map');
-assert(zoneFile.zones.find((z) => z.id === 'old-town')?.dow === 4, 'Old Town is Thursday');
-assert(zoneFile.zones.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
-assert(new Set(zoneFile.zones.map((z) => z.id)).size === zoneFile.zones.length, 'unique zone ids');
-assert([1, 2, 3, 4, 5].every((d) => zoneFile.zones.some((z) => z.dow === d)), 'all weekdays have a zone');
+const regions = zoneFile.regions;
+const hh = regions.find((z) => z.id === 'highlander-heights');
+assert(hh && hh.dow === 5 && hh.town === 'Fort Collins', 'Highlander Heights is Friday on the 2026 map');
+assert(regions.find((z) => z.id === 'old-town')?.dow === 4, 'Old Town is Thursday');
+assert(regions.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
+assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
+assert([1, 2, 3, 4, 5].every((d) => regions.some((z) => z.town === 'Fort Collins' && z.dow === d)), 'all weekdays have a FoCo zone');
+const towns = ['Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington', 'Unincorporated'];
+towns.forEach((town) => {
+  assert(regions.some((z) => z.town === town), `${town} has trash regions`);
+});
+assert(regions.find((z) => z.id === 'loveland-centerra')?.dow === null, 'Loveland Centerra day is Recollect, not invented');
+assert(regions.find((z) => z.id === 'wellington-old-town')?.town === 'Wellington', 'Old Town Wellington is listed');
+assert(regions.find((z) => z.id === 'berthoud-mountain-high')?.phone === '970-834-1144', 'Mountain High phone');
+assert(regions.find((z) => z.id === 'estes-superior')?.phone === '970-214-4902', 'Superior Trash phone');
+assert(regions.find((z) => z.id === 'uninc-landfill')?.phone === '970-498-5760', 'Landfill office phone');
+assert(yardTrimmingsSeason({ year: 2026, month: 4, date: 1, dow: 3 }, 'Loveland') === true, 'Loveland yard in April');
+assert(yardTrimmingsSeason({ year: 2026, month: 12, date: 10, dow: 4 }, 'Loveland') === false, 'Loveland yard off after Dec 4');
 
 console.log('OK: trash-day holiday bump');

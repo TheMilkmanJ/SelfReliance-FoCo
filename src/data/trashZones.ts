@@ -2,32 +2,95 @@ import type { ServiceDow } from '../lib/trashCalendar';
 import { DOW_LABEL } from '../lib/trashCalendar';
 import raw from './trashZones.json';
 
-export type TrashZone = {
+export type TrashTown = 'Fort Collins' | 'Loveland' | 'Estes Park' | 'Berthoud' | 'Wellington' | 'Unincorporated';
+
+export type RecyclingKind = 'same-day-weekly' | 'every-other' | 'ask' | 'none';
+export type YardKind = 'same-day-season' | 'in-trash' | 'ask' | 'none';
+
+export type TrashRegion = {
   id: string;
+  town: TrashTown;
   label: string;
   where: string;
-  dow: ServiceDow;
+  dow: ServiceDow | null;
+  hauler: string;
+  phone: string | null;
+  lookupUrl: string | null;
+  recycling: RecyclingKind;
+  yard: YardKind;
+  cartsBy: string | null;
 };
 
-export const FOCO_TRASH_ZONES: TrashZone[] = (raw.zones as TrashZone[]).map((z) => ({
+/** Kept so older imports keep working. */
+export type TrashZone = TrashRegion;
+
+export const TOWN_ORDER: TrashTown[] = [
+  'Fort Collins',
+  'Loveland',
+  'Estes Park',
+  'Berthoud',
+  'Wellington',
+  'Unincorporated',
+];
+
+export const TRASH_REGIONS: TrashRegion[] = (raw.regions as TrashRegion[]).map((z) => ({
   id: z.id,
+  town: z.town,
   label: z.label,
   where: z.where,
   dow: z.dow,
+  hauler: z.hauler,
+  phone: z.phone,
+  lookupUrl: z.lookupUrl,
+  recycling: z.recycling,
+  yard: z.yard,
+  cartsBy: z.cartsBy,
 }));
 
-/** Friday first so Highlander Heights sits at the top of the list. */
+export const FOCO_TRASH_ZONES: TrashRegion[] = TRASH_REGIONS.filter((z) => z.town === 'Fort Collins');
+
+/** Friday first so Highlander Heights sits at the top of Fort Collins. */
 export const ZONE_DOW_ORDER: ServiceDow[] = [5, 4, 3, 2, 1];
 
-export function zoneById(id: string | null | undefined): TrashZone | null {
+export function regionById(id: string | null | undefined): TrashRegion | null {
   if (!id) return null;
-  return FOCO_TRASH_ZONES.find((z) => z.id === id) ?? null;
+  return TRASH_REGIONS.find((z) => z.id === id) ?? null;
 }
 
-export function zonesForDow(dow: ServiceDow): TrashZone[] {
+/** @deprecated Use regionById. */
+export function zoneById(id: string | null | undefined): TrashRegion | null {
+  return regionById(id);
+}
+
+export function regionsForTown(town: TrashTown): TrashRegion[] {
+  return TRASH_REGIONS.filter((z) => z.town === town);
+}
+
+export function zonesForDow(dow: ServiceDow): TrashRegion[] {
   return FOCO_TRASH_ZONES.filter((z) => z.dow === dow);
 }
 
-export function zoneDayLabel(zone: TrashZone): string {
-  return `${zone.label} · ${DOW_LABEL[zone.dow]}`;
+export function zoneDayLabel(zone: TrashRegion): string {
+  return zone.dow ? `${zone.label} · ${DOW_LABEL[zone.dow]}` : zone.label;
 }
+
+export function townFromArea(area: string): TrashTown | null {
+  if (area === 'Fort Collins' || area === 'Loveland' || area === 'Estes Park' || area === 'Berthoud' || area === 'Wellington') {
+    return area;
+  }
+  return null;
+}
+
+export function areaFromTown(town: TrashTown): 'All' | Exclude<TrashTown, 'Unincorporated'> {
+  if (town === 'Unincorporated') return 'All';
+  return town;
+}
+
+export const DAY_STORAGE_KEY: Record<TrashTown, string> = {
+  'Fort Collins': 'foco-trash-day',
+  Loveland: 'foco-loveland-trash-day',
+  'Estes Park': 'foco-estes-trash-day',
+  Berthoud: 'foco-berthoud-trash-day',
+  Wellington: 'foco-wellington-trash-day',
+  Unincorporated: 'foco-uninc-trash-day',
+};

@@ -107,8 +107,9 @@ export function isPickupDay(regular: ServiceDow, ymd: Ymd): boolean {
   return ymd.dow === actualPickupDow(regular, ymd);
 }
 
-export function yardTrimmingsSeason(ymd: Ymd): boolean {
+export function yardTrimmingsSeason(ymd: Ymd, town?: string): boolean {
   const md = ymd.month * 100 + ymd.date;
+  if (town === 'Loveland') return md >= 330 && md <= 1204;
   return md >= 401 && md <= 1130;
 }
 
