@@ -6,6 +6,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     permissions:
       contents: write
     steps:
@@ -18,14 +19,19 @@ jobs:
           ls -lah Self-Reliance-FoCo.apk
           echo 'a21a34d1c2b720ec6ff8a83feaea9712d34dea27af2104a655b9029977549edc  Self-Reliance-FoCo.apk' | sha256sum -c
           python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
-      - name: Upload APK to existing v2.22.3 release
+      - name: Recreate GitHub release with APK
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sleep 3
-          gh release view v2.22.3 --repo TheMilkmanJ/SelfReliance-FoCo
-          gh release upload v2.22.3 Self-Reliance-FoCo.apk --clobber --repo TheMilkmanJ/SelfReliance-FoCo
-          gh release view v2.22.3 --repo TheMilkmanJ/SelfReliance-FoCo --json assets --jq '.assets[].name'
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.22.3
+
+          Trash cart, recycling, and yard trimmings use the same listing cards as the directory. Highlander Heights stays the Friday east-of-College listing. versionCode 31 — installs over v2.22.2.
+
+          SHA-256: a21a34d1c2b720ec6ff8a83feaea9712d34dea27af2104a655b9029977549edc
+          EOF
+          gh release delete v2.22.3 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.22.3 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.22.3' --notes-file notes.md
       - name: Record checksum and remove this workflow
         run: |
           git config user.name github-actions[bot]
