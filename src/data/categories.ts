@@ -114,6 +114,14 @@ export const CATEGORIES: Category[] = [
     blurb: 'Child care help, school programs, parenting support.',
   },
   {
+    id: 'pregnancy',
+    label: 'Pregnancy & Birth',
+    short: 'Pregnancy',
+    icon: 'heart-outline',
+    color: '#C2185B',
+    blurb: 'Prenatal care, WIC, hospital and home birth, water birth, HypnoBirthing, and doulas.',
+  },
+  {
     id: 'veterans',
     label: 'Veterans',
     short: 'Veterans',
