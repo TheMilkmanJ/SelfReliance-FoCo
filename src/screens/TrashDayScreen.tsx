@@ -5,6 +5,8 @@ import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-nat
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Header } from '../components/Header';
+import { TrashZoneSelect } from '../components/TrashZoneSelect';
+import { zoneById, type TrashZone } from '../data/trashZones';
 import { call, open } from '../lib/actions';
 import { useDenverNow } from '../lib/denverClock';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
@@ -25,6 +27,7 @@ import type { AreaFilter as AreaFilterId } from '../data/resources';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
 const FOCO_DAY_KEY = 'foco-trash-day';
+const FOCO_ZONE_KEY = 'foco-trash-zone';
 const LOVELAND_DAY_KEY = 'foco-loveland-trash-day';
 const RECYCLE_KEY = 'foco-loveland-recycle-this-week';
 
@@ -49,26 +52,35 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const now = useDenverNow();
   const ymd = fromDenverNow(now);
   const [focoDay, setFocoDay] = useState<ServiceDow | null>(null);
+  const [focoZoneId, setFocoZoneId] = useState<string | null>(null);
   const [lovelandDay, setLovelandDay] = useState<ServiceDow | null>(null);
   const [lovelandRecycle, setLovelandRecycle] = useState(true);
 
   useEffect(() => {
-    const readDay = (key: string, set: (d: ServiceDow) => void) => {
-      void AsyncStorage.getItem(key).then((saved) => {
-        const n = Number(saved);
-        if (n >= 1 && n <= 5) set(n as ServiceDow);
-      });
-    };
-    readDay(FOCO_DAY_KEY, setFocoDay);
-    readDay(LOVELAND_DAY_KEY, setLovelandDay);
-    void AsyncStorage.getItem(RECYCLE_KEY).then((saved) => {
-      if (saved === 'no') setLovelandRecycle(false);
-      if (saved === 'yes') setLovelandRecycle(true);
+    void Promise.all([
+      AsyncStorage.getItem(FOCO_DAY_KEY),
+      AsyncStorage.getItem(FOCO_ZONE_KEY),
+      AsyncStorage.getItem(LOVELAND_DAY_KEY),
+      AsyncStorage.getItem(RECYCLE_KEY),
+    ]).then(([daySaved, zoneSaved, lovelandSaved, recycleSaved]) => {
+      const zone = zoneById(zoneSaved);
+      if (zone) {
+        setFocoZoneId(zone.id);
+        setFocoDay(zone.dow);
+      } else {
+        const n = Number(daySaved);
+        if (n >= 1 && n <= 5) setFocoDay(n as ServiceDow);
+      }
+      const ln = Number(lovelandSaved);
+      if (ln >= 1 && ln <= 5) setLovelandDay(ln as ServiceDow);
+      if (recycleSaved === 'no') setLovelandRecycle(false);
+      if (recycleSaved === 'yes') setLovelandRecycle(true);
     });
   }, []);
 
   const town = area === 'All' ? 'Fort Collins' : area;
-  const regular = town === 'Loveland' ? lovelandDay : focoDay;
+  const focoZone = town === 'Loveland' ? null : zoneById(focoZoneId);
+  const regular = town === 'Loveland' ? lovelandDay : focoZone?.dow ?? focoDay;
 
   const saveDay = (day: ServiceDow) => {
     if (town === 'Loveland') {
@@ -76,8 +88,22 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
       void AsyncStorage.setItem(LOVELAND_DAY_KEY, String(day));
     } else {
       setFocoDay(day);
+      setFocoZoneId(null);
       void AsyncStorage.setItem(FOCO_DAY_KEY, String(day));
+      void AsyncStorage.removeItem(FOCO_ZONE_KEY);
     }
+  };
+
+  const saveZone = (zone: TrashZone) => {
+    setFocoZoneId(zone.id);
+    setFocoDay(zone.dow);
+    void AsyncStorage.setItem(FOCO_ZONE_KEY, zone.id);
+    void AsyncStorage.setItem(FOCO_DAY_KEY, String(zone.dow));
+  };
+
+  const clearZone = () => {
+    setFocoZoneId(null);
+    void AsyncStorage.removeItem(FOCO_ZONE_KEY);
   };
 
   const saveRecycle = (on: boolean) => {
@@ -99,7 +125,9 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         title: delayed ? 'Today — delayed' : 'Today is trash day',
         sub: delayed
           ? `${holiday?.name ?? 'Holiday'} bumped this week. Carts still go out today by 7am.`
-          : 'Carts at the curb by 7am. Republic runs 7am-7pm.',
+          : focoZone
+            ? `${focoZone.label}. Carts at the curb by 7am. Republic runs 7am-7pm.`
+            : 'Carts at the curb by 7am. Republic runs 7am-7pm.',
       };
     }
     if (pickup) {
@@ -107,11 +135,13 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         title: `Next pickup: ${formatYmd(pickup.when)}`,
         sub: pickup.delayed
           ? `${pickup.holiday?.name ?? 'A holiday'} delays this week by one day.`
-          : `Usual day is ${DOW_LABEL[regular]}.`,
+          : focoZone
+            ? `${focoZone.label} usual day is ${DOW_LABEL[regular]}.`
+            : `Usual day is ${DOW_LABEL[regular]}.`,
       };
     }
     return null;
-  }, [regular, todayIs, delayed, holiday, pickup]);
+  }, [regular, todayIs, delayed, holiday, pickup, focoZone]);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -126,28 +156,22 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         {town === 'Fort Collins' ? (
           <>
             <Text style={[styles.lede, { color: colors.body }]}>
-              City-contracted homes use Republic Services. Trash and recycling go out the same day. Yard trimmings
-              April–November. Carts at the curb by 7am; trucks run 7am–7pm. This app cannot look up a house on
-              Republic’s map — pick your usual weekday once and it will tell you if a holiday moved it.
+              City-contracted homes use Republic Services. Pick your neighborhood — Highlander Heights is Friday on the
+              2026 map. Trash and recycling go out the same day. Carts at the curb by 7am.
             </Text>
-            <Text style={[styles.note, { color: colors.body }]}>
-              On the 2026 city map, College Avenue is the Thursday / Friday line. West of College (Old Town, Prospect
-              west) is Thursday. East of College — Lemay, Highlander Heights, toward I-25 — is Friday. If you live on
-              that line, look up the address instead of guessing from a neighbor.
-            </Text>
+            <TrashZoneSelect value={focoZoneId} onChange={saveZone} onClear={clearZone} />
             {holiday ? (
               <Text style={[styles.note, { color: colors.body }]}>
                 This week: {holiday.name} ({DOW_LABEL[holiday.dow]}) delays Republic collection one day for routes on
-                and after that weekday. Friday routes run Saturday. Tap the usual weekday, not the delayed day.
+                and after that weekday. Friday routes run Saturday.
               </Text>
             ) : lastHoliday ? (
               <Text style={[styles.note, { color: colors.body }]}>
-                Last week: {lastHoliday.name} delayed Republic one day for routes on and after that weekday. Thursday
-                routes ran Friday when the holiday was Monday–Thursday. This week is back to the usual weekday — tap
-                that, not last week’s delayed day.
+                Last week: {lastHoliday.name} delayed Republic one day. This week is back to the usual weekday for{' '}
+                {focoZone ? focoZone.label : 'your area'}.
               </Text>
             ) : null}
-            <Text style={[styles.section, { color: colors.ink }]}>Usual collection day</Text>
+            <Text style={[styles.section, { color: colors.ink }]}>Or pick the weekday</Text>
             <View style={styles.days}>
               {SERVICE_DAYS.map((d) => {
                 const on = regular === d.id;
@@ -177,8 +201,8 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
               </View>
             ) : (
               <Text style={[styles.hint, { color: colors.muted }]}>
-                Don’t know the day? Look up the address with Republic or call 970-416-2012, then tap the usual weekday
-                here — not last week’s delayed truck if a holiday just passed.
+                Open the neighborhood list and tap Highlander Heights, or look up the address with Republic if you live
+                on College Avenue.
               </Text>
             )}
             {regular ? (
