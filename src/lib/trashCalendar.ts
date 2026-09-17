@@ -90,6 +90,11 @@ export function holidayThisServiceWeek(ymd: Ymd): ObservedHoliday | null {
   return null;
 }
 
+/** Observed weekday holiday in the previous Monday–Friday service week, if any. */
+export function holidayLastServiceWeek(ymd: Ymd): ObservedHoliday | null {
+  return holidayThisServiceWeek(addDays(ymd, -7));
+}
+
 /** Actual pickup weekday (1–6) after a Republic one-day holiday bump. */
 export function actualPickupDow(regular: ServiceDow, ymd: Ymd): number {
   const hol = holidayThisServiceWeek(ymd);

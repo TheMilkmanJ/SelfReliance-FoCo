@@ -58,6 +58,15 @@ function holidayThisServiceWeek(ymd) {
   return null;
 }
 
+function addDays(ymd, days) {
+  const d = new Date(Date.UTC(ymd.year, ymd.month - 1, ymd.date + days));
+  return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, date: d.getUTCDate(), dow: d.getUTCDay() };
+}
+
+function holidayLastServiceWeek(ymd) {
+  return holidayThisServiceWeek(addDays(ymd, -7));
+}
+
 function actualPickupDow(regular, ymd) {
   const hol = holidayThisServiceWeek(ymd);
   if (!hol || hol.dow < 1 || hol.dow > 5) return regular;
@@ -90,6 +99,16 @@ assert(actualPickupDow(3, janThu) === 3, 'Wednesday before holiday unchanged');
 const labor = h2026.find((h) => h.name === 'Labor Day');
 assert(labor && labor.date === 7 && labor.dow === 1, 'Labor Day 2026 Monday Sep 7');
 assert(actualPickupDow(1, { year: 2026, month: 9, date: 7, dow: 1 }) === 2, 'Labor Day Monday route → Tuesday');
+assert(actualPickupDow(4, { year: 2026, month: 9, date: 10, dow: 4 }) === 5, 'Labor week Thursday route not Thursday');
+assert(actualPickupDow(4, { year: 2026, month: 9, date: 11, dow: 5 }) === 5, 'Labor week Thursday route → Friday Sep 11');
+assert(actualPickupDow(5, { year: 2026, month: 9, date: 11, dow: 5 }) === 6, 'Labor week Friday route not Friday');
+assert(actualPickupDow(5, { year: 2026, month: 9, date: 12, dow: 6 }) === 6, 'Labor week Friday route → Saturday Sep 12');
+
+const thisThu = { year: 2026, month: 9, date: 17, dow: 4 };
+assert(holidayThisServiceWeek(thisThu) === null, 'week of Sep 17 2026 is a normal week');
+assert(actualPickupDow(4, thisThu) === 4, 'this week Thursday stays Thursday');
+assert(actualPickupDow(5, { year: 2026, month: 9, date: 18, dow: 5 }) === 5, 'this week Friday stays Friday');
+assert(holidayLastServiceWeek(thisThu)?.name === 'Labor Day', 'Sep 17 still remembers last week Labor Day');
 
 const xmas = republicHolidays(2026).find((h) => h.name === 'Christmas Day');
 assert(xmas && xmas.dow === 5, 'Christmas 2026 Friday');
