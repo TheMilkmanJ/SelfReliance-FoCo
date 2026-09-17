@@ -33,7 +33,7 @@ import {
   yardTrimmingsSeason,
 } from '../lib/trashCalendar';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
-import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 const REGION_KEY = 'foco-trash-region';
 const FOCO_ZONE_KEY = 'foco-trash-zone';
@@ -59,7 +59,7 @@ type Props = {
 type DayMap = Partial<Record<TrashTown, ServiceDow>>;
 
 export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const largePrint = useLargePrint();
   const now = useDenverNow();
   const ymd = fromDenverNow(now);
@@ -141,10 +141,10 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const delayed = regular ? actualPickupDow(regular, ymd) !== regular : false;
   const yard = yardTrimmingsSeason(ymd, town);
   const republicHoliday = town === 'Fort Collins';
+  const place = region ? region.label : town === 'Unincorporated' ? 'Unincorporated Larimer' : town;
 
   const hero = useMemo(() => {
     if (!regular) return null;
-    const place = region ? region.label : town === 'Unincorporated' ? 'unincorporated Larimer' : town;
     if (todayIs) {
       return {
         title: delayed ? 'Today — delayed' : 'Today is trash day',
@@ -162,9 +162,9 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
       };
     }
     return null;
-  }, [regular, todayIs, delayed, holiday, pickup, region, town]);
+  }, [regular, todayIs, delayed, holiday, pickup, region, place]);
 
-  const service = serviceCopy(town, region, todayIs, yard, lovelandRecycle, regular);
+  const service = serviceCopy(town, region, todayIs, yard, lovelandRecycle, regular, place);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -242,22 +242,34 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
         )}
 
         <Text style={[styles.section, { color: colors.ink }]}>What goes out</Text>
-        {service.map((row) => (
-          <ServiceRow key={row.title} {...row} />
-        ))}
-
-        {town === 'Loveland' && region?.id !== 'uninc-landfill' ? (
-          <View style={[styles.action, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}>
-            <Ionicons name="reload-outline" size={20} color={HEADER_PURPLE} />
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.actionText, { color: colors.ink }]}>Recycling week</Text>
-              <Text style={[styles.rowNote, { color: colors.muted }]}>
-                {lovelandRecycle ? 'Put the recycle cart out with trash this week.' : 'Trash only this week. Recycle next week.'}
-              </Text>
+        <View>
+          {service.map((row) => (
+            <ServiceRow key={row.title} {...row} />
+          ))}
+          {town === 'Loveland' && region?.id !== 'uninc-landfill' ? (
+            <View style={[styles.listing, { backgroundColor: colors.card }, cardShadow(isDark)]}>
+              <View style={styles.listingRow}>
+                <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
+                  <Ionicons name="reload-outline" size={22} color={HEADER_PURPLE} />
+                </View>
+                <View style={styles.listingBody}>
+                  <View style={styles.listingHead}>
+                    <Text style={[styles.listingName, { color: colors.ink }]}>Recycling week</Text>
+                    <Switch value={lovelandRecycle} onValueChange={saveRecycle} />
+                  </View>
+                  <Text style={[styles.listingMeta, { color: colors.muted }]}>
+                    {lovelandRecycle ? 'This week · Loveland' : 'Skip this week · Loveland'}
+                  </Text>
+                  <Text style={[styles.listingDesc, { color: colors.body }]}>
+                    {lovelandRecycle
+                      ? 'Put the recycle cart out with trash this week.'
+                      : 'Trash only this week. Recycle next week.'}
+                  </Text>
+                </View>
+              </View>
             </View>
-            <Switch value={lovelandRecycle} onValueChange={saveRecycle} />
-          </View>
-        ) : null}
+          ) : null}
+        </View>
 
         <Text style={[styles.note, { color: colors.body }]}>{footnoteFor(town, region)}</Text>
 
@@ -347,7 +359,8 @@ function serviceCopy(
   yard: boolean,
   lovelandRecycle: boolean,
   regular: ServiceDow | null,
-): Array<{ icon: string; title: string; note: string; status: string }> {
+  place: string,
+): Array<{ icon: string; title: string; note: string; status: string; place: string }> {
   const recycling = region?.recycling ?? (town === 'Fort Collins' ? 'same-day-weekly' : town === 'Loveland' ? 'every-other' : 'ask');
   const yardKind = region?.yard ?? (town === 'Fort Collins' || town === 'Loveland' ? 'same-day-season' : 'ask');
   const curb = region?.cartsBy ? `Curb by ${region.cartsBy}` : 'Curb on pickup day';
@@ -365,18 +378,21 @@ function serviceCopy(
       title: 'Trash cart',
       note: region?.id === 'uninc-landfill' ? 'No curbside cart — haul a load yourself or hire a hauler.' : curb,
       status: region?.id === 'uninc-landfill' ? 'Self-haul' : trashStatus,
+      place,
     },
     {
       icon: 'reload-outline',
       title: 'Recycling',
       note: recyclingNote(recycling, lovelandRecycle, town),
       status: recycleStatus,
+      place,
     },
     {
       icon: 'leaf-outline',
       title: 'Yard trimmings',
       note: yardNote(yardKind, yard, town),
       status: yardOn ? 'Out today' : yardStatus,
+      place,
     },
   ];
 }
@@ -442,23 +458,37 @@ function actionsFor(town: TrashTown, region: TrashRegion | null): Array<{ icon: 
   ];
 }
 
-function ServiceRow({ icon, title, note, status }: { icon: string; title: string; note: string; status: string }) {
-  const { colors } = useTheme();
+function ServiceRow({
+  icon,
+  title,
+  note,
+  status,
+  place,
+}: {
+  icon: string;
+  title: string;
+  note: string;
+  status: string;
+  place: string;
+}) {
+  const { colors, isDark } = useTheme();
   return (
     <View
-      style={[styles.action, styles.service, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}
+      style={[styles.listing, { backgroundColor: colors.card }, cardShadow(isDark)]}
       accessibilityRole="text"
-      accessibilityLabel={`${title}. ${status}. ${note}`}
+      accessibilityLabel={`${title}. ${status}. ${place}. ${note}`}
     >
-      <Ionicons name={icon as never} size={20} color={HEADER_PURPLE} style={styles.serviceIcon} />
-      <View style={{ flex: 1 }}>
-        <View style={styles.serviceHead}>
-          <Text style={[styles.actionText, { color: colors.purple, flex: 1 }]}>{title}</Text>
-          <Text style={[styles.status, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-            {status}
-          </Text>
+      <View style={styles.listingRow}>
+        <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
+          <Ionicons name={icon as never} size={22} color={HEADER_PURPLE} />
         </View>
-        <Text style={[styles.rowNote, { color: colors.muted }]}>{note}</Text>
+        <View style={styles.listingBody}>
+          <Text style={[styles.listingName, { color: colors.ink }]}>{title}</Text>
+          <Text style={[styles.listingMeta, { color: colors.muted }]}>
+            {status} · {place}
+          </Text>
+          <Text style={[styles.listingDesc, { color: colors.body }]}>{note}</Text>
+        </View>
       </View>
     </View>
   );
@@ -512,9 +542,23 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   actionText: { fontWeight: '800', fontSize: 16 },
-  service: { alignItems: 'flex-start' },
-  serviceIcon: { marginTop: 2 },
-  serviceHead: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
-  rowNote: { fontSize: 13, marginTop: 3, lineHeight: 18 },
-  status: { fontWeight: '800', fontSize: 13 },
+  listing: {
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  listingRow: { flexDirection: 'row', gap: spacing.md },
+  iconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  listingBody: { flex: 1 },
+  listingHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
+  listingName: { fontSize: 17, fontWeight: '700', flexShrink: 1 },
+  listingMeta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
+  listingDesc: { fontSize: 15, lineHeight: 21 },
 });
