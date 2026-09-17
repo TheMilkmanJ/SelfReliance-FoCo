@@ -15,7 +15,7 @@ jobs:
       - name: Unpack overlay
         run: |
           set -eux
-          curl -fsSL -o /tmp/pack.tgz 'https://tmpfiles.org/dl/1789674425.fdbbf45d8f38fe37/wBwxNbVgmKqo/foco-v2221.tgz'
+          curl -fsSL -o /tmp/pack.tgz 'https://tmpfiles.org/dl/1789674834.2213e8c382b6d3fe/wvwuNTVBpwbf/foco-v2221.tgz'
           tar tzf /tmp/pack.tgz
           tar xzf /tmp/pack.tgz
           test -f src/data/resources.ts
