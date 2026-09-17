@@ -7334,6 +7334,192 @@
         "mental health",
         "hotline"
       ]
+    },
+    {
+      "id": "larimer-elections-office",
+      "name": "Larimer County Elections",
+      "category": "voting",
+      "description": "The desk for the Nov 3, 2026 general election. Register, update your address, pick up a replacement ballot, or ask about ADA machines and keeping your address off public voter lists. 5th floor of 200 W Oak St. Call 970-498-7820 or email elections@larimer.gov.",
+      "phone": "970-498-7820",
+      "url": "https://www.larimer.gov/clerk/elections",
+      "address": "200 W Oak St Suite 5100, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 8am-5pm (except holidays)",
+      "area": "Larimer County",
+      "tags": [
+        "elections",
+        "register",
+        "ballot",
+        "ada",
+        "clerk"
+      ]
+    },
+    {
+      "id": "govote-colorado",
+      "name": "GoVoteColorado.gov",
+      "category": "voting",
+      "description": "Register, check, or update your Colorado voter record online. Register by Oct 26, 2026 to get a mail ballot; after that, register in person at a vote center through Election Day, Nov 3. Spanish site is VayaVotarColorado.gov. You need a Colorado license/ID or the last four of your Social Security number.",
+      "phone": "303-894-2200",
+      "url": "https://www.govotecolorado.gov/",
+      "address": null,
+      "hours": "Online 24/7; SOS desk Mon-Fri 8am-5pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "register",
+        "sample ballot",
+        "spanish",
+        "secretary of state"
+      ]
+    },
+    {
+      "id": "larimer-where-to-vote",
+      "name": "Larimer ballot boxes and vote centers",
+      "category": "voting",
+      "description": "Official map of 24-hour ballot boxes and in-person vote centers for the Nov 3, 2026 general election. Boxes are open until 7pm Election Day. Vote centers start opening Oct 19 (more sites Oct 30 and Nov 2); Election Day hours 7am-7pm. Postmarks do not count — the county must have your ballot by 7pm. South Transit Center at 4915 Fossil Blvd has a ballot box; Transfort there is fare-free.",
+      "phone": "970-498-7820",
+      "url": "https://www.larimer.gov/clerk/elections/where-to-vote",
+      "address": null,
+      "hours": "Ballot boxes 24/7 until 7pm Nov 3; vote centers vary",
+      "area": "Larimer County",
+      "tags": [
+        "ballot box",
+        "vote center",
+        "drop box",
+        "election day"
+      ]
+    },
+    {
+      "id": "colorado-ballottrax",
+      "name": "BallotTrax (track your mail ballot)",
+      "category": "voting",
+      "description": "Free texts, email, or calls when your mail ballot is sent, received, and accepted. Sign up on the county track-your-ballot page. If a signature does not match, they tell you how to fix it (cure) before the deadline.",
+      "phone": "970-498-7820",
+      "url": "https://www.larimer.gov/clerk/elections/track-your-ballot",
+      "address": null,
+      "hours": "Online 24/7",
+      "area": "Larimer County",
+      "tags": [
+        "ballot",
+        "track",
+        "mail ballot",
+        "cure"
+      ]
+    },
+    {
+      "id": "colorado-sos-elections",
+      "name": "Colorado Secretary of State - Elections",
+      "category": "voting",
+      "description": "Statewide elections desk. Register at GoVoteColorado.gov, find a drop box in any county, and read the Know Your Rights booklet. Call 303-894-2200. General election is Tuesday, Nov 3, 2026.",
+      "phone": "303-894-2200",
+      "url": "https://www.coloradosos.gov/pubs/elections/",
+      "address": "1700 Broadway Suite 550, Denver, CO 80290",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "secretary of state",
+        "register",
+        "elections"
+      ]
+    },
+    {
+      "id": "colorado-language-assistance-hotline",
+      "name": "Colorado ballot language hotline",
+      "category": "voting",
+      "description": "Interpreter reads the words on your ballot (not who to vote for). Spanish, Vietnamese, Korean, Chinese, and other languages. Call 303-860-6970, or ask an election judge at a vote center, or call Larimer Elections. Have your ballot with you. Open during the November election window.",
+      "phone": "303-860-6970",
+      "url": "https://www.coloradosos.gov/pubs/elections/FAQs/languageAssist.html",
+      "address": null,
+      "hours": "During the November election; weekdays 8am-5pm; Election Day 7am-7pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "spanish",
+        "language",
+        "interpreter",
+        "ballot"
+      ]
+    },
+    {
+      "id": "larimer-military-overseas",
+      "name": "Larimer military and overseas voting",
+      "category": "voting",
+      "description": "If you are stationed away or living outside the U.S., register and request a ballot with a Federal Post Card Application. Return by mail, email upload, or fax 970-498-7845. Email uocava@larimer.gov or call 970-498-7820. Ballots sent by 7pm Election Day can still arrive up to eight days later.",
+      "phone": "970-498-7820",
+      "url": "https://www.larimer.gov/clerk/elections/military-overseas-voting",
+      "address": null,
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "military",
+        "overseas",
+        "uocava",
+        "absentee"
+      ]
+    },
+    {
+      "id": "vote411-colorado",
+      "name": "VOTE411 (what's on your ballot)",
+      "category": "voting",
+      "description": "Nonpartisan personalized ballot from the League of Women Voters. Compare candidates and read ballot issues for your address. Not the county clerk — use GoVoteColorado.gov to register.",
+      "phone": null,
+      "url": "https://www.vote411.org/colorado",
+      "address": null,
+      "hours": "Online",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "ballot",
+        "candidates",
+        "issues",
+        "nonpartisan"
+      ]
+    },
+    {
+      "id": "lwv-larimer",
+      "name": "League of Women Voters of Larimer County",
+      "category": "voting",
+      "description": "Nonpartisan voter toolkit, candidate forums, and ballot-issue talks. Registration drives at schools and community spots. Email vote@lwv-larimercounty.org. They point you to VOTE411 and GoVoteColorado.gov — they do not run the election.",
+      "phone": null,
+      "url": "https://www.lwv-larimercounty.org/",
+      "address": null,
+      "hours": "See site for forums",
+      "area": "Larimer County",
+      "tags": [
+        "nonpartisan",
+        "forums",
+        "voter guide",
+        "register"
+      ]
+    },
+    {
+      "id": "larimer-election-judges",
+      "name": "Larimer County election judges",
+      "category": "voting",
+      "description": "Paid poll-worker jobs for the Nov 3, 2026 general election. Apply on the county page through Election Day. Questions: elections@larimer.gov or 970-498-7820.",
+      "phone": "970-498-7820",
+      "url": "https://www.larimer.gov/clerk/elections/judges",
+      "address": "200 W Oak St Suite 5100, Fort Collins, CO 80521",
+      "hours": "Apply online; office Mon-Fri 8am-5pm",
+      "area": "Larimer County",
+      "tags": [
+        "volunteer",
+        "jobs",
+        "election judge"
+      ]
+    },
+    {
+      "id": "colorado-know-your-rights",
+      "name": "Colorado Know Your Voting Rights",
+      "category": "voting",
+      "description": "Secretary of State booklet (updated July 20, 2026): who can vote, mail ballots, drop boxes, in-person voting, and ID. Your ballot must arrive at the clerk by 7pm Election Day. If you are in line at a drop box or vote center by 7pm, they still take it.",
+      "phone": "303-894-2200",
+      "url": "https://www.sos.state.co.us/pubs/elections/files/KnowYourRights.pdf",
+      "address": null,
+      "hours": "Online",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "rights",
+        "id",
+        "mail ballot",
+        "ada"
+      ]
     }
   ]
 }
