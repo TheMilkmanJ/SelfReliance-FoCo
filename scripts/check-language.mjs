@@ -6,9 +6,13 @@ const byId = new Map(resources.map((r) => [r.id, r]));
 const missing = [];
 for (const id of [
   'irc-northern-colorado',
+  'ianc-fort-collins',
+  'csu-isss',
+  'csu-place-english',
   'poudre-libraries-esl',
-  'fuerza-latina-immigrant-hotline',
+  'poudre-libraries-adult-learning',
   'colorado-language-assistance-hotline',
+  'fuerza-latina-immigrant-hotline',
   'fuerza-latina',
   'colorado-immigrant-rights-coalition',
   'relay-colorado',
@@ -23,7 +27,11 @@ if (missing.length) {
 
 const stay = {
   'irc-northern-colorado': 'immigrant_refugee',
+  'ianc-fort-collins': 'immigrant_refugee',
+  'csu-isss': 'education',
+  'csu-place-english': 'education',
   'poudre-libraries-esl': 'immigrant_refugee',
+  'poudre-libraries-adult-learning': 'education',
   'fuerza-latina-immigrant-hotline': 'immigrant_refugee',
   'colorado-language-assistance-hotline': 'voting',
   'fuerza-latina': 'employment',

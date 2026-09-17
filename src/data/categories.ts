@@ -103,7 +103,7 @@ export const CATEGORIES: Category[] = [
     short: 'Language',
     icon: 'language-outline',
     color: '#3949AB',
-    blurb: 'Switch English and Spanish, plus interpreters, English classes, and Spanish hotlines.',
+    blurb: 'Switch English, Spanish, Hindi, Chinese, Vietnamese, Korean, or Arabic, plus interpreters and English classes.',
   },
   {
     id: 'voting',
