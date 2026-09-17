@@ -1,3 +1,5 @@
+import { en as EN_STRINGS } from '../i18n/en';
+import { es as ES_STRINGS } from '../i18n/es';
 import { CATEGORY_MAP } from './categories';
 import { CERT_GROUP_MAP } from './certGroups';
 import raw from './resources.json';
@@ -1023,6 +1025,71 @@ export function sortVotingResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, VOTING_PINNED_IDS);
 }
 
+/** Shown first on the Language tile. Immigrant legal desks stay on Immigrants. */
+export const LANGUAGE_PINNED_IDS = [
+  'irc-northern-colorado',
+  'poudre-libraries-esl',
+  'fuerza-latina-immigrant-hotline',
+  'colorado-language-assistance-hotline',
+] as const;
+
+const LANGUAGE_ALWAYS = new Set<string>([
+  ...LANGUAGE_PINNED_IDS,
+  'fuerza-latina',
+  'colorado-immigrant-rights-coalition',
+  'relay-colorado',
+  'united-way-211',
+]);
+
+export type LanguageChipId = 'all' | 'interpreters' | 'english' | 'spanish';
+
+export const LANGUAGE_CHIPS: Array<{ id: LanguageChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'interpreters', label: 'Interpreters', icon: 'chatbubbles-outline' },
+  { id: 'english', label: 'English classes', icon: 'school-outline' },
+  { id: 'spanish', label: 'Spanish help', icon: 'call-outline' },
+];
+
+/** Language tile plus related desks that stay in their original categories. */
+export function isLanguageResource(resource: Resource): boolean {
+  if (resource.category === 'language') return true;
+  return LANGUAGE_ALWAYS.has(resource.id);
+}
+
+export function matchesLanguageChip(resource: Resource, chip: LanguageChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'interpreters') {
+    return (
+      resource.id === 'irc-northern-colorado' ||
+      resource.id === 'colorado-language-assistance-hotline' ||
+      resource.id === 'relay-colorado' ||
+      hasAnyTag(resource, ['interpreter', 'interpretation', 'language'])
+    );
+  }
+  if (chip === 'english') {
+    return (
+      resource.id === 'poudre-libraries-esl' ||
+      resource.id === 'irc-northern-colorado' ||
+      hasAnyTag(resource, ['esl', 'english', 'english classes'])
+    );
+  }
+  if (chip === 'spanish') {
+    return (
+      resource.id === 'fuerza-latina-immigrant-hotline' ||
+      resource.id === 'fuerza-latina' ||
+      resource.id === 'colorado-language-assistance-hotline' ||
+      resource.id === 'colorado-immigrant-rights-coalition' ||
+      resource.id === 'united-way-211' ||
+      hasAnyTag(resource, ['spanish'])
+    );
+  }
+  return true;
+}
+
+export function sortLanguageResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, LANGUAGE_PINNED_IDS);
+}
+
 function normalize(s: string): string {
   return s
     .toLowerCase()
@@ -1037,9 +1104,24 @@ export function searchResources(query: string, pool: Resource[] = RESOURCES): Re
   return pool.filter((r) => {
     const certLabel = r.certGroup ? CERT_GROUP_MAP[r.certGroup].label : '';
     const catLabel = CATEGORY_MAP[r.category]?.label ?? r.category.replace(/_/g, ' ');
+    const catKeyName = `cat.${r.category}` as const;
+    const dict = EN_STRINGS as Record<string, string>;
+    const dictEs = ES_STRINGS as Record<string, string>;
     const hay = normalize(
-      [r.name, r.description, r.area, r.address ?? '', r.tags.join(' '), catLabel, certLabel].join(' '),
+      [
+        r.name,
+        r.description,
+        r.area,
+        r.address ?? '',
+        r.tags.join(' '),
+        catLabel,
+        certLabel,
+        dict[`${catKeyName}.label`] ?? '',
+        dict[`${catKeyName}.short`] ?? '',
+        dictEs[`${catKeyName}.label`] ?? '',
+        dictEs[`${catKeyName}.short`] ?? '',
+      ].join(' '),
     );
-    return terms.every((t) => hay.includes(t));
+    return terms.every((term) => hay.includes(term));
   });
 }
