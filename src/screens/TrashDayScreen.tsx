@@ -14,6 +14,7 @@ import {
   actualPickupDow,
   formatYmd,
   fromDenverNow,
+  holidayLastServiceWeek,
   holidayThisServiceWeek,
   isPickupDay,
   nextPickup,
@@ -28,7 +29,8 @@ const LOVELAND_DAY_KEY = 'foco-loveland-trash-day';
 const RECYCLE_KEY = 'foco-loveland-recycle-this-week';
 
 const LOOKUP = {
-  foco: 'https://www.republicservices.com/municipality/fort-collins-co',
+  foco: 'https://www.republicservices.com/schedule',
+  guide: 'https://www.republicservices.com/cms/documents/municipality/Fort-Collins-CO/Fort-Collins-Service-Guide-2026.pdf',
   loveland: 'https://loveland.recollect.net',
   estes: 'https://www.wm.com/us/en/location/co/estes-park',
   berthoud: 'https://www.berthoud.org/1387/Trash-and-Utility-Providers',
@@ -84,6 +86,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   };
 
   const holiday = holidayThisServiceWeek(ymd);
+  const lastHoliday = holidayLastServiceWeek(ymd);
   const pickup = regular ? nextPickup(regular, ymd) : null;
   const todayIs = regular ? isPickupDay(regular, ymd) : false;
   const delayed = regular ? actualPickupDow(regular, ymd) !== regular : false;
@@ -124,13 +127,24 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
           <>
             <Text style={[styles.lede, { color: colors.body }]}>
               City-contracted homes use Republic Services. Trash and recycling go out the same day. Yard trimmings
-              April–November. This app cannot read Republic’s address map — pick your usual weekday once and it will
-              tell you if a holiday moved it.
+              April–November. Carts at the curb by 7am; trucks run 7am–7pm. This app cannot look up a house on
+              Republic’s map — pick your usual weekday once and it will tell you if a holiday moved it.
+            </Text>
+            <Text style={[styles.note, { color: colors.body }]}>
+              On the 2026 city map, College Avenue is the Thursday / Friday line. West of College (Old Town, Prospect
+              west) is Thursday. East of College — Lemay, Highlander Heights, toward I-25 — is Friday. If you live on
+              that line, look up the address instead of guessing from a neighbor.
             </Text>
             {holiday ? (
               <Text style={[styles.note, { color: colors.body }]}>
                 This week: {holiday.name} ({DOW_LABEL[holiday.dow]}) delays Republic collection one day for routes on
-                and after that weekday. Friday routes run Saturday.
+                and after that weekday. Friday routes run Saturday. Tap the usual weekday, not the delayed day.
+              </Text>
+            ) : lastHoliday ? (
+              <Text style={[styles.note, { color: colors.body }]}>
+                Last week: {lastHoliday.name} delayed Republic one day for routes on and after that weekday. Thursday
+                routes ran Friday when the holiday was Monday–Thursday. This week is back to the usual weekday — tap
+                that, not last week’s delayed day.
               </Text>
             ) : null}
             <Text style={[styles.section, { color: colors.ink }]}>Usual collection day</Text>
@@ -163,7 +177,8 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
               </View>
             ) : (
               <Text style={[styles.hint, { color: colors.muted }]}>
-                Don’t know the day? Look it up with Republic or call 970-416-2012, then tap it here.
+                Don’t know the day? Look up the address with Republic or call 970-416-2012, then tap the usual weekday
+                here — not last week’s delayed truck if a holiday just passed.
               </Text>
             )}
             {regular ? (
@@ -184,6 +199,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
             </Text>
             <Action icon="call" label="Call Republic 970-416-2012" onPress={() => call('970-416-2012')} />
             <Action icon="globe-outline" label="Look up my address" onPress={() => open(LOOKUP.foco)} />
+            <Action icon="map-outline" label="2026 collection map (PDF)" onPress={() => open(LOOKUP.guide)} />
             <Action
               icon="leaf-outline"
               label="What goes in which cart (city guide)"
