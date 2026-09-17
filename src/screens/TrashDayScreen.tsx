@@ -16,11 +16,11 @@ import {
   type TrashTown,
   type YardKind,
 } from '../data/trashZones';
+import { dowKey, dowShortKey, holidayLabel, monthKey, useI18n, type Translate } from '../i18n';
 import { call, open } from '../lib/actions';
 import { useDenverNow } from '../lib/denverClock';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import {
-  DOW_LABEL,
   SERVICE_DAYS,
   actualPickupDow,
   formatYmd,
@@ -61,6 +61,7 @@ type DayMap = Partial<Record<TrashTown, ServiceDow>>;
 export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const { colors, isDark } = useTheme();
   const largePrint = useLargePrint();
+  const { t } = useI18n();
   const now = useDenverNow();
   const ymd = fromDenverNow(now);
   const [regionId, setRegionId] = useState<string | null>(null);
@@ -141,79 +142,89 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const delayed = regular ? actualPickupDow(regular, ymd) !== regular : false;
   const yard = yardTrimmingsSeason(ymd, town);
   const republicHoliday = town === 'Fort Collins';
-  const place = region ? region.label : town === 'Unincorporated' ? 'Unincorporated Larimer' : town;
+  const place = region ? region.label : town === 'Unincorporated' ? t('area.unincorporated') : town;
 
   const hero = useMemo(() => {
     if (!regular) return null;
+    const by = region?.cartsBy ? t('trash.byTime', { time: region.cartsBy }) : '';
     if (todayIs) {
       return {
-        title: delayed ? 'Today — delayed' : 'Today is trash day',
+        title: delayed ? t('trash.todayDelayed') : t('trash.today'),
         sub: delayed
-          ? `${holiday?.name ?? 'Holiday'} bumped this week. Carts still go out today${region?.cartsBy ? ` by ${region.cartsBy}` : ''}.`
-          : `${place}. Carts at the curb${region?.cartsBy ? ` by ${region.cartsBy}` : ''}.`,
+          ? t('trash.cartsTodayDelayed', { holiday: holidayLabel(holiday?.name ?? '', t) || t('holiday.generic'), by })
+          : t('trash.cartsToday', { place, by }),
       };
     }
     if (pickup) {
       return {
-        title: `Next pickup: ${formatYmd(pickup.when)}`,
+        title: t('trash.next', { date: formatYmd(pickup.when) }),
         sub: pickup.delayed
-          ? `${pickup.holiday?.name ?? 'A holiday'} delays this week by one day.`
-          : `${place} — usual day is ${DOW_LABEL[regular]}.`,
+          ? t('trash.holidayDelay', { holiday: holidayLabel(pickup.holiday?.name ?? '', t) || t('holiday.aHoliday') })
+          : t('trash.usualIs', { place, day: t(dowKey(regular)) }),
       };
     }
     return null;
-  }, [regular, todayIs, delayed, holiday, pickup, region, place]);
+  }, [regular, todayIs, delayed, holiday, pickup, region, place, t]);
 
-  const service = serviceCopy(town, region, todayIs, yard, lovelandRecycle, regular, place);
+  const service = serviceCopy(town, region, todayIs, yard, lovelandRecycle, regular, place, t);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-      <Header title="Trash day" subtitle={`${now.weekdayLabel}, ${now.dateLabel} · ${now.timeLabel}`} />
+      <Header
+        title={t('trash.title')}
+        subtitle={t('trash.subtitle', {
+          weekday: t(dowKey(now.dow)),
+          date: `${t(monthKey(now.month))} ${now.date}`,
+          time: now.timeLabel,
+        })}
+      />
       <ScrollView contentContainerStyle={styles.body}>
-        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel="Back to resources">
+        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
           <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
-          <Text style={[styles.backText, { color: colors.purple }]}>Resources</Text>
+          <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>
         <AreaFilter value={area} onChange={onAreaChange} />
 
-        <Text style={[styles.lede, { color: colors.body }]}>{ledeFor(town, region)}</Text>
+        <Text style={[styles.lede, { color: colors.body }]}>{ledeFor(town, region, t)}</Text>
 
         <TrashZoneSelect value={region?.id ?? null} focusTown={focusTown} onChange={saveRegion} onClear={clearRegion} />
 
         {republicHoliday && holiday ? (
           <Text style={[styles.note, { color: colors.body }]}>
-            This week: {holiday.name} ({DOW_LABEL[holiday.dow]}) delays Republic collection one day for Fort Collins
-            routes on and after that weekday. Friday routes run Saturday.
+            {t('trash.weekDelay', { holiday: holidayLabel(holiday.name, t), day: t(dowKey(holiday.dow)) })}
           </Text>
         ) : republicHoliday && lastHoliday ? (
           <Text style={[styles.note, { color: colors.body }]}>
-            Last week: {lastHoliday.name} delayed Republic one day. This week is back to the usual weekday for{' '}
-            {region ? region.label : 'your area'}.
+            {t('trash.lastWeekDelay', {
+              holiday: holidayLabel(lastHoliday.name, t),
+              place: region ? region.label : t('trash.yourArea'),
+            })}
           </Text>
         ) : null}
 
         {region?.id === 'uninc-landfill' ? null : (
           <>
             <Text style={[styles.section, { color: colors.ink }]}>
-              {region?.dow ? 'Or pick the weekday' : 'Usual trash day'}
+              {region?.dow ? t('trash.orWeekday') : t('trash.usualDay')}
             </Text>
             <View style={styles.days}>
               {SERVICE_DAYS.map((d) => {
                 const on = regular === d.id;
+                const label = t(dowKey(d.id));
                 return (
                   <Pressable
                     key={d.id}
                     onPress={() => saveDay(d.id)}
                     accessibilityRole="button"
                     accessibilityState={{ selected: on }}
-                    accessibilityLabel={d.label}
+                    accessibilityLabel={label}
                     style={[
                       styles.day,
                       { backgroundColor: on ? HEADER_PURPLE : colors.card, borderColor: on ? HEADER_PURPLE : colors.line },
                     ]}
                   >
                     <Text style={[styles.dayText, { color: on ? '#fff' : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-                      {largePrint ? d.label.slice(0, 3) : d.label}
+                      {largePrint ? t(dowShortKey(d.id)) : label}
                     </Text>
                   </Pressable>
                 );
@@ -229,19 +240,14 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
           </View>
         ) : region?.id === 'uninc-landfill' ? (
           <View style={[styles.hero, { backgroundColor: colors.card }]}>
-            <Text style={[styles.heroTitle, { color: colors.ink }]}>No curbside county route</Text>
-            <Text style={[styles.heroSub, { color: colors.body }]}>
-              Unincorporated Larimer does not pick a trash day. Haul it yourself or hire a private company.
-            </Text>
+            <Text style={[styles.heroTitle, { color: colors.ink }]}>{t('trash.noCurbside')}</Text>
+            <Text style={[styles.heroSub, { color: colors.body }]}>{t('trash.noCurbsideSub')}</Text>
           </View>
         ) : (
-          <Text style={[styles.hint, { color: colors.muted }]}>
-            Open the region list — Highlander Heights, Centerra, Old Town Wellington, and the other towns are in there.
-            Or pick the weekday you already know.
-          </Text>
+          <Text style={[styles.hint, { color: colors.muted }]}>{t('trash.hintPick')}</Text>
         )}
 
-        <Text style={[styles.section, { color: colors.ink }]}>What goes out</Text>
+        <Text style={[styles.section, { color: colors.ink }]}>{t('trash.whatGoesOut')}</Text>
         <View>
           {service.map((row) => (
             <ServiceRow key={row.title} {...row} />
@@ -254,16 +260,14 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
                 </View>
                 <View style={styles.listingBody}>
                   <View style={styles.listingHead}>
-                    <Text style={[styles.listingName, { color: colors.ink }]}>Recycling week</Text>
+                    <Text style={[styles.listingName, { color: colors.ink }]}>{t('trash.recycleWeek')}</Text>
                     <Switch value={lovelandRecycle} onValueChange={saveRecycle} />
                   </View>
                   <Text style={[styles.listingMeta, { color: colors.muted }]}>
-                    {lovelandRecycle ? 'This week · Loveland' : 'Skip this week · Loveland'}
+                    {lovelandRecycle ? t('trash.thisWeek') : t('trash.skipWeek')}
                   </Text>
                   <Text style={[styles.listingDesc, { color: colors.body }]}>
-                    {lovelandRecycle
-                      ? 'Put the recycle cart out with trash this week.'
-                      : 'Trash only this week. Recycle next week.'}
+                    {lovelandRecycle ? t('trash.recycleYes') : t('trash.recycleNo')}
                   </Text>
                 </View>
               </View>
@@ -271,16 +275,15 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
           ) : null}
         </View>
 
-        <Text style={[styles.note, { color: colors.body }]}>{footnoteFor(town, region)}</Text>
+        <Text style={[styles.note, { color: colors.body }]}>{footnoteFor(town, region, t)}</Text>
 
-        {actionsFor(town, region).map((row) => (
+        {actionsFor(town, region, t).map((row) => (
           <Action key={row.label} icon={row.icon} label={row.label} onPress={row.onPress} />
         ))}
 
         {area === 'All' && !region ? (
           <Text style={[styles.note, { color: colors.muted }]}>
-            Showing {areaLabel('Fort Collins')} city-contract rules when All of Larimer is selected and no region is
-            picked. The dropdown lists Loveland, Estes Park, Berthoud, Wellington, and unincorporated too.
+            {t('trash.allNote', { area: areaLabel('Fort Collins', t) })}
           </Text>
         ) : null}
       </ScrollView>
@@ -288,68 +291,44 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   );
 }
 
-function ledeFor(town: TrashTown, region: TrashRegion | null): string {
-  if (region?.town === 'Unincorporated' && region.id === 'uninc-landfill') {
-    return 'Larimer County does not run curbside pickup outside city limits. Self-haul to the landfill on South Taft Hill, or hire a licensed hauler.';
-  }
-  if (town === 'Fort Collins') {
-    return 'City-contracted homes use Republic Services. Pick a Fort Collins neighborhood — Highlander Heights is Friday on the 2026 map — or scroll the same list for Loveland, Estes Park, Berthoud, Wellington, and unincorporated Larimer.';
-  }
-  if (town === 'Loveland') {
-    return 'Loveland runs its own trash, recycling, and yard waste. Trash is weekly. Recycling is every other week on the same weekday. Recollect has the house-level day if you are not sure.';
-  }
-  if (town === 'Estes Park') {
-    return 'Estes Park is not on the Fort Collins Republic contract. Residential routes are usually Waste Management or Superior Trash (Atlas Unlimited). Day is on your bill.';
-  }
-  if (town === 'Berthoud') {
-    return 'Berthoud does not pick one hauler. The town licenses several companies, and some HOAs lock you to one. Pick the company on your bill.';
-  }
-  if (town === 'Wellington') {
-    return 'Wellington lists private haulers. Your day is on your bill, not a town-wide map. Dumpster Diverz says most Wellington addresses are Tuesday or Friday.';
-  }
-  return 'Unincorporated Larimer has no county curbside route. Hire a hauler or take it to the landfill yourself.';
+function ledeFor(town: TrashTown, region: TrashRegion | null, t: Translate): string {
+  if (region?.town === 'Unincorporated' && region.id === 'uninc-landfill') return t('trash.ledeLandfill');
+  if (town === 'Fort Collins') return t('trash.ledeFoco');
+  if (town === 'Loveland') return t('trash.ledeLoveland');
+  if (town === 'Estes Park') return t('trash.ledeEstes');
+  if (town === 'Berthoud') return t('trash.ledeBerthoud');
+  if (town === 'Wellington') return t('trash.ledeWellington');
+  return t('trash.ledeUninc');
 }
 
-function footnoteFor(town: TrashTown, region: TrashRegion | null): string {
-  if (region?.id === 'uninc-landfill') {
-    return 'Landfill hours are Monday–Saturday. Call the 24-hour line 970-498-5770 for wind closures. Main office 970-498-5760.';
-  }
-  if (town === 'Fort Collins') {
-    return 'Extra-small (35-gallon) trash carts are every other week. Recycling is still weekly. Call Republic if you are not sure which week. Two free bulky items a year — schedule at 970-416-2012. Door-to-door cart help if you cannot pull carts to the curb.';
-  }
-  if (town === 'Loveland') {
-    return 'Yard waste carts run about March 30–December 4 (2026 dates). Winter months are trash and recycling only. Extra bags next to the cart are billed on the utility statement. Solid Waste 970-962-2529.';
-  }
-  if (town === 'Estes Park') {
-    return 'WM: look up the day in My WM or call 1-866-849-0076. Superior Trash / Atlas Unlimited: 970-214-4902. Bags and carts out by 7am.';
-  }
-  if (town === 'Berthoud') {
-    return 'Ask the town at 970-532-2643 if you are not sure who is licensed for your street. Some metro districts only allow one company.';
-  }
-  if (town === 'Wellington') {
-    return 'Town list: Dumpster Diverz 970-888-7274, Republic 970-484-5556, Waste Management 970-482-6319. Recycling is usually extra and every other week.';
-  }
-  return 'Atlas Unlimited covers a lot of north county (Red Feather, Livermore, Laporte, Bellvue). Republic and WM also take some rural addresses.';
+function footnoteFor(town: TrashTown, region: TrashRegion | null, t: Translate): string {
+  if (region?.id === 'uninc-landfill') return t('trash.footLandfill');
+  if (town === 'Fort Collins') return t('trash.footFoco');
+  if (town === 'Loveland') return t('trash.footLoveland');
+  if (town === 'Estes Park') return t('trash.footEstes');
+  if (town === 'Berthoud') return t('trash.footBerthoud');
+  if (town === 'Wellington') return t('trash.footWellington');
+  return t('trash.footUninc');
 }
 
-function recyclingNote(kind: RecyclingKind, lovelandRecycle: boolean, town: TrashTown): string {
-  if (kind === 'none') return 'No curbside recycling on a county landfill trip — use the recycle drop-off on site.';
-  if (kind === 'ask') return 'Ask your hauler if recycling is the same day.';
+function recyclingNote(kind: RecyclingKind, lovelandRecycle: boolean, town: TrashTown, t: Translate): string {
+  if (kind === 'none') return t('trash.recycNone');
+  if (kind === 'ask') return t('trash.recycAsk');
   if (kind === 'every-other' && town === 'Loveland') {
-    return lovelandRecycle ? 'Every other week — this is a recycle week.' : 'Every other week — skip the recycle cart this week.';
+    return lovelandRecycle ? t('trash.recycLovelandYes') : t('trash.recycLovelandNo');
   }
-  if (kind === 'every-other') return 'Usually every other week on trash day. Confirm on your bill.';
-  return 'Same day as trash · weekly';
+  if (kind === 'every-other') return t('trash.recycEveryOther');
+  return t('trash.recycWeekly');
 }
 
-function yardNote(kind: YardKind, yard: boolean, town: TrashTown): string {
-  if (kind === 'none') return 'Yard debris can go with a landfill load if it meets county rules.';
-  if (kind === 'ask') return 'Ask your hauler. Not every route has a yard cart.';
-  if (kind === 'in-trash') return 'Dumpster Diverz takes grass, leaves, and small branches in the trash cart. No separate yard route.';
+function yardNote(kind: YardKind, yard: boolean, town: TrashTown, t: Translate): string {
+  if (kind === 'none') return t('trash.yardNone');
+  if (kind === 'ask') return t('trash.yardAsk');
+  if (kind === 'in-trash') return t('trash.yardInTrash');
   if (town === 'Loveland') {
-    return yard ? 'In season (about Mar 30–Dec 4) · same weekday as trash' : 'Off-season — city yard carts pause in winter';
+    return yard ? t('trash.yardLovelandOn') : t('trash.yardLovelandOff');
   }
-  return yard ? 'In season (Apr–Nov) · same day as trash' : 'Off-season (Dec–Mar)';
+  return yard ? t('trash.yardOn') : t('trash.yardOff');
 }
 
 function serviceCopy(
@@ -360,101 +339,126 @@ function serviceCopy(
   lovelandRecycle: boolean,
   regular: ServiceDow | null,
   place: string,
+  t: Translate,
 ): Array<{ icon: string; title: string; note: string; status: string; place: string }> {
   const recycling = region?.recycling ?? (town === 'Fort Collins' ? 'same-day-weekly' : town === 'Loveland' ? 'every-other' : 'ask');
   const yardKind = region?.yard ?? (town === 'Fort Collins' || town === 'Loveland' ? 'same-day-season' : 'ask');
-  const curb = region?.cartsBy ? `Curb by ${region.cartsBy}` : 'Curb on pickup day';
-  const trashStatus = !regular ? 'Pick a day' : todayIs ? 'Out today' : 'Not today';
+  const curb = region?.cartsBy ? t('trash.curbBy', { time: region.cartsBy }) : t('trash.curbOn');
+  const trashStatus = !regular ? t('trash.pickDay') : todayIs ? t('trash.outToday') : t('trash.notToday');
   const recycleOn = recycling === 'same-day-weekly' ? todayIs : recycling === 'every-other' && town === 'Loveland' ? todayIs && lovelandRecycle : false;
   const recycleStatus =
-    recycling === 'none' ? 'Drop-off' : recycling === 'ask' ? 'Ask hauler' : !regular ? 'Pick a day' : recycleOn ? 'Out today' : 'Not today';
+    recycling === 'none'
+      ? t('trash.dropOff')
+      : recycling === 'ask'
+        ? t('trash.askHauler')
+        : !regular
+          ? t('trash.pickDay')
+          : recycleOn
+            ? t('trash.outToday')
+            : t('trash.notToday');
   const yardOn = yardKind === 'same-day-season' && todayIs && yard;
   const yardStatus =
-    yardKind === 'none' ? 'Landfill' : yardKind === 'ask' ? 'Ask hauler' : yardKind === 'in-trash' ? 'In trash cart' : !yard ? 'Off season' : trashStatus;
+    yardKind === 'none'
+      ? t('trash.selfHaul')
+      : yardKind === 'ask'
+        ? t('trash.askHauler')
+        : yardKind === 'in-trash'
+          ? t('trash.inTrashCart')
+          : !yard
+            ? t('trash.offSeason')
+            : trashStatus;
 
   return [
     {
       icon: 'trash-outline',
-      title: 'Trash cart',
-      note: region?.id === 'uninc-landfill' ? 'No curbside cart — haul a load yourself or hire a hauler.' : curb,
-      status: region?.id === 'uninc-landfill' ? 'Self-haul' : trashStatus,
+      title: t('trash.cart'),
+      note: region?.id === 'uninc-landfill' ? t('trash.noCart') : curb,
+      status: region?.id === 'uninc-landfill' ? t('trash.selfHaul') : trashStatus,
       place,
     },
     {
       icon: 'reload-outline',
-      title: 'Recycling',
-      note: recyclingNote(recycling, lovelandRecycle, town),
+      title: t('trash.recycling'),
+      note: recyclingNote(recycling, lovelandRecycle, town, t),
       status: recycleStatus,
       place,
     },
     {
       icon: 'leaf-outline',
-      title: 'Yard trimmings',
-      note: yardNote(yardKind, yard, town),
-      status: yardOn ? 'Out today' : yardStatus,
+      title: t('trash.yard'),
+      note: yardNote(yardKind, yard, town, t),
+      status: yardOn ? t('trash.outToday') : yardStatus,
       place,
     },
   ];
 }
 
-function actionsFor(town: TrashTown, region: TrashRegion | null): Array<{ icon: string; label: string; onPress: () => void }> {
+function actionsFor(town: TrashTown, region: TrashRegion | null, t: Translate): Array<{ icon: string; label: string; onPress: () => void }> {
   const extra: Array<{ icon: string; label: string; onPress: () => void }> = [];
   if (region?.phone) {
-    extra.push({ icon: 'call', label: `Call ${region.hauler} ${region.phone}`, onPress: () => call(region.phone as string) });
+    extra.push({
+      icon: 'call',
+      label: t('trash.callHauler', { hauler: region.hauler, phone: region.phone }),
+      onPress: () => call(region.phone as string),
+    });
   }
   if (region?.lookupUrl) {
-    extra.push({ icon: 'globe-outline', label: region.id === 'uninc-landfill' ? 'Landfill hours and fees' : 'Look up this area', onPress: () => open(region.lookupUrl as string) });
+    extra.push({
+      icon: 'globe-outline',
+      label: region.id === 'uninc-landfill' ? t('trash.landfillHours') : t('trash.lookupArea'),
+      onPress: () => open(region.lookupUrl as string),
+    });
   }
 
   if (town === 'Fort Collins') {
     return [
       ...extra,
-      ...(region?.phone === '970-416-2012' ? [] : [{ icon: 'call', label: 'Call Republic 970-416-2012', onPress: () => call('970-416-2012') }]),
-      { icon: 'globe-outline', label: 'Look up my address', onPress: () => open(LOOKUP.foco) },
-      { icon: 'map-outline', label: '2026 collection map (PDF)', onPress: () => open(LOOKUP.guide) },
-      { icon: 'leaf-outline', label: 'What goes in which cart (city guide)', onPress: () => open(LOOKUP.focoCarts) },
+      ...(region?.phone === '970-416-2012' ? [] : [{ icon: 'call', label: t('trash.callRepublic'), onPress: () => call('970-416-2012') }]),
+      { icon: 'globe-outline', label: t('trash.lookupAddress'), onPress: () => open(LOOKUP.foco) },
+      { icon: 'map-outline', label: t('trash.mapPdf'), onPress: () => open(LOOKUP.guide) },
+      { icon: 'leaf-outline', label: t('trash.cartGuide'), onPress: () => open(LOOKUP.focoCarts) },
     ];
   }
   if (town === 'Loveland') {
     return [
       ...extra,
-      ...(region?.phone === '970-962-2529' ? [] : [{ icon: 'call', label: 'Call Loveland Solid Waste 970-962-2529', onPress: () => call('970-962-2529') }]),
-      { icon: 'phone-portrait-outline', label: 'Loveland Recollect calendar', onPress: () => open(LOOKUP.loveland) },
+      ...(region?.phone === '970-962-2529' ? [] : [{ icon: 'call', label: t('trash.callLoveland'), onPress: () => call('970-962-2529') }]),
+      { icon: 'phone-portrait-outline', label: t('trash.recollect'), onPress: () => open(LOOKUP.loveland) },
     ];
   }
   if (town === 'Estes Park') {
     return [
       ...extra,
-      { icon: 'call', label: 'Call WM 1-866-849-0076', onPress: () => call('1-866-849-0076') },
-      { icon: 'call', label: 'Call Superior Trash 970-214-4902', onPress: () => call('970-214-4902') },
-      { icon: 'globe-outline', label: 'WM Estes Park', onPress: () => open(LOOKUP.estes) },
+      { icon: 'call', label: t('trash.callWm'), onPress: () => call('1-866-849-0076') },
+      { icon: 'call', label: t('trash.callSuperior'), onPress: () => call('970-214-4902') },
+      { icon: 'globe-outline', label: t('trash.wmEstes'), onPress: () => open(LOOKUP.estes) },
     ];
   }
   if (town === 'Berthoud') {
     return [
       ...extra,
-      { icon: 'call', label: 'Town of Berthoud 970-532-2643', onPress: () => call('970-532-2643') },
-      { icon: 'globe-outline', label: 'Licensed haulers', onPress: () => open(LOOKUP.berthoud) },
-      { icon: 'call', label: 'Mountain High Disposal 970-834-1144', onPress: () => call('970-834-1144') },
-      { icon: 'call', label: 'United Waste 970-532-0803', onPress: () => call('970-532-0803') },
-      { icon: 'call', label: 'Step Up Disposals 970-888-1414', onPress: () => call('970-888-1414') },
+      { icon: 'call', label: t('trash.berthoudTown'), onPress: () => call('970-532-2643') },
+      { icon: 'globe-outline', label: t('trash.licensedHaulers'), onPress: () => open(LOOKUP.berthoud) },
+      { icon: 'call', label: t('trash.mountainHigh'), onPress: () => call('970-834-1144') },
+      { icon: 'call', label: t('trash.unitedWaste'), onPress: () => call('970-532-0803') },
+      { icon: 'call', label: t('trash.stepUp'), onPress: () => call('970-888-1414') },
     ];
   }
   if (town === 'Wellington') {
     return [
       ...extra,
-      { icon: 'call', label: 'Dumpster Diverz 970-888-7274', onPress: () => call('970-888-7274') },
-      { icon: 'call', label: 'Republic 970-484-5556', onPress: () => call('970-484-5556') },
-      { icon: 'call', label: 'Waste Management 970-482-6319', onPress: () => call('970-482-6319') },
-      { icon: 'globe-outline', label: 'Town utilities & trash list', onPress: () => open(LOOKUP.wellington) },
+      { icon: 'call', label: t('trash.dumpsterDiverz'), onPress: () => call('970-888-7274') },
+      { icon: 'call', label: t('trash.republicWell'), onPress: () => call('970-484-5556') },
+      { icon: 'call', label: t('trash.wmWell'), onPress: () => call('970-482-6319') },
+      { icon: 'globe-outline', label: t('trash.wellingtonList'), onPress: () => open(LOOKUP.wellington) },
     ];
   }
   return [
     ...extra,
-    { icon: 'call', label: 'Landfill office 970-498-5760', onPress: () => call('970-498-5760') },
-    { icon: 'call', label: 'Landfill 24-hour line 970-498-5770', onPress: () => call('970-498-5770') },
-    { icon: 'globe-outline', label: 'Larimer County landfill', onPress: () => open(LOOKUP.landfill) },
-    { icon: 'call', label: 'Atlas Unlimited north county 970-881-2262', onPress: () => call('970-881-2262') },
+    { icon: 'call', label: t('trash.landfillOffice'), onPress: () => call('970-498-5760') },
+    { icon: 'call', label: t('trash.landfill24'), onPress: () => call('970-498-5770') },
+    { icon: 'globe-outline', label: t('trash.landfillSite'), onPress: () => open(LOOKUP.landfill) },
+    { icon: 'call', label: t('trash.atlas'), onPress: () => call('970-881-2262') },
   ];
 }
 
