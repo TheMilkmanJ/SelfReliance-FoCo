@@ -9,6 +9,7 @@ import { OPEN_NEEDS } from '../data/openNowNeeds';
 import { OPEN_PLACES } from '../data/openNowPlaces';
 import type { OpenNeedId, OpenPlace } from '../data/openNowTypes';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
+import { useI18n, type MessageKey, dowKey, monthKey } from '../i18n';
 import { useDenverNow } from '../lib/denverClock';
 import { matchesOpenTown, statusFor } from '../lib/openNowStatus';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
@@ -24,15 +25,16 @@ type Props = {
 
 export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const now = useDenverNow();
   const [need, setNeed] = useState<OpenNeedId | 'all'>('all');
   const [chip, setChip] = useState<FilterChip>('open');
 
   const ranked = useMemo(() => {
     return OPEN_PLACES.filter((p) => (need === 'all' ? true : p.needs.includes(need)) && matchesOpenTown(p, area))
-      .map((place) => ({ place, status: statusFor(place, now) }))
+      .map((place) => ({ place, status: statusFor(place, now, t) }))
       .sort((a, b) => a.status.sort - b.status.sort || a.place.name.localeCompare(b.place.name));
-  }, [need, area, now]);
+  }, [need, area, now, t]);
 
   const visible = ranked.filter((row) => {
     if (chip === 'all') return true;
@@ -44,8 +46,11 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
       <Header
-        title="Open now"
-        subtitle={`${now.weekdayLabel}, ${now.dateLabel} · meals, showers, beds`}
+        title={t('open.title')}
+        subtitle={t('open.subtitle', {
+          weekday: t(dowKey(now.dow)),
+          date: `${t(monthKey(now.month))} ${now.date}`,
+        })}
       />
       <FlatList
         data={visible}
@@ -56,25 +61,22 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
         )}
         ListHeaderComponent={
           <View style={styles.top}>
-            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel="Back to resources">
+            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
               <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
-              <Text style={[styles.backText, { color: colors.purple }]}>Resources</Text>
+              <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
             </Pressable>
-            <Text style={[styles.lede, { color: colors.body }]}>
-              Same desks as the directory, filtered to what is supposed to be open in the next few hours. Hours change.
-              Call if you can.
-            </Text>
+            <Text style={[styles.lede, { color: colors.body }]}>{t('open.lede')}</Text>
             <AreaFilter value={area} onChange={onAreaChange} />
             <View style={styles.chips}>
-              <MiniChip label="All needs" active={need === 'all'} onPress={() => setNeed('all')} />
+              <MiniChip label={t('open.allNeeds')} active={need === 'all'} onPress={() => setNeed('all')} />
               {OPEN_NEEDS.map((n) => (
-                <MiniChip key={n.id} label={n.short} active={need === n.id} onPress={() => setNeed(n.id)} />
+                <MiniChip key={n.id} label={t(`open.${n.id}` as MessageKey)} active={need === n.id} onPress={() => setNeed(n.id)} />
               ))}
             </View>
             <View style={styles.chips}>
-              <MiniChip label={`${openCount} open now`} active={chip === 'open'} onPress={() => setChip('open')} />
-              <MiniChip label="Later today" active={chip === 'later'} onPress={() => setChip('later')} />
-              <MiniChip label="All hours" active={chip === 'all'} onPress={() => setChip('all')} />
+              <MiniChip label={t('open.countNow', { n: openCount })} active={chip === 'open'} onPress={() => setChip('open')} />
+              <MiniChip label={t('open.later')} active={chip === 'later'} onPress={() => setChip('later')} />
+              <MiniChip label={t('open.allHours')} active={chip === 'all'} onPress={() => setChip('all')} />
             </View>
           </View>
         }
@@ -82,11 +84,9 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
           <View style={styles.empty}>
             <Ionicons name="time-outline" size={40} color={colors.muted} />
             <Text style={[styles.emptyTitle, { color: colors.ink }]}>
-              {chip === 'open' ? `Nothing open right now in ${areaLabel(area)}` : `Nothing listed for ${areaLabel(area)}`}
+              {chip === 'open' ? t('open.emptyNow', { area: areaLabel(area, t) }) : t('open.emptyListed', { area: areaLabel(area, t) })}
             </Text>
-            <Text style={[styles.emptyText, { color: colors.muted }]}>
-              Try All hours, All of Larimer, or call 2-1-1.
-            </Text>
+            <Text style={[styles.emptyText, { color: colors.muted }]}>{t('open.emptyHint')}</Text>
           </View>
         }
       />

@@ -8,6 +8,7 @@ import { ResourceCard } from '../components/ResourceCard';
 import { GIVE_NEED_CHIPS, giveNeedResources, type GiveNeedId } from '../data/giveNeed';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
 import type { Resource } from '../data/types';
+import { useI18n, type MessageKey } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -20,13 +21,14 @@ type Props = {
 
 export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const [kind, setKind] = useState<GiveNeedId>('need');
   const list = useMemo(() => giveNeedResources(kind, area), [kind, area]);
-  const chip = GIVE_NEED_CHIPS.find((c) => c.id === kind);
+  const blurbKey = `give.${kind}Blurb` as MessageKey;
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-      <Header title="Give, need, volunteer" subtitle="Call the desk. Not a classifieds feed." />
+      <Header title={t('give.title')} subtitle={t('give.subtitle')} />
       <FlatList
         data={list}
         keyExtractor={(r) => r.id}
@@ -34,39 +36,35 @@ export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) 
         renderItem={({ item }) => <ResourceCard resource={item} onPress={onSelect} />}
         ListHeaderComponent={
           <View style={styles.top}>
-            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel="Back to resources">
+            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
               <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
               <Text style={[styles.backText, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-                Resources
+                {t('common.resources')}
               </Text>
             </Pressable>
             <Text style={[styles.lede, { color: colors.body }]} maxFontSizeMultiplier={MAX_FONT.title}>
-              Neighbors asked for a place to send people who have something to give, who need something, or who can
-              show up and help. These are real desks already in the directory. People Helping People (Suzanne Barslund,
-              970-391-9039) is first for furniture.
+              {t('give.lede')}
             </Text>
             <AreaFilter value={area} onChange={onAreaChange} />
             <View style={styles.chips}>
               {GIVE_NEED_CHIPS.map((c) => (
-                <MiniChip key={c.id} label={c.short} active={kind === c.id} onPress={() => setKind(c.id)} />
+                <MiniChip key={c.id} label={t(`give.${c.id}` as MessageKey)} active={kind === c.id} onPress={() => setKind(c.id)} />
               ))}
             </View>
             <Text style={[styles.blurb, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-              {chip?.blurb}
+              {t(blurbKey)}
             </Text>
             <Text style={[styles.count, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-              {list.length} {list.length === 1 ? 'desk' : 'desks'}
-              {area === 'All' ? '' : ` in ${areaLabel(area)}`}
+              {t(list.length === 1 ? 'give.deskOne' : 'give.deskMany', { n: list.length })}
+              {area === 'All' ? '' : t('home.inArea', { area: areaLabel(area, t) })}
             </Text>
           </View>
         }
         ListEmptyComponent={
           <View style={styles.empty}>
             <Ionicons name="people-outline" size={40} color={colors.muted} />
-            <Text style={[styles.emptyTitle, { color: colors.ink }]}>Nothing listed for {areaLabel(area)}</Text>
-            <Text style={[styles.emptyText, { color: colors.muted }]}>
-              Try All of Larimer, or call Suzanne Barslund at 970-391-9039 for furniture.
-            </Text>
+            <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('give.empty', { area: areaLabel(area, t) })}</Text>
+            <Text style={[styles.emptyText, { color: colors.muted }]}>{t('give.emptyHint')}</Text>
           </View>
         }
       />

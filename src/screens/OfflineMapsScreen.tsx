@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Header } from '../components/Header';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
+import { useI18n } from '../i18n';
 import { mapsTownUrl, open } from '../lib/actions';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
@@ -24,48 +25,43 @@ function townFor(area: AreaFilterId): string {
 
 export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
   const { colors } = useTheme();
+  const { t } = useI18n();
   const town = townFor(area);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-      <Header title="Offline maps" subtitle="Google Maps download, plus bus PDFs" />
+      <Header title={t('maps.title')} subtitle={t('maps.subtitle')} />
       <ScrollView contentContainerStyle={styles.body}>
-        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel="Back to resources">
+        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
           <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
-          <Text style={[styles.backText, { color: colors.purple }]}>Resources</Text>
+          <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>
         <AreaFilter value={area} onChange={onAreaChange} />
 
         <Text style={[styles.lede, { color: colors.body }]} maxFontSizeMultiplier={MAX_FONT.title}>
-          This directory, trash day, and open now already work with no signal. Google does not let this app store
-          Google’s map. Download {town} inside the Google Maps app. Then Get directions can still work for walking
-          and driving when you have no data. Bus times and live traffic need a signal.
+          {t('maps.lede', { town })}
         </Text>
 
-        <Text style={[styles.section, { color: colors.ink }]}>Download in Google Maps</Text>
-        <Step n={1} line="Open Google Maps (not this app)." />
-        <Step n={2} line={`Search ${town}.`} />
-        <Step n={3} line="Tap the town name at the bottom, then Download." />
-        <Step n={4} line="Wait on Wi-Fi. The area is saved on the phone." />
+        <Text style={[styles.section, { color: colors.ink }]}>{t('maps.downloadSection')}</Text>
+        <Step n={1} line={t('maps.step1')} />
+        <Step n={2} line={t('maps.step2', { town })} />
+        <Step n={3} line={t('maps.step3')} />
+        <Step n={4} line={t('maps.step4')} />
 
         {area === 'All' ? (
           <Text style={[styles.note, { color: colors.muted }]}>
-            Showing {areaLabel('Fort Collins')} when All of Larimer is selected. Pick a town chip for Loveland, Estes
-            Park, Berthoud, or Wellington and download that area the same way.
+            {t('maps.noteAll', { area: areaLabel('Fort Collins', t) })}
           </Text>
         ) : null}
 
-        <Action icon="map-outline" label={`Open Google Maps for ${town}`} onPress={() => open(mapsTownUrl(town))} />
-        <Action icon="download-outline" label="Google’s offline maps steps" onPress={() => open(HELP)} />
+        <Action icon="map-outline" label={t('maps.openTown', { town })} onPress={() => open(mapsTownUrl(town))} />
+        <Action icon="download-outline" label={t('maps.googleSteps')} onPress={() => open(HELP)} />
 
-        <Text style={[styles.section, { color: colors.ink }]}>Buses without a map tile</Text>
-        <Text style={[styles.note, { color: colors.body }]}>
-          Transfort route maps are PDFs you can save in Files. No Sunday service. COLT is Loveland’s buses. Live next-bus
-          times still need data.
-        </Text>
-        <Action icon="bus-outline" label="Transfort route maps (save the PDFs)" onPress={() => open(TRANSFORT)} />
+        <Text style={[styles.section, { color: colors.ink }]}>{t('maps.busSection')}</Text>
+        <Text style={[styles.note, { color: colors.body }]}>{t('maps.busNote')}</Text>
+        <Action icon="bus-outline" label={t('maps.transfort')} onPress={() => open(TRANSFORT)} />
         {town === 'Loveland' ? (
-          <Action icon="bus-outline" label="COLT Loveland buses" onPress={() => open(COLT)} />
+          <Action icon="bus-outline" label={t('maps.colt')} onPress={() => open(COLT)} />
         ) : null}
       </ScrollView>
     </View>
