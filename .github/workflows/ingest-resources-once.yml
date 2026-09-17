@@ -1,0 +1,47 @@
+name: ingest-resources-once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/ingest-resources-once.yml
+      - _ingest/voting-tail.txt
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Splice voting listings into resources.json and remove ingest overlay
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/data/resources.json')
+          text = p.read_text()
+          tail = Path('_ingest/voting-tail.txt').read_text()
+          if '"id": "larimer-elections-office"' in text:
+              print('voting listings already present')
+          else:
+              marker = '\n  ]\n}\n'
+              if not text.endswith(marker):
+                  raise SystemExit('unexpected resources.json ending: ' + repr(text[-80:]))
+              text = text[:-len(marker)] + ',\n' + tail
+              p.write_text(text)
+              print('spliced', len(text))
+          import json
+          data = json.loads(p.read_text())
+          voting = [r['id'] for r in data['resources'] if r.get('category') == 'voting']
+          assert len(data['resources']) == 427, len(data['resources'])
+          assert len(voting) == 11, voting
+          print('ok', len(data['resources']), voting)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -r _ingest
+          git rm .github/workflows/ingest-resources-once.yml
+          git add src/data/resources.json
+          git commit -m "Ship resources.json voting listings for v2.21.0"
+          git push
