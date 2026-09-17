@@ -135,7 +135,7 @@ Nothing you tap is sent anywhere. City and dark-mode choices stay on your phone.
 
 ## Checksum (v2.22.3)
 
-To verify the published APK: `sha256` pending release build.
+`sha256: a21a34d1c2b720ec6ff8a83feaea9712d34dea27af2104a655b9029977549edc`
 
 ## Questions or problems
 
