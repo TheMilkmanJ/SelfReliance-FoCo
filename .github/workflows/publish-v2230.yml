@@ -1,0 +1,58 @@
+name: publish-v2230
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-v2230.yml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch APK
+        run: |
+          set -euo pipefail
+          curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789677651.45f7a23ed95d4953/w5w1N1LGmRlj/self-reliance-foco.apk'
+          python3 - <<'PY'
+          import hashlib, os, zipfile
+          p = 'Self-Reliance-FoCo.apk'
+          if not zipfile.is_zipfile(p):
+              raise SystemExit('downloaded file is not an APK zip')
+          h = hashlib.sha256(open(p, 'rb').read()).hexdigest()
+          print(h, os.path.getsize(p))
+          if h != '2abcc9905c871c1b445fac2d852f4b81b5f8e0e3386fdfd102d9c11609bfb282':
+              raise SystemExit('sha256 mismatch')
+          PY
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.23.0
+
+          English / Spanish switcher: Language tile plus an ES/EN header button. Menus change; listing names stay as each desk wrote them. Interpreters, English classes, and Spanish hotlines show as extras. versionCode 32 — installs over v2.22.3.
+
+          SHA-256: 2abcc9905c871c1b445fac2d852f4b81b5f8e0e3386fdfd102d9c11609bfb282
+          EOF
+          gh release create v2.23.0 Self-Reliance-FoCo.apk --title 'Self-Reliance FoCo v2.23.0' --notes-file notes.md
+      - name: Delete this workflow
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/publish-v2230.yml
+          git add .github/workflows/publish-v2230.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.23.0 publish workflow.' || true
+            git push origin HEAD || true
+          fi
