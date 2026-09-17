@@ -20,3 +20,4 @@ jobs:
       - run: npm run check:open
       - run: npm run check:give
       - run: npm run check:ehs
+      - run: npm run check:language
