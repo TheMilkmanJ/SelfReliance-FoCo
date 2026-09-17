@@ -1,0 +1,69 @@
+name: ingest-v2230
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ingest-v2230.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Overlay language source
+        run: |
+          set -euo pipefail
+          echo retry=3
+          curl -fsSL -A 'Mozilla/5.0' -o overlay.tgz 'https://tmpfiles.org/dl/1789677870.8d8716500a1d0a13/wmwhNpLeNjeI/foco-overlay-2230b.tgz'
+          file overlay.tgz
+          python3 - <<'PY'
+          import pathlib
+          p = pathlib.Path('overlay.tgz')
+          raw = p.read_bytes()[:4]
+          if raw[:2] != b'\x1f\x8b':
+              raise SystemExit('overlay is not gzip (got HTML or garbage)')
+          print('gzip ok', p.stat().st_size)
+          PY
+          tar -tzf overlay.tgz | head
+          tar -xzf overlay.tgz
+          test -f src/i18n/en.ts
+          python3 - <<'PY'
+          import json
+          d = json.load(open('app.json'))
+          assert d['expo']['version'] == '2.23.0', d['expo']['version']
+          assert d['expo']['android']['versionCode'] == 32
+          print('app.json', d['expo']['version'], d['expo']['android']['versionCode'])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add App.tsx README.md app.json package.json scripts/check-language.mjs src
+          git status --short
+          git pull --rebase origin main
+          if git diff --cached --quiet; then
+            echo 'no overlay changes'
+          else
+            git commit -m 'Add English/Spanish language switcher on Resources.'
+            git push origin main
+          fi
+      - name: Delete this workflow
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/ingest-v2230.yml
+          git add .github/workflows/ingest-v2230.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.23.0 ingest workflow.' || true
+            git push origin HEAD || true
+          fi
