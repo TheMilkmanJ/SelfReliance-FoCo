@@ -1,0 +1,79 @@
+name: overlay-v2170
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/overlay-v2170.yml"
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert People Helping People listing
+        run: |
+          python3 <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("src/data/resources.json")
+          data = json.loads(p.read_text())
+          rs = data["resources"]
+          listing = {
+              "id": "people-helping-people",
+              "name": "People Helping People \u2014 furniture (Suzanne Barslund)",
+              "category": "household",
+              "description": "Ask for Suzanne (Suze) Barslund. They pick up gently used furniture and household goods and give them away at no charge \u2014 including to people moving from homelessness into housing, older adults, and single parents. Call if you need furniture, have something to donate, or can volunteer to lift, repair, organize, or deliver. Work days have been at Catch All Mini Storage in Loveland. Call first; this is not a walk-in store.",
+              "phone": "970-391-9039",
+              "url": None,
+              "address": "750 14th St SE, Loveland, CO 80537",
+              "hours": "Call Suzanne first. Volunteer work days have been Saturday mornings when a group is scheduled.",
+              "area": "Larimer County",
+              "tags": ["furniture", "donate", "volunteer", "free furniture", "household", "homeless"],
+          }
+          ids = [r.get("id") for r in rs]
+          if "people-helping-people" not in ids:
+              idx = next((i for i, r in enumerate(rs) if r.get("id") == "habitat-restore-loveland"), len(rs) - 1) + 1
+              rs.insert(idx, listing)
+              p.write_text(json.dumps(data, indent=2) + "\n")
+              print("inserted listing")
+          else:
+              print("listing already present")
+
+          ts = Path("src/data/resources.ts")
+          t = ts.read_text()
+          if "'people-helping-people'" not in t:
+              old = "  'until-theyre-home',\n  'homeward-alliance-wagees',"
+              new = "  'until-theyre-home',\n  'people-helping-people',\n  'homeward-alliance-wagees',"
+              if old not in t:
+                  raise SystemExit("HOMELESS_ALWAYS pin site missing")
+              ts.write_text(t.replace(old, new, 1))
+              print("pinned homeless")
+          else:
+              print("already pinned")
+
+          cat = Path("src/data/categories.ts")
+          c = cat.read_text()
+          cold = "Beds, furniture, dishes, and thrift stores with used household goods."
+          cnew = "Beds, free furniture giveaways, dishes, and thrift stores with used household goods."
+          if cold in c:
+              cat.write_text(c.replace(cold, cnew, 1))
+              print("updated household blurb")
+          else:
+              print("household blurb already updated or missing")
+          PY
+      - name: Commit listing if needed
+        run: |
+          git config user.name "overlay-v2170"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/resources.json src/data/resources.ts src/data/categories.ts
+          git diff --cached --quiet || git commit -m "Add People Helping People furniture listing."
+          git push
+      - name: Delete this workflow
+        run: |
+          git rm -f .github/workflows/overlay-v2170.yml
+          git commit -m "Remove overlay-v2170 workflow." || true
+          git push || true
