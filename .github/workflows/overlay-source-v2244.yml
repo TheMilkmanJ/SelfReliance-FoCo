@@ -1,0 +1,56 @@
+name: overlay-source-v2244
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/overlay-source-v2244.yml'
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch source overlay
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o foco-source-v2244.tgz 'https://tmpfiles.org/dl/1789711217.4181b801af0229cd/wmwENqWOxM8d/foco-source-v2244.tgz'
+          echo 'b0ecc0f8f8f0155da0ce87b9dbc56e60c79cdd228b9add347b78ee013c1261dd  foco-source-v2244.tgz' | sha256sum -c
+          tar -xzf foco-source-v2244.tgz
+          rm -f foco-source-v2244.tgz
+      - name: Commit overlay
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md package.json app.json \
+            src/data/types.ts src/data/categories.ts src/data/resources.ts src/data/resources.json \
+            src/data/trashZones.json src/data/trashZones.ts \
+            src/screens/HomeScreen.tsx src/screens/TrashDayScreen.tsx \
+            src/i18n src/components/LanguagePicker.tsx src/components/HomeTools.tsx src/components/TrashZoneSelect.tsx \
+            scripts/check-religion.mjs scripts/check-i18n.mjs scripts/validate-resources.mjs scripts/check-marriage.mjs scripts/check-trash.mjs
+          git status
+          if git diff --cached --quiet; then
+            echo 'nothing to overlay'
+          else
+            git commit -m 'Overlay v2.24.4 source: Faith & religion tile, Hebrew, 449 listings.'
+            git pull --rebase origin main || true
+            git push origin HEAD
+          fi
+      - name: Delete this workflow
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/overlay-source-v2244.yml
+          git add .github/workflows/overlay-source-v2244.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.24.4 source overlay workflow.' || true
+            git push origin HEAD || true
+          fi
