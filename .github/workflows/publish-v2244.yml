@@ -1,0 +1,51 @@
+name: publish-v2244
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-v2244.yml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch APK
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789710953.60be3fbca29aebe7/wfwjNlWFP16z/self-reliance-foco.apk'
+          ls -lah Self-Reliance-FoCo.apk
+          echo 'bdcce929dfb9b8b356c138a6a2742e7fdf9bee359271e95f46da9db0f5496b9a  Self-Reliance-FoCo.apk' | sha256sum -c
+          python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.24.4
+
+          Faith & religion tile with Jewish, Christian, Muslim, Hindu, Buddhist, Sikh, and interfaith chips. Fort Collins Jewish desks: Har Shalom, Chabad, Temple Or Hadash, CSU Hillel. Hebrew menus. Church pantries stay on Food and Clothes. versionCode 37 — installs over v2.24.2.
+
+          SHA-256: bdcce929dfb9b8b356c138a6a2742e7fdf9bee359271e95f46da9db0f5496b9a
+          EOF
+          gh release delete v2.24.4 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.24.4 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.24.4' --notes-file notes.md
+      - name: Delete this workflow
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/publish-v2244.yml
+          git add .github/workflows/publish-v2244.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.24.4 publish workflow.' || true
+            git push origin HEAD || true
+          fi
