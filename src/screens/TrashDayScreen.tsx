@@ -23,11 +23,12 @@ import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import {
   SERVICE_DAYS,
   actualPickupDow,
+  cartDayKind,
+  effectiveServiceDow,
   formatYmd,
   fromDenverNow,
   holidayLastServiceWeek,
   holidayThisServiceWeek,
-  isPickupDay,
   nextPickup,
   type ServiceDow,
   yardTrimmingsSeason,
@@ -66,6 +67,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const ymd = fromDenverNow(now);
   const [regionId, setRegionId] = useState<string | null>(null);
   const [days, setDays] = useState<DayMap>({});
+  const [dayTouched, setDayTouched] = useState(false);
   const [lovelandRecycle, setLovelandRecycle] = useState(true);
 
   useEffect(() => {
@@ -75,21 +77,23 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
       AsyncStorage.getItem(RECYCLE_KEY),
       ...Object.values(DAY_STORAGE_KEY).map((key) => AsyncStorage.getItem(key)),
     ]).then(([regionSaved, zoneSaved, recycleSaved, ...daySaved]) => {
-      const region = regionById(regionSaved) ?? regionById(zoneSaved);
-      if (region) {
-        setRegionId(region.id);
-        if (regionSaved !== region.id || zoneSaved !== region.id) {
-          void AsyncStorage.setItem(REGION_KEY, region.id);
-          void AsyncStorage.setItem(FOCO_ZONE_KEY, region.id);
-        }
+      const stored = regionById(regionSaved) ?? regionById(zoneSaved);
+      if (stored && (regionSaved !== stored.id || zoneSaved !== stored.id)) {
+        void AsyncStorage.setItem(REGION_KEY, stored.id);
+        void AsyncStorage.setItem(FOCO_ZONE_KEY, stored.id);
       }
-      const next: DayMap = {};
-      (Object.keys(DAY_STORAGE_KEY) as TrashTown[]).forEach((town, i) => {
-        const n = Number(daySaved[i]);
-        if (n >= 1 && n <= 5) next[town] = n as ServiceDow;
+      // In-session picks win if storage resolves after the user already tapped.
+      setRegionId((current) => current ?? stored?.id ?? null);
+      setDays((current) => {
+        const next: DayMap = {};
+        (Object.keys(DAY_STORAGE_KEY) as TrashTown[]).forEach((town, i) => {
+          const n = Number(daySaved[i]);
+          if (n >= 1 && n <= 5) next[town] = n as ServiceDow;
+        });
+        const mapped = stored?.dow ? (stored.dow as ServiceDow) : null;
+        if (mapped && stored && current[stored.town] == null) next[stored.town] = mapped;
+        return { ...next, ...current };
       });
-      if (region?.dow) next[region.town] = region.dow;
-      setDays(next);
       if (recycleSaved === 'no') setLovelandRecycle(false);
       if (recycleSaved === 'yes') setLovelandRecycle(true);
     });
@@ -99,20 +103,19 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const chipTown = townFromArea(area);
   const region = savedRegion && (!chipTown || savedRegion.town === chipTown) ? savedRegion : null;
   const town: TrashTown = region?.town ?? chipTown ?? 'Fort Collins';
-  const regular = region?.dow ?? days[town] ?? null;
+  const regular = dayTouched
+    ? effectiveServiceDow(days[town], region?.dow ?? null)
+    : effectiveServiceDow(null, region?.dow ?? days[town] ?? null);
   const focusTown = chipTown;
 
   const saveDay = (day: ServiceDow) => {
+    setDayTouched(true);
     setDays((prev) => ({ ...prev, [town]: day }));
     void AsyncStorage.setItem(DAY_STORAGE_KEY[town], String(day));
-    if (region?.dow && region.dow !== day) {
-      setRegionId(null);
-      void AsyncStorage.removeItem(REGION_KEY);
-      void AsyncStorage.removeItem(FOCO_ZONE_KEY);
-    }
   };
 
   const saveRegion = (next: TrashRegion) => {
+    setDayTouched(false);
     setRegionId(next.id);
     void AsyncStorage.setItem(REGION_KEY, next.id);
     void AsyncStorage.setItem(FOCO_ZONE_KEY, next.id);
@@ -138,8 +141,9 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const holiday = holidayThisServiceWeek(ymd);
   const lastHoliday = holidayLastServiceWeek(ymd);
   const pickup = regular ? nextPickup(regular, ymd) : null;
-  const todayIs = regular ? isPickupDay(regular, ymd) : false;
-  const delayed = regular ? actualPickupDow(regular, ymd) !== regular : false;
+  const pickupDow = regular ? actualPickupDow(regular, ymd) : null;
+  const todayIs = pickupDow != null && ymd.dow === pickupDow;
+  const delayed = regular != null && pickupDow != null && pickupDow !== regular;
   const yard = yardTrimmingsSeason(ymd, town);
   const republicHoliday = town === 'Fort Collins';
   const place = region ? region.label : town === 'Unincorporated' ? t('area.unincorporated') : town;
@@ -166,7 +170,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
     return null;
   }, [regular, todayIs, delayed, holiday, pickup, region, place, t]);
 
-  const service = serviceCopy(town, region, todayIs, yard, lovelandRecycle, regular, place, t);
+  const service = serviceCopy(town, region, ymd.dow, yard, lovelandRecycle, pickupDow, place, t);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -187,7 +191,13 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
 
         <Text style={[styles.lede, { color: colors.body }]}>{ledeFor(town, region, t)}</Text>
 
-        <TrashZoneSelect value={region?.id ?? null} focusTown={focusTown} onChange={saveRegion} onClear={clearRegion} />
+        <TrashZoneSelect
+          value={region?.id ?? null}
+          pickupDow={regular}
+          focusTown={focusTown}
+          onChange={saveRegion}
+          onClear={clearRegion}
+        />
 
         {republicHoliday && holiday ? (
           <Text style={[styles.note, { color: colors.body }]}>
@@ -331,31 +341,40 @@ function yardNote(kind: YardKind, yard: boolean, town: TrashTown, t: Translate):
   return yard ? t('trash.yardOn') : t('trash.yardOff');
 }
 
+function cartStatus(todayDow: number, pickupDow: number | null, t: Translate): string {
+  const kind = cartDayKind(todayDow, pickupDow);
+  if (kind === 'pick') return t('trash.pickDay');
+  if (kind === 'out-today') return t('trash.outToday');
+  return t('trash.dayPickup', { day: t(dowKey(pickupDow as number)) });
+}
+
 function serviceCopy(
   town: TrashTown,
   region: TrashRegion | null,
-  todayIs: boolean,
+  todayDow: number,
   yard: boolean,
   lovelandRecycle: boolean,
-  regular: ServiceDow | null,
+  pickupDow: number | null,
   place: string,
   t: Translate,
 ): Array<{ icon: string; title: string; note: string; status: string; place: string }> {
   const recycling = region?.recycling ?? (town === 'Fort Collins' ? 'same-day-weekly' : town === 'Loveland' ? 'every-other' : 'ask');
   const yardKind = region?.yard ?? (town === 'Fort Collins' || town === 'Loveland' ? 'same-day-season' : 'ask');
   const curb = region?.cartsBy ? t('trash.curbBy', { time: region.cartsBy }) : t('trash.curbOn');
-  const trashStatus = !regular ? t('trash.pickDay') : todayIs ? t('trash.outToday') : t('trash.notToday');
+  const todayIs = pickupDow != null && todayDow === pickupDow;
+  const trashStatus = cartStatus(todayDow, pickupDow, t);
   const recycleOn = recycling === 'same-day-weekly' ? todayIs : recycling === 'every-other' && town === 'Loveland' ? todayIs && lovelandRecycle : false;
+  const recycleSkip = recycling === 'every-other' && town === 'Loveland' && !lovelandRecycle;
   const recycleStatus =
     recycling === 'none'
       ? t('trash.dropOff')
       : recycling === 'ask'
         ? t('trash.askHauler')
-        : !regular
-          ? t('trash.pickDay')
+        : recycleSkip
+          ? t('trash.skipWeek')
           : recycleOn
             ? t('trash.outToday')
-            : t('trash.notToday');
+            : trashStatus;
   const yardOn = yardKind === 'same-day-season' && todayIs && yard;
   const yardStatus =
     yardKind === 'none'
