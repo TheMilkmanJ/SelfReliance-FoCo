@@ -22,6 +22,7 @@ export {
   dowShortKey,
   monthKey,
   deviceLanguage,
+  isAppLanguage,
   languageOption,
   nextLanguage,
   LANGUAGE_STORAGE_KEY,

@@ -54,6 +54,7 @@ export const en = {
   'home.emptyLanguage': 'Try All on the language chips, pick All of Larimer, or call 2-1-1.',
   'home.emptyMarriage': 'Try All on the marriage chips, pick All of Larimer, or call the clerk at 970-498-7860.',
   'home.emptyDivorce': 'Try All on the divorce chips, pick All of Larimer, or call the Court Resource Center at 970-494-3581.',
+  'home.emptyReligion': 'Try All on the faith chips, pick All of Larimer, or call 2-1-1.',
   'home.tileA11y': '{label}, {n} resources',
   'home.searchEmptyTitle': 'Nothing matched "{query}"',
   'home.searchEmptyText': 'Try a simpler word like rent, food, child care, or dental. Or call 2-1-1.',
@@ -63,8 +64,11 @@ export const en = {
   'quick.callA11y': 'Call {label}, {sub}',
 
   'tool.trash': 'Trash day',
-  'tool.trashSub': 'Highlander Heights is Friday',
-  'tool.trashA11y': 'Trash day, pick Highlander Heights or another neighborhood',
+  'tool.trashSub': 'Pick your neighborhood',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': 'Trash day, pick your neighborhood',
+  'tool.trashA11ySaved': 'Trash day, {place}',
   'tool.open': 'Open now',
   'tool.openSub': 'Meals, showers, beds',
   'tool.openA11y': 'Open now, meals showers and beds open today',
@@ -86,7 +90,7 @@ export const en = {
   'lang.menusMeta': 'App menus',
   'lang.menusNote': 'Buttons, tabs, and chips in this language. Office names stay as each desk wrote them.',
   'lang.honest':
-    'This switch changes the app, not the listings. Hindi is here for Indian households; Telugu, Tamil, Gujarati, Punjabi, and others can ask IRC or 2-1-1 for an interpreter. Vietnamese, Korean, Chinese, and Arabic menus are here too. Colorado ballots use the language hotline for Vietnamese, Korean, and Chinese.',
+    'This switch changes the app, not the listings. Hindi is here for Indian households; Telugu, Tamil, Gujarati, Punjabi, and others can ask IRC or 2-1-1 for an interpreter. Vietnamese, Korean, Chinese, Arabic, and Hebrew menus are here too. Colorado ballots use the language hotline for Vietnamese, Korean, and Chinese.',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': 'Use {name} for app menus',
@@ -118,6 +122,13 @@ export const en = {
   'chip.divorce.kids': 'Kids & support',
   'chip.divorce.safety': 'Leave safely',
   'chip.divorce.name': 'Change your name',
+  'chip.religion.jewish': 'Jewish',
+  'chip.religion.christian': 'Christian',
+  'chip.religion.muslim': 'Muslim',
+  'chip.religion.hindu': 'Hindu',
+  'chip.religion.buddhist': 'Buddhist',
+  'chip.religion.sikh': 'Sikh',
+  'chip.religion.interfaith': 'Interfaith',
   'chip.disability.med9': 'Med-9 & cash',
   'chip.disability.glasses': 'Glasses & vision',
   'chip.disability.deaf': 'Deaf & phones',
@@ -182,7 +193,11 @@ export const en = {
   'cat.language.label': 'Language',
   'cat.language.short': 'Language',
   'cat.language.blurb':
-    'Switch English, Spanish, Hindi, Chinese, Vietnamese, Korean, or Arabic, plus interpreters and English classes.',
+    'Switch English, Spanish, Hindi, Chinese, Vietnamese, Korean, Arabic, or Hebrew, plus interpreters and English classes.',
+  'cat.religion.label': 'Faith & religion',
+  'cat.religion.short': 'Faith',
+  'cat.religion.blurb':
+    'Jewish, Christian, Muslim, Hindu, Buddhist, Sikh, and interfaith desks. Church pantries stay on Food and Clothes.',
   'cat.voting.label': 'Voters',
   'cat.voting.short': 'Voters',
   'cat.voting.blurb': 'Register, mail ballots, drop boxes, vote centers, and rides to go vote.',
@@ -432,7 +447,7 @@ export const en = {
   'trash.noCurbside': 'No curbside county route',
   'trash.noCurbsideSub': 'Unincorporated Larimer does not pick a trash day. Haul it yourself or hire a private company.',
   'trash.hintPick':
-    'Open the region list — Highlander Heights, Centerra, Old Town Wellington, and the other towns are in there. Or pick the weekday you already know.',
+    'Open the region list — Fort Collins, Loveland, Estes Park, Berthoud, Wellington, and unincorporated Larimer are in there. Or pick the weekday you already know.',
   'trash.whatGoesOut': 'What goes out',
   'trash.cart': 'Trash cart',
   'trash.recycling': 'Recycling',
@@ -471,7 +486,7 @@ export const en = {
   'trash.ledeLandfill':
     'Larimer County does not run curbside pickup outside city limits. Self-haul to the landfill on South Taft Hill, or hire a licensed hauler.',
   'trash.ledeFoco':
-    'City-contracted homes use Republic Services. Pick a Fort Collins neighborhood — Highlander Heights is Friday on the 2026 map — or scroll the same list for Loveland, Estes Park, Berthoud, Wellington, and unincorporated Larimer.',
+    'City-contracted homes use Republic Services. Pick a Fort Collins neighborhood from the list, or scroll the same list for Loveland, Estes Park, Berthoud, Wellington, and unincorporated Larimer.',
   'trash.ledeLoveland':
     'Loveland runs its own trash, recycling, and yard waste. Trash is weekly. Recycling is every other week on the same weekday. Recollect has the house-level day if you are not sure.',
   'trash.ledeEstes':

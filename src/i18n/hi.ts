@@ -56,6 +56,7 @@ export const hi: Record<keyof typeof en, string> = {
   'home.emptyLanguage': 'भाषा फ़िल्टर पर सभी आज़माएँ, पूरा Larimer चुनें, या 2-1-1 पर कॉल करें।',
   'home.emptyMarriage': 'शादी फ़िल्टर पर सभी आज़माएँ, पूरा Larimer चुनें, या क्लर्क को 970-498-7860 पर कॉल करें।',
   'home.emptyDivorce': 'तलाक फ़िल्टर पर सभी आज़माएँ, पूरा Larimer चुनें, या कोर्ट रिसोर्स सेंटर को 970-494-3581 पर कॉल करें।',
+  'home.emptyReligion': 'धर्म फ़िल्टर पर सभी आज़माएँ, पूरा Larimer चुनें, या 2-1-1 पर कॉल करें।',
   'home.tileA11y': '{label}, {n} संसाधन',
   'home.searchEmptyTitle': '"{query}" से कुछ नहीं मिला',
   'home.searchEmptyText': 'किराया, खाना, चाइल्ड केयर या डेंटल जैसी छोटी शब्द आज़माएँ। या 2-1-1 पर कॉल करें।',
@@ -65,8 +66,11 @@ export const hi: Record<keyof typeof en, string> = {
   'quick.callA11y': '{label} को कॉल करें, {sub}',
 
   'tool.trash': 'कचरा दिन',
-  'tool.trashSub': 'Highlander Heights शुक्रवार है',
-  'tool.trashA11y': 'कचरा दिन, Highlander Heights या दूसरा मोहल्ला चुनें',
+  'tool.trashSub': 'अपना मोहल्ला चुनें',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': 'कचरा दिन, अपना मोहल्ला चुनें',
+  'tool.trashA11ySaved': 'कचरा दिन, {place}',
   'tool.open': 'अभी खुला',
   'tool.openSub': 'खाना, शावर, बिस्तर',
   'tool.openA11y': 'अभी खुला, आज खाना शावर और बिस्तर खुले हैं',
@@ -88,7 +92,7 @@ export const hi: Record<keyof typeof en, string> = {
   'lang.menusMeta': 'ऐप मेनू',
   'lang.menusNote': 'बटन, टैब और चिप्स इस भाषा में। दफ्तर के नाम वैसे ही रहते हैं जैसे डेस्क ने लिखे।',
   'lang.honest':
-    'यह स्विच ऐप बदलता है, लिस्टिंग नहीं। हिन्दी भारतीय घरों के लिए है; तेलुगु, तमिल, गुजराती, पंजाबी और बाकी IRC या 2-1-1 से दुभाषिया माँग सकते हैं। वियतनामी, कोरियाई, चीनी और अरबी मेनू भी हैं। Colorado के बैलेट पर वियतनामी, कोरियाई और चीनी के लिए भाषा हॉटलाइन है।',
+    'यह स्विच ऐप बदलता है, लिस्टिंग नहीं। हिन्दी भारतीय घरों के लिए है; तेलुगु, तमिल, गुजराती, पंजाबी और बाकी IRC या 2-1-1 से दुभाषिया माँग सकते हैं। वियतनामी, कोरियाई, चीनी, अरबी और हिब्रू मेनू भी हैं। Colorado के बैलेट पर वियतनामी, कोरियाई और चीनी के लिए भाषा हॉटलाइन है।',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': 'ऐप मेनू के लिए {name} इस्तेमाल करें',
@@ -120,6 +124,13 @@ export const hi: Record<keyof typeof en, string> = {
   'chip.divorce.kids': 'बच्चे और सपोर्ट',
   'chip.divorce.safety': 'सुरक्षित निकलना',
   'chip.divorce.name': 'नाम बदलो',
+  'chip.religion.jewish': 'यहूदी',
+  'chip.religion.christian': 'ईसाई',
+  'chip.religion.muslim': 'मुस्लिम',
+  'chip.religion.hindu': 'हिन्दू',
+  'chip.religion.buddhist': 'बौद्ध',
+  'chip.religion.sikh': 'सिख',
+  'chip.religion.interfaith': 'अंतरधार्मिक',
   'chip.disability.med9': 'Med-9 और नकद',
   'chip.disability.glasses': 'चश्मा और नज़र',
   'chip.disability.deaf': 'बहरापन और फोन',
@@ -184,7 +195,11 @@ export const hi: Record<keyof typeof en, string> = {
   'cat.language.label': 'भाषा',
   'cat.language.short': 'भाषा',
   'cat.language.blurb':
-    'अंग्रेज़ी, स्पेनिश, हिन्दी, चीनी, वियतनामी, कोरियाई या अरबी बदलें, साथ में दुभाषिए और अंग्रेज़ी क्लास।',
+    'अंग्रेज़ी, स्पेनिश, हिन्दी, चीनी, वियतनामी, कोरियाई, अरबी या हिब्रू बदलें, साथ में दुभाषिए और अंग्रेज़ी क्लास।',
+  'cat.religion.label': 'आस्था और धर्म',
+  'cat.religion.short': 'धर्म',
+  'cat.religion.blurb':
+    'यहूदी, ईसाई, मुस्लिम, हिन्दू, बौद्ध, सिख और अंतरधार्मिक डेस्क। चर्च पेंट्री खाना और कपड़ों पर ही रहती हैं।',
   'cat.voting.label': 'वोटर',
   'cat.voting.short': 'वोटर',
   'cat.voting.blurb': 'रजिस्टर करें, मेल बैलेट, ड्रॉप बॉक्स, वोट सेंटर, और वोट जाने की सवारी।',
@@ -436,7 +451,7 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.noCurbsideSub':
     'गैर-निगमित Larimer कचरा दिन नहीं चुनता। खुद ले जाएँ या निजी कंपनी रखें।',
   'trash.hintPick':
-    'क्षेत्र सूची खोलें — Highlander Heights, Centerra, Old Town Wellington और बाकी शहर वहाँ हैं। या जो दिन आप जानते हैं वो चुनें।',
+    'क्षेत्र सूची खोलें — Fort Collins, Loveland, Estes Park, Berthoud, Wellington और गैर-निगमित Larimer वहाँ हैं। या जो दिन आप जानते हैं वो चुनें।',
   'trash.whatGoesOut': 'क्या निकलता है',
   'trash.cart': 'कचरा गाड़ी',
   'trash.recycling': 'रिसाइक्लिंग',
@@ -475,7 +490,7 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'Larimer County शहर की सीमा के बाहर किनारे पिकअप नहीं चलाता। South Taft Hill के लैंडफिल पर खुद ले जाएँ, या लाइसेंस वाला हॉलर रखें।',
   'trash.ledeFoco':
-    'शहर-कॉन्ट्रैक्ट घर Republic Services इस्तेमाल करते हैं। Fort Collins मोहल्ला चुनें — 2026 मैप पर Highlander Heights शुक्रवार है — या उसी सूची में Loveland, Estes Park, Berthoud, Wellington और गैर-निगमित Larimer देखें।',
+    'शहर-कॉन्ट्रैक्ट घर Republic Services इस्तेमाल करते हैं। सूची से Fort Collins मोहल्ला चुनें, या उसी सूची में Loveland, Estes Park, Berthoud, Wellington और गैर-निगमित Larimer देखें।',
   'trash.ledeLoveland':
     'Loveland अपना कचरा, रिसाइक्लिंग और यार्ड वेस्ट चलाता है। कचरा हर हफ़्ते। रिसाइक्लिंग उसी हफ़्ते के दिन हर दूसरे हफ़्ते। पक्का न हो तो Recollect के पास घर का दिन है।',
   'trash.ledeEstes':

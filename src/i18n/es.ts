@@ -56,6 +56,7 @@ export const es: Record<keyof typeof en, string> = {
   'home.emptyLanguage': 'Prueba Todas en los filtros de idioma, elige Todo Larimer, o llama al 2-1-1.',
   'home.emptyMarriage': 'Prueba Todas en matrimonio, elige Todo Larimer, o llama al secretario al 970-498-7860.',
   'home.emptyDivorce': 'Prueba Todas en divorcio, elige Todo Larimer, o llama al Centro de Recursos del Tribunal al 970-494-3581.',
+  'home.emptyReligion': 'Prueba Todas en fe, elige Todo Larimer, o llama al 2-1-1.',
   'home.tileA11y': '{label}, {n} recursos',
   'home.searchEmptyTitle': 'Nada coincidió con "{query}"',
   'home.searchEmptyText': 'Prueba una palabra más simple como renta, comida, guardería o dental. O llama al 2-1-1.',
@@ -65,8 +66,11 @@ export const es: Record<keyof typeof en, string> = {
   'quick.callA11y': 'Llamar a {label}, {sub}',
 
   'tool.trash': 'Día de basura',
-  'tool.trashSub': 'Highlander Heights es viernes',
-  'tool.trashA11y': 'Día de basura, elige Highlander Heights u otro vecindario',
+  'tool.trashSub': 'Elige tu vecindario',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': 'Día de basura, elige tu vecindario',
+  'tool.trashA11ySaved': 'Día de basura, {place}',
   'tool.open': 'Abierto ahora',
   'tool.openSub': 'Comidas, duchas, camas',
   'tool.openA11y': 'Abierto ahora, comidas duchas y camas abiertas hoy',
@@ -88,7 +92,7 @@ export const es: Record<keyof typeof en, string> = {
   'lang.menusMeta': 'Menús de la app',
   'lang.menusNote': 'Botones, pestañas y filtros en este idioma. Los nombres de las oficinas quedan como los escribió el escritorio.',
   'lang.honest':
-    'Este cambio es de la app, no de las fichas. El hindi está para las familias indias; telugu, tamil, gujarati, punjabi y otros pueden pedir intérprete en IRC o al 2-1-1. También hay menús en vietnamita, coreano, chino y árabe. Las boletas de Colorado usan la línea de idioma para vietnamita, coreano y chino.',
+    'Este cambio es de la app, no de las fichas. El hindi está para las familias indias; telugu, tamil, gujarati, punjabi y otros pueden pedir intérprete en IRC o al 2-1-1. También hay menús en vietnamita, coreano, chino, árabe y hebreo. Las boletas de Colorado usan la línea de idioma para vietnamita, coreano y chino.',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': 'Usar {name} para los menús de la app',
@@ -120,6 +124,13 @@ export const es: Record<keyof typeof en, string> = {
   'chip.divorce.kids': 'Hijos y pensión',
   'chip.divorce.safety': 'Salir con seguridad',
   'chip.divorce.name': 'Cambiar el nombre',
+  'chip.religion.jewish': 'Judío',
+  'chip.religion.christian': 'Cristiano',
+  'chip.religion.muslim': 'Musulmán',
+  'chip.religion.hindu': 'Hindú',
+  'chip.religion.buddhist': 'Budista',
+  'chip.religion.sikh': 'Sij',
+  'chip.religion.interfaith': 'Interreligioso',
   'chip.disability.med9': 'Med-9 y dinero',
   'chip.disability.glasses': 'Lentes y visión',
   'chip.disability.deaf': 'Sordera y teléfonos',
@@ -184,7 +195,11 @@ export const es: Record<keyof typeof en, string> = {
   'cat.language.label': 'Idioma',
   'cat.language.short': 'Idioma',
   'cat.language.blurb':
-    'Cambia inglés, español, hindi, chino, vietnamita, coreano o árabe, más intérpretes y clases de inglés.',
+    'Cambia inglés, español, hindi, chino, vietnamita, coreano, árabe o hebreo, más intérpretes y clases de inglés.',
+  'cat.religion.label': 'Fe y religión',
+  'cat.religion.short': 'Fe',
+  'cat.religion.blurb':
+    'Escritorios judíos, cristianos, musulmanes, hindúes, budistas, sij e interreligiosos. Las despensas de iglesias siguen en Comida y Ropa.',
   'cat.voting.label': 'Votantes',
   'cat.voting.short': 'Votantes',
   'cat.voting.blurb': 'Regístrate, boletas por correo, buzones, centros de votación y rides para ir a votar.',
@@ -436,7 +451,7 @@ export const es: Record<keyof typeof en, string> = {
   'trash.noCurbsideSub':
     'Larimer no incorporado no elige un día de basura. Llévala tú o contrata una empresa privada.',
   'trash.hintPick':
-    'Abre la lista de zonas — Highlander Heights, Centerra, Old Town Wellington y los otros pueblos están ahí. O elige el día que ya conoces.',
+    'Abre la lista de zonas — Fort Collins, Loveland, Estes Park, Berthoud, Wellington y Larimer no incorporado están ahí. O elige el día que ya conoces.',
   'trash.whatGoesOut': 'Qué sale',
   'trash.cart': 'Contenedor de basura',
   'trash.recycling': 'Reciclaje',
@@ -475,7 +490,7 @@ export const es: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'El condado de Larimer no recoge en la orilla fuera de los límites de la ciudad. Llévala al basurero en South Taft Hill, o contrata una empresa con licencia.',
   'trash.ledeFoco':
-    'Las casas con contrato de la ciudad usan Republic Services. Elige un vecindario de Fort Collins — Highlander Heights es viernes en el mapa de 2026 — o recorre la misma lista para Loveland, Estes Park, Berthoud, Wellington y Larimer no incorporado.',
+    'Las casas con contrato de la ciudad usan Republic Services. Elige un vecindario de Fort Collins en la lista, o recorre la misma lista para Loveland, Estes Park, Berthoud, Wellington y Larimer no incorporado.',
   'trash.ledeLoveland':
     'Loveland corre su propia basura, reciclaje y jardín. La basura es semanal. El reciclaje es cada dos semanas el mismo día. Recollect tiene el día de tu casa si no estás seguro.',
   'trash.ledeEstes':

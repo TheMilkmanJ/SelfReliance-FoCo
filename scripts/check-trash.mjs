@@ -86,12 +86,17 @@ function isPickupDay(regular, ymd) {
 
 function cartDayKind(todayDow, pickupDow) {
   if (pickupDow == null) return 'pick';
-  if (todayDow === pickupDow) return 'out-today';
+  if (Number(todayDow) === Number(pickupDow)) return 'out-today';
   return 'weekday';
 }
 
 function effectiveServiceDow(override, mapped) {
   return override ?? mapped ?? null;
+}
+
+function mappedServiceDow(mapped, overrideForThisRegion, leftoverTownDay) {
+  if (mapped != null) return overrideForThisRegion ?? mapped;
+  return leftoverTownDay ?? null;
 }
 
 function assert(cond, msg) {
@@ -140,6 +145,26 @@ assert(
 assert(actualPickupDow(5, { year: 2026, month: 9, date: 11, dow: 5 }) === 6, 'Labor week Friday → Saturday for the label');
 assert(effectiveServiceDow(null, 3) === 3, 'Taft/Drake mapped Wednesday when no chip override');
 assert(effectiveServiceDow(4, 3) === 4, 'weekday chip can override mapped day without dropping the location');
+assert(mappedServiceDow(1, null, 4) === 1, 'South of Harmony Monday wins over leftover Thursday from another FoCo area');
+assert(mappedServiceDow(1, 2, 4) === 2, 'this-visit chip tap on South of Harmony can override the map day');
+assert(mappedServiceDow(null, null, 4) === 4, 'towns without a map day still use the weekday chip');
+assert(mappedServiceDow(3, null, 4) === 3, 'Taft/Drake mapped Wednesday ignores leftover Thursday');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(mappedServiceDow(3, null, 4), thisThu)) === 'weekday',
+  'Taft Hill / west Drake on Thu Sep 17 is Wednesday pickup, not Out today',
+);
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(mappedServiceDow(1, null, 4), thisThu)) === 'weekday',
+  'South of Harmony on Thu Sep 17 is Monday pickup, not Out today from leftover Thursday',
+);
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(mappedServiceDow(5, 4, 4), thisThu)) === 'out-today',
+  'this-visit Thursday chip can still mark Out today, leftover storage must not',
+);
+assert(
+  cartDayKind(thisThu.dow, mappedServiceDow(null, null, null) == null ? null : 4) === 'pick',
+  'no neighborhood and no chip this visit is Pick a day, not Out today',
+);
 assert(
   cartDayKind(thisThu.dow, actualPickupDow(effectiveServiceDow(null, 3), thisThu)) === 'weekday',
   'Taft Hill / west Drake on Thu Sep 17 is Wednesday pickup, not Out today',
@@ -157,6 +182,16 @@ import { fileURLToPath } from 'node:url';
 
 const zoneFile = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/data/trashZones.json'), 'utf8'));
 const regions = zoneFile.regions;
+const zoneTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/data/trashZones.ts'), 'utf8');
+assert(!/Friday first so Highlander/.test(zoneTs), 'Fort Collins list is not Friday-first for Highlander Heights');
+assert(/ZONE_DOW_ORDER: ServiceDow\[\] = \[1, 2, 3, 4, 5\]/.test(zoneTs), 'weekdays are Monday–Friday, no pinned neighborhood');
+assert(regions[0].id !== 'highlander-heights', 'Highlander Heights is not the hardcoded first default');
+const firstFoco = regions.find((z) => z.town === 'Fort Collins');
+assert(firstFoco && firstFoco.dow === 1, 'Fort Collins neighborhoods list Monday first, not Friday first');
+const prefsTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/lib/trashPrefs.ts'), 'utf8');
+assert(!prefsTs.includes('highlander-heights'), 'remembered region helper does not default to Highlander Heights');
+const enCopy = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/i18n/en.ts'), 'utf8');
+assert(!enCopy.includes('Highlander'), 'menus do not name Highlander Heights as the default');
 const hh = regions.find((z) => z.id === 'highlander-heights');
 assert(hh && hh.dow === 5 && hh.town === 'Fort Collins', 'Highlander Heights is Friday on the 2026 map');
 assert(
@@ -175,7 +210,19 @@ assert(
   cartDayKind(thisThu.dow, actualPickupDow(taft.dow, thisThu)) === 'weekday',
   'Taft/Drake What goes out on Thursday says Wednesday pickup',
 );
-assert(regions.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
+assert(regions.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday on the 2026 map');
+const south = regions.find((z) => z.id === 'south-harmony');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(south.dow, thisThu)) === 'weekday',
+  'South of Harmony What goes out on Thursday is Monday pickup, not Out today',
+);
+assert(/Monday on the 2026 map/i.test(south.where), 'South of Harmony copy says Monday');
+const horsetooth = regions.find((z) => z.id === 'east-horsetooth');
+assert(horsetooth && horsetooth.dow === 2, 'East of College around Horsetooth is Tuesday (north of Harmony)');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(horsetooth.dow, thisThu)) === 'weekday',
+  'Horsetooth Tuesday zone on Thursday is Tuesday pickup, not Out today',
+);
 assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
 assert([1, 2, 3, 4, 5].every((d) => regions.some((z) => z.town === 'Fort Collins' && z.dow === d)), 'all weekdays have a FoCo zone');
 const towns = ['Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington', 'Unincorporated'];

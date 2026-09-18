@@ -56,6 +56,7 @@ export const ko: Record<keyof typeof en, string> = {
   'home.emptyLanguage': '언어 칩에서 전체를 보고, Larimer 전체를 고르거나 2-1-1에 전화하세요.',
   'home.emptyMarriage': '결혼 칩에서 전체를 보고, Larimer 전체를 고르거나 서기실 970-498-7860으로 전화하세요.',
   'home.emptyDivorce': '이혼 칩에서 전체를 보고, Larimer 전체를 고르거나 법원 자료실 970-494-3581로 전화하세요.',
+  'home.emptyReligion': '신앙 칩에서 전체를 보고, Larimer 전체를 고르거나 2-1-1로 전화하세요.',
   'home.tileA11y': '{label}, 자원 {n}개',
   'home.searchEmptyTitle': '“{query}”와 일치하는 항목 없음',
   'home.searchEmptyText': '집세, 음식, 돌봄, 치과처럼 짧은 단어를 써 보세요. 또는 2-1-1에 전화하세요.',
@@ -65,8 +66,11 @@ export const ko: Record<keyof typeof en, string> = {
   'quick.callA11y': '{label}에 전화, {sub}',
 
   'tool.trash': '쓰레기 수거일',
-  'tool.trashSub': 'Highlander Heights는 금요일',
-  'tool.trashA11y': '쓰레기 수거일, Highlander Heights 또는 다른 동네 선택',
+  'tool.trashSub': '동네를 고르세요',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': '쓰레기 수거일, 동네를 고르세요',
+  'tool.trashA11ySaved': '쓰레기 수거일, {place}',
   'tool.open': '지금 열림',
   'tool.openSub': '식사, 샤워, 잠자리',
   'tool.openA11y': '지금 열림, 오늘 식사 샤워 잠자리 개방',
@@ -88,7 +92,7 @@ export const ko: Record<keyof typeof en, string> = {
   'lang.menusMeta': '앱 메뉴',
   'lang.menusNote': '버튼, 탭, 칩이 이 언어입니다. 사무실 이름은 각 창구가 적은 그대로입니다.',
   'lang.honest':
-    '이 전환은 앱을 바꿉니다. 목록은 그대로입니다. 힌디어는 인도 가정을 위한 것이고, 텔루구, 타밀, 구자라트, 펀자브 등은 IRC나 2-1-1에 통역을 요청할 수 있습니다. 베트남어, 한국어, 중국어, 아랍어 메뉴도 있습니다. Colorado 투표용지 언어 핫라인은 베트남어, 한국어, 중국어입니다.',
+    '이 전환은 앱을 바꿉니다. 목록은 그대로입니다. 힌디어는 인도 가정을 위한 것이고, 텔루구, 타밀, 구자라트, 펀자브 등은 IRC나 2-1-1에 통역을 요청할 수 있습니다. 베트남어, 한국어, 중국어, 아랍어, 히브리어 메뉴도 있습니다. Colorado 투표용지 언어 핫라인은 베트남어, 한국어, 중국어입니다.',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': '앱 메뉴에 {name} 사용',
@@ -120,6 +124,13 @@ export const ko: Record<keyof typeof en, string> = {
   'chip.divorce.kids': '아이와 양육비',
   'chip.divorce.safety': '안전하게 나가기',
   'chip.divorce.name': '이름 바꾸기',
+  'chip.religion.jewish': '유대교',
+  'chip.religion.christian': '기독교',
+  'chip.religion.muslim': '이슬람',
+  'chip.religion.hindu': '힌두교',
+  'chip.religion.buddhist': '불교',
+  'chip.religion.sikh': '시크교',
+  'chip.religion.interfaith': '종교 간',
   'chip.disability.med9': 'Med-9 & 현금',
   'chip.disability.glasses': '안경 & 시력',
   'chip.disability.deaf': '청각 & 전화',
@@ -184,7 +195,11 @@ export const ko: Record<keyof typeof en, string> = {
   'cat.language.label': '언어',
   'cat.language.short': '언어',
   'cat.language.blurb':
-    '영어, 스페인어, 힌디어, 중국어, 베트남어, 한국어, 아랍어로 바꾸고, 통역과 영어 수업도 있습니다.',
+    '영어, 스페인어, 힌디어, 중국어, 베트남어, 한국어, 아랍어, 히브리어로 바꾸고, 통역과 영어 수업도 있습니다.',
+  'cat.religion.label': '신앙과 종교',
+  'cat.religion.short': '신앙',
+  'cat.religion.blurb':
+    '유대교, 기독교, 이슬람, 힌두교, 불교, 시크교, 종교 간 창구. 교회 식량과 옷은 음식·옷 칸에 그대로입니다.',
   'cat.voting.label': '유권자',
   'cat.voting.short': '유권자',
   'cat.voting.blurb': '등록, 우편 투표용지, 투표함, 투표소, 투표하러 가는 이동.',
@@ -435,7 +450,7 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.noCurbsideSub':
     '미편입 Larimer는 쓰레기 수거일을 고르지 않습니다. 직접 가져가거나 민간 업체를 고용하세요.',
   'trash.hintPick':
-    '구역 목록을 여세요 — Highlander Heights, Centerra, Old Town Wellington과 다른 마을이 있습니다. 또는 이미 아는 요일을 고르세요.',
+    '구역 목록을 여세요 — Fort Collins, Loveland, Estes Park, Berthoud, Wellington, 미편입 Larimer가 있습니다. 또는 이미 아는 요일을 고르세요.',
   'trash.whatGoesOut': '내놓을 것',
   'trash.cart': '쓰레기통',
   'trash.recycling': '재활용',
@@ -474,7 +489,7 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'Larimer County는 시 경계 밖 연석 수거를 하지 않습니다. South Taft Hill 매립장으로 직접 가져가거나, 허가받은 업체를 고용하세요.',
   'trash.ledeFoco':
-    '시 계약 주택은 Republic Services를 씁니다. Fort Collins 동네를 고르세요 — 2026 지도에서 Highlander Heights는 금요일 — 또는 같은 목록에서 Loveland, Estes Park, Berthoud, Wellington, 미편입 Larimer를 보세요.',
+    '시 계약 주택은 Republic Services를 씁니다. 목록에서 Fort Collins 동네를 고르세요. 또는 같은 목록에서 Loveland, Estes Park, Berthoud, Wellington, 미편입 Larimer를 보세요.',
   'trash.ledeLoveland':
     'Loveland는 쓰레기, 재활용, 정원 쓰레기를 직접 운영합니다. 쓰레기는 매주. 재활용은 같은 요일 격주. 확실하지 않으면 Recollect에 집별 요일이 있습니다.',
   'trash.ledeEstes':

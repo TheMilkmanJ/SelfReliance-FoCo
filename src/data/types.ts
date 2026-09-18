@@ -24,13 +24,16 @@ export type CategoryId =
   | 'disaster'
   | 'identification'
   | 'language'
+  | 'religion'
   | 'pets'
   | 'lgbtq'
   | 'weather'
   | 'reentry'
   | 'household'
   | 'pregnancy'
-  | 'voting';
+  | 'voting'
+  | 'marriage'
+  | 'divorce';
 
 export type Area =
   | 'Fort Collins'

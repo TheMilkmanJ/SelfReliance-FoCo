@@ -56,6 +56,7 @@ export const ar: Record<keyof typeof en, string> = {
   'home.emptyLanguage': 'جرّب الكل في فلاتر اللغة، اختر كل Larimer، أو اتصل بـ 2-1-1.',
   'home.emptyMarriage': 'جرّب الكل في فلاتر الزواج، اختر كل Larimer، أو اتصل بالكاتب على 970-498-7860.',
   'home.emptyDivorce': 'جرّب الكل في فلاتر الطلاق، اختر كل Larimer، أو اتصل بمركز موارد المحكمة على 970-494-3581.',
+  'home.emptyReligion': 'جرّب الكل في فلاتر الإيمان، اختر كل Larimer، أو اتصل بـ 2-1-1.',
   'home.tileA11y': '{label}، {n} موارد',
   'home.searchEmptyTitle': 'لا شيء يطابق "{query}"',
   'home.searchEmptyText': 'جرّب كلمة أبسط مثل الإيجار أو الطعام أو رعاية الأطفال أو الأسنان. أو اتصل بـ 2-1-1.',
@@ -65,8 +66,11 @@ export const ar: Record<keyof typeof en, string> = {
   'quick.callA11y': 'اتصل بـ {label}، {sub}',
 
   'tool.trash': 'يوم القمامة',
-  'tool.trashSub': 'Highlander Heights يوم الجمعة',
-  'tool.trashA11y': 'يوم القمامة، اختر Highlander Heights أو حياً آخر',
+  'tool.trashSub': 'اختر حيك',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': 'يوم القمامة، اختر حيك',
+  'tool.trashA11ySaved': 'يوم القمامة، {place}',
   'tool.open': 'مفتوح الآن',
   'tool.openSub': 'وجبات، دش، أسرّة',
   'tool.openA11y': 'مفتوح الآن، وجبات ودش وأسرّة مفتوحة اليوم',
@@ -88,7 +92,7 @@ export const ar: Record<keyof typeof en, string> = {
   'lang.menusMeta': 'قوائم التطبيق',
   'lang.menusNote': 'الأزرار والتبويبات والفلاتر بهذه اللغة. أسماء المكاتب تبقى كما كتبها كل مكتب.',
   'lang.honest':
-    'هذا التبديل يغيّر التطبيق لا القوائم. الهندية هنا للأسر الهندية؛ التيلوغو والتاميلية والغوجاراتية والبنجابية وغيرها يمكنهم طلب مترجم من IRC أو 2-1-1. توجد أيضاً قوائم فيتنامية وكورية وصينية وعربية. أوراق اقتراع Colorado تستخدم خط اللغة للفيتنامية والكورية والصينية.',
+    'هذا التبديل يغيّر التطبيق لا القوائم. الهندية هنا للأسر الهندية؛ التيلوغو والتاميلية والغوجاراتية والبنجابية وغيرها يمكنهم طلب مترجم من IRC أو 2-1-1. توجد أيضاً قوائم فيتنامية وكورية وصينية وعربية وعبرية. أوراق اقتراع Colorado تستخدم خط اللغة للفيتنامية والكورية والصينية.',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': 'استخدم {name} لقوائم التطبيق',
@@ -120,6 +124,13 @@ export const ar: Record<keyof typeof en, string> = {
   'chip.divorce.kids': 'الأطفال والنفقة',
   'chip.divorce.safety': 'المغادرة بأمان',
   'chip.divorce.name': 'تغيير الاسم',
+  'chip.religion.jewish': 'يهودي',
+  'chip.religion.christian': 'مسيحي',
+  'chip.religion.muslim': 'مسلم',
+  'chip.religion.hindu': 'هندوسي',
+  'chip.religion.buddhist': 'بوذي',
+  'chip.religion.sikh': 'سيخي',
+  'chip.religion.interfaith': 'مشترك الأديان',
   'chip.disability.med9': 'Med-9 ونقد',
   'chip.disability.glasses': 'نظارات وبصر',
   'chip.disability.deaf': 'صمم وهواتف',
@@ -184,7 +195,11 @@ export const ar: Record<keyof typeof en, string> = {
   'cat.language.label': 'لغة',
   'cat.language.short': 'لغة',
   'cat.language.blurb':
-    'بدّل الإنجليزية أو الإسبانية أو الهندية أو الصينية أو الفيتنامية أو الكورية أو العربية، مع مترجمين ودروس إنجليزية.',
+    'بدّل الإنجليزية أو الإسبانية أو الهندية أو الصينية أو الفيتنامية أو الكورية أو العربية أو العبرية، مع مترجمين ودروس إنجليزية.',
+  'cat.religion.label': 'الإيمان والدين',
+  'cat.religion.short': 'الإيمان',
+  'cat.religion.blurb':
+    'مكاتب يهودية ومسيحية وإسلامية وهندوسية وبوذية وسيخية ومشتركة. مخازن الكنائس تبقى في الطعام والملابس.',
   'cat.voting.label': 'ناخبون',
   'cat.voting.short': 'ناخبون',
   'cat.voting.blurb': 'سجّل، بطاقات بريدية، صناديق، مراكز تصويت، وتوصيل للتصويت.',
@@ -435,7 +450,7 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.noCurbsideSub':
     'Larimer غير المدمجة لا تختار يوم قمامة. انقلها بنفسك أو استأجر شركة خاصة.',
   'trash.hintPick':
-    'افتح قائمة المناطق — Highlander Heights و Centerra و Old Town Wellington والبلدات الأخرى هناك. أو اختر يوم الأسبوع الذي تعرفه.',
+    'افتح قائمة المناطق — Fort Collins و Loveland و Estes Park و Berthoud و Wellington و Larimer غير المدمجة هناك. أو اختر يوم الأسبوع الذي تعرفه.',
   'trash.whatGoesOut': 'ماذا يخرج',
   'trash.cart': 'حاوية القمامة',
   'trash.recycling': 'إعادة التدوير',
@@ -474,7 +489,7 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'مقاطعة Larimer لا تشغّل جمع الرصيف خارج حدود المدينة. انقلها بنفسك إلى المكب في South Taft Hill، أو استأجر شركة مرخَّصة.',
   'trash.ledeFoco':
-    'المنازل بعقد المدينة تستخدم Republic Services. اختر حياً في Fort Collins — Highlander Heights جمعة على خريطة 2026 — أو مرّر القائمة نفسها لـ Loveland و Estes Park و Berthoud و Wellington و Larimer غير المدمجة.',
+    'المنازل بعقد المدينة تستخدم Republic Services. اختر حياً في Fort Collins من القائمة، أو مرّر القائمة نفسها لـ Loveland و Estes Park و Berthoud و Wellington و Larimer غير المدمجة.',
   'trash.ledeLoveland':
     'Loveland تشغّل قمامتها وتدويرها ومخلفات حديقتها. القمامة أسبوعية. التدوير كل أسبوعين في نفس يوم الأسبوع. Recollect لديه يوم المنزل إن لم تكن متأكداً.',
   'trash.ledeEstes':

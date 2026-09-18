@@ -49,8 +49,8 @@ export const TRASH_REGIONS: TrashRegion[] = (raw.regions as TrashRegion[]).map((
 
 export const FOCO_TRASH_ZONES: TrashRegion[] = TRASH_REGIONS.filter((z) => z.town === 'Fort Collins');
 
-/** Friday first so Highlander Heights sits at the top of Fort Collins. */
-export const ZONE_DOW_ORDER: ServiceDow[] = [5, 4, 3, 2, 1];
+/** Calendar order. No neighborhood is pinned to the top. */
+export const ZONE_DOW_ORDER: ServiceDow[] = [1, 2, 3, 4, 5];
 
 /** Older builds stored this generic Friday blob separately from Highlander Heights. */
 const REGION_ALIASES: Record<string, string> = {

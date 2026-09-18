@@ -1,12 +1,13 @@
 import { ar } from './ar';
 import { en } from './en';
 import { es } from './es';
+import { he } from './he';
 import { hi } from './hi';
 import { ko } from './ko';
 import { vi } from './vi';
 import { zh } from './zh';
 
-export type AppLanguage = 'en' | 'es' | 'hi' | 'zh' | 'vi' | 'ko' | 'ar';
+export type AppLanguage = 'en' | 'es' | 'hi' | 'zh' | 'vi' | 'ko' | 'ar' | 'he';
 export type MessageKey = keyof typeof en;
 export type Vars = Record<string, string | number>;
 export type Translate = (key: MessageKey, vars?: Vars) => string;
@@ -27,6 +28,7 @@ export const APP_LANGUAGES: LanguageOption[] = [
   { id: 'vi', code: 'VI', nativeName: 'Tiếng Việt', englishName: 'Vietnamese' },
   { id: 'ko', code: 'KO', nativeName: '한국어', englishName: 'Korean' },
   { id: 'ar', code: 'AR', nativeName: 'العربية', englishName: 'Arabic' },
+  { id: 'he', code: 'HE', nativeName: 'עברית', englishName: 'Hebrew' },
 ];
 
 export const STRINGS: Record<AppLanguage, Record<MessageKey, string>> = {
@@ -37,6 +39,7 @@ export const STRINGS: Record<AppLanguage, Record<MessageKey, string>> = {
   vi,
   ko,
   ar,
+  he,
 };
 
 export const LANGUAGE_STORAGE_KEY = 'foco-language';
@@ -72,6 +75,7 @@ export function deviceLanguage(): AppLanguage {
     if (locale.startsWith('vi')) return 'vi';
     if (locale.startsWith('ko')) return 'ko';
     if (locale.startsWith('ar')) return 'ar';
+    if (locale.startsWith('he') || locale.startsWith('iw')) return 'he';
     if (INDIAN_LOCALE_PREFIXES.some((p) => locale === p || locale.startsWith(`${p}-`))) return 'hi';
     return 'en';
   } catch {

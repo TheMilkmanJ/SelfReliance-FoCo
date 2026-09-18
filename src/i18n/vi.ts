@@ -56,6 +56,7 @@ export const vi: Record<keyof typeof en, string> = {
   'home.emptyLanguage': 'Thử Tất cả trên bộ lọc ngôn ngữ, chọn Toàn Larimer, hoặc gọi 2-1-1.',
   'home.emptyMarriage': 'Thử Tất cả trên bộ lọc kết hôn, chọn Toàn Larimer, hoặc gọi thư ký 970-498-7860.',
   'home.emptyDivorce': 'Thử Tất cả trên bộ lọc ly hôn, chọn Toàn Larimer, hoặc gọi Trung tâm Tài nguyên Tòa án 970-494-3581.',
+  'home.emptyReligion': 'Thử Tất cả trên bộ lọc tôn giáo, chọn Toàn Larimer, hoặc gọi 2-1-1.',
   'home.tileA11y': '{label}, {n} tài nguyên',
   'home.searchEmptyTitle': 'Không khớp “{query}”',
   'home.searchEmptyText': 'Thử từ đơn giản hơn như tiền thuê, thức ăn, giữ trẻ hoặc nha khoa. Hoặc gọi 2-1-1.',
@@ -65,8 +66,11 @@ export const vi: Record<keyof typeof en, string> = {
   'quick.callA11y': 'Gọi {label}, {sub}',
 
   'tool.trash': 'Ngày rác',
-  'tool.trashSub': 'Highlander Heights là thứ Sáu',
-  'tool.trashA11y': 'Ngày rác, chọn Highlander Heights hoặc khu khác',
+  'tool.trashSub': 'Chọn khu của bạn',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': 'Ngày rác, chọn khu của bạn',
+  'tool.trashA11ySaved': 'Ngày rác, {place}',
   'tool.open': 'Đang mở',
   'tool.openSub': 'Bữa ăn, tắm, giường',
   'tool.openA11y': 'Đang mở, bữa ăn tắm và giường mở hôm nay',
@@ -88,7 +92,7 @@ export const vi: Record<keyof typeof en, string> = {
   'lang.menusMeta': 'Menu ứng dụng',
   'lang.menusNote': 'Nút, tab và chip bằng ngôn ngữ này. Tên văn phòng giữ nguyên như bàn đó viết.',
   'lang.honest':
-    'Công tắc này đổi ứng dụng, không đổi danh sách. Tiếng Hindi dành cho hộ gia đình Ấn Độ; Telugu, Tamil, Gujarati, Punjabi và khác có thể xin thông dịch viên ở IRC hoặc 2-1-1. Cũng có menu tiếng Việt, Hàn, Trung và Ả Rập. Phiếu bầu Colorado dùng đường dây ngôn ngữ cho tiếng Việt, Hàn và Trung.',
+    'Công tắc này đổi ứng dụng, không đổi danh sách. Tiếng Hindi dành cho hộ gia đình Ấn Độ; Telugu, Tamil, Gujarati, Punjabi và khác có thể xin thông dịch viên ở IRC hoặc 2-1-1. Cũng có menu tiếng Việt, Hàn, Trung, Ả Rập và Hebrew. Phiếu bầu Colorado dùng đường dây ngôn ngữ cho tiếng Việt, Hàn và Trung.',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': 'Dùng {name} cho menu ứng dụng',
@@ -120,6 +124,13 @@ export const vi: Record<keyof typeof en, string> = {
   'chip.divorce.kids': 'Con & cấp dưỡng',
   'chip.divorce.safety': 'Rời an toàn',
   'chip.divorce.name': 'Đổi tên',
+  'chip.religion.jewish': 'Do Thái',
+  'chip.religion.christian': 'Kitô giáo',
+  'chip.religion.muslim': 'Hồi giáo',
+  'chip.religion.hindu': 'Hindu',
+  'chip.religion.buddhist': 'Phật giáo',
+  'chip.religion.sikh': 'Sikh',
+  'chip.religion.interfaith': 'Liên tôn',
   'chip.disability.med9': 'Med-9 & tiền mặt',
   'chip.disability.glasses': 'Kính & thị lực',
   'chip.disability.deaf': 'Điếc & điện thoại',
@@ -184,7 +195,11 @@ export const vi: Record<keyof typeof en, string> = {
   'cat.language.label': 'Ngôn ngữ',
   'cat.language.short': 'Ngôn ngữ',
   'cat.language.blurb':
-    'Chuyển tiếng Anh, Tây Ban Nha, Hindi, Trung, Việt, Hàn hoặc Ả Rập, cộng thông dịch và lớp tiếng Anh.',
+    'Chuyển tiếng Anh, Tây Ban Nha, Hindi, Trung, Việt, Hàn, Ả Rập hoặc Hebrew, cộng thông dịch và lớp tiếng Anh.',
+  'cat.religion.label': 'Tôn giáo',
+  'cat.religion.short': 'Tôn giáo',
+  'cat.religion.blurb':
+    'Bàn Do Thái, Kitô, Hồi giáo, Hindu, Phật giáo, Sikh và liên tôn. Tủ thức ăn nhà thờ vẫn ở Thực phẩm và Quần áo.',
   'cat.voting.label': 'Cử tri',
   'cat.voting.short': 'Cử tri',
   'cat.voting.blurb': 'Đăng ký, phiếu gửi thư, hòm phiếu, trung tâm bỏ phiếu, và đưa đón đi bỏ phiếu.',
@@ -435,7 +450,7 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.noCurbsideSub':
     'Larimer chưa thành lập không chọn ngày rác. Tự chở hoặc thuê công ty tư nhân.',
   'trash.hintPick':
-    'Mở danh sách khu — Highlander Heights, Centerra, Old Town Wellington và các thị trấn khác ở đó. Hoặc chọn thứ bạn đã biết.',
+    'Mở danh sách khu — Fort Collins, Loveland, Estes Park, Berthoud, Wellington và Larimer chưa thành lập ở đó. Hoặc chọn thứ bạn đã biết.',
   'trash.whatGoesOut': 'Mang ra gì',
   'trash.cart': 'Thùng rác',
   'trash.recycling': 'Tái chế',
@@ -474,7 +489,7 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'Larimer County không thu lề đường ngoài giới hạn thành phố. Tự chở đến bãi rác South Taft Hill, hoặc thuê công ty có giấy phép.',
   'trash.ledeFoco':
-    'Nhà theo hợp đồng thành phố dùng Republic Services. Chọn khu Fort Collins — Highlander Heights là thứ Sáu trên bản đồ 2026 — hoặc kéo cùng danh sách cho Loveland, Estes Park, Berthoud, Wellington và Larimer chưa thành lập.',
+    'Nhà theo hợp đồng thành phố dùng Republic Services. Chọn khu Fort Collins trong danh sách, hoặc kéo cùng danh sách cho Loveland, Estes Park, Berthoud, Wellington và Larimer chưa thành lập.',
   'trash.ledeLoveland':
     'Loveland tự chạy rác, tái chế và rác sân. Rác hàng tuần. Tái chế cách tuần cùng thứ. Recollect có ngày theo nhà nếu bạn không chắc.',
   'trash.ledeEstes':

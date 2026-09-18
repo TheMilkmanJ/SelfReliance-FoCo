@@ -56,6 +56,7 @@ export const zh: Record<keyof typeof en, string> = {
   'home.emptyLanguage': '试试语言筛选里的全部，选整个 Larimer，或打 2-1-1。',
   'home.emptyMarriage': '试试婚姻筛选里的全部，选整个 Larimer，或打书记官 970-498-7860。',
   'home.emptyDivorce': '试试离婚筛选里的全部，选整个 Larimer，或打法院资源中心 970-494-3581。',
+  'home.emptyReligion': '试试信仰筛选里的全部，选整个 Larimer，或打 2-1-1。',
   'home.tileA11y': '{label}，{n} 项资源',
   'home.searchEmptyTitle': '没有匹配“{query}”',
   'home.searchEmptyText': '试试更简单的词，比如房租、食物、托儿或牙医。或打 2-1-1。',
@@ -65,8 +66,11 @@ export const zh: Record<keyof typeof en, string> = {
   'quick.callA11y': '拨打 {label}，{sub}',
 
   'tool.trash': '垃圾日',
-  'tool.trashSub': 'Highlander Heights 是星期五',
-  'tool.trashA11y': '垃圾日，选 Highlander Heights 或其他街区',
+  'tool.trashSub': '选择你的街区',
+  'tool.trashSubSaved': '{place} · {day}',
+  'tool.trashSubPlace': '{place}',
+  'tool.trashA11y': '垃圾日，选择你的街区',
+  'tool.trashA11ySaved': '垃圾日，{place}',
   'tool.open': '现在营业',
   'tool.openSub': '餐食、淋浴、床位',
   'tool.openA11y': '现在营业，今天开放餐食、淋浴和床位',
@@ -88,7 +92,7 @@ export const zh: Record<keyof typeof en, string> = {
   'lang.menusMeta': '应用菜单',
   'lang.menusNote': '按钮、标签和筛选为这种语言。机构名称保持各柜台原来的写法。',
   'lang.honest':
-    '这个开关改的是应用，不是条目。印地语面向印度家庭；泰卢固语、泰米尔语、古吉拉特语、旁遮普语等可向 IRC 或 2-1-1 要口译。也有越南语、韩语、中文和阿拉伯语菜单。Colorado 选票的语言热线支持越南语、韩语和中文。',
+    '这个开关改的是应用，不是条目。印地语面向印度家庭；泰卢固语、泰米尔语、古吉拉特语、旁遮普语等可向 IRC 或 2-1-1 要口译。也有越南语、韩语、中文、阿拉伯语和希伯来语菜单。Colorado 选票的语言热线支持越南语、韩语和中文。',
   'lang.a11yEn': 'Use English for app menus',
   'lang.a11yEs': 'Usar español para los menús de la app',
   'lang.a11yUse': '使用{name}作为应用菜单',
@@ -120,6 +124,13 @@ export const zh: Record<keyof typeof en, string> = {
   'chip.divorce.kids': '孩子与抚养',
   'chip.divorce.safety': '安全离开',
   'chip.divorce.name': '改名',
+  'chip.religion.jewish': '犹太教',
+  'chip.religion.christian': '基督教',
+  'chip.religion.muslim': '伊斯兰教',
+  'chip.religion.hindu': '印度教',
+  'chip.religion.buddhist': '佛教',
+  'chip.religion.sikh': '锡克教',
+  'chip.religion.interfaith': '跨信仰',
   'chip.disability.med9': 'Med-9 和现金',
   'chip.disability.glasses': '眼镜和视力',
   'chip.disability.deaf': '听障和电话',
@@ -184,7 +195,11 @@ export const zh: Record<keyof typeof en, string> = {
   'cat.language.label': '语言',
   'cat.language.short': '语言',
   'cat.language.blurb':
-    '切换英语、西班牙语、印地语、中文、越南语、韩语或阿拉伯语，另有口译和英语课。',
+    '切换英语、西班牙语、印地语、中文、越南语、韩语、阿拉伯语或希伯来语，另有口译和英语课。',
+  'cat.religion.label': '信仰与宗教',
+  'cat.religion.short': '信仰',
+  'cat.religion.blurb':
+    '犹太教、基督教、伊斯兰教、印度教、佛教、锡克教和跨信仰服务台。教堂食物和衣物仍在食品与衣物分类。',
   'cat.voting.label': '选民',
   'cat.voting.short': '选民',
   'cat.voting.blurb': '登记、邮寄选票、投票箱、投票中心，以及去投票的乘车。',
@@ -432,7 +447,7 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.noCurbside': '没有县路边收运线路',
   'trash.noCurbsideSub': '未建制 Larimer 不选定垃圾日。自己拉走，或雇私营公司。',
   'trash.hintPick':
-    '打开区域列表 — Highlander Heights、Centerra、Old Town Wellington 和其他城镇都在里面。或选你已经知道的星期几。',
+    '打开区域列表 — Fort Collins、Loveland、Estes Park、Berthoud、Wellington 和未建制 Larimer 都在里面。或选你已经知道的星期几。',
   'trash.whatGoesOut': '拿出什么',
   'trash.cart': '垃圾桶',
   'trash.recycling': '回收',
@@ -471,7 +486,7 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.ledeLandfill':
     'Larimer County 在城市界限外不提供路边收运。自己拉到 South Taft Hill 填埋场，或雇有执照的收运公司。',
   'trash.ledeFoco':
-    '市政合同住户使用 Republic Services。选一个 Fort Collins 街区 — 2026 地图上 Highlander Heights 是星期五 — 或在同一列表里看 Loveland、Estes Park、Berthoud、Wellington 和未建制 Larimer。',
+    '市政合同住户使用 Republic Services。从列表里选一个 Fort Collins 街区，或在同一列表里看 Loveland、Estes Park、Berthoud、Wellington 和未建制 Larimer。',
   'trash.ledeLoveland':
     'Loveland 自己负责垃圾、回收和庭院废物。垃圾每周一次。回收隔周，同一星期几。不确定就查 Recollect 的门牌日。',
   'trash.ledeEstes':

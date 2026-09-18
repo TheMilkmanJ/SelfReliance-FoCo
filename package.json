@@ -31,6 +31,8 @@
     "check:give": "node scripts/check-give.mjs",
     "check:ehs": "node scripts/check-ehs.mjs",
     "check:language": "node scripts/check-language.mjs",
+    "check:marriage": "node scripts/check-marriage.mjs",
+    "check:religion": "node scripts/check-religion.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
     "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease"
   },

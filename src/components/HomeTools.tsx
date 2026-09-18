@@ -1,27 +1,36 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { useI18n } from '../i18n';
+import { regionById } from '../data/trashZones';
+import { dowKey, useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 type Props = {
+  trashRegionId: string | null;
   onTrash: () => void;
   onOpenNow: () => void;
   onGiveNeed: () => void;
   onOfflineMaps: () => void;
 };
 
-export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Props) {
+export function HomeTools({ trashRegionId, onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Props) {
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
+  const saved = regionById(trashRegionId);
+  const trashSub = saved
+    ? saved.dow
+      ? t('tool.trashSubSaved', { place: saved.label, day: t(dowKey(saved.dow)) })
+      : t('tool.trashSubPlace', { place: saved.label })
+    : t('tool.trashSub');
+  const trashA11y = saved ? t('tool.trashA11ySaved', { place: saved.label }) : t('tool.trashA11y');
   return (
     <View style={styles.row}>
       <Pressable
         onPress={onTrash}
         style={({ pressed }) => [styles.btn, { backgroundColor: colors.card }, cardShadow(isDark), pressed && { opacity: 0.88 }]}
         accessibilityRole="button"
-        accessibilityLabel={t('tool.trashA11y')}
+        accessibilityLabel={trashA11y}
       >
         <View style={[styles.icon, { backgroundColor: isDark ? '#3d342c' : '#efe6d6' }]}>
           <Ionicons name="trash-outline" size={26} color={isDark ? '#e0c3a8' : '#6d4c41'} />
@@ -30,7 +39,7 @@ export function HomeTools({ onTrash, onOpenNow, onGiveNeed, onOfflineMaps }: Pro
           {t('tool.trash')}
         </Text>
         <Text style={[styles.sub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-          {t('tool.trashSub')}
+          {trashSub}
         </Text>
       </Pressable>
       <Pressable

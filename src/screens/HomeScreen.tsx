@@ -13,28 +13,43 @@ import { ResourceCard } from '../components/ResourceCard';
 import { SearchBar } from '../components/SearchBar';
 import { CATEGORIES } from '../data/categories';
 import {
+  DIVORCE_CHIPS,
   LANGUAGE_CHIPS,
+  MARRIAGE_CHIPS,
   PREGNANCY_CHIPS,
+  RELIGION_CHIPS,
   RESOURCES,
   VOTING_CHIPS,
   countByCategory,
   filterByArea,
   isChildcareResource,
+  isDivorceResource,
   isLanguageResource,
+  isMarriageResource,
   isPregnancyResource,
+  isReligionResource,
   isVotingResource,
+  matchesDivorceChip,
   matchesLanguageChip,
+  matchesMarriageChip,
   matchesPregnancyChip,
+  matchesReligionChip,
   matchesVotingChip,
   searchResources,
   sortChildcareResources,
+  sortDivorceResources,
   sortFamilyResources,
   sortLanguageResources,
+  sortMarriageResources,
   sortPregnancyResources,
+  sortReligionResources,
   sortVotingResources,
   type AreaFilter as AreaFilterId,
+  type DivorceChipId,
   type LanguageChipId,
+  type MarriageChipId,
   type PregnancyChipId,
+  type ReligionChipId,
   type VotingChipId,
 } from '../data/resources';
 import type { Category, CategoryId, Resource } from '../data/types';
@@ -46,6 +61,7 @@ type Props = {
   onSelect: (r: Resource) => void;
   area: AreaFilterId;
   onAreaChange: (area: AreaFilterId) => void;
+  trashRegionId: string | null;
   onTrashDay: () => void;
   onOpenNow: () => void;
   onGiveNeed: () => void;
@@ -56,6 +72,7 @@ export function HomeScreen({
   onSelect,
   area,
   onAreaChange,
+  trashRegionId,
   onTrashDay,
   onOpenNow,
   onGiveNeed,
@@ -69,6 +86,9 @@ export function HomeScreen({
   const [pregnancyFilter, setPregnancyFilter] = useState<PregnancyChipId>('all');
   const [votingFilter, setVotingFilter] = useState<VotingChipId>('all');
   const [languageFilter, setLanguageFilter] = useState<LanguageChipId>('all');
+  const [marriageFilter, setMarriageFilter] = useState<MarriageChipId>('all');
+  const [divorceFilter, setDivorceFilter] = useState<DivorceChipId>('all');
+  const [religionFilter, setReligionFilter] = useState<ReligionChipId>('all');
 
   const searching = query.trim().length > 0;
   const inArea = useMemo(() => filterByArea(RESOURCES, area), [area]);
@@ -77,6 +97,9 @@ export function HomeScreen({
     next.pregnancy = inArea.filter(isPregnancyResource).length;
     next.voting = inArea.filter(isVotingResource).length;
     next.language = inArea.filter(isLanguageResource).length;
+    next.marriage = inArea.filter(isMarriageResource).length;
+    next.divorce = inArea.filter(isDivorceResource).length;
+    next.religion = inArea.filter(isReligionResource).length;
     next.childcare = inArea.filter(isChildcareResource).length;
     return next;
   }, [inArea]);
@@ -104,6 +127,27 @@ export function HomeScreen({
       }
       return sortLanguageResources(list);
     }
+    if (openCat === 'marriage') {
+      let list = inArea.filter(isMarriageResource);
+      if (marriageFilter !== 'all') {
+        list = list.filter((r) => matchesMarriageChip(r, marriageFilter));
+      }
+      return sortMarriageResources(list);
+    }
+    if (openCat === 'divorce') {
+      let list = inArea.filter(isDivorceResource);
+      if (divorceFilter !== 'all') {
+        list = list.filter((r) => matchesDivorceChip(r, divorceFilter));
+      }
+      return sortDivorceResources(list);
+    }
+    if (openCat === 'religion') {
+      let list = inArea.filter(isReligionResource);
+      if (religionFilter !== 'all') {
+        list = list.filter((r) => matchesReligionChip(r, religionFilter));
+      }
+      return sortReligionResources(list);
+    }
     if (openCat === 'family_children') {
       return sortFamilyResources(inArea.filter((r) => r.category === 'family_children'));
     }
@@ -111,7 +155,7 @@ export function HomeScreen({
       return sortChildcareResources(inArea.filter(isChildcareResource));
     }
     return inArea.filter((r) => r.category === openCat);
-  }, [openCat, inArea, pregnancyFilter, votingFilter, languageFilter]);
+  }, [openCat, inArea, pregnancyFilter, votingFilter, languageFilter, marriageFilter, divorceFilter, religionFilter]);
 
   const inAreaNote = area === 'All' ? '' : t('home.inArea', { area: areaLabel(area, t) });
 
@@ -123,7 +167,13 @@ export function HomeScreen({
           ? t('home.emptyVoting')
           : openCat === 'language'
             ? t('home.emptyLanguage')
-            : t('home.emptyText');
+            : openCat === 'marriage'
+              ? t('home.emptyMarriage')
+              : openCat === 'divorce'
+                ? t('home.emptyDivorce')
+                : openCat === 'religion'
+                  ? t('home.emptyReligion')
+                  : t('home.emptyText');
     return (
       <View style={[styles.screen, { backgroundColor: colors.bg }]}>
         <Header title={t(catKey(openCat, 'label'))} subtitle={t(catKey(openCat, 'blurb'))} />
@@ -139,6 +189,9 @@ export function HomeScreen({
                   setPregnancyFilter('all');
                   setVotingFilter('all');
                   setLanguageFilter('all');
+                  setMarriageFilter('all');
+                  setDivorceFilter('all');
+                  setReligionFilter('all');
                   setOpenCat(null);
                 }}
                 style={styles.back}
@@ -188,6 +241,45 @@ export function HomeScreen({
                   ))}
                 </ChipRow>
               ) : null}
+              {openCat === 'marriage' ? (
+                <ChipRow>
+                  {MARRIAGE_CHIPS.map((chip) => (
+                    <Chip
+                      key={chip.id}
+                      label={chip.id === 'all' ? t('chip.all') : t(`chip.marriage.${chip.id}` as MessageKey)}
+                      icon={chip.id === 'all' ? undefined : chip.icon}
+                      active={marriageFilter === chip.id}
+                      onPress={() => setMarriageFilter(chip.id)}
+                    />
+                  ))}
+                </ChipRow>
+              ) : null}
+              {openCat === 'divorce' ? (
+                <ChipRow>
+                  {DIVORCE_CHIPS.map((chip) => (
+                    <Chip
+                      key={chip.id}
+                      label={chip.id === 'all' ? t('chip.all') : t(`chip.divorce.${chip.id}` as MessageKey)}
+                      icon={chip.id === 'all' ? undefined : chip.icon}
+                      active={divorceFilter === chip.id}
+                      onPress={() => setDivorceFilter(chip.id)}
+                    />
+                  ))}
+                </ChipRow>
+              ) : null}
+              {openCat === 'religion' ? (
+                <ChipRow>
+                  {RELIGION_CHIPS.map((chip) => (
+                    <Chip
+                      key={chip.id}
+                      label={chip.id === 'all' ? t('chip.all') : t(`chip.religion.${chip.id}` as MessageKey)}
+                      icon={chip.id === 'all' ? undefined : chip.icon}
+                      active={religionFilter === chip.id}
+                      onPress={() => setReligionFilter(chip.id)}
+                    />
+                  ))}
+                </ChipRow>
+              ) : null}
               <AreaFilter value={area} onChange={onAreaChange} />
               <Text style={[styles.count, { color: colors.muted, paddingTop: spacing.md }]}>
                 {t(catResources.length === 1 ? 'home.countOne' : 'home.countMany', { n: catResources.length })}
@@ -229,6 +321,7 @@ export function HomeScreen({
               <>
                 <QuickHelp />
                 <HomeTools
+                  trashRegionId={trashRegionId}
                   onTrash={onTrashDay}
                   onOpenNow={onOpenNow}
                   onGiveNeed={onGiveNeed}
@@ -247,6 +340,9 @@ export function HomeScreen({
                         setPregnancyFilter('all');
                         setVotingFilter('all');
                         setLanguageFilter('all');
+                        setMarriageFilter('all');
+                        setDivorceFilter('all');
+                        setReligionFilter('all');
                         setOpenCat(c.id);
                       }}
                     />

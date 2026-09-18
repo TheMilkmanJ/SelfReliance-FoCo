@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dir = dirname(fileURLToPath(import.meta.url));
-const langs = ['en', 'es', 'hi', 'zh', 'vi', 'ko', 'ar'];
+const langs = ['en', 'es', 'hi', 'zh', 'vi', 'ko', 'ar', 'he'];
 
 function keys(name) {
   const text = readFileSync(join(dir, `../src/i18n/${name}.ts`), 'utf8');
@@ -25,4 +25,13 @@ for (const lang of langs) {
 }
 
 if (failed) process.exit(1);
+
+const translate = readFileSync(join(dir, '../src/i18n/translate.ts'), 'utf8');
+for (const id of langs) {
+  if (!translate.includes(`id: '${id}'`)) {
+    console.error(`APP_LANGUAGES is missing ${id}`);
+    process.exit(1);
+  }
+}
+
 console.log(`OK: ${en.size} keys in ${langs.join(', ')}`);

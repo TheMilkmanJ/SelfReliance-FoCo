@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import {
@@ -28,7 +28,11 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
   const { colors } = useTheme();
   const { t } = useI18n();
   const selected = regionById(value);
-  const [open, setOpen] = useState(!selected);
+  const [open, setOpen] = useState(!value);
+
+  useEffect(() => {
+    setOpen(!value);
+  }, [value]);
 
   const towns = useMemo(() => {
     if (!focusTown) return TOWN_ORDER;

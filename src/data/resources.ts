@@ -1,5 +1,4 @@
-import { en as EN_STRINGS } from '../i18n/en';
-import { es as ES_STRINGS } from '../i18n/es';
+import { STRINGS } from '../i18n/translate';
 import { CATEGORY_MAP } from './categories';
 import { CERT_GROUP_MAP } from './certGroups';
 import raw from './resources.json';
@@ -1028,26 +1027,31 @@ export function sortVotingResources(list: Resource[]): Resource[] {
 /** Shown first on the Language tile. Immigrant legal desks stay on Immigrants. */
 export const LANGUAGE_PINNED_IDS = [
   'irc-northern-colorado',
+  'ianc-fort-collins',
+  'csu-isss',
   'poudre-libraries-esl',
-  'fuerza-latina-immigrant-hotline',
   'colorado-language-assistance-hotline',
 ] as const;
 
 const LANGUAGE_ALWAYS = new Set<string>([
   ...LANGUAGE_PINNED_IDS,
+  'csu-place-english',
+  'poudre-libraries-adult-learning',
+  'fuerza-latina-immigrant-hotline',
   'fuerza-latina',
   'colorado-immigrant-rights-coalition',
   'relay-colorado',
   'united-way-211',
 ]);
 
-export type LanguageChipId = 'all' | 'interpreters' | 'english' | 'spanish';
+export type LanguageChipId = 'all' | 'interpreters' | 'english' | 'spanish' | 'more';
 
 export const LANGUAGE_CHIPS: Array<{ id: LanguageChipId; label: string; icon: string }> = [
   { id: 'all', label: 'All', icon: 'apps-outline' },
   { id: 'interpreters', label: 'Interpreters', icon: 'chatbubbles-outline' },
   { id: 'english', label: 'English classes', icon: 'school-outline' },
   { id: 'spanish', label: 'Spanish help', icon: 'call-outline' },
+  { id: 'more', label: 'Hindi, Chinese, more', icon: 'globe-outline' },
 ];
 
 /** Language tile plus related desks that stay in their original categories. */
@@ -1063,6 +1067,8 @@ export function matchesLanguageChip(resource: Resource, chip: LanguageChipId): b
       resource.id === 'irc-northern-colorado' ||
       resource.id === 'colorado-language-assistance-hotline' ||
       resource.id === 'relay-colorado' ||
+      resource.id === 'csu-isss' ||
+      resource.id === 'united-way-211' ||
       hasAnyTag(resource, ['interpreter', 'interpretation', 'language'])
     );
   }
@@ -1070,6 +1076,8 @@ export function matchesLanguageChip(resource: Resource, chip: LanguageChipId): b
     return (
       resource.id === 'poudre-libraries-esl' ||
       resource.id === 'irc-northern-colorado' ||
+      resource.id === 'csu-place-english' ||
+      resource.id === 'poudre-libraries-adult-learning' ||
       hasAnyTag(resource, ['esl', 'english', 'english classes'])
     );
   }
@@ -1083,11 +1091,270 @@ export function matchesLanguageChip(resource: Resource, chip: LanguageChipId): b
       hasAnyTag(resource, ['spanish'])
     );
   }
+  if (chip === 'more') {
+    return (
+      resource.id === 'ianc-fort-collins' ||
+      resource.id === 'csu-isss' ||
+      resource.id === 'irc-northern-colorado' ||
+      resource.id === 'colorado-language-assistance-hotline' ||
+      resource.id === 'united-way-211' ||
+      hasAnyTag(resource, ['hindi', 'indian', 'chinese', 'vietnamese', 'korean', 'arabic'])
+    );
+  }
   return true;
 }
 
 export function sortLanguageResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, LANGUAGE_PINNED_IDS);
+}
+
+/** Shown first on the Marriage tile. Clerk / DMV / SSA stay on Identification. */
+export const MARRIAGE_PINNED_IDS = [
+  'larimer-clerk-marriage',
+  'larimer-clerk-marriage-copy',
+  'ssa-name-change',
+  'colorado-dmv-fort-collins',
+  'social-security-fort-collins',
+] as const;
+
+const MARRIAGE_ALWAYS = new Set<string>([
+  ...MARRIAGE_PINNED_IDS,
+  'colorado-dmv-loveland',
+  'ssa-card-replacement',
+  'united-way-211',
+]);
+
+export type MarriageChipId = 'all' | 'license' | 'copy' | 'name';
+
+export const MARRIAGE_CHIPS: Array<{ id: MarriageChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'license', label: 'Get a license', icon: 'create-outline' },
+  { id: 'copy', label: 'Certified copy', icon: 'copy-outline' },
+  { id: 'name', label: 'Change your name', icon: 'id-card-outline' },
+];
+
+export function isMarriageResource(resource: Resource): boolean {
+  if (resource.category === 'marriage') return true;
+  return MARRIAGE_ALWAYS.has(resource.id);
+}
+
+export function matchesMarriageChip(resource: Resource, chip: MarriageChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'license') return resource.id === 'larimer-clerk-marriage';
+  if (chip === 'copy') return resource.id === 'larimer-clerk-marriage-copy' || resource.id === 'larimer-clerk-marriage';
+  if (chip === 'name') {
+    return (
+      resource.id === 'ssa-name-change' ||
+      resource.id === 'ssa-card-replacement' ||
+      resource.id === 'social-security-fort-collins' ||
+      resource.id === 'colorado-dmv-fort-collins' ||
+      resource.id === 'colorado-dmv-loveland' ||
+      resource.id === 'larimer-clerk-marriage-copy'
+    );
+  }
+  return true;
+}
+
+export function sortMarriageResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, MARRIAGE_PINNED_IDS);
+}
+
+/** Shown first on the Divorce tile. Legal aid and crisis desks stay on Legal / Crisis. */
+export const DIVORCE_PINNED_IDS = [
+  'colorado-self-help-court',
+  'colorado-courts-divorce',
+  'colorado-legal-services-fort-collins',
+  'larimer-child-support',
+  'crossroads-safehouse',
+] as const;
+
+const DIVORCE_ALWAYS = new Set<string>([
+  ...DIVORCE_PINNED_IDS,
+  'ask-a-lawyer-larimer',
+  'larimer-bar-pro-bono',
+  'csu-student-legal-services',
+  'casa-larimer',
+  'larimer-children-youth-family',
+  'project-self-sufficiency',
+  'alternatives-to-violence',
+  'estes-valley-crisis-advocates',
+  'ssa-name-change',
+  'colorado-dmv-fort-collins',
+  'colorado-dmv-loveland',
+  'ssa-card-replacement',
+  'social-security-fort-collins',
+  'united-way-211',
+]);
+
+export type DivorceChipId = 'all' | 'court' | 'lawyer' | 'kids' | 'safety' | 'name';
+
+export const DIVORCE_CHIPS: Array<{ id: DivorceChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'court', label: 'Court forms', icon: 'document-text-outline' },
+  { id: 'lawyer', label: 'A lawyer', icon: 'briefcase-outline' },
+  { id: 'kids', label: 'Kids & support', icon: 'people-outline' },
+  { id: 'safety', label: 'Leave safely', icon: 'shield-outline' },
+  { id: 'name', label: 'Change your name', icon: 'id-card-outline' },
+];
+
+export function isDivorceResource(resource: Resource): boolean {
+  if (resource.category === 'divorce') return true;
+  return DIVORCE_ALWAYS.has(resource.id);
+}
+
+export function matchesDivorceChip(resource: Resource, chip: DivorceChipId): boolean {
+  if (chip === 'all') return true;
+  if (chip === 'court') {
+    return resource.id === 'colorado-self-help-court' || resource.id === 'colorado-courts-divorce';
+  }
+  if (chip === 'lawyer') {
+    return (
+      resource.id === 'colorado-legal-services-fort-collins' ||
+      resource.id === 'ask-a-lawyer-larimer' ||
+      resource.id === 'larimer-bar-pro-bono' ||
+      resource.id === 'csu-student-legal-services' ||
+      resource.id === 'colorado-self-help-court'
+    );
+  }
+  if (chip === 'kids') {
+    return (
+      resource.id === 'larimer-child-support' ||
+      resource.id === 'casa-larimer' ||
+      resource.id === 'larimer-children-youth-family' ||
+      resource.id === 'project-self-sufficiency' ||
+      resource.id === 'colorado-courts-divorce' ||
+      resource.id === 'colorado-self-help-court'
+    );
+  }
+  if (chip === 'safety') {
+    return (
+      resource.id === 'crossroads-safehouse' ||
+      resource.id === 'alternatives-to-violence' ||
+      resource.id === 'estes-valley-crisis-advocates' ||
+      resource.id === 'united-way-211'
+    );
+  }
+  if (chip === 'name') {
+    return (
+      resource.id === 'ssa-name-change' ||
+      resource.id === 'ssa-card-replacement' ||
+      resource.id === 'social-security-fort-collins' ||
+      resource.id === 'colorado-dmv-fort-collins' ||
+      resource.id === 'colorado-dmv-loveland' ||
+      resource.id === 'colorado-self-help-court' ||
+      resource.id === 'colorado-courts-divorce'
+    );
+  }
+  return true;
+}
+
+export function sortDivorceResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, DIVORCE_PINNED_IDS);
+}
+
+/** Shown first on Faith & religion. Church pantries stay on Food / Clothes. */
+export const RELIGION_PINNED_IDS = [
+  'har-shalom',
+  'chabad-northern-colorado',
+  'temple-or-hadash',
+  'csu-hillel',
+  'islamic-center-fort-collins',
+  'st-joseph-catholic-fort-collins',
+] as const;
+
+const RELIGION_ALWAYS = new Set<string>([
+  ...RELIGION_PINNED_IDS,
+  'jewish-family-service-colorado',
+  'first-united-methodist-fort-collins',
+  'heruka-kadampa-fort-collins',
+  'sanatan-mandir-brighton',
+  'colorado-singh-sabha',
+  'foothills-unitarian-church',
+  'fort-collins-interfaith-council',
+  'st-johns-lutheran-pantry',
+  'st-johns-clothing-closet',
+  'kids-closet-fort-collins',
+  'loveland-vineyard-pantry',
+  'laporte-presbyterian-pantry',
+  'adventist-community-services-loveland',
+  'foothills-unitarian-mobile-pantry',
+  'salvation-army-fort-collins',
+  'salvation-army-loveland',
+  'salvation-army-care-closet',
+  'catholic-charities-samaritan-house',
+  'catholic-charities-senior-services',
+  'catholic-charities-immigration',
+  'fort-collins-rescue-mission',
+  'cws-fort-collins',
+  'ianc-fort-collins',
+  'family-housing-network',
+  'united-way-211',
+]);
+
+export type ReligionChipId = 'all' | 'jewish' | 'christian' | 'muslim' | 'hindu' | 'buddhist' | 'sikh' | 'interfaith';
+
+const RELIGION_BY_CHIP: Record<Exclude<ReligionChipId, 'all'>, ReadonlySet<string>> = {
+  jewish: new Set([
+    'har-shalom',
+    'chabad-northern-colorado',
+    'temple-or-hadash',
+    'csu-hillel',
+    'jewish-family-service-colorado',
+  ]),
+  christian: new Set([
+    'st-joseph-catholic-fort-collins',
+    'first-united-methodist-fort-collins',
+    'st-johns-lutheran-pantry',
+    'st-johns-clothing-closet',
+    'kids-closet-fort-collins',
+    'loveland-vineyard-pantry',
+    'laporte-presbyterian-pantry',
+    'adventist-community-services-loveland',
+    'salvation-army-fort-collins',
+    'salvation-army-loveland',
+    'salvation-army-care-closet',
+    'catholic-charities-samaritan-house',
+    'catholic-charities-senior-services',
+    'catholic-charities-immigration',
+    'fort-collins-rescue-mission',
+    'cws-fort-collins',
+  ]),
+  muslim: new Set(['islamic-center-fort-collins']),
+  hindu: new Set(['sanatan-mandir-brighton', 'ianc-fort-collins']),
+  buddhist: new Set(['heruka-kadampa-fort-collins']),
+  sikh: new Set(['colorado-singh-sabha', 'ianc-fort-collins']),
+  interfaith: new Set([
+    'foothills-unitarian-church',
+    'fort-collins-interfaith-council',
+    'foothills-unitarian-mobile-pantry',
+    'family-housing-network',
+    'united-way-211',
+  ]),
+};
+
+export const RELIGION_CHIPS: Array<{ id: ReligionChipId; label: string; icon: string }> = [
+  { id: 'all', label: 'All', icon: 'apps-outline' },
+  { id: 'jewish', label: 'Jewish', icon: 'star-outline' },
+  { id: 'christian', label: 'Christian', icon: 'book-outline' },
+  { id: 'muslim', label: 'Muslim', icon: 'moon-outline' },
+  { id: 'hindu', label: 'Hindu', icon: 'sunny-outline' },
+  { id: 'buddhist', label: 'Buddhist', icon: 'leaf-outline' },
+  { id: 'sikh', label: 'Sikh', icon: 'ellipse-outline' },
+  { id: 'interfaith', label: 'Interfaith', icon: 'globe-outline' },
+];
+
+export function isReligionResource(resource: Resource): boolean {
+  if (resource.category === 'religion') return true;
+  return RELIGION_ALWAYS.has(resource.id);
+}
+
+export function matchesReligionChip(resource: Resource, chip: ReligionChipId): boolean {
+  if (chip === 'all') return true;
+  return RELIGION_BY_CHIP[chip].has(resource.id);
+}
+
+export function sortReligionResources(list: Resource[]): Resource[] {
+  return sortPinnedResources(list, RELIGION_PINNED_IDS);
 }
 
 function normalize(s: string): string {
@@ -1105,8 +1372,10 @@ export function searchResources(query: string, pool: Resource[] = RESOURCES): Re
     const certLabel = r.certGroup ? CERT_GROUP_MAP[r.certGroup].label : '';
     const catLabel = CATEGORY_MAP[r.category]?.label ?? r.category.replace(/_/g, ' ');
     const catKeyName = `cat.${r.category}` as const;
-    const dict = EN_STRINGS as Record<string, string>;
-    const dictEs = ES_STRINGS as Record<string, string>;
+    const catLabels = Object.values(STRINGS).flatMap((dict) => [
+      dict[`${catKeyName}.label` as keyof typeof dict] ?? '',
+      dict[`${catKeyName}.short` as keyof typeof dict] ?? '',
+    ]);
     const hay = normalize(
       [
         r.name,
@@ -1116,10 +1385,7 @@ export function searchResources(query: string, pool: Resource[] = RESOURCES): Re
         r.tags.join(' '),
         catLabel,
         certLabel,
-        dict[`${catKeyName}.label`] ?? '',
-        dict[`${catKeyName}.short`] ?? '',
-        dictEs[`${catKeyName}.label`] ?? '',
-        dictEs[`${catKeyName}.short`] ?? '',
+        ...catLabels,
       ].join(' '),
     );
     return terms.every((term) => hay.includes(term));

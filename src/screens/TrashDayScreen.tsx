@@ -24,7 +24,7 @@ import {
   SERVICE_DAYS,
   actualPickupDow,
   cartDayKind,
-  effectiveServiceDow,
+  mappedServiceDow,
   formatYmd,
   fromDenverNow,
   holidayLastServiceWeek,
@@ -34,11 +34,11 @@ import {
   yardTrimmingsSeason,
 } from '../lib/trashCalendar';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
+import { TRASH_REGION_KEY, TRASH_ZONE_KEY } from '../lib/trashPrefs';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
-const REGION_KEY = 'foco-trash-region';
-const FOCO_ZONE_KEY = 'foco-trash-zone';
 const RECYCLE_KEY = 'foco-loveland-recycle-this-week';
+const OVERRIDE_KEY = 'foco-trash-day-override';
 
 const LOOKUP = {
   foco: 'https://www.republicservices.com/schedule',
@@ -54,36 +54,32 @@ const LOOKUP = {
 type Props = {
   area: AreaFilterId;
   onAreaChange: (area: AreaFilterId) => void;
+  regionId: string | null;
+  onRegionIdChange: (id: string | null) => void;
   onBack: () => void;
 };
 
 type DayMap = Partial<Record<TrashTown, ServiceDow>>;
 
-export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
+export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange, onBack }: Props) {
   const { colors, isDark } = useTheme();
   const largePrint = useLargePrint();
   const { t } = useI18n();
   const now = useDenverNow();
   const ymd = fromDenverNow(now);
-  const [regionId, setRegionId] = useState<string | null>(null);
   const [days, setDays] = useState<DayMap>({});
-  const [dayTouched, setDayTouched] = useState(false);
+  const [chipOverride, setChipOverride] = useState<ServiceDow | null>(null);
   const [lovelandRecycle, setLovelandRecycle] = useState(true);
 
   useEffect(() => {
+    void AsyncStorage.removeItem(OVERRIDE_KEY);
     void Promise.all([
-      AsyncStorage.getItem(REGION_KEY),
-      AsyncStorage.getItem(FOCO_ZONE_KEY),
+      AsyncStorage.getItem(TRASH_REGION_KEY),
+      AsyncStorage.getItem(TRASH_ZONE_KEY),
       AsyncStorage.getItem(RECYCLE_KEY),
       ...Object.values(DAY_STORAGE_KEY).map((key) => AsyncStorage.getItem(key)),
     ]).then(([regionSaved, zoneSaved, recycleSaved, ...daySaved]) => {
       const stored = regionById(regionSaved) ?? regionById(zoneSaved);
-      if (stored && (regionSaved !== stored.id || zoneSaved !== stored.id)) {
-        void AsyncStorage.setItem(REGION_KEY, stored.id);
-        void AsyncStorage.setItem(FOCO_ZONE_KEY, stored.id);
-      }
-      // In-session picks win if storage resolves after the user already tapped.
-      setRegionId((current) => current ?? stored?.id ?? null);
       setDays((current) => {
         const next: DayMap = {};
         (Object.keys(DAY_STORAGE_KEY) as TrashTown[]).forEach((town, i) => {
@@ -91,7 +87,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
           if (n >= 1 && n <= 5) next[town] = n as ServiceDow;
         });
         const mapped = stored?.dow ? (stored.dow as ServiceDow) : null;
-        if (mapped && stored && current[stored.town] == null) next[stored.town] = mapped;
+        if (mapped && stored) next[stored.town] = mapped;
         return { ...next, ...current };
       });
       if (recycleSaved === 'no') setLovelandRecycle(false);
@@ -101,24 +97,24 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
 
   const savedRegion = regionById(regionId);
   const chipTown = townFromArea(area);
-  const region = savedRegion && (!chipTown || savedRegion.town === chipTown) ? savedRegion : null;
+  const region = savedRegion;
   const town: TrashTown = region?.town ?? chipTown ?? 'Fort Collins';
-  const regular = dayTouched
-    ? effectiveServiceDow(days[town], region?.dow ?? null)
-    : effectiveServiceDow(null, region?.dow ?? days[town] ?? null);
+  // Mapped FoCo neighborhoods use the 2026-map day. Leftover Thursday in storage
+  // must not drive Out today. Unmapped towns (Loveland) still use a remembered chip.
+  const leftover = region && region.dow == null ? days[town] ?? null : null;
+  const regular = mappedServiceDow(region?.dow ?? null, chipOverride, leftover);
   const focusTown = chipTown;
 
   const saveDay = (day: ServiceDow) => {
-    setDayTouched(true);
+    setChipOverride(day);
     setDays((prev) => ({ ...prev, [town]: day }));
     void AsyncStorage.setItem(DAY_STORAGE_KEY[town], String(day));
   };
 
   const saveRegion = (next: TrashRegion) => {
-    setDayTouched(false);
-    setRegionId(next.id);
-    void AsyncStorage.setItem(REGION_KEY, next.id);
-    void AsyncStorage.setItem(FOCO_ZONE_KEY, next.id);
+    setChipOverride(null);
+    void AsyncStorage.removeItem(OVERRIDE_KEY);
+    onRegionIdChange(next.id);
     if (next.dow) {
       setDays((prev) => ({ ...prev, [next.town]: next.dow as ServiceDow }));
       void AsyncStorage.setItem(DAY_STORAGE_KEY[next.town], String(next.dow));
@@ -128,9 +124,9 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   };
 
   const clearRegion = () => {
-    setRegionId(null);
-    void AsyncStorage.removeItem(REGION_KEY);
-    void AsyncStorage.removeItem(FOCO_ZONE_KEY);
+    onRegionIdChange(null);
+    setChipOverride(null);
+    void AsyncStorage.removeItem(OVERRIDE_KEY);
   };
 
   const saveRecycle = (on: boolean) => {
@@ -142,7 +138,7 @@ export function TrashDayScreen({ area, onAreaChange, onBack }: Props) {
   const lastHoliday = holidayLastServiceWeek(ymd);
   const pickup = regular ? nextPickup(regular, ymd) : null;
   const pickupDow = regular ? actualPickupDow(regular, ymd) : null;
-  const todayIs = pickupDow != null && ymd.dow === pickupDow;
+  const todayIs = cartDayKind(ymd.dow, pickupDow) === 'out-today';
   const delayed = regular != null && pickupDow != null && pickupDow !== regular;
   const yard = yardTrimmingsSeason(ymd, town);
   const republicHoliday = town === 'Fort Collins';
