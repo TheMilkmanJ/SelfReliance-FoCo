@@ -499,17 +499,18 @@ function ServiceRow({
     <View
       style={[styles.listing, { backgroundColor: colors.card }, cardShadow(isDark)]}
       accessibilityRole="text"
-      accessibilityLabel={`${title}. ${status}. ${place}. ${note}`}
+      accessibilityLabel={`${title}. ${status}. ${place}. ${note}.`}
     >
       <View style={styles.listingRow}>
         <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
           <Ionicons name={icon as never} size={22} color={HEADER_PURPLE} />
         </View>
         <View style={styles.listingBody}>
-          <Text style={[styles.listingName, { color: colors.ink }]}>{title}</Text>
-          <Text style={[styles.listingMeta, { color: colors.muted }]}>
-            {status} · {place}
-          </Text>
+          <View style={styles.listingHead}>
+            <Text style={[styles.listingName, { color: colors.ink }]}>{title}</Text>
+            <Text style={[styles.statusPill, { color: HEADER_PURPLE }]}>{status}</Text>
+          </View>
+          <Text style={[styles.listingMeta, { color: colors.muted }]}>{place}</Text>
           <Text style={[styles.listingDesc, { color: colors.body }]}>{note}</Text>
         </View>
       </View>
@@ -579,9 +580,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  listingBody: { flex: 1 },
+  listingBody: { flex: 1, minWidth: 0 },
   listingHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   listingName: { fontSize: 17, fontWeight: '700', flexShrink: 1 },
+  statusPill: { fontSize: 13, fontWeight: '800' },
   listingMeta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
   listingDesc: { fontSize: 15, lineHeight: 21 },
 });
