@@ -80,6 +80,20 @@ function actualPickupDow(regular, ymd) {
   return regular + 1;
 }
 
+function isPickupDay(regular, ymd) {
+  return ymd.dow === actualPickupDow(regular, ymd);
+}
+
+function cartDayKind(todayDow, pickupDow) {
+  if (pickupDow == null) return 'pick';
+  if (todayDow === pickupDow) return 'out-today';
+  return 'weekday';
+}
+
+function effectiveServiceDow(override, mapped) {
+  return override ?? mapped ?? null;
+}
+
 function assert(cond, msg) {
   if (!cond) throw new Error(msg);
 }
@@ -115,6 +129,22 @@ assert(holidayThisServiceWeek(thisThu) === null, 'week of Sep 17 2026 is a norma
 assert(actualPickupDow(4, thisThu) === 4, 'this week Thursday stays Thursday');
 assert(actualPickupDow(5, { year: 2026, month: 9, date: 18, dow: 5 }) === 5, 'this week Friday stays Friday');
 assert(holidayLastServiceWeek(thisThu)?.name === 'Labor Day', 'Sep 17 still remembers last week Labor Day');
+assert(!isPickupDay(5, thisThu), 'Thursday is not a Friday route');
+assert(cartDayKind(thisThu.dow, actualPickupDow(5, thisThu)) === 'weekday', 'Friday zone on Thursday is Friday pickup, not Not today');
+assert(cartDayKind(5, 5) === 'out-today', 'Friday on a Friday route is Out today');
+assert(cartDayKind(4, null) === 'pick', 'no weekday yet');
+assert(
+  cartDayKind(5, actualPickupDow(5, { year: 2026, month: 9, date: 11, dow: 5 })) === 'weekday',
+  'Labor week Friday route labels Saturday pickup',
+);
+assert(actualPickupDow(5, { year: 2026, month: 9, date: 11, dow: 5 }) === 6, 'Labor week Friday → Saturday for the label');
+assert(effectiveServiceDow(null, 3) === 3, 'Taft/Drake mapped Wednesday when no chip override');
+assert(effectiveServiceDow(4, 3) === 4, 'weekday chip can override mapped day without dropping the location');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(effectiveServiceDow(null, 3), thisThu)) === 'weekday',
+  'Taft Hill / west Drake on Thu Sep 17 is Wednesday pickup, not Out today',
+);
+assert(isPickupDay(3, thisThu) === false, 'Wednesday route is not out on Thursday in a normal week');
 
 const xmas = republicHolidays(2026).find((h) => h.name === 'Christmas Day');
 assert(xmas && xmas.dow === 5, 'Christmas 2026 Friday');
@@ -129,9 +159,22 @@ const zoneFile = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.
 const regions = zoneFile.regions;
 const hh = regions.find((z) => z.id === 'highlander-heights');
 assert(hh && hh.dow === 5 && hh.town === 'Fort Collins', 'Highlander Heights is Friday on the 2026 map');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(hh.dow, thisThu)) === 'weekday',
+  'Highlander Heights What goes out on Thursday is Friday pickup, not Not today',
+);
 assert(/east of College/i.test(hh.where) && /Drake|Pitkin|Emigh/.test(hh.where), 'Highlander Heights covers east of College');
 assert(!regions.some((z) => z.id === 'east-college-north'), 'generic Friday east blob is folded into Highlander Heights');
 assert(regions.find((z) => z.id === 'old-town')?.dow === 4, 'Old Town is Thursday');
+const i25 = regions.find((z) => z.id === 'i25-northeast');
+assert(i25 && i25.dow === 5 && /I-25/.test(i25.label), 'I-25 / northeast Fort Collins is Friday');
+assert(cartDayKind(thisThu.dow, actualPickupDow(i25.dow, thisThu)) === 'weekday', 'I-25 cards on Thu Sep 17 say Friday pickup');
+const taft = regions.find((z) => z.id === 'taft-drake');
+assert(taft && taft.dow === 3 && /Taft Hill/i.test(taft.label) && /Drake/i.test(taft.label), 'Taft Hill and west Drake is Wednesday');
+assert(
+  cartDayKind(thisThu.dow, actualPickupDow(taft.dow, thisThu)) === 'weekday',
+  'Taft/Drake What goes out on Thursday says Wednesday pickup',
+);
 assert(regions.find((z) => z.id === 'south-harmony')?.dow === 1, 'South of Harmony is Monday');
 assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
 assert([1, 2, 3, 4, 5].every((d) => regions.some((z) => z.town === 'Fort Collins' && z.dow === d)), 'all weekdays have a FoCo zone');

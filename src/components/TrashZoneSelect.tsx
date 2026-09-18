@@ -18,12 +18,13 @@ import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
 type Props = {
   value: string | null;
+  pickupDow?: ServiceDow | null;
   focusTown: TrashTown | null;
   onChange: (region: TrashRegion) => void;
   onClear: () => void;
 };
 
-export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) {
+export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear }: Props) {
   const { colors } = useTheme();
   const { t } = useI18n();
   const selected = regionById(value);
@@ -57,8 +58,11 @@ export function TrashZoneSelect({ value, focusTown, onChange, onClear }: Props) 
           </Text>
           <Text style={[styles.barSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
             {selected
-              ? selected.dow
-                ? t('trash.pickup', { town: selected.town, day: t(dowKey(selected.dow)) })
+              ? (pickupDow ?? selected.dow)
+                ? t('trash.pickup', {
+                    town: selected.town,
+                    day: t(dowKey((pickupDow ?? selected.dow) as ServiceDow)),
+                  })
                 : t('trash.haulerLine', { town: selected.town, hauler: selected.hauler })
               : t('trash.townsHint')}
           </Text>
