@@ -1,113 +1,39 @@
 import { Ionicons } from '@expo/vector-icons';
-import { createElement, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { APP_LANGUAGES, isAppLanguage, languageOption, useI18n, type AppLanguage } from '../i18n';
+import { APP_LANGUAGES, languageOption, useI18n, type AppLanguage } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
-function optionLabel(opt: (typeof APP_LANGUAGES)[number]): string {
-  return opt.englishName === opt.nativeName ? opt.nativeName : `${opt.nativeName} — ${opt.englishName}`;
-}
-
-/** Native HTML select on web so it is a real dropdown. Custom list on Android/iOS. */
-function LanguageSelect({
-  variant,
-}: {
-  variant: 'header' | 'tile';
-}) {
-  const { colors } = useTheme();
-  const { language, setLanguage, t } = useI18n();
-  const current = languageOption(language);
-  const a11y = t('header.languageA11y', { name: current.nativeName });
-
-  if (Platform.OS === 'web') {
-    const style =
-      variant === 'header'
-        ? {
-            height: 40,
-            minWidth: 92,
-            marginTop: 2,
-            paddingLeft: 10,
-            paddingRight: 8,
-            borderRadius: 20,
-            border: 'none',
-            backgroundColor: 'rgba(255,255,255,0.16)',
-            color: '#fff',
-            fontWeight: 800,
-            fontSize: 13,
-          }
-        : {
-            width: '100%',
-            minHeight: 56,
-            paddingLeft: 16,
-            paddingRight: 12,
-            borderRadius: 16,
-            border: `2px solid ${HEADER_PURPLE}`,
-            backgroundColor: colors.card,
-            color: colors.ink,
-            fontWeight: 800,
-            fontSize: 17,
-          };
-    return createElement(
-      'select',
-      {
-        value: language,
-        'aria-label': a11y,
-        onChange: (event: { target: { value: string } }) => {
-          if (isAppLanguage(event.target.value)) setLanguage(event.target.value);
-        },
-        style,
-      },
-      APP_LANGUAGES.map((opt) => createElement('option', { key: opt.id, value: opt.id }, optionLabel(opt))),
-    );
-  }
-
-  if (variant === 'header') {
-    return <HeaderLanguageMenu />;
-  }
-
-  return <TileLanguageMenu />;
-}
-
-/** Language tile: a dropdown you pick from. All eight app languages. */
+/** Language tile: tap the bar, then scroll the list. The page behind does not move. */
 export function LanguagePicker() {
   const { colors } = useTheme();
-  const { t } = useI18n();
-
-  return (
-    <View style={styles.wrap}>
-      <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
-        {t('lang.listLabel')}
-      </Text>
-      <View style={styles.selectWrap}>
-        <LanguageSelect variant="tile" />
-      </View>
-      <Text style={[styles.honest, { color: colors.muted }]}>{t('lang.honest')}</Text>
-    </View>
-  );
-}
-
-/** Header control: dropdown of the same eight languages. */
-export function HeaderLanguageButton() {
-  return <LanguageSelect variant="header" />;
-}
-
-function TileLanguageMenu() {
-  const { colors } = useTheme();
   const { language, setLanguage, t } = useI18n();
   const current = languageOption(language);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const sub =
     current.englishName === current.nativeName
       ? t('lang.menusMeta')
       : `${current.englishName} · ${t('lang.menusMeta')}`;
 
   return (
-    <View>
+    <View style={styles.wrap}>
+      <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+        {t('lang.listLabel')}
+      </Text>
       <Pressable
-        onPress={() => setOpen((was) => !was)}
+        onPress={() => setOpen(true)}
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
         accessibilityLabel={t('header.languageA11y', { name: current.nativeName })}
@@ -124,34 +50,32 @@ function TileLanguageMenu() {
             {sub}
           </Text>
         </View>
-        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={22} color={HEADER_PURPLE} />
+        <Ionicons name="chevron-down" size={22} color={HEADER_PURPLE} />
       </Pressable>
-      {open ? (
-        <View style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.line }]}>
-          <LanguageRows
-            selected={language}
-            onPick={(id) => {
-              setLanguage(id);
-              setOpen(false);
-            }}
-          />
-        </View>
-      ) : null}
+      <Text style={[styles.honest, { color: colors.muted }]}>{t('lang.honest')}</Text>
+      <LanguageSheet
+        open={open}
+        selected={language}
+        onClose={() => setOpen(false)}
+        onPick={(id) => {
+          setLanguage(id);
+          setOpen(false);
+        }}
+      />
     </View>
   );
 }
 
-function HeaderLanguageMenu() {
-  const insets = useSafeAreaInsets();
-  const { colors, isDark } = useTheme();
+/** Header control: same eight languages, in a sheet that keeps the finger scroll. */
+export function HeaderLanguageButton() {
   const { language, setLanguage, t } = useI18n();
   const current = languageOption(language);
   const [open, setOpen] = useState(false);
 
   return (
-    <View style={styles.headerWrap}>
+    <>
       <Pressable
-        onPress={() => setOpen((was) => !was)}
+        onPress={() => setOpen(true)}
         hitSlop={10}
         style={styles.headerBtn}
         accessibilityRole="button"
@@ -161,14 +85,60 @@ function HeaderLanguageMenu() {
         <Text style={styles.headerCode} maxFontSizeMultiplier={MAX_FONT.chrome}>
           {current.code}
         </Text>
-        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={11} color="#fff" />
+        <Ionicons name="chevron-down" size={11} color="#fff" />
       </Pressable>
-      {open ? (
+      <LanguageSheet
+        open={open}
+        selected={language}
+        onClose={() => setOpen(false)}
+        onPick={(id) => {
+          setLanguage(id);
+          setOpen(false);
+        }}
+      />
+    </>
+  );
+}
+
+function LanguageSheet({
+  open,
+  selected,
+  onClose,
+  onPick,
+}: {
+  open: boolean;
+  selected: AppLanguage;
+  onClose: () => void;
+  onPick: (id: AppLanguage) => void;
+}) {
+  const insets = useSafeAreaInsets();
+  const { height } = useWindowDimensions();
+  const { colors, isDark } = useTheme();
+  const { t } = useI18n();
+  const listMax = Math.min(420, Math.max(220, height - insets.top - insets.bottom - 160));
+
+  return (
+    <Modal
+      visible={open}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+      statusBarTranslucent
+      accessibilityViewIsModal
+    >
+      <View style={styles.modalRoot} pointerEvents="box-none">
+        <Pressable
+          style={styles.backdrop}
+          onPress={onClose}
+          accessibilityRole="button"
+          accessibilityLabel={t('header.closeLang')}
+        />
         <View
           style={[
-            styles.headerMenu,
+            styles.sheet,
             {
-              top: insets.top + 48,
+              marginTop: insets.top + 56,
+              marginBottom: insets.bottom + spacing.lg,
               backgroundColor: colors.card,
               borderColor: isDark ? colors.line : HEADER_PURPLE,
             },
@@ -177,18 +147,18 @@ function HeaderLanguageMenu() {
           <Text style={[styles.menuLabel, { color: HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
             {t('lang.listLabel')}
           </Text>
-          <ScrollView style={styles.headerScroll} keyboardShouldPersistTaps="handled">
-            <LanguageRows
-              selected={language}
-              onPick={(id) => {
-                setLanguage(id);
-                setOpen(false);
-              }}
-            />
+          <ScrollView
+            style={[styles.scroll, { maxHeight: listMax }]}
+            nestedScrollEnabled
+            keyboardShouldPersistTaps="handled"
+            bounces={false}
+            overScrollMode="never"
+          >
+            <LanguageRows selected={selected} onPick={onPick} />
           </ScrollView>
         </View>
-      ) : null}
-    </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -239,8 +209,8 @@ function LanguageRows({
 const styles = StyleSheet.create({
   wrap: { gap: spacing.sm, paddingBottom: spacing.sm },
   section: { paddingHorizontal: spacing.lg, fontSize: 18, fontWeight: '800' },
-  selectWrap: { marginHorizontal: spacing.lg },
   bar: {
+    marginHorizontal: spacing.lg,
     borderWidth: 2,
     borderRadius: radius.lg,
     minHeight: 64,
@@ -259,19 +229,12 @@ const styles = StyleSheet.create({
   },
   barTitle: { fontSize: 17, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
   barSub: { fontSize: 13, marginTop: 3, lineHeight: 18, textAlign: 'left', writingDirection: 'ltr' },
-  menu: {
-    marginTop: spacing.sm,
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    overflow: 'hidden',
-  },
   honest: {
     paddingHorizontal: spacing.lg,
     fontSize: 13,
     lineHeight: 19,
     marginBottom: spacing.md,
   },
-  headerWrap: { zIndex: 20 },
   headerBtn: {
     minWidth: 44,
     height: 40,
@@ -285,18 +248,35 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   headerCode: { color: '#fff', fontSize: 13, fontWeight: '800', lineHeight: 16 },
-  headerMenu: {
+  modalRoot: {
+    flex: 1,
+  },
+  backdrop: {
     position: 'absolute',
+    top: 0,
     right: 0,
-    width: 280,
-    maxHeight: 420,
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'rgba(20, 17, 28, 0.45)',
+  },
+  scroll: {
+    flexGrow: 0,
+    ...Platform.select({
+      web: { touchAction: 'pan-y' },
+      default: {},
+    }),
+  },
+  sheet: {
+    marginHorizontal: spacing.lg,
+    alignSelf: 'flex-end',
+    width: 300,
+    maxWidth: '100%',
     borderWidth: 1,
     borderRadius: radius.lg,
     overflow: 'hidden',
-    zIndex: 30,
+    zIndex: 2,
     elevation: 8,
   },
-  headerScroll: { maxHeight: 380 },
   menuLabel: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
