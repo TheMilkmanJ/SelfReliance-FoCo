@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
@@ -54,6 +54,7 @@ import {
 } from '../data/resources';
 import type { Category, CategoryId, Resource } from '../data/types';
 import { catKey, useI18n, type MessageKey } from '../i18n';
+import { useBackLayer } from '../lib/backStack';
 import { useLargePrint } from '../lib/fontScale';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
@@ -89,6 +90,17 @@ export function HomeScreen({
   const [marriageFilter, setMarriageFilter] = useState<MarriageChipId>('all');
   const [divorceFilter, setDivorceFilter] = useState<DivorceChipId>('all');
   const [religionFilter, setReligionFilter] = useState<ReligionChipId>('all');
+
+  const closeCategory = useCallback(() => {
+    setPregnancyFilter('all');
+    setVotingFilter('all');
+    setLanguageFilter('all');
+    setMarriageFilter('all');
+    setDivorceFilter('all');
+    setReligionFilter('all');
+    setOpenCat(null);
+  }, []);
+  const { handleClose } = useBackLayer(openCat != null, closeCategory);
 
   const searching = query.trim().length > 0;
   const inArea = useMemo(() => filterByArea(RESOURCES, area), [area]);
@@ -185,15 +197,7 @@ export function HomeScreen({
           ListHeaderComponent={
             <View>
               <Pressable
-                onPress={() => {
-                  setPregnancyFilter('all');
-                  setVotingFilter('all');
-                  setLanguageFilter('all');
-                  setMarriageFilter('all');
-                  setDivorceFilter('all');
-                  setReligionFilter('all');
-                  setOpenCat(null);
-                }}
+                onPress={handleClose}
                 style={styles.back}
                 accessibilityRole="button"
                 hitSlop={8}

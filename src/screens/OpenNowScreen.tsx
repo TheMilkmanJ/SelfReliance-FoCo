@@ -10,6 +10,7 @@ import { OPEN_PLACES } from '../data/openNowPlaces';
 import type { OpenNeedId, OpenPlace } from '../data/openNowTypes';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
 import { useI18n, type MessageKey, dowKey, monthKey } from '../i18n';
+import { useBackLayer } from '../lib/backStack';
 import { useDenverNow } from '../lib/denverClock';
 import { matchesOpenTown, statusFor } from '../lib/openNowStatus';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
@@ -24,6 +25,7 @@ type Props = {
 };
 
 export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
+  const { handleClose } = useBackLayer(true, onBack);
   const { colors } = useTheme();
   const { t } = useI18n();
   const now = useDenverNow();
@@ -61,7 +63,7 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
         )}
         ListHeaderComponent={
           <View style={styles.top}>
-            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
+            <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
               <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
               <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
             </Pressable>

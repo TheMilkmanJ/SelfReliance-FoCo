@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { APP_LANGUAGES, languageOption, useI18n, type AppLanguage } from '../i18n';
+import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -57,10 +58,7 @@ export function LanguagePicker() {
         open={open}
         selected={language}
         onClose={() => setOpen(false)}
-        onPick={(id) => {
-          setLanguage(id);
-          setOpen(false);
-        }}
+        onPick={(id) => setLanguage(id)}
       />
     </View>
   );
@@ -91,10 +89,7 @@ export function HeaderLanguageButton() {
         open={open}
         selected={language}
         onClose={() => setOpen(false)}
-        onPick={(id) => {
-          setLanguage(id);
-          setOpen(false);
-        }}
+        onPick={(id) => setLanguage(id)}
       />
     </>
   );
@@ -115,6 +110,7 @@ function LanguageSheet({
   const { height } = useWindowDimensions();
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
+  const { handleClose } = useBackLayer(open, onClose);
   const listMax = Math.min(420, Math.max(220, height - insets.top - insets.bottom - 160));
 
   return (
@@ -122,14 +118,14 @@ function LanguageSheet({
       visible={open}
       transparent
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
       statusBarTranslucent
       accessibilityViewIsModal
     >
       <View style={styles.modalRoot} pointerEvents="box-none">
         <Pressable
           style={styles.backdrop}
-          onPress={onClose}
+          onPress={handleClose}
           accessibilityRole="button"
           accessibilityLabel={t('header.closeLang')}
         />
@@ -154,7 +150,13 @@ function LanguageSheet({
             bounces={false}
             overScrollMode="never"
           >
-            <LanguageRows selected={selected} onPick={onPick} />
+            <LanguageRows
+              selected={selected}
+              onPick={(id) => {
+                onPick(id);
+                handleClose();
+              }}
+            />
           </ScrollView>
         </View>
       </View>

@@ -6,6 +6,7 @@ import { Header } from '../components/Header';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
 import { useI18n } from '../i18n';
 import { mapsTownUrl, open } from '../lib/actions';
+import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -24,6 +25,7 @@ function townFor(area: AreaFilterId): string {
 }
 
 export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
+  const { handleClose } = useBackLayer(true, onBack);
   const { colors } = useTheme();
   const { t } = useI18n();
   const town = townFor(area);
@@ -32,7 +34,7 @@ export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
       <Header title={t('maps.title')} subtitle={t('maps.subtitle')} />
       <ScrollView contentContainerStyle={styles.body}>
-        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
+        <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
           <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
           <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>

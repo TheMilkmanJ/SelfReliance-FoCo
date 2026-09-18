@@ -8,6 +8,7 @@ import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
 import { areaMessage, catKey, certKey, useI18n } from '../i18n';
 import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
+import { useBackLayer } from '../lib/backStack';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 import { FreeBadge } from './FreeBadge';
 
@@ -20,6 +21,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const { t } = useI18n();
+  const { handleClose } = useBackLayer(resource != null, onClose);
   if (!resource) return null;
   const cat = CATEGORY_MAP[resource.category];
   const cert = resource.certGroup ? CERT_GROUP_MAP[resource.certGroup] : null;
@@ -30,14 +32,14 @@ export function ResourceDetail({ resource, onClose }: Props) {
     : t(catKey(resource.category, 'label'));
 
   return (
-    <Modal visible animationType="slide" onRequestClose={onClose} presentationStyle="pageSheet">
+    <Modal visible animationType="slide" onRequestClose={handleClose} presentationStyle="pageSheet">
       <View style={[styles.sheet, { paddingTop: Math.max(insets.top, spacing.md), backgroundColor: colors.bg }]}>
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${cat.color}1a` }]}>
             <Ionicons name={cat.icon as never} size={16} color={cat.color} />
             <Text style={[styles.pillText, { color: cat.color }]}>{pill}</Text>
           </View>
-          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
+          <Pressable onPress={handleClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
             <Ionicons name="close" size={28} color={colors.ink} />
           </Pressable>
         </View>

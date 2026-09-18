@@ -18,6 +18,7 @@ import {
 } from '../data/trashZones';
 import { dowKey, dowShortKey, holidayLabel, monthKey, useI18n, type Translate } from '../i18n';
 import { call, open } from '../lib/actions';
+import { useBackLayer } from '../lib/backStack';
 import { useDenverNow } from '../lib/denverClock';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import {
@@ -62,6 +63,7 @@ type Props = {
 type DayMap = Partial<Record<TrashTown, ServiceDow>>;
 
 export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange, onBack }: Props) {
+  const { handleClose } = useBackLayer(true, onBack);
   const { colors, isDark } = useTheme();
   const largePrint = useLargePrint();
   const { t } = useI18n();
@@ -179,7 +181,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
         })}
       />
       <ScrollView contentContainerStyle={styles.body}>
-        <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
+        <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
           <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
           <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>

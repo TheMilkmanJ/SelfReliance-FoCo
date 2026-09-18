@@ -6,6 +6,7 @@ import { OPEN_NEED_MAP, OPEN_NEEDS } from '../data/openNowNeeds';
 import type { OpenPlace } from '../data/openNowTypes';
 import { useI18n, type MessageKey } from '../i18n';
 import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
+import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
 import type { PlaceStatus } from '../lib/openNowStatus';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
@@ -20,20 +21,21 @@ export function OpenNowDetail({ place, status, onClose }: Props) {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const { t } = useI18n();
+  const { handleClose } = useBackLayer(place != null, onClose);
   if (!place) return null;
   const need = OPEN_NEED_MAP[place.needs[0]] ?? OPEN_NEEDS[0];
   const statusColor =
     status?.kind === 'open' ? colors.green : status?.kind === 'later' ? '#b45309' : colors.muted;
 
   return (
-    <Modal visible animationType="slide" onRequestClose={onClose} presentationStyle="pageSheet">
+    <Modal visible animationType="slide" onRequestClose={handleClose} presentationStyle="pageSheet">
       <View style={[styles.sheet, { paddingTop: Math.max(insets.top, spacing.md), backgroundColor: colors.bg }]}>
         <View style={styles.topBar}>
           <View style={[styles.pill, { backgroundColor: `${need.color}1a` }]}>
             <Ionicons name={need.icon as never} size={16} color={need.color} />
             <Text style={[styles.pillText, { color: need.color }]}>{t(`open.${need.id}Full` as MessageKey)}</Text>
           </View>
-          <Pressable onPress={onClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
+          <Pressable onPress={handleClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
             <Ionicons name="close" size={28} color={colors.ink} />
           </Pressable>
         </View>

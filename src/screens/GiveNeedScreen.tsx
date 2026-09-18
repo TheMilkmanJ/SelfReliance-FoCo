@@ -9,6 +9,7 @@ import { GIVE_NEED_CHIPS, giveNeedResources, type GiveNeedId } from '../data/giv
 import type { AreaFilter as AreaFilterId } from '../data/resources';
 import type { Resource } from '../data/types';
 import { useI18n, type MessageKey } from '../i18n';
+import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) {
+  const { handleClose } = useBackLayer(true, onBack);
   const { colors } = useTheme();
   const { t } = useI18n();
   const [kind, setKind] = useState<GiveNeedId>('need');
@@ -36,7 +38,7 @@ export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) 
         renderItem={({ item }) => <ResourceCard resource={item} onPress={onSelect} />}
         ListHeaderComponent={
           <View style={styles.top}>
-            <Pressable onPress={onBack} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
+            <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
               <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
               <Text style={[styles.backText, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
                 {t('common.resources')}
