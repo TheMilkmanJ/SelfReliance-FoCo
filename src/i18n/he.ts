@@ -462,7 +462,7 @@ export const he: Record<keyof typeof en, string> = {
   'trash.skipWeek': 'דלג על השבוע · Loveland',
   'trash.recycleYes': 'שים את פח המיחזור עם האשפה השבוע.',
   'trash.recycleNo': 'רק אשפה השבוע. מיחזור שבוע הבא.',
-  'trash.notToday': 'לא היום',
+  'trash.notToday': 'איסוף רגיל',
   'trash.dayPickup': '{day}',
   'trash.outToday': 'יוצא היום',
   'trash.pickDay': 'בחר יום',

@@ -460,7 +460,7 @@ export const en = {
   'trash.skipWeek': 'Skip this week · Loveland',
   'trash.recycleYes': 'Put the recycle cart out with trash this week.',
   'trash.recycleNo': 'Trash only this week. Recycle next week.',
-  'trash.notToday': 'Not today',
+  'trash.notToday': 'Usual pickup',
   'trash.dayPickup': '{day}',
   'trash.outToday': 'Out today',
   'trash.pickDay': 'Pick a day',

@@ -460,7 +460,7 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.skipWeek': '本周跳过 · Loveland',
   'trash.recycleYes': '本周把回收桶和垃圾一起放出去。',
   'trash.recycleNo': '本周只出垃圾。下周再回收。',
-  'trash.notToday': '不是今天',
+  'trash.notToday': '通常日',
   'trash.dayPickup': '{day}',
   'trash.outToday': '今天放出去',
   'trash.pickDay': '选一天',

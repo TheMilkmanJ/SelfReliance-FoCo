@@ -463,7 +463,7 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.skipWeek': 'تخطَّ هذا الأسبوع · Loveland',
   'trash.recycleYes': 'أخرج حاوية التدوير مع القمامة هذا الأسبوع.',
   'trash.recycleNo': 'قمامة فقط هذا الأسبوع. التدوير الأسبوع القادم.',
-  'trash.notToday': 'ليس اليوم',
+  'trash.notToday': 'الجمع المعتاد',
   'trash.dayPickup': '{day}',
   'trash.outToday': 'يخرج اليوم',
   'trash.pickDay': 'اختر يوماً',

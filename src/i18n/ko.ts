@@ -463,7 +463,7 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.skipWeek': '이번 주 건너뛰기 · Loveland',
   'trash.recycleYes': '이번 주 재활용통을 쓰레기와 함께 내놓으세요.',
   'trash.recycleNo': '이번 주는 쓰레기만. 재활용은 다음 주.',
-  'trash.notToday': '오늘 아님',
+  'trash.notToday': '평소 수거일',
   'trash.dayPickup': '{day}',
   'trash.outToday': '오늘 내놓기',
   'trash.pickDay': '요일 고르기',

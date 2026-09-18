@@ -464,7 +464,7 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.skipWeek': 'यह हफ़्ता छोड़ें · Loveland',
   'trash.recycleYes': 'इस हफ़्ते रिसायकल गाड़ी कचरे के साथ निकालें।',
   'trash.recycleNo': 'इस हफ़्ते सिर्फ़ कचरा। रिसायकल अगले हफ़्ते।',
-  'trash.notToday': 'आज नहीं',
+  'trash.notToday': 'आमतौर पर',
   'trash.dayPickup': '{day}',
   'trash.outToday': 'आज निकले',
   'trash.pickDay': 'दिन चुनें',

@@ -463,7 +463,7 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.skipWeek': 'Bỏ tuần này · Loveland',
   'trash.recycleYes': 'Đưa thùng tái chế ra cùng rác tuần này.',
   'trash.recycleNo': 'Chỉ rác tuần này. Tái chế tuần sau.',
-  'trash.notToday': 'Không phải hôm nay',
+  'trash.notToday': 'Ngày thường lấy',
   'trash.dayPickup': '{day}',
   'trash.outToday': 'Ra hôm nay',
   'trash.pickDay': 'Chọn một ngày',

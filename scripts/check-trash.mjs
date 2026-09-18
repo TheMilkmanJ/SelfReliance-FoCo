@@ -255,6 +255,8 @@ assert(!enCopy.includes('Goes out {day}'), 'cart rows do not say Goes out weekda
 assert(!enCopy.includes('goes out {day}'), 'home tile and dropdown do not say goes out weekday');
 assert(enCopy.includes("'trash.outToday': 'Out today'"), 'Out today is only on the pickup day');
 assert(enCopy.includes("'trash.dayPickup': '{day}'"), 'other days show the weekday only');
+assert(enCopy.includes("'trash.notToday': 'Usual pickup'"), 'hero says Usual pickup, not Not today, when the weekday is known');
+assert(!enCopy.includes("'trash.notToday': 'Not today'"), 'Not today is not the kicker on a Tuesday route');
 assert(!enCopy.includes("'{day} · out today'"), 'Out today is not prefixed with the weekday');
 assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
 assert([1, 2, 3, 4, 5].every((d) => regions.some((z) => z.town === 'Fort Collins' && z.dow === d)), 'all weekdays have a FoCo zone');
