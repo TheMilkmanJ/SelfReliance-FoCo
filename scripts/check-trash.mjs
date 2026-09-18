@@ -99,6 +99,25 @@ function mappedServiceDow(mapped, overrideForThisRegion, leftoverTownDay) {
   return overrideForThisRegion ?? leftoverTownDay ?? null;
 }
 
+function usesHolidayBump(town, hauler, regionId) {
+  if (regionId === 'uninc-landfill') return false;
+  if (town === 'Fort Collins' || town === 'Loveland') return true;
+  if (hauler && /Superior|Atlas Unlimited|United Waste/i.test(hauler)) return true;
+  return false;
+}
+
+/** Same rules as TrashDayScreen: JSON map or per-neighborhood memory wins; town leftover only with no region. */
+function regularFor(region, regionDays, sessionChip, leftoverTown) {
+  const remembered = region ? regionDays[region.id] ?? null : null;
+  const mapped = region?.dow ?? remembered ?? null;
+  const leftover = !region ? leftoverTown : null;
+  return mappedServiceDow(mapped, sessionChip, leftover);
+}
+
+function showChips(region, mapped) {
+  return region?.id !== 'uninc-landfill' && mapped == null;
+}
+
 function chipForThisRegion(selectedRegionId, chipRegionId, chip) {
   if (chip == null) return null;
   if ((selectedRegionId ?? '') !== (chipRegionId ?? '')) return null;
@@ -265,6 +284,10 @@ towns.forEach((town) => {
   assert(regions.some((z) => z.town === town), `${town} has trash regions`);
 });
 assert(regions.find((z) => z.id === 'loveland-centerra')?.dow === null, 'Loveland Centerra day is Recollect, not invented');
+assert(regions.find((z) => z.id === 'loveland-namaqua')?.dow === null, 'Loveland Namaqua day is Recollect, not invented');
+assert(regions.find((z) => z.id === 'estes-downtown')?.dow === null, 'Estes day is on the bill, not invented');
+assert(regions.find((z) => z.id === 'berthoud-united')?.dow === null, 'Berthoud day is on the bill, not invented');
+assert(regions.find((z) => z.id === 'wellington-old-town')?.dow === null, 'Wellington day is on the bill, not invented');
 assert(regions.find((z) => z.id === 'wellington-old-town')?.town === 'Wellington', 'Old Town Wellington is listed');
 assert(regions.find((z) => z.id === 'berthoud-mountain-high')?.phone === '970-834-1144', 'Mountain High phone');
 assert(regions.find((z) => z.id === 'estes-superior')?.phone === '970-214-4902', 'Superior Trash phone');
@@ -274,9 +297,40 @@ assert(yardTrimmingsSeason({ year: 2026, month: 12, date: 10, dow: 4 }, 'Lovelan
 
 const screenTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/screens/TrashDayScreen.tsx'), 'utf8');
 assert(screenTs.includes('showWeekdayChips'), 'mapped neighborhoods hide weekday chips so Friday cannot mark Horsetooth Out today');
-assert(screenTs.includes('region?.dow == null'), 'weekday chips only show when the neighborhood has no map day');
+assert(screenTs.includes('mapped == null'), 'weekday chips hide once this neighborhood has a map day or a remembered day');
 assert(screenTs.includes('if (region?.dow != null) return'), 'saveDay is a no-op on a mapped neighborhood');
+assert(screenTs.includes('regionDays'), 'unmapped towns remember a weekday per neighborhood, not town-wide');
+assert(screenTs.includes('!region ? days[town]'), 'town leftover Friday only applies when no neighborhood is selected');
+assert(screenTs.includes('usesHolidayBump'), 'Loveland and documented haulers delay after holidays the same way FoCo does');
+assert(screenTs.includes('rememberedDays={regionDays}'), 'neighborhood list gets remembered weekdays for grouping');
 const selectTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/components/TrashZoneSelect.tsx'), 'utf8');
 assert(selectTs.includes("pointerEvents={closing ? 'none' : 'auto'}"), 'region list stays under the tap so it cannot hit Friday');
+assert(selectTs.includes('rememberedDays'), 'every town groups by weekday once a neighborhood has a day');
+assert(selectTs.includes("t('trash.pickDayGroup')"), 'neighborhoods without a day sit under Pick a day');
+assert(!selectTs.includes("town === 'Fort Collins'"), 'weekday grouping is not Fort Collins-only');
+assert(prefsTs.includes('foco-trash-region-day:'), 'remembered weekday is stored per neighborhood id');
+assert(enCopy.includes("'trash.pickDayGroup': 'Pick a day'"), 'unknown rows are labeled Pick a day');
+assert(enCopy.includes('Out today tracks it the same way as Fort Collins'), 'Loveland / Estes / Berthoud / Wellington copy says Out today tracks like FoCo');
+
+const centerra = { id: 'loveland-centerra', dow: null };
+const namaqua = { id: 'loveland-namaqua', dow: null };
+assert(regularFor(centerra, {}, null, 5) == null, 'Centerra does not inherit leftover Friday from another Loveland pick');
+assert(regularFor(centerra, { 'loveland-centerra': 2 }, null, 5) === 2, 'Centerra remembers Tuesday even if leftover storage is Friday');
+assert(
+  cartDayKind(thisFri.dow, actualPickupDow(regularFor(centerra, { 'loveland-centerra': 2 }, null, 5), thisFri)) === 'weekday',
+  'Centerra Tuesday on Friday is Usual pickup, not Out today from leftover Friday',
+);
+assert(regularFor(namaqua, { 'loveland-centerra': 2 }, null, 5) == null, 'Namaqua does not inherit Centerra Tuesday');
+assert(regularFor(null, { 'loveland-centerra': 2 }, null, 5) === 5, 'no neighborhood still uses the town leftover chip');
+assert(showChips(centerra, null) === true, 'Centerra shows weekday chips until you pick a day');
+assert(showChips(centerra, 2) === false, 'Centerra hides chips after Tuesday is remembered');
+assert(showChips({ id: 'east-horsetooth', dow: 2 }, 2) === false, 'Horsetooth hides chips because the map day is Tuesday');
+assert(showChips({ id: 'uninc-landfill', dow: null }, null) === false, 'landfill never shows weekday chips');
+assert(usesHolidayBump('Fort Collins', 'Republic Services', 'south-harmony') === true, 'FoCo delays after holidays');
+assert(usesHolidayBump('Loveland', 'City of Loveland Solid Waste', 'loveland-centerra') === true, 'Loveland city carts delay after holidays');
+assert(usesHolidayBump('Estes Park', 'Waste Management', 'estes-wm') === false, 'WM Estes does not get a Republic bump invented');
+assert(usesHolidayBump('Estes Park', 'Atlas Unlimited (Superior Trash)', 'estes-superior') === true, 'Superior / Atlas delays after holidays');
+assert(usesHolidayBump('Berthoud', 'United Waste Systems', 'berthoud-united') === true, 'United Waste delays after holidays');
+assert(usesHolidayBump('Unincorporated', 'Larimer County Landfill', 'uninc-landfill') === false, 'landfill has no curbside holiday bump');
 
 console.log('OK: trash-day holiday bump');

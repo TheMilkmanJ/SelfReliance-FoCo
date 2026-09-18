@@ -1,9 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { regionById } from '../data/trashZones';
 import { dowKey, useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
+import { loadRegionDay } from '../lib/trashPrefs';
+import type { ServiceDow } from '../lib/trashCalendar';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 type Props = {
@@ -18,14 +21,31 @@ export function HomeTools({ trashRegionId, onTrash, onOpenNow, onGiveNeed, onOff
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
   const saved = regionById(trashRegionId);
+  const [rememberedDay, setRememberedDay] = useState<ServiceDow | null>(null);
+
+  useEffect(() => {
+    if (!saved || saved.dow) {
+      setRememberedDay(null);
+      return;
+    }
+    let cancelled = false;
+    void loadRegionDay(saved.id).then((day) => {
+      if (!cancelled) setRememberedDay(day);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [saved?.id, saved?.dow]);
+
+  const day = saved?.dow ?? rememberedDay ?? null;
   const trashSub = saved
-    ? saved.dow
-      ? t('tool.trashSubSaved', { place: saved.label, day: t(dowKey(saved.dow)) })
+    ? day
+      ? t('tool.trashSubSaved', { place: saved.label, day: t(dowKey(day)) })
       : t('tool.trashSubPlace', { place: saved.label })
     : t('tool.trashSub');
   const trashA11y = saved
-    ? saved.dow
-      ? t('tool.trashA11ySaved', { place: saved.label, day: t(dowKey(saved.dow)) })
+    ? day
+      ? t('tool.trashA11ySaved', { place: saved.label, day: t(dowKey(day)) })
       : t('tool.trashA11yPlace', { place: saved.label })
     : t('tool.trashA11y');
   return (

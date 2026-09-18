@@ -432,6 +432,7 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.clear': '清除区域',
   'trash.orWeekday': '或选星期几',
   'trash.usualDay': '通常的垃圾日',
+  'trash.pickDayGroup': '选一天',
   'trash.today': '今天要把桶放出去',
   'trash.todayDelayed': '节日推迟 — 今天要把桶放出去',
   'trash.next': '下次收运：{date}',
@@ -491,13 +492,13 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     '市政合同住户使用 Republic Services。从列表里选一个 Fort Collins 街区，或在同一列表里看 Loveland、Estes Park、Berthoud、Wellington 和未建制 Larimer。',
   'trash.ledeLoveland':
-    'Loveland 自己负责垃圾、回收和庭院废物。垃圾每周一次。回收隔周，同一星期几。不确定就查 Recollect 的门牌日。',
+    'Loveland 自己负责垃圾、回收和庭院废物。先选街区，再选 Recollect 显示的你家星期几。之后，「今天放出去」和 Fort Collins 一样跟踪。回收隔周，同一星期几。',
   'trash.ledeEstes':
-    'Estes Park 不在 Fort Collins 的 Republic 合同里。住宅线路通常是 Waste Management 或 Superior Trash（Atlas Unlimited）。日期在账单上。',
+    'Estes Park 不在 Fort Collins 的 Republic 合同里。选 Waste Management 或 Superior Trash，再选账单上的星期几。之后，「今天放出去」和 Fort Collins 一样跟踪。',
   'trash.ledeBerthoud':
-    'Berthoud 不指定一家收运公司。镇上给多家发执照，有的 HOA 会绑一家。选账单上的公司。',
+    'Berthoud 给多家收运公司发执照，有的 HOA 会绑一家。选账单上的公司，再选它的星期几。之后，「今天放出去」和 Fort Collins 一样跟踪。',
   'trash.ledeWellington':
-    'Wellington 列出私营收运公司。你的日期在账单上，不是全镇地图。Dumpster Diverz 说多数 Wellington 地址是星期二或星期五。',
+    'Wellington 列出私营收运公司。Dumpster Diverz 说多数地址是星期二或星期五 — 先选街区，再选账单上的星期几。之后，「今天放出去」和 Fort Collins 一样跟踪。',
   'trash.ledeUninc':
     '未建制 Larimer 没有县路边线路。雇收运公司，或自己送到填埋场。',
   'trash.footLandfill':

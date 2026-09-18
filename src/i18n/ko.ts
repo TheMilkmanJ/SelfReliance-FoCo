@@ -434,6 +434,7 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.clear': '구역 지우기',
   'trash.orWeekday': '또는 요일 선택',
   'trash.usualDay': '평소 쓰레기 수거일',
+  'trash.pickDayGroup': '요일 고르기',
   'trash.today': '오늘 통을 내놓으세요',
   'trash.todayDelayed': '휴일 연기 — 오늘 통을 내놓으세요',
   'trash.next': '다음 수거: {date}',
@@ -494,13 +495,13 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     '시 계약 주택은 Republic Services를 씁니다. 목록에서 Fort Collins 동네를 고르세요. 또는 같은 목록에서 Loveland, Estes Park, Berthoud, Wellington, 미편입 Larimer를 보세요.',
   'trash.ledeLoveland':
-    'Loveland는 쓰레기, 재활용, 정원 쓰레기를 직접 운영합니다. 쓰레기는 매주. 재활용은 같은 요일 격주. 확실하지 않으면 Recollect에 집별 요일이 있습니다.',
+    'Loveland는 쓰레기, 재활용, 정원 쓰레기를 직접 운영합니다. 동네를 고른 다음 Recollect가 집에 표시하는 요일을 고르세요. 그다음 「오늘 내놓기」가 Fort Collins와 같이 따라갑니다. 재활용은 그 요일 격주입니다.',
   'trash.ledeEstes':
-    'Estes Park는 Fort Collins Republic 계약에 없습니다. 주택 노선은 보통 Waste Management 또는 Superior Trash(Atlas Unlimited)입니다. 요일은 고지서에 있습니다.',
+    'Estes Park는 Fort Collins Republic 계약에 없습니다. Waste Management 또는 Superior Trash를 고른 다음 고지서의 요일을 고르세요. 그다음 「오늘 내놓기」가 Fort Collins와 같이 따라갑니다.',
   'trash.ledeBerthoud':
-    'Berthoud는 업체를 하나로 정하지 않습니다. 마을이 여러 회사에 허가를 주고, 일부 HOA는 한곳으로 묶습니다. 고지서의 회사를 고르세요.',
+    'Berthoud는 여러 업체에 허가를 주고, 일부 HOA는 한곳으로 묶습니다. 고지서의 회사를 고른 다음 그 요일을 고르세요. 그다음 「오늘 내놓기」가 Fort Collins와 같이 따라갑니다.',
   'trash.ledeWellington':
-    'Wellington은 민간 업체를 적습니다. 요일은 고지서에 있고 마을 전체 지도가 아닙니다. Dumpster Diverz는 대부분 Wellington 주소가 화요일 또는 금요일이라고 합니다.',
+    'Wellington은 민간 업체를 적습니다. Dumpster Diverz는 대부분 주소가 화요일 또는 금요일이라고 합니다 — 동네를 고른 다음 고지서의 요일을 고르세요. 그다음 「오늘 내놓기」가 Fort Collins와 같이 따라갑니다.',
   'trash.ledeUninc':
     '미편입 Larimer에는 카운티 연석 노선이 없습니다. 업체를 고용하거나 직접 매립장으로 가져가세요.',
   'trash.footLandfill':

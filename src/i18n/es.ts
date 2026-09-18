@@ -435,6 +435,7 @@ export const es: Record<keyof typeof en, string> = {
   'trash.clear': 'Quitar zona',
   'trash.orWeekday': 'O elige el día',
   'trash.usualDay': 'Día usual de basura',
+  'trash.pickDayGroup': 'Elige el día',
   'trash.today': 'Los contenedores salen hoy',
   'trash.todayDelayed': 'Retraso por feriado — los contenedores salen hoy',
   'trash.next': 'Próxima recolección: {date}',
@@ -495,13 +496,13 @@ export const es: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     'Las casas con contrato de la ciudad usan Republic Services. Elige un vecindario de Fort Collins en la lista, o recorre la misma lista para Loveland, Estes Park, Berthoud, Wellington y Larimer no incorporado.',
   'trash.ledeLoveland':
-    'Loveland corre su propia basura, reciclaje y jardín. La basura es semanal. El reciclaje es cada dos semanas el mismo día. Recollect tiene el día de tu casa si no estás seguro.',
+    'Loveland corre su propia basura, reciclaje y jardín. Elige un vecindario, luego el día que Recollect muestra para tu casa. Después, Sale hoy lo sigue igual que en Fort Collins. El reciclaje es cada dos semanas ese mismo día.',
   'trash.ledeEstes':
-    'Estes Park no está en el contrato de Republic de Fort Collins. Las rutas residenciales suelen ser Waste Management o Superior Trash (Atlas Unlimited). El día está en tu factura.',
+    'Estes Park no está en el contrato de Republic de Fort Collins. Elige Waste Management o Superior Trash, luego el día de tu factura. Después, Sale hoy lo sigue igual que en Fort Collins.',
   'trash.ledeBerthoud':
-    'Berthoud no elige una sola empresa. El pueblo da licencia a varias, y algunas HOA te atan a una. Elige la empresa de tu factura.',
+    'Berthoud da licencia a varias empresas, y algunas HOA te atan a una. Elige la empresa de tu factura, luego su día. Después, Sale hoy lo sigue igual que en Fort Collins.',
   'trash.ledeWellington':
-    'Wellington lista empresas privadas. Tu día está en la factura, no en un mapa del pueblo. Dumpster Diverz dice que la mayoría de las direcciones de Wellington son martes o viernes.',
+    'Wellington lista empresas privadas. Dumpster Diverz dice que la mayoría de las direcciones son martes o viernes — elige tu vecindario, luego el día de tu factura. Después, Sale hoy lo sigue igual que en Fort Collins.',
   'trash.ledeUninc':
     'Larimer no incorporado no tiene ruta del condado en la orilla. Contrata una empresa o llévala al basurero tú.',
   'trash.footLandfill':

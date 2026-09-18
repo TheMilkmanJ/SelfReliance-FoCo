@@ -434,6 +434,7 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.clear': 'مسح المنطقة',
   'trash.orWeekday': 'أو اختر يوم الأسبوع',
   'trash.usualDay': 'يوم القمامة المعتاد',
+  'trash.pickDayGroup': 'اختر يوماً',
   'trash.today': 'الحاويات تخرج اليوم',
   'trash.todayDelayed': 'تأخير العطلة — الحاويات تخرج اليوم',
   'trash.next': 'الجمع التالي: {date}',
@@ -494,13 +495,13 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     'المنازل بعقد المدينة تستخدم Republic Services. اختر حياً في Fort Collins من القائمة، أو مرّر القائمة نفسها لـ Loveland و Estes Park و Berthoud و Wellington و Larimer غير المدمجة.',
   'trash.ledeLoveland':
-    'Loveland تشغّل قمامتها وتدويرها ومخلفات حديقتها. القمامة أسبوعية. التدوير كل أسبوعين في نفس يوم الأسبوع. Recollect لديه يوم المنزل إن لم تكن متأكداً.',
+    'Loveland تشغّل قمامتها وتدويرها ومخلفات حديقتها. اختر حياً، ثم يوم الأسبوع الذي يظهره Recollect لبيتك. بعد ذلك، يخرج اليوم يتتبعه كما في Fort Collins. التدوير كل أسبوعين في ذلك اليوم.',
   'trash.ledeEstes':
-    'Estes Park ليست على عقد Republic في Fort Collins. الخطوط السكنية عادة Waste Management أو Superior Trash (Atlas Unlimited). اليوم على فاتورتك.',
+    'Estes Park ليست على عقد Republic في Fort Collins. اختر Waste Management أو Superior Trash، ثم يوم فاتورتك. بعد ذلك، يخرج اليوم يتتبعه كما في Fort Collins.',
   'trash.ledeBerthoud':
-    'Berthoud لا تختار شركة واحدة. البلدة ترخّص عدة شركات، وبعض جمعيات الملاك تربطك بواحدة. اختر الشركة على فاتورتك.',
+    'Berthoud ترخّص عدة شركات، وبعض جمعيات الملاك تربطك بواحدة. اختر الشركة على فاتورتك، ثم يومها. بعد ذلك، يخرج اليوم يتتبعه كما في Fort Collins.',
   'trash.ledeWellington':
-    'Wellington تسرد شركات خاصة. يومك على الفاتورة لا على خريطة البلدة. Dumpster Diverz يقول إن معظم عناوين Wellington ثلاثاء أو جمعة.',
+    'Wellington تسرد شركات خاصة. Dumpster Diverz يقول إن معظم العناوين ثلاثاء أو جمعة — اختر حيك، ثم يوم الفاتورة. بعد ذلك، يخرج اليوم يتتبعه كما في Fort Collins.',
   'trash.ledeUninc':
     'Larimer غير المدمجة ليس لها خط رصيف للمقاطعة. استأجر شركة أو خذها إلى المكب بنفسك.',
   'trash.footLandfill':

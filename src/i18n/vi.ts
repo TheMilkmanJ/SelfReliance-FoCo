@@ -434,6 +434,7 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.clear': 'Xóa khu',
   'trash.orWeekday': 'Hoặc chọn thứ trong tuần',
   'trash.usualDay': 'Ngày rác thường lệ',
+  'trash.pickDayGroup': 'Chọn ngày',
   'trash.today': 'Thùng ra hôm nay',
   'trash.todayDelayed': 'Hoãn ngày lễ — thùng ra hôm nay',
   'trash.next': 'Lần thu tới: {date}',
@@ -494,13 +495,13 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     'Nhà theo hợp đồng thành phố dùng Republic Services. Chọn khu Fort Collins trong danh sách, hoặc kéo cùng danh sách cho Loveland, Estes Park, Berthoud, Wellington và Larimer chưa thành lập.',
   'trash.ledeLoveland':
-    'Loveland tự chạy rác, tái chế và rác sân. Rác hàng tuần. Tái chế cách tuần cùng thứ. Recollect có ngày theo nhà nếu bạn không chắc.',
+    'Loveland tự chạy rác, tái chế và rác sân. Chọn khu, rồi thứ Recollect hiện cho nhà bạn. Sau đó, Ra hôm nay theo dõi giống Fort Collins. Tái chế cách tuần cùng thứ đó.',
   'trash.ledeEstes':
-    'Estes Park không nằm trong hợp đồng Republic của Fort Collins. Tuyến nhà thường là Waste Management hoặc Superior Trash (Atlas Unlimited). Ngày ở trên hóa đơn.',
+    'Estes Park không nằm trong hợp đồng Republic của Fort Collins. Chọn Waste Management hoặc Superior Trash, rồi thứ trên hóa đơn. Sau đó, Ra hôm nay theo dõi giống Fort Collins.',
   'trash.ledeBerthoud':
-    'Berthoud không chọn một công ty. Thị trấn cấp phép nhiều công ty, và một số HOA buộc bạn một nơi. Chọn công ty trên hóa đơn.',
+    'Berthoud cấp phép nhiều công ty, và một số HOA buộc bạn một nơi. Chọn công ty trên hóa đơn, rồi thứ của họ. Sau đó, Ra hôm nay theo dõi giống Fort Collins.',
   'trash.ledeWellington':
-    'Wellington liệt kê công ty tư nhân. Ngày của bạn ở trên hóa đơn, không phải bản đồ cả thị trấn. Dumpster Diverz nói hầu hết địa chỉ Wellington là thứ Ba hoặc thứ Sáu.',
+    'Wellington liệt kê công ty tư nhân. Dumpster Diverz nói hầu hết địa chỉ là thứ Ba hoặc thứ Sáu — chọn khu, rồi thứ trên hóa đơn. Sau đó, Ra hôm nay theo dõi giống Fort Collins.',
   'trash.ledeUninc':
     'Larimer chưa thành lập không có tuyến lề đường của quận. Thuê công ty hoặc tự chở đến bãi rác.',
   'trash.footLandfill':

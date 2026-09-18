@@ -32,11 +32,12 @@ import {
   holidayLastServiceWeek,
   holidayThisServiceWeek,
   nextPickup,
+  usesHolidayBump,
   type ServiceDow,
   yardTrimmingsSeason,
 } from '../lib/trashCalendar';
 import type { AreaFilter as AreaFilterId } from '../data/resources';
-import { TRASH_REGION_KEY, TRASH_ZONE_KEY } from '../lib/trashPrefs';
+import { TRASH_REGION_KEY, TRASH_ZONE_KEY, loadRegionDays, saveRegionDay } from '../lib/trashPrefs';
 import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
 
 const RECYCLE_KEY = 'foco-loveland-recycle-this-week';
@@ -71,6 +72,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   const now = useDenverNow();
   const ymd = fromDenverNow(now);
   const [days, setDays] = useState<DayMap>({});
+  const [regionDays, setRegionDays] = useState<Record<string, ServiceDow>>({});
   const [chipOverride, setChipOverride] = useState<ServiceDow | null>(null);
   const [chipRegionId, setChipRegionId] = useState<string | null>(null);
   const [chipsLocked, setChipsLocked] = useState(false);
@@ -85,6 +87,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
 
   useEffect(() => {
     void AsyncStorage.removeItem(OVERRIDE_KEY);
+    void loadRegionDays().then(setRegionDays);
     void Promise.all([
       AsyncStorage.getItem(TRASH_REGION_KEY),
       AsyncStorage.getItem(TRASH_ZONE_KEY),
@@ -111,15 +114,17 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   const chipTown = townFromArea(area);
   const region = savedRegion;
   const town: TrashTown = region?.town ?? chipTown ?? 'Fort Collins';
-  // Mapped FoCo neighborhoods use the 2026-map day. Leftover Thursday in storage
-  // must not drive Out today. Unmapped towns (Loveland) still use a remembered chip.
-  const leftover = region && region.dow == null ? days[town] ?? null : null;
+  // JSON map day (FoCo) or a weekday remembered for this neighborhood (Loveland / Estes / Berthoud / Wellington).
+  // Town-wide leftover Friday must not mark Centerra Out today, and must not ride to Namaqua.
+  const remembered = region ? regionDays[region.id] ?? null : null;
+  const mapped = region?.dow ?? remembered ?? null;
+  const leftover = !region ? days[town] ?? null : null;
   const sessionChip = chipForThisRegion(regionId, chipRegionId, chipOverride);
-  const regular = mappedServiceDow(region?.dow ?? null, sessionChip, leftover);
+  const regular = mappedServiceDow(mapped, sessionChip, leftover);
   const focusTown = chipTown;
-  // Mapped FoCo rows already have a weekday. The Friday chip under a closing
-  // neighborhood list was marking Horsetooth Out today — hide chips so that tap has nowhere to land.
-  const showWeekdayChips = region?.id !== 'uninc-landfill' && region?.dow == null;
+  // Hide chips once this neighborhood has a day — same as mapped FoCo. Tapping Friday
+  // on a closing list must not mark a Tuesday neighborhood Out today.
+  const showWeekdayChips = region?.id !== 'uninc-landfill' && mapped == null;
 
   const saveDay = (day: ServiceDow) => {
     if (region?.dow != null) return;
@@ -128,6 +133,10 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
     setChipRegionId(regionId);
     setDays((prev) => ({ ...prev, [town]: day }));
     void AsyncStorage.setItem(DAY_STORAGE_KEY[town], String(day));
+    if (regionId) {
+      setRegionDays((prev) => ({ ...prev, [regionId]: day }));
+      void saveRegionDay(regionId, day);
+    }
   };
 
   const saveRegion = (next: TrashRegion) => {
@@ -159,8 +168,9 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
 
   const holiday = holidayThisServiceWeek(ymd);
   const lastHoliday = holidayLastServiceWeek(ymd);
-  const pickup = regular ? nextPickup(regular, ymd) : null;
-  const pickupDow = regular ? actualPickupDow(regular, ymd) : null;
+  const holidayBump = usesHolidayBump(town, region?.hauler, region?.id);
+  const pickup = regular ? nextPickup(regular, ymd, holidayBump) : null;
+  const pickupDow = regular ? (holidayBump ? actualPickupDow(regular, ymd) : regular) : null;
   const todayIs = cartDayKind(ymd.dow, pickupDow) === 'out-today';
   const delayed = regular != null && pickupDow != null && pickupDow !== regular;
   const yard = yardTrimmingsSeason(ymd, town);
@@ -224,6 +234,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
           value={region?.id ?? null}
           pickupDow={regular}
           focusTown={focusTown}
+          rememberedDays={regionDays}
           onChange={saveRegion}
           onClear={clearRegion}
         />
@@ -238,6 +249,10 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
               holiday: holidayLabel(lastHoliday.name, t),
               place: region ? region.label : t('trash.yourArea'),
             })}
+          </Text>
+        ) : holidayBump && holiday ? (
+          <Text style={[styles.note, { color: colors.body }]}>
+            {t('trash.holidayDelay', { holiday: holidayLabel(holiday.name, t) })}
           </Text>
         ) : null}
 

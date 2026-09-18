@@ -434,6 +434,7 @@ export const he: Record<keyof typeof en, string> = {
   'trash.clear': 'נקה אזור',
   'trash.orWeekday': 'או בחר את יום השבוע',
   'trash.usualDay': 'יום האשפה הרגיל',
+  'trash.pickDayGroup': 'בחר יום',
   'trash.today': 'הפחים יוצאים היום',
   'trash.todayDelayed': 'עיכוב חג — הפחים יוצאים היום',
   'trash.next': 'האיסוף הבא: {date}',
@@ -493,13 +494,13 @@ export const he: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     'בתים בחוזה עירוני משתמשים ב־Republic Services. בחר שכונה ב־Fort Collins מהרשימה, או גלול את אותה רשימה ל־Loveland, Estes Park, Berthoud, Wellington ו־Larimer לא מאוגד.',
   'trash.ledeLoveland':
-    'Loveland מפעילה אשפה, מיחזור וגזם בעצמה. אשפה שבועית. מיחזור כל שבועיים באותו יום שבוע. ל־Recollect יש את יום הבית אם אינך בטוח.',
+    'Loveland מפעילה אשפה, מיחזור וגזם בעצמה. בחר שכונה, ואז את יום השבוע ש־Recollect מציג לבית שלך. אחרי זה, יוצא היום עוקב כמו ב־Fort Collins. מיחזור כל שבועיים באותו יום.',
   'trash.ledeEstes':
-    'Estes Park לא בחוזה Republic של Fort Collins. קווים למגורים בדרך כלל Waste Management או Superior Trash (Atlas Unlimited). היום בחשבון.',
+    'Estes Park לא בחוזה Republic של Fort Collins. בחר Waste Management או Superior Trash, ואז את היום בחשבון. אחרי זה, יוצא היום עוקב כמו ב־Fort Collins.',
   'trash.ledeBerthoud':
-    'Berthoud לא בוחרת חברה אחת. העיירה מרשה כמה חברות, וחלק מאיגודי הדיירים נועלים אותך לאחת. בחר את החברה בחשבון.',
+    'Berthoud מרשה כמה חברות, וחלק מאיגודי הדיירים נועלים אותך לאחת. בחר את החברה בחשבון, ואז את היום שלה. אחרי זה, יוצא היום עוקב כמו ב־Fort Collins.',
   'trash.ledeWellington':
-    'Wellington מפרטת חברות פרטיות. היום שלך בחשבון, לא במפה עירונית. Dumpster Diverz אומר שרוב הכתובות ב־Wellington הן יום שלישי או שישי.',
+    'Wellington מפרטת חברות פרטיות. Dumpster Diverz אומר שרוב הכתובות הן יום שלישי או שישי — בחר שכונה, ואז את היום בחשבון. אחרי זה, יוצא היום עוקב כמו ב־Fort Collins.',
   'trash.ledeUninc':
     'ל־Larimer לא מאוגד אין קו מדרכה של המחוז. שכור חברה או קח למטמנה בעצמך.',
   'trash.footLandfill':

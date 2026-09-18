@@ -103,8 +103,16 @@ export function actualPickupDow(regular: ServiceDow, ymd: Ymd): number {
   return regular + 1;
 }
 
-export function isPickupDay(regular: ServiceDow, ymd: Ymd): boolean {
-  return ymd.dow === actualPickupDow(regular, ymd);
+export function isPickupDay(regular: ServiceDow, ymd: Ymd, bump = true): boolean {
+  return ymd.dow === (bump ? actualPickupDow(regular, ymd) : regular);
+}
+
+/** Fort Collins Republic, Loveland city carts, Superior/Atlas, and United Waste all delay one weekday after the six observed holidays. */
+export function usesHolidayBump(town?: string | null, hauler?: string | null, regionId?: string | null): boolean {
+  if (regionId === 'uninc-landfill') return false;
+  if (town === 'Fort Collins' || town === 'Loveland') return true;
+  if (hauler && /Superior|Atlas Unlimited|United Waste/i.test(hauler)) return true;
+  return false;
 }
 
 /**
@@ -178,11 +186,15 @@ export function fromDenverNow(now: DenverNow): Ymd {
   return { year: now.year, month: now.month, date: now.date, dow: now.dow };
 }
 
-export function nextPickup(regular: ServiceDow, from: Ymd): { when: Ymd; delayed: boolean; holiday: ObservedHoliday | null } {
+export function nextPickup(
+  regular: ServiceDow,
+  from: Ymd,
+  bump = true,
+): { when: Ymd; delayed: boolean; holiday: ObservedHoliday | null } {
   for (let i = 0; i < 8; i += 1) {
     const when = addDays(from, i);
-    if (isPickupDay(regular, when)) {
-      const delayed = actualPickupDow(regular, when) !== regular;
+    if (isPickupDay(regular, when, bump)) {
+      const delayed = bump && actualPickupDow(regular, when) !== regular;
       return { when, delayed, holiday: delayed ? holidayThisServiceWeek(when) : null };
     }
   }

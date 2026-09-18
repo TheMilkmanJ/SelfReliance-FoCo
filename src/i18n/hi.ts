@@ -435,6 +435,7 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.clear': 'क्षेत्र हटाएँ',
   'trash.orWeekday': 'या हफ़्ते का दिन चुनें',
   'trash.usualDay': 'आम कचरा दिन',
+  'trash.pickDayGroup': 'दिन चुनें',
   'trash.today': 'गाड़ियाँ आज निकलती हैं',
   'trash.todayDelayed': 'छुट्टी की देरी — गाड़ियाँ आज निकलती हैं',
   'trash.next': 'अगला पिकअप: {date}',
@@ -495,13 +496,13 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.ledeFoco':
     'शहर-कॉन्ट्रैक्ट घर Republic Services इस्तेमाल करते हैं। सूची से Fort Collins मोहल्ला चुनें, या उसी सूची में Loveland, Estes Park, Berthoud, Wellington और गैर-निगमित Larimer देखें।',
   'trash.ledeLoveland':
-    'Loveland अपना कचरा, रिसाइक्लिंग और यार्ड वेस्ट चलाता है। कचरा हर हफ़्ते। रिसाइक्लिंग उसी हफ़्ते के दिन हर दूसरे हफ़्ते। पक्का न हो तो Recollect के पास घर का दिन है।',
+    'Loveland अपना कचरा, रिसाइक्लिंग और यार्ड वेस्ट चलाता है। मोहल्ला चुनें, फिर Recollect जो दिन आपके घर दिखाता है। उसके बाद, आज निकले Fort Collins की तरह ट्रैक करता है। रिसाइक्लिंग उसी हफ़्ते के दिन हर दूसरे हफ़्ते है।',
   'trash.ledeEstes':
-    'Estes Park Fort Collins के Republic कॉन्ट्रैक्ट पर नहीं है। रिहायशी रूट आमतौर पर Waste Management या Superior Trash (Atlas Unlimited) हैं। दिन आपके बिल पर है।',
+    'Estes Park Fort Collins के Republic कॉन्ट्रैक्ट पर नहीं है। Waste Management या Superior Trash चुनें, फिर बिल वाला दिन। उसके बाद, आज निकले Fort Collins की तरह ट्रैक करता है।',
   'trash.ledeBerthoud':
-    'Berthoud एक हॉलर नहीं चुनता। शहर कई कंपनियों को लाइसेंस देता है, और कुछ HOA एक से बाँधते हैं। बिल वाली कंपनी चुनें।',
+    'Berthoud कई हॉलर को लाइसेंस देता है, और कुछ HOA एक से बाँधते हैं। बिल वाली कंपनी चुनें, फिर उसका दिन। उसके बाद, आज निकले Fort Collins की तरह ट्रैक करता है।',
   'trash.ledeWellington':
-    'Wellington निजी हॉलर सूचीबद्ध करता है। आपका दिन बिल पर है, शहर-भर मैप पर नहीं। Dumpster Diverz कहता है ज़्यादातर Wellington पते मंगलवार या शुक्रवार हैं।',
+    'Wellington निजी हॉलर सूचीबद्ध करता है। Dumpster Diverz कहता है ज़्यादातर पते मंगलवार या शुक्रवार हैं — मोहल्ला चुनें, फिर बिल वाला दिन। उसके बाद, आज निकले Fort Collins की तरह ट्रैक करता है।',
   'trash.ledeUninc':
     'गैर-निगमित Larimer की काउंटी किनारे रूट नहीं है। हॉलर रखें या खुद लैंडफिल ले जाएँ।',
   'trash.footLandfill':

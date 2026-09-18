@@ -4,7 +4,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import {
   TOWN_ORDER,
-  TRASH_REGIONS,
   ZONE_DOW_ORDER,
   regionById,
   regionsForTown,
@@ -16,15 +15,29 @@ import { type ServiceDow } from '../lib/trashCalendar';
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
+type RememberedDays = Record<string, ServiceDow>;
+
 type Props = {
   value: string | null;
   pickupDow?: ServiceDow | null;
   focusTown: TrashTown | null;
+  rememberedDays?: RememberedDays;
   onChange: (region: TrashRegion) => void;
   onClear: () => void;
 };
 
-export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear }: Props) {
+function rowDow(region: TrashRegion, rememberedDays: RememberedDays): ServiceDow | null {
+  return region.dow ?? rememberedDays[region.id] ?? null;
+}
+
+export function TrashZoneSelect({
+  value,
+  pickupDow,
+  focusTown,
+  rememberedDays = {},
+  onChange,
+  onClear,
+}: Props) {
   const { colors } = useTheme();
   const { t } = useI18n();
   const selected = regionById(value);
@@ -88,6 +101,7 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
               key={town}
               town={town}
               selectedId={value}
+              rememberedDays={rememberedDays}
               onPick={(region) => {
                 onChange(region);
                 setClosing(true);
@@ -120,10 +134,12 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
 function TownGroup({
   town,
   selectedId,
+  rememberedDays,
   onPick,
 }: {
   town: TrashTown;
   selectedId: string | null;
+  rememberedDays: RememberedDays;
   onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
@@ -131,45 +147,49 @@ function TownGroup({
   const rows = regionsForTown(town);
   if (rows.length === 0) return null;
 
-  const focoByDow = town === 'Fort Collins';
+  const byDow = ZONE_DOW_ORDER.map((dow) => ({
+    dow,
+    rows: rows.filter((region) => rowDow(region, rememberedDays) === dow),
+  })).filter((group) => group.rows.length > 0);
+  const unknown = rows.filter((region) => rowDow(region, rememberedDays) == null);
 
   return (
     <View>
       <Text style={[styles.town, { color: HEADER_PURPLE, borderBottomColor: colors.line }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
         {town === 'Unincorporated' ? t('area.unincorporated') : town}
       </Text>
-      {focoByDow
-        ? ZONE_DOW_ORDER.map((dow) => (
-            <DowGroup key={`${town}-${dow}`} dow={dow} selectedId={selectedId} onPick={onPick} />
-          ))
-        : rows.map((region) => (
-            <RegionRow key={region.id} region={region} selectedId={selectedId} onPick={onPick} />
+      {byDow.map((group) => (
+        <View key={`${town}-${group.dow}`}>
+          <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            {t(dowKey(group.dow))}
+          </Text>
+          {group.rows.map((region) => (
+            <RegionRow
+              key={region.id}
+              region={region}
+              selectedId={selectedId}
+              rememberedDays={rememberedDays}
+              onPick={onPick}
+            />
           ))}
-    </View>
-  );
-}
-
-function DowGroup({
-  dow,
-  selectedId,
-  onPick,
-}: {
-  dow: ServiceDow;
-  selectedId: string | null;
-  onPick: (region: TrashRegion) => void;
-}) {
-  const { colors } = useTheme();
-  const { t } = useI18n();
-  const rows = TRASH_REGIONS.filter((z) => z.town === 'Fort Collins' && z.dow === dow);
-  if (rows.length === 0) return null;
-  return (
-    <View>
-      <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
-        {t(dowKey(dow))}
-      </Text>
-      {rows.map((region) => (
-        <RegionRow key={region.id} region={region} selectedId={selectedId} onPick={onPick} />
+        </View>
       ))}
+      {unknown.length > 0 ? (
+        <View>
+          <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            {t('trash.pickDayGroup')}
+          </Text>
+          {unknown.map((region) => (
+            <RegionRow
+              key={region.id}
+              region={region}
+              selectedId={selectedId}
+              rememberedDays={rememberedDays}
+              onPick={onPick}
+            />
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -177,16 +197,19 @@ function DowGroup({
 function RegionRow({
   region,
   selectedId,
+  rememberedDays,
   onPick,
 }: {
   region: TrashRegion;
   selectedId: string | null;
+  rememberedDays: RememberedDays;
   onPick: (region: TrashRegion) => void;
 }) {
   const { colors } = useTheme();
   const { t } = useI18n();
   const on = region.id === selectedId;
-  const day = region.dow ? `${t(dowKey(region.dow))} · ` : '';
+  const dow = rowDow(region, rememberedDays);
+  const day = dow ? `${t(dowKey(dow))} · ` : '';
   return (
     <Pressable
       onPress={() => onPick(region)}

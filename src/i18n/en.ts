@@ -432,6 +432,7 @@ export const en = {
   'trash.clear': 'Clear region',
   'trash.orWeekday': 'Or pick the weekday',
   'trash.usualDay': 'Usual trash day',
+  'trash.pickDayGroup': 'Pick a day',
   'trash.today': 'Carts go out today',
   'trash.todayDelayed': 'Holiday delay — carts go out today',
   'trash.next': 'Next pickup: {date}',
@@ -491,13 +492,13 @@ export const en = {
   'trash.ledeFoco':
     'City-contracted homes use Republic Services. Pick a Fort Collins neighborhood from the list, or scroll the same list for Loveland, Estes Park, Berthoud, Wellington, and unincorporated Larimer.',
   'trash.ledeLoveland':
-    'Loveland runs its own trash, recycling, and yard waste. Trash is weekly. Recycling is every other week on the same weekday. Recollect has the house-level day if you are not sure.',
+    'Loveland runs its own trash, recycling, and yard waste. Pick a neighborhood, then the weekday Recollect shows for your house. After that, Out today tracks it the same way as Fort Collins. Recycling is every other week on that weekday.',
   'trash.ledeEstes':
-    'Estes Park is not on the Fort Collins Republic contract. Residential routes are usually Waste Management or Superior Trash (Atlas Unlimited). Day is on your bill.',
+    'Estes Park is not on the Fort Collins Republic contract. Pick Waste Management or Superior Trash, then the weekday on your bill. After that, Out today tracks it the same way as Fort Collins.',
   'trash.ledeBerthoud':
-    'Berthoud does not pick one hauler. The town licenses several companies, and some HOAs lock you to one. Pick the company on your bill.',
+    'Berthoud licenses several haulers, and some HOAs lock you to one. Pick the company on your bill, then its weekday. After that, Out today tracks it the same way as Fort Collins.',
   'trash.ledeWellington':
-    'Wellington lists private haulers. Your day is on your bill, not a town-wide map. Dumpster Diverz says most Wellington addresses are Tuesday or Friday.',
+    'Wellington lists private haulers. Dumpster Diverz says most addresses are Tuesday or Friday — pick your neighborhood, then the day on your bill. After that, Out today tracks it the same way as Fort Collins.',
   'trash.ledeUninc':
     'Unincorporated Larimer has no county curbside route. Hire a hauler or take it to the landfill yourself.',
   'trash.footLandfill':
