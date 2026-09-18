@@ -150,23 +150,33 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
     if (!regular) return null;
     const by = region?.cartsBy ? t('trash.byTime', { time: region.cartsBy }) : '';
     if (todayIs) {
+      const day = t(dowKey((pickupDow ?? regular) as number));
       return {
-        title: delayed ? t('trash.todayDelayed') : t('trash.today'),
+        kicker: delayed ? t('trash.todayDelayed') : t('trash.today'),
+        title: day,
         sub: delayed
           ? t('trash.cartsTodayDelayed', { holiday: holidayLabel(holiday?.name ?? '', t) || t('holiday.generic'), by })
           : t('trash.cartsToday', { place, by }),
       };
     }
     if (pickup) {
+      const day = t(dowKey(pickup.when.dow));
       return {
-        title: t('trash.next', { date: formatYmd(pickup.when) }),
+        kicker: t('trash.notToday'),
+        title: day,
         sub: pickup.delayed
-          ? t('trash.holidayDelay', { holiday: holidayLabel(pickup.holiday?.name ?? '', t) || t('holiday.aHoliday') })
-          : t('trash.usualIs', { place, day: t(dowKey(regular)) }),
+          ? t('trash.notTodaySubDelayed', {
+              holiday: holidayLabel(pickup.holiday?.name ?? '', t) || t('holiday.aHoliday'),
+              place,
+              day,
+              when: formatYmd(pickup.when),
+              by,
+            })
+          : t('trash.notTodaySub', { place, day, when: formatYmd(pickup.when), by }),
       };
     }
     return null;
-  }, [regular, todayIs, delayed, holiday, pickup, region, place, t]);
+  }, [regular, todayIs, delayed, holiday, pickup, pickupDow, region, place, t]);
 
   const service = serviceCopy(town, region, ymd.dow, yard, lovelandRecycle, pickupDow, place, t);
 
@@ -243,8 +253,15 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
 
         {hero ? (
           <View style={[styles.hero, { backgroundColor: todayIs ? HEADER_PURPLE : colors.card }]}>
-            <Text style={[styles.heroTitle, { color: todayIs ? '#fff' : colors.ink }]}>{hero.title}</Text>
-            <Text style={[styles.heroSub, { color: todayIs ? '#e9dffb' : colors.body }]}>{hero.sub}</Text>
+            <Text style={[styles.heroKicker, { color: todayIs ? '#e9dffb' : HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+              {hero.kicker}
+            </Text>
+            <Text style={[styles.heroTitle, { color: todayIs ? '#fff' : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+              {hero.title}
+            </Text>
+            <Text style={[styles.heroSub, { color: todayIs ? '#e9dffb' : colors.body }]} maxFontSizeMultiplier={MAX_FONT.title}>
+              {hero.sub}
+            </Text>
           </View>
         ) : region?.id === 'uninc-landfill' ? (
           <View style={[styles.hero, { backgroundColor: colors.card }]}>
@@ -342,8 +359,9 @@ function yardNote(kind: YardKind, yard: boolean, town: TrashTown, t: Translate):
 function cartStatus(todayDow: number, pickupDow: number | null, t: Translate): string {
   const kind = cartDayKind(todayDow, pickupDow);
   if (kind === 'pick') return t('trash.pickDay');
-  if (kind === 'out-today') return t('trash.outToday');
-  return t('trash.dayPickup', { day: t(dowKey(pickupDow as number)) });
+  const day = t(dowKey(pickupDow as number));
+  if (kind === 'out-today') return t('trash.outToday', { day });
+  return t('trash.dayPickup', { day });
 }
 
 function serviceCopy(
@@ -361,7 +379,6 @@ function serviceCopy(
   const curb = region?.cartsBy ? t('trash.curbBy', { time: region.cartsBy }) : t('trash.curbOn');
   const todayIs = pickupDow != null && todayDow === pickupDow;
   const trashStatus = cartStatus(todayDow, pickupDow, t);
-  const recycleOn = recycling === 'same-day-weekly' ? todayIs : recycling === 'every-other' && town === 'Loveland' ? todayIs && lovelandRecycle : false;
   const recycleSkip = recycling === 'every-other' && town === 'Loveland' && !lovelandRecycle;
   const recycleStatus =
     recycling === 'none'
@@ -370,9 +387,7 @@ function serviceCopy(
         ? t('trash.askHauler')
         : recycleSkip
           ? t('trash.skipWeek')
-          : recycleOn
-            ? t('trash.outToday')
-            : trashStatus;
+          : trashStatus;
   const yardOn = yardKind === 'same-day-season' && todayIs && yard;
   const yardStatus =
     yardKind === 'none'
@@ -404,7 +419,7 @@ function serviceCopy(
       icon: 'leaf-outline',
       title: t('trash.yard'),
       note: yardNote(yardKind, yard, town, t),
-      status: yardOn ? t('trash.outToday') : yardStatus,
+      status: yardOn ? trashStatus : yardStatus,
       place,
     },
   ];
@@ -504,12 +519,18 @@ function ServiceRow({
           <Ionicons name={icon as never} size={22} color={HEADER_PURPLE} />
         </View>
         <View style={styles.listingBody}>
-          <View style={styles.listingHead}>
-            <Text style={[styles.listingName, { color: colors.ink }]}>{title}</Text>
-            <Text style={[styles.statusPill, { color: HEADER_PURPLE }]}>{status}</Text>
-          </View>
-          <Text style={[styles.listingMeta, { color: colors.muted }]}>{place}</Text>
-          <Text style={[styles.listingDesc, { color: colors.body }]}>{note}</Text>
+          <Text style={[styles.listingName, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+            {title}
+          </Text>
+          <Text style={[styles.statusLine, { color: HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.title}>
+            {status}
+          </Text>
+          <Text style={[styles.listingMeta, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            {place}
+          </Text>
+          <Text style={[styles.listingDesc, { color: colors.body }]} maxFontSizeMultiplier={MAX_FONT.title}>
+            {note}
+          </Text>
         </View>
       </View>
     </View>
@@ -548,8 +569,9 @@ const styles = StyleSheet.create({
   day: { borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: 12, paddingVertical: 10 },
   dayText: { fontWeight: '700', fontSize: 14 },
   hero: { marginHorizontal: spacing.lg, borderRadius: radius.lg, padding: spacing.lg, gap: 6 },
-  heroTitle: { fontSize: 22, fontWeight: '800' },
-  heroSub: { fontSize: 15, lineHeight: 22 },
+  heroKicker: { fontSize: 13, fontWeight: '800', letterSpacing: 0.4, textTransform: 'uppercase' },
+  heroTitle: { fontSize: 36, fontWeight: '800', lineHeight: 42 },
+  heroSub: { fontSize: 16, lineHeight: 23 },
   hint: { paddingHorizontal: spacing.lg, fontSize: 15, lineHeight: 22 },
   note: { paddingHorizontal: spacing.lg, fontSize: 14, lineHeight: 21 },
   action: {
@@ -579,9 +601,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   listingBody: { flex: 1, minWidth: 0 },
-  listingHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
-  listingName: { fontSize: 17, fontWeight: '700', flexShrink: 1 },
-  statusPill: { fontSize: 13, fontWeight: '800' },
-  listingMeta: { fontSize: 13, marginTop: 2, marginBottom: 6 },
+  listingHead: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8, justifyContent: 'space-between' },
+  listingName: { fontSize: 17, fontWeight: '700' },
+  statusLine: { fontSize: 20, fontWeight: '800', marginTop: 2 },
+  listingMeta: { fontSize: 13, marginTop: 4, marginBottom: 6 },
   listingDesc: { fontSize: 15, lineHeight: 21 },
 });

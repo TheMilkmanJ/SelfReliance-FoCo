@@ -23,7 +23,11 @@ export function HomeTools({ trashRegionId, onTrash, onOpenNow, onGiveNeed, onOff
       ? t('tool.trashSubSaved', { place: saved.label, day: t(dowKey(saved.dow)) })
       : t('tool.trashSubPlace', { place: saved.label })
     : t('tool.trashSub');
-  const trashA11y = saved ? t('tool.trashA11ySaved', { place: saved.label }) : t('tool.trashA11y');
+  const trashA11y = saved
+    ? saved.dow
+      ? t('tool.trashA11ySaved', { place: saved.label, day: t(dowKey(saved.dow)) })
+      : t('tool.trashA11yPlace', { place: saved.label })
+    : t('tool.trashA11y');
   return (
     <View style={styles.row}>
       <Pressable
