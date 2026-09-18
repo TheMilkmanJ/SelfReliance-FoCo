@@ -99,6 +99,12 @@ function mappedServiceDow(mapped, overrideForThisRegion, leftoverTownDay) {
   return leftoverTownDay ?? null;
 }
 
+function chipForThisRegion(selectedRegionId, chipRegionId, chip) {
+  if (chip == null) return null;
+  if ((selectedRegionId ?? '') !== (chipRegionId ?? '')) return null;
+  return chip;
+}
+
 function assert(cond, msg) {
   if (!cond) throw new Error(msg);
 }
@@ -223,6 +229,33 @@ assert(
   cartDayKind(thisThu.dow, actualPickupDow(horsetooth.dow, thisThu)) === 'weekday',
   'Horsetooth Tuesday zone on Thursday is Tuesday pickup, not Out today',
 );
+const thisFri = { year: 2026, month: 9, date: 18, dow: 5 };
+assert(mappedServiceDow(2, null, 5) === 2, 'Horsetooth Tuesday wins over leftover Friday from Highlander Heights');
+assert(
+  cartDayKind(thisFri.dow, actualPickupDow(mappedServiceDow(2, null, 5), thisFri)) === 'weekday',
+  'Horsetooth on Fri Sep 18 is Tuesday pickup, not Out today from leftover Friday storage',
+);
+assert(
+  cartDayKind(thisFri.dow, actualPickupDow(mappedServiceDow(2, 5, 5), thisFri)) === 'out-today',
+  'stale Friday chip on Horsetooth would wrongly say Out today — UI must not pass leftover as sessionChip',
+);
+assert(
+  chipForThisRegion('east-horsetooth', 'highlander-heights', 5) == null,
+  'Highlander Friday chip does not apply after switching to Horsetooth',
+);
+assert(
+  mappedServiceDow(2, chipForThisRegion('east-horsetooth', 'highlander-heights', 5), 5) === 2,
+  'Horsetooth uses Tuesday when leftover Friday belongs to another neighborhood',
+);
+assert(
+  cartDayKind(thisFri.dow, actualPickupDow(hh.dow, thisFri)) === 'out-today',
+  'Highlander Heights on Friday is Out today',
+);
+assert(!enCopy.includes('Goes out {day}'), 'cart rows do not say Goes out weekday');
+assert(!enCopy.includes('goes out {day}'), 'home tile and dropdown do not say goes out weekday');
+assert(enCopy.includes("'trash.outToday': 'Out today'"), 'Out today is only on the pickup day');
+assert(enCopy.includes("'trash.dayPickup': '{day}'"), 'other days show the weekday only');
+assert(!enCopy.includes("'{day} · out today'"), 'Out today is not prefixed with the weekday');
 assert(new Set(regions.map((z) => z.id)).size === regions.length, 'unique region ids');
 assert([1, 2, 3, 4, 5].every((d) => regions.some((z) => z.town === 'Fort Collins' && z.dow === d)), 'all weekdays have a FoCo zone');
 const towns = ['Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington', 'Unincorporated'];
@@ -236,5 +269,11 @@ assert(regions.find((z) => z.id === 'estes-superior')?.phone === '970-214-4902',
 assert(regions.find((z) => z.id === 'uninc-landfill')?.phone === '970-498-5760', 'Landfill office phone');
 assert(yardTrimmingsSeason({ year: 2026, month: 4, date: 1, dow: 3 }, 'Loveland') === true, 'Loveland yard in April');
 assert(yardTrimmingsSeason({ year: 2026, month: 12, date: 10, dow: 4 }, 'Loveland') === false, 'Loveland yard off after Dec 4');
+
+const screenTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/screens/TrashDayScreen.tsx'), 'utf8');
+assert(screenTs.includes('chipForThisRegion'), 'Trash day scopes the weekday chip to the selected neighborhood');
+assert(screenTs.includes('ignoreChipUntil'), 'Trash day ignores a leftover weekday tap right after picking a neighborhood');
+const selectTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/components/TrashZoneSelect.tsx'), 'utf8');
+assert(selectTs.includes("pointerEvents={closing ? 'none' : 'auto'}"), 'region list stays under the tap so it cannot hit Friday');
 
 console.log('OK: trash-day holiday bump');

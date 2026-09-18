@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
@@ -25,6 +25,7 @@ import {
   SERVICE_DAYS,
   actualPickupDow,
   cartDayKind,
+  chipForThisRegion,
   mappedServiceDow,
   formatYmd,
   fromDenverNow,
@@ -71,7 +72,16 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   const ymd = fromDenverNow(now);
   const [days, setDays] = useState<DayMap>({});
   const [chipOverride, setChipOverride] = useState<ServiceDow | null>(null);
+  const [chipRegionId, setChipRegionId] = useState<string | null>(null);
+  const [chipsLocked, setChipsLocked] = useState(false);
+  const ignoreChipUntil = useRef(0);
   const [lovelandRecycle, setLovelandRecycle] = useState(true);
+
+  const lockWeekdayChips = () => {
+    ignoreChipUntil.current = Date.now() + 600;
+    setChipsLocked(true);
+    setTimeout(() => setChipsLocked(false), 600);
+  };
 
   useEffect(() => {
     void AsyncStorage.removeItem(OVERRIDE_KEY);
@@ -104,17 +114,22 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   // Mapped FoCo neighborhoods use the 2026-map day. Leftover Thursday in storage
   // must not drive Out today. Unmapped towns (Loveland) still use a remembered chip.
   const leftover = region && region.dow == null ? days[town] ?? null : null;
-  const regular = mappedServiceDow(region?.dow ?? null, chipOverride, leftover);
+  const sessionChip = chipForThisRegion(regionId, chipRegionId, chipOverride);
+  const regular = mappedServiceDow(region?.dow ?? null, sessionChip, leftover);
   const focusTown = chipTown;
 
   const saveDay = (day: ServiceDow) => {
+    if (Date.now() < ignoreChipUntil.current) return;
     setChipOverride(day);
+    setChipRegionId(regionId);
     setDays((prev) => ({ ...prev, [town]: day }));
     void AsyncStorage.setItem(DAY_STORAGE_KEY[town], String(day));
   };
 
   const saveRegion = (next: TrashRegion) => {
+    lockWeekdayChips();
     setChipOverride(null);
+    setChipRegionId(next.id);
     void AsyncStorage.removeItem(OVERRIDE_KEY);
     onRegionIdChange(next.id);
     if (next.dow) {
@@ -126,8 +141,10 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   };
 
   const clearRegion = () => {
+    lockWeekdayChips();
     onRegionIdChange(null);
     setChipOverride(null);
+    setChipRegionId(null);
     void AsyncStorage.removeItem(OVERRIDE_KEY);
   };
 
@@ -225,7 +242,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
             <Text style={[styles.section, { color: colors.ink }]}>
               {region?.dow ? t('trash.orWeekday') : t('trash.usualDay')}
             </Text>
-            <View style={styles.days}>
+            <View style={styles.days} pointerEvents={chipsLocked ? 'none' : 'auto'}>
               {SERVICE_DAYS.map((d) => {
                 const on = regular === d.id;
                 const label = t(dowKey(d.id));
@@ -234,7 +251,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
                     key={d.id}
                     onPress={() => saveDay(d.id)}
                     accessibilityRole="button"
-                    accessibilityState={{ selected: on }}
+                    accessibilityState={{ selected: on, disabled: chipsLocked }}
                     accessibilityLabel={label}
                     style={[
                       styles.day,
@@ -360,7 +377,7 @@ function cartStatus(todayDow: number, pickupDow: number | null, t: Translate): s
   const kind = cartDayKind(todayDow, pickupDow);
   if (kind === 'pick') return t('trash.pickDay');
   const day = t(dowKey(pickupDow as number));
-  if (kind === 'out-today') return t('trash.outToday', { day });
+  if (kind === 'out-today') return t('trash.outToday');
   return t('trash.dayPickup', { day });
 }
 

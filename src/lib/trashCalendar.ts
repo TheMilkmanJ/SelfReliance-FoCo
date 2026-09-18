@@ -119,10 +119,39 @@ export function effectiveServiceDow(
   return override ?? mapped ?? null;
 }
 
+/**
+ * A weekday chip only counts for the neighborhood it was tapped on.
+ * Highlander Heights Friday must not ride along after you pick Horsetooth (Tuesday).
+ */
+export function chipForThisRegion(
+  selectedRegionId: string | null | undefined,
+  chipRegionId: string | null | undefined,
+  chip: ServiceDow | null | undefined,
+): ServiceDow | null {
+  if (chip == null) return null;
+  if ((selectedRegionId ?? '') !== (chipRegionId ?? '')) return null;
+  return chip;
+}
+
+/**
+ * A mapped Fort Collins neighborhood always uses its 2026-map weekday.
+ * Leftover Thursday from Old Town must not follow you to South of Harmony / Taft / Friday routes.
+ * A weekday chip only overrides during this visit (sessionChip), never from a saved leftover.
+ * sessionChip must already be scoped to this neighborhood (see chipForThisRegion).
+ */
+export function mappedServiceDow(
+  mapped: ServiceDow | null | undefined,
+  sessionChip: ServiceDow | null | undefined,
+  leftoverTownDay: ServiceDow | null | undefined,
+): ServiceDow | null {
+  if (mapped != null) return sessionChip ?? mapped;
+  return sessionChip ?? leftoverTownDay ?? null;
+}
+
 /** Cart rows follow the actual pickup weekday. Out today only when that day is today. */
 export function cartDayKind(todayDow: number, pickupDow: number | null): 'pick' | 'out-today' | 'weekday' {
   if (pickupDow == null) return 'pick';
-  if (todayDow === pickupDow) return 'out-today';
+  if (Number(todayDow) === Number(pickupDow)) return 'out-today';
   return 'weekday';
 }
 

@@ -29,9 +29,13 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
   const { t } = useI18n();
   const selected = regionById(value);
   const [open, setOpen] = useState(!value);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    setOpen(!value);
+    if (!value) {
+      setOpen(true);
+      setClosing(false);
+    }
   }, [value]);
 
   const towns = useMemo(() => {
@@ -75,7 +79,10 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
       </Pressable>
 
       {open ? (
-        <View style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.line }]}>
+        <View
+          pointerEvents={closing ? 'none' : 'auto'}
+          style={[styles.menu, { backgroundColor: colors.card, borderColor: colors.line }]}
+        >
           {towns.map((town) => (
             <TownGroup
               key={town}
@@ -83,7 +90,11 @@ export function TrashZoneSelect({ value, pickupDow, focusTown, onChange, onClear
               selectedId={value}
               onPick={(region) => {
                 onChange(region);
-                setOpen(false);
+                setClosing(true);
+                setTimeout(() => {
+                  setOpen(false);
+                  setClosing(false);
+                }, 350);
               }}
             />
           ))}
