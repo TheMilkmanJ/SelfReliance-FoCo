@@ -107,6 +107,25 @@ export function isPickupDay(regular: ServiceDow, ymd: Ymd): boolean {
   return ymd.dow === actualPickupDow(regular, ymd);
 }
 
+/**
+ * Weekday chip if the user picked one, otherwise the neighborhood's mapped day.
+ * Picking a location writes the mapped day into the chip, so the two stay in sync
+ * until the user taps a different weekday — and that tap must not clear the location.
+ */
+export function effectiveServiceDow(
+  override: ServiceDow | null | undefined,
+  mapped: ServiceDow | null | undefined,
+): ServiceDow | null {
+  return override ?? mapped ?? null;
+}
+
+/** Cart rows follow the actual pickup weekday. Out today only when that day is today. */
+export function cartDayKind(todayDow: number, pickupDow: number | null): 'pick' | 'out-today' | 'weekday' {
+  if (pickupDow == null) return 'pick';
+  if (todayDow === pickupDow) return 'out-today';
+  return 'weekday';
+}
+
 export function yardTrimmingsSeason(ymd: Ymd, town?: string): boolean {
   const md = ymd.month * 100 + ymd.date;
   if (town === 'Loveland') return md >= 330 && md <= 1204;

@@ -18,7 +18,7 @@ export type LanguageOption = {
   englishName: string;
 };
 
-/** Order the header button cycles. Native names stay in their own script. */
+/** Languages in the header and Language tile dropdowns. Native names stay in their own script. */
 export const APP_LANGUAGES: LanguageOption[] = [
   { id: 'en', code: 'EN', nativeName: 'English', englishName: 'English' },
   { id: 'es', code: 'ES', nativeName: 'Español', englishName: 'Spanish' },
