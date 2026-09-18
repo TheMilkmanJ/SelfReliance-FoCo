@@ -236,7 +236,7 @@ export const zh: Record<keyof typeof en, string> = {
   'cat.addiction.blurb': '戒毒、治疗、DUI 课程、AA、NA，以及全天物质使用热线。',
   'cat.special_needs.label': '特殊需求儿童',
   'cat.special_needs.short': '特殊需求',
-  'cat.special_needs.blurb': '早期干预、Child Find、咸息服务，以及家长维权。',
+  'cat.special_needs.blurb': '早期干预、Child Find、喘息服务，以及家长维权。',
   'cat.holiday.label': '节日与玩具',
   'cat.holiday.short': '节日',
   'cat.holiday.blurb': '圣诞玩具、食品篮和季节性礼品项目。秋天申请。',
