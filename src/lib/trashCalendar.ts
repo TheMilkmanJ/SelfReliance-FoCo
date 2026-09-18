@@ -108,15 +108,14 @@ export function isPickupDay(regular: ServiceDow, ymd: Ymd): boolean {
 }
 
 /**
- * Weekday chip if the user picked one, otherwise the neighborhood's mapped day.
- * Picking a location writes the mapped day into the chip, so the two stay in sync
- * until the user taps a different weekday — and that tap must not clear the location.
+ * A mapped 2026-map weekday always wins. A chip only counts when there is no map day
+ * (Loveland / Estes / Berthoud / Wellington). Tapping Friday must not mark Horsetooth Out today.
  */
 export function effectiveServiceDow(
   override: ServiceDow | null | undefined,
   mapped: ServiceDow | null | undefined,
 ): ServiceDow | null {
-  return override ?? mapped ?? null;
+  return mapped ?? override ?? null;
 }
 
 /**
@@ -135,16 +134,15 @@ export function chipForThisRegion(
 
 /**
  * A mapped Fort Collins neighborhood always uses its 2026-map weekday.
- * Leftover Thursday from Old Town must not follow you to South of Harmony / Taft / Friday routes.
- * A weekday chip only overrides during this visit (sessionChip), never from a saved leftover.
- * sessionChip must already be scoped to this neighborhood (see chipForThisRegion).
+ * A Friday chip — leftover from Highlander Heights or tapped after picking Horsetooth —
+ * must not mark a Tuesday route Out today. Unmapped towns still use a weekday chip.
  */
 export function mappedServiceDow(
   mapped: ServiceDow | null | undefined,
   sessionChip: ServiceDow | null | undefined,
   leftoverTownDay: ServiceDow | null | undefined,
 ): ServiceDow | null {
-  if (mapped != null) return sessionChip ?? mapped;
+  if (mapped != null) return mapped;
   return sessionChip ?? leftoverTownDay ?? null;
 }
 

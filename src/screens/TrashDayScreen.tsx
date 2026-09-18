@@ -117,8 +117,12 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
   const sessionChip = chipForThisRegion(regionId, chipRegionId, chipOverride);
   const regular = mappedServiceDow(region?.dow ?? null, sessionChip, leftover);
   const focusTown = chipTown;
+  // Mapped FoCo rows already have a weekday. The Friday chip under a closing
+  // neighborhood list was marking Horsetooth Out today — hide chips so that tap has nowhere to land.
+  const showWeekdayChips = region?.id !== 'uninc-landfill' && region?.dow == null;
 
   const saveDay = (day: ServiceDow) => {
+    if (region?.dow != null) return;
     if (Date.now() < ignoreChipUntil.current) return;
     setChipOverride(day);
     setChipRegionId(regionId);
@@ -237,10 +241,10 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
           </Text>
         ) : null}
 
-        {region?.id === 'uninc-landfill' ? null : (
+        {showWeekdayChips ? (
           <>
             <Text style={[styles.section, { color: colors.ink }]}>
-              {region?.dow ? t('trash.orWeekday') : t('trash.usualDay')}
+              {t('trash.usualDay')}
             </Text>
             <View style={styles.days} pointerEvents={chipsLocked ? 'none' : 'auto'}>
               {SERVICE_DAYS.map((d) => {
@@ -266,7 +270,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
               })}
             </View>
           </>
-        )}
+        ) : null}
 
         {hero ? (
           <View style={[styles.hero, { backgroundColor: todayIs ? HEADER_PURPLE : colors.card }]}>

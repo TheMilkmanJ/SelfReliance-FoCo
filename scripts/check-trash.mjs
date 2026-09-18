@@ -91,12 +91,12 @@ function cartDayKind(todayDow, pickupDow) {
 }
 
 function effectiveServiceDow(override, mapped) {
-  return override ?? mapped ?? null;
+  return mapped ?? override ?? null;
 }
 
 function mappedServiceDow(mapped, overrideForThisRegion, leftoverTownDay) {
-  if (mapped != null) return overrideForThisRegion ?? mapped;
-  return leftoverTownDay ?? null;
+  if (mapped != null) return mapped;
+  return overrideForThisRegion ?? leftoverTownDay ?? null;
 }
 
 function chipForThisRegion(selectedRegionId, chipRegionId, chip) {
@@ -150,9 +150,9 @@ assert(
 );
 assert(actualPickupDow(5, { year: 2026, month: 9, date: 11, dow: 5 }) === 6, 'Labor week Friday → Saturday for the label');
 assert(effectiveServiceDow(null, 3) === 3, 'Taft/Drake mapped Wednesday when no chip override');
-assert(effectiveServiceDow(4, 3) === 4, 'weekday chip can override mapped day without dropping the location');
+assert(effectiveServiceDow(4, 3) === 3, 'mapped Wednesday wins over a Thursday chip');
 assert(mappedServiceDow(1, null, 4) === 1, 'South of Harmony Monday wins over leftover Thursday from another FoCo area');
-assert(mappedServiceDow(1, 2, 4) === 2, 'this-visit chip tap on South of Harmony can override the map day');
+assert(mappedServiceDow(1, 2, 4) === 1, 'South of Harmony Monday ignores a Tuesday chip tap');
 assert(mappedServiceDow(null, null, 4) === 4, 'towns without a map day still use the weekday chip');
 assert(mappedServiceDow(3, null, 4) === 3, 'Taft/Drake mapped Wednesday ignores leftover Thursday');
 assert(
@@ -164,8 +164,8 @@ assert(
   'South of Harmony on Thu Sep 17 is Monday pickup, not Out today from leftover Thursday',
 );
 assert(
-  cartDayKind(thisThu.dow, actualPickupDow(mappedServiceDow(5, 4, 4), thisThu)) === 'out-today',
-  'this-visit Thursday chip can still mark Out today, leftover storage must not',
+  cartDayKind(thisThu.dow, actualPickupDow(mappedServiceDow(5, 4, 4), thisThu)) === 'weekday',
+  'Highlander Heights stays Friday even if a Thursday chip is tapped',
 );
 assert(
   cartDayKind(thisThu.dow, mappedServiceDow(null, null, null) == null ? null : 4) === 'pick',
@@ -236,8 +236,8 @@ assert(
   'Horsetooth on Fri Sep 18 is Tuesday pickup, not Out today from leftover Friday storage',
 );
 assert(
-  cartDayKind(thisFri.dow, actualPickupDow(mappedServiceDow(2, 5, 5), thisFri)) === 'out-today',
-  'stale Friday chip on Horsetooth would wrongly say Out today — UI must not pass leftover as sessionChip',
+  cartDayKind(thisFri.dow, actualPickupDow(mappedServiceDow(2, 5, 5), thisFri)) === 'weekday',
+  'Friday chip on Horsetooth is still Tuesday pickup, not Out today',
 );
 assert(
   chipForThisRegion('east-horsetooth', 'highlander-heights', 5) == null,
@@ -271,8 +271,9 @@ assert(yardTrimmingsSeason({ year: 2026, month: 4, date: 1, dow: 3 }, 'Loveland'
 assert(yardTrimmingsSeason({ year: 2026, month: 12, date: 10, dow: 4 }, 'Loveland') === false, 'Loveland yard off after Dec 4');
 
 const screenTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/screens/TrashDayScreen.tsx'), 'utf8');
-assert(screenTs.includes('chipForThisRegion'), 'Trash day scopes the weekday chip to the selected neighborhood');
-assert(screenTs.includes('ignoreChipUntil'), 'Trash day ignores a leftover weekday tap right after picking a neighborhood');
+assert(screenTs.includes('showWeekdayChips'), 'mapped neighborhoods hide weekday chips so Friday cannot mark Horsetooth Out today');
+assert(screenTs.includes('region?.dow == null'), 'weekday chips only show when the neighborhood has no map day');
+assert(screenTs.includes('if (region?.dow != null) return'), 'saveDay is a no-op on a mapped neighborhood');
 const selectTs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../src/components/TrashZoneSelect.tsx'), 'utf8');
 assert(selectTs.includes("pointerEvents={closing ? 'none' : 'auto'}"), 'region list stays under the tap so it cannot hit Friday');
 
