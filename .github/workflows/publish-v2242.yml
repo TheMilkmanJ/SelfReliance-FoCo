@@ -1,0 +1,51 @@
+name: publish-v2242
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-v2242.yml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch APK
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789706452.c646faba870fa0da/wcwrNG5PhfUK/self-reliance-foco.apk'
+          ls -lah Self-Reliance-FoCo.apk
+          echo '6ae85d47e409564e1ff28342a2fdc18e7e438ddd133dc565806d57a8cf54872c  Self-Reliance-FoCo.apk' | sha256sum -c
+          python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.24.2
+
+          Trash cart / Recycling / Yard trimmings no longer say Not today when a weekday is known. Highlander Heights on Thursday shows Friday pickup on that card. Out today only on the actual pickup day. versionCode 35 — installs over v2.23.0 and v2.24.1.
+
+          SHA-256: 6ae85d47e409564e1ff28342a2fdc18e7e438ddd133dc565806d57a8cf54872c
+          EOF
+          gh release delete v2.24.2 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.24.2 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.24.2' --notes-file notes.md
+      - name: Delete this workflow
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/publish-v2242.yml
+          git add .github/workflows/publish-v2242.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.24.2 publish workflow.' || true
+            git push origin HEAD || true
+          fi
