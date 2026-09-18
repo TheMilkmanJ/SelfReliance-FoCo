@@ -1,0 +1,67 @@
+name: publish-v22410
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-v22410.yml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Overlay source
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o foco-source-v22410.tgz 'https://tmpfiles.org/dl/1789740067.d387732df38e4d29/wwwUNmaSGfbu/foco-source-v22410.tgz'
+          echo '83399f38a883cd7fb1f17b318308b7748da79368665e5d99d07d5c672ada4051  foco-source-v22410.tgz' | sha256sum -c
+          tar -xzf foco-source-v22410.tgz
+          rm -f foco-source-v22410.tgz
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md app.json scripts/check-trash.mjs src/i18n src/lib/trashCalendar.ts src/screens/TrashDayScreen.tsx
+          if git diff --cached --quiet; then
+            echo 'source already current'
+          else
+            git commit -m 'Overlay v2.24.10 source: Usual pickup instead of Not today.'
+            git pull --rebase origin main || true
+            git push origin HEAD
+          fi
+      - name: Fetch APK
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789740067.3a88b958ceaf4e1a/w4wBNoakGryO/self-reliance-foco.apk'
+          ls -lah Self-Reliance-FoCo.apk
+          echo '2dce08d035483a22735254e4fca74317d6c02dfa54f72f0d63a20717dbd30028  Self-Reliance-FoCo.apk' | sha256sum -c
+          python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.24.10
+
+          Horsetooth still reads as Tuesday. The big card says Usual pickup, not Not today. Carts go out today / Out today only on that neighborhood’s real pickup day. versionCode 43 — installs over v2.24.9.
+
+          SHA-256: 2dce08d035483a22735254e4fca74317d6c02dfa54f72f0d63a20717dbd30028
+          EOF
+          gh release delete v2.24.10 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.24.10 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.24.10' --notes-file notes.md
+      - name: Delete this workflow
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/publish-v22410.yml
+          git add .github/workflows/publish-v22410.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.24.10 publish workflow.' || true
+            git push origin HEAD || true
+          fi
