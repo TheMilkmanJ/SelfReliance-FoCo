@@ -340,6 +340,8 @@ const STUDENT_ALWAYS = new Set<string>([
   'poudre-libraries-job-center',
   'loveland-public-library',
   'estes-valley-library',
+  'wellington-public-library',
+  'berthoud-community-library',
   'cultural-enrichment-center',
   'in-pathways-inclusive-higher-ed',
   'psd-swap',
@@ -610,6 +612,7 @@ const HOMELESS_ALWAYS = new Set<string>([
   'colorado-parole-fort-collins',
   'cwise-parole-reentry',
   'larimer-community-corrections',
+  'larimer-jail-visiting',
 ]);
 
 const HOMELESS_TAG =

@@ -7911,6 +7911,95 @@
         "interfaith",
         "religion"
       ]
+    },
+    {
+      "id": "wellington-public-library",
+      "name": "Wellington Public Library",
+      "category": "education",
+      "description": "Free library card for Wellington-area residents. Computers, Wi-Fi, printing, and holds. Call 970-568-3040 to put something on hold or ask a librarian. 3800 Wilson Avenue.",
+      "phone": "970-568-3040",
+      "url": "https://wellington.colibraries.org/",
+      "address": "3800 Wilson Ave, Wellington, CO 80549",
+      "hours": "Mon-Fri 10am-6pm; Sat 10am-4pm; Sun closed",
+      "area": "Wellington",
+      "tags": [
+        "library",
+        "students",
+        "wifi",
+        "homework",
+        "computers"
+      ]
+    },
+    {
+      "id": "berthoud-community-library",
+      "name": "Berthoud Community Library District",
+      "category": "education",
+      "description": "Free library card for Berthoud-area residents. Computers, Wi-Fi, printing, fax, and scan. Ask the desk for a card. 236 Welch Avenue.",
+      "phone": "970-532-2757",
+      "url": "https://www.berthoudcommunitylibrary.org/",
+      "address": "236 Welch Ave, Berthoud, CO 80513",
+      "hours": "Mon, Tue, Fri 10am-6pm; Wed-Thu 10am-8pm; Sat 10am-4pm; Sun closed",
+      "area": "Berthoud",
+      "tags": [
+        "library",
+        "students",
+        "wifi",
+        "homework",
+        "computers"
+      ]
+    },
+    {
+      "id": "wellington-library-heat-cold",
+      "name": "Wellington Public Library - indoor heat and AC",
+      "category": "weather",
+      "description": "Public library with heat, AC, restrooms, and a place to sit in Wellington. Not overnight.",
+      "phone": "970-568-3040",
+      "url": "https://wellington.colibraries.org/",
+      "address": "3800 Wilson Ave, Wellington, CO 80549",
+      "hours": "Mon-Fri 10am-6pm; Sat 10am-4pm; Sun closed",
+      "area": "Wellington",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "library",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "berthoud-library-heat-cold",
+      "name": "Berthoud Community Library - indoor heat and AC",
+      "category": "weather",
+      "description": "Public library with heat, AC, restrooms, and a place to sit in Berthoud. Not overnight.",
+      "phone": "970-532-2757",
+      "url": "https://www.berthoudcommunitylibrary.org/",
+      "address": "236 Welch Ave, Berthoud, CO 80513",
+      "hours": "Mon, Tue, Fri 10am-6pm; Wed-Thu 10am-8pm; Sat 10am-4pm; Sun closed",
+      "area": "Berthoud",
+      "tags": [
+        "cooling center",
+        "warming center",
+        "library",
+        "heat",
+        "cold"
+      ]
+    },
+    {
+      "id": "larimer-jail-visiting",
+      "name": "Larimer County Jail - find someone or visit",
+      "category": "reentry",
+      "description": "Call 970-498-5200 to ask if someone is in the Larimer County Jail, or search the inmate list on the county site. Video visits are started by the person inside — you cannot book one yourself. Off-site video works on a phone or computer with a camera, seven days a week. The Sheriff will never call to demand money for a bond or release. Front desk at 2405 Midpoint Drive: drop property Mon-Fri 6am-8pm; pick up property Mon-Fri 6am-11pm. Community Corrections is the building next door, not this desk.",
+      "phone": "970-498-5200",
+      "url": "https://www.larimer.gov/sheriff/jail/inmate-visitation",
+      "address": "2405 Midpoint Dr, Fort Collins, CO 80525",
+      "hours": "Inmate-started video visits daily; property desk Mon-Fri 6am-11pm pickup, 6am-8pm drop-off",
+      "area": "Larimer County",
+      "tags": [
+        "jail",
+        "visiting",
+        "sheriff",
+        "reentry"
+      ]
     }
   ]
 }
