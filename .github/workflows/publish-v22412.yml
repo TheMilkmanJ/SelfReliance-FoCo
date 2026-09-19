@@ -1,0 +1,67 @@
+name: publish-v22412
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-v22412.yml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Overlay source
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o foco-source-v22412.tgz 'https://tmpfiles.org/dl/1789778229.9567ab3709975b94/wUwONYRy2l4w/foco-source-v22412.tgz'
+          echo '36d908a3ee1922b6c98184ff5653c4e55c192905d22fcfe777582b298f229fb5  foco-source-v22412.tgz' | sha256sum -c
+          tar -xzf foco-source-v22412.tgz
+          rm -f foco-source-v22412.tgz
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md app.json scripts/check-open.mjs src/data/resources.json src/data/resources.ts src/data/openNowPlaces.ts
+          if git diff --cached --quiet; then
+            echo 'source already current'
+          else
+            git commit -m 'Overlay v2.24.12 source: Wellington and Berthoud libraries and jail visiting.'
+            git pull --rebase origin main || true
+            git push origin HEAD
+          fi
+      - name: Fetch APK
+        run: |
+          curl -fsSL -A 'Mozilla/5.0' -o Self-Reliance-FoCo.apk 'https://tmpfiles.org/dl/1789778212.d71415a898db237e/w1wqNKRy2krE/self-reliance-foco.apk'
+          ls -lah Self-Reliance-FoCo.apk
+          echo 'd514bdd8a550cd02f5df2d28bef06ade2306b0b93d2812c15d46e1fc27fe9687  Self-Reliance-FoCo.apk' | sha256sum -c
+          python3 -c "import zipfile; assert zipfile.is_zipfile('Self-Reliance-FoCo.apk')"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > notes.md <<'EOF'
+          # Self-Reliance FoCo v2.24.12
+
+          Wellington Public Library, Berthoud Community Library District, and Larimer County Jail visiting are in the directory. 454 listings. versionCode 45 — installs over v2.24.11.
+
+          SHA-256: d514bdd8a550cd02f5df2d28bef06ade2306b0b93d2812c15d46e1fc27fe9687
+          EOF
+          gh release delete v2.24.12 --yes --cleanup-tag --repo TheMilkmanJ/SelfReliance-FoCo || true
+          gh release create v2.24.12 Self-Reliance-FoCo.apk --repo TheMilkmanJ/SelfReliance-FoCo --title 'Self-Reliance FoCo v2.24.12' --notes-file notes.md
+      - name: Delete this workflow
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .github/workflows/publish-v22412.yml
+          git add .github/workflows/publish-v22412.yml || true
+          git pull --rebase origin main || true
+          if git diff --cached --quiet; then
+            echo 'workflow already gone'
+          else
+            git commit -m 'Remove one-shot v2.24.12 publish workflow.' || true
+            git push origin HEAD || true
+          fi
