@@ -4,12 +4,16 @@
 
 <h1 align="center">Self-Reliance FoCo</h1>
 
-<p align="center">A free Larimer County help directory for Fort Collins, Loveland, Estes Park, Berthoud, and Wellington — food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Download for <strong>Android</strong> or <strong>Windows</strong> below.</p>
+<p align="center">A free Larimer County help directory for Fort Collins, Loveland, Estes Park, Berthoud, and Wellington — food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Download for <strong>Android</strong>, <strong>Windows</strong>, or <strong>Mac</strong> below. <strong>iPhone</strong> is documented further down (TestFlight / App Store later).</p>
 
 <p align="center">
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.24.12%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
   <br />
-  <a href="#download-for-windows"><img alt="Download for Windows" src="https://img.shields.io/badge/Download%20for%20Windows-desktop%20section-0078d4?style=for-the-badge&logo=windows&logoColor=white" /></a>
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo-Setup.exe"><img alt="Download for Windows" src="https://img.shields.io/badge/Download%20for%20Windows-Self--Reliance--FoCo--Setup.exe-0078d4?style=for-the-badge&logo=windows&logoColor=white" /></a>
+  <br />
+  <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.dmg"><img alt="Download for Mac" src="https://img.shields.io/badge/Download%20for%20Mac-Self--Reliance--FoCo.dmg-555555?style=for-the-badge&logo=apple&logoColor=white" /></a>
+  <br />
+  <a href="#download-for-iphone"><img alt="iPhone (coming via TestFlight)" src="https://img.shields.io/badge/iPhone-coming%20via%20TestFlight%20%2F%20App%20Store-999999?style=for-the-badge&logo=apple&logoColor=white" /></a>
   <br />
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
@@ -25,7 +29,9 @@
 ## Links
 
 - **Android APK:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk
-- **Windows desktop:** see [Download for Windows](#download-for-windows) (installer on Releases when published as `Self-Reliance-FoCo-Setup.exe`)
+- **Windows desktop (separate download):** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo-Setup.exe
+- **Mac desktop (separate download):** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.dmg
+- **iPhone:** see [Download for iPhone](#download-for-iphone) — TestFlight / App Store later (not a GitHub sideload)
 - **This repository:** https://github.com/TheMilkmanJ/SelfReliance-FoCo
 - **Releases:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest
 
@@ -62,29 +68,40 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
-**iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
+**iPhone:** see [Download for iPhone](#download-for-iphone). The Expo project already has bundle id `org.foco.selfreliance`; a public TestFlight / App Store build is not published yet.
 
 
 ## Download for Windows
 
 Use this on a Windows PC (desktop or laptop). Same Self-Reliance FoCo directory as the phone app — listings, call/maps taps, trash day, and the rest — in a normal window you can pin to the taskbar.
 
-**Installer (when published):**  
-[Self-Reliance-FoCo-Setup.exe](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo-Setup.exe) on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
+**Separate Windows download:**  
+[Self-Reliance-FoCo-Setup.exe](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo-Setup.exe)
 
-Until that file appears on the latest release:
+1. Click the Windows badge at the top of this README, or the link above.
+2. Run the installer. Windows SmartScreen may say the app is unrecognized (unsigned community build) — choose **More info** → **Run anyway** if you trust this repo.
+3. Open **Self-Reliance FoCo** from the Start menu or desktop shortcut.
 
-1. Open [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) and look for **Self-Reliance-FoCo-Setup.exe**.
-2. If it is not there yet, run the app in a browser from this repo (Node 20+):
+If the Setup.exe is missing from the latest release, use [Expo web](#run-it-locally) or the [Android APK](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk) until the desktop Action finishes publishing.
 
-```bash
-npm install
-npx expo start --web
-```
+## Download for Mac
 
-3. Or keep using the [Android APK](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk) on your phone.
+**Separate Mac download:**  
+[Self-Reliance-FoCo.dmg](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.dmg)
 
-Windows packaging (Electron wrap of the Expo web build) is the next desktop step; this section is the public download slot so Nextdoor and community posts can point people at Windows the same way they point at Android.
+1. Click the Mac badge at the top, or the link above.
+2. Open the DMG and drag **Self-Reliance FoCo** to Applications.
+3. First launch: if Gatekeeper blocks it (unsigned community build), right-click the app → **Open** → **Open**.
+
+Windows and Mac are two different files on Releases — pick the one for your computer.
+
+## Download for iPhone
+
+There is **no** GitHub `.ipa` sideload for normal iPhones (Apple does not allow that the way Android allows an APK).
+
+**Coming later:** TestFlight and/or the App Store, using the existing iOS bundle id `org.foco.selfreliance`. That needs an Apple Developer account and a signed Expo/EAS build — not set up yet.
+
+**Until then on iPhone:** open the web preview from this repo (`npx expo start --web`) on a computer, or use the [Android APK](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk) on an Android phone.
 
 ## What is in the app (v2.24.12, versionCode 45)
 

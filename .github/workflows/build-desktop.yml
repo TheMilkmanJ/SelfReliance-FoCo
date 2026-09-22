@@ -14,9 +14,6 @@ on:
       - "package-lock.json"
       - ".github/workflows/build-desktop.yml"
 
-permissions:
-  contents: write
-
 concurrency:
   group: build-desktop-${{ github.ref }}
   cancel-in-progress: true
@@ -30,7 +27,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - run: npm install
+      - run: npm ci
       - run: npx expo export --platform web --output-dir dist-web
       - name: Build Windows installer
         run: npx electron-builder --win nsis --config electron-builder.yml
@@ -57,7 +54,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - run: npm install
+      - run: npm ci
       - run: npx expo export --platform web --output-dir dist-web
       - name: Build Mac DMG
         run: npx electron-builder --mac dmg --config electron-builder.yml
