@@ -24,7 +24,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "name": "Self-Reliance FoCo",
+      "shortName": "FoCo",
+      "description": "Larimer County help directory — food, housing, shelter, jobs, and more.",
+      "themeColor": "#522f81",
+      "backgroundColor": "#522f81",
+      "display": "standalone",
+      "lang": "en"
     },
     "plugins": [
       [

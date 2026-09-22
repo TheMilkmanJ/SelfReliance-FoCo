@@ -1,0 +1,34 @@
+appId: org.foco.selfreliance.desktop
+productName: Self-Reliance FoCo
+copyright: Copyright © Self-Reliance FoCo
+directories:
+  output: release
+  buildResources: desktop
+files:
+  - desktop/**/*
+  - dist-web/**/*
+  - package.json
+extraMetadata:
+  main: desktop/main.js
+asar: true
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: Self-Reliance-FoCo-Setup.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+mac:
+  target:
+    - target: dmg
+      arch:
+        - universal
+  artifactName: Self-Reliance-FoCo.${ext}
+  category: public.app-category.reference
+  identity: null
+dmg:
+  title: Self-Reliance FoCo

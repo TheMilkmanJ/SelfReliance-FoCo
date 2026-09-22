@@ -17,7 +17,9 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "electron": "^37.2.0",
+    "electron-builder": "^26.0.12"
   },
   "scripts": {
     "start": "expo start",
@@ -34,7 +36,11 @@
     "check:marriage": "node scripts/check-marriage.mjs",
     "check:religion": "node scripts/check-religion.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
-    "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease"
+    "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease",
+    "desktop:export": "expo export --platform web --output-dir dist-web",
+    "desktop:pack": "electron-builder --config electron-builder.yml",
+    "desktop:pack:win": "electron-builder --win nsis --config electron-builder.yml",
+    "desktop:pack:mac": "electron-builder --mac dmg --config electron-builder.yml"
   },
   "private": true
 }
