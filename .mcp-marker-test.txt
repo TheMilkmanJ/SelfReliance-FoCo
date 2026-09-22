@@ -1,1 +1,0 @@
-__CURSOR_FILE_CONTENT__:/workspace/foco-readme/resources_for_push.json
