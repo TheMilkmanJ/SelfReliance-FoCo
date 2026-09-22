@@ -8000,6 +8000,25 @@
         "sheriff",
         "reentry"
       ]
+    },
+    {
+      "id": "love-like-jeremy",
+      "name": "Love Like Jeremy (Facebook group)",
+      "category": "shelter",
+      "description": "Community Facebook group that helps people who are unhoused in the Fort Collins / Northern Colorado area — ask for leads on food, gear, rides, and other aid. Join on Facebook to post or respond; it is not a shelter desk or overnight bed.",
+      "phone": null,
+      "url": "https://www.facebook.com/groups/lovelikejeremy",
+      "address": null,
+      "hours": "Online; check the group for posts",
+      "area": "Larimer County",
+      "tags": [
+        "homeless",
+        "unhoused",
+        "facebook",
+        "community",
+        "mutual aid",
+        "outreach"
+      ]
     }
   ]
 }
