@@ -4,10 +4,12 @@
 
 <h1 align="center">Self-Reliance FoCo</h1>
 
-<p align="center">A free Android app that puts Larimer County help in one place: food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Covers Fort Collins, Loveland, Estes Park, Berthoud, and Wellington.</p>
+<p align="center">A free Larimer County help directory for Fort Collins, Loveland, Estes Park, Berthoud, and Wellington — food, housing, shelter, jobs, child care, dental, disaster recovery, immigrant services, and more. Download for <strong>Android</strong> or <strong>Windows</strong> below.</p>
 
 <p align="center">
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk"><img alt="Download the Android app" src="https://img.shields.io/badge/Download%20v2.24.12%20for%20Android-Self--Reliance--FoCo.apk-522f81?style=for-the-badge&logo=android&logoColor=white" /></a>
+  <br />
+  <a href="#download-for-windows"><img alt="Download for Windows" src="https://img.shields.io/badge/Download%20for%20Windows-desktop%20section-0078d4?style=for-the-badge&logo=windows&logoColor=white" /></a>
   <br />
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-TheMilkmanJ%2FSelfReliance--FoCo-3d2261?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/badge/Releases-latest-f5a623?style=for-the-badge" /></a>
@@ -23,6 +25,7 @@
 ## Links
 
 - **Android APK:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk
+- **Windows desktop:** see [Download for Windows](#download-for-windows) (installer on Releases when published as `Self-Reliance-FoCo-Setup.exe`)
 - **This repository:** https://github.com/TheMilkmanJ/SelfReliance-FoCo
 - **Releases:** https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest
 
@@ -60,6 +63,28 @@ The release keystore is **not** in this repo. Anyone can build a debug APK. A Pl
 **Have the older church Self-Reliance app?** Uninstall that one first. Android will not let this install over it.
 
 **iPhone:** the Expo project has an iOS bundle id (`org.foco.selfreliance`), but there is no App Store build yet.
+
+
+## Download for Windows
+
+Use this on a Windows PC (desktop or laptop). Same Self-Reliance FoCo directory as the phone app — listings, call/maps taps, trash day, and the rest — in a normal window you can pin to the taskbar.
+
+**Installer (when published):**  
+[Self-Reliance-FoCo-Setup.exe](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo-Setup.exe) on [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest).
+
+Until that file appears on the latest release:
+
+1. Open [Releases](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest) and look for **Self-Reliance-FoCo-Setup.exe**.
+2. If it is not there yet, run the app in a browser from this repo (Node 20+):
+
+```bash
+npm install
+npx expo start --web
+```
+
+3. Or keep using the [Android APK](https://github.com/TheMilkmanJ/SelfReliance-FoCo/releases/latest/download/Self-Reliance-FoCo.apk) on your phone.
+
+Windows packaging (Electron wrap of the Expo web build) is the next desktop step; this section is the public download slot so Nextdoor and community posts can point people at Windows the same way they point at Android.
 
 ## What is in the app (v2.24.12, versionCode 45)
 
