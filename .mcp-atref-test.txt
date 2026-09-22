@@ -1,0 +1,1 @@
+@/workspace/foco-readme/resources_to_push.json
