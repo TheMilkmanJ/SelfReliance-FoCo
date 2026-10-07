@@ -546,4 +546,13 @@ export const es: Record<keyof typeof en, string> = {
   'trash.landfill24': 'Línea 24 horas del basurero 970-498-5770',
   'trash.landfillSite': 'Basurero del condado de Larimer',
   'trash.atlas': 'Atlas Unlimited norte del condado 970-881-2262',
+
+  'about.open': 'Acerca de',
+  'about.openA11y': 'Acerca de',
+  'about.title': 'Acerca de',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'Directorio de ayuda del condado de Larimer. Sin cuenta.',
+  'about.privacy': 'Política de privacidad',
+  'about.privacyA11y': 'Política de privacidad',
+  'about.privacyHint': 'Se abre en el navegador',
 };

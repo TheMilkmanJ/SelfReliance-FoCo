@@ -542,4 +542,13 @@ export const en = {
   'trash.landfill24': 'Landfill 24-hour line 970-498-5770',
   'trash.landfillSite': 'Larimer County landfill',
   'trash.atlas': 'Atlas Unlimited north county 970-881-2262',
+
+  'about.open': 'About',
+  'about.openA11y': 'About',
+  'about.title': 'About',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'Larimer County help directory. No account.',
+  'about.privacy': 'Privacy Policy',
+  'about.privacyA11y': 'Privacy Policy',
+  'about.privacyHint': 'Opens in your browser',
 } as const;

@@ -544,4 +544,13 @@ export const he: Record<keyof typeof en, string> = {
   'trash.landfill24': 'קו המטמנה 24 שעות 970-498-5770',
   'trash.landfillSite': 'מטמנת מחוז Larimer',
   'trash.atlas': 'Atlas Unlimited צפון המחוז 970-881-2262',
+
+  'about.open': 'אודות',
+  'about.openA11y': 'אודות',
+  'about.title': 'אודות',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'מדריך עזרה במחוז לרימר. בלי חשבון.',
+  'about.privacy': 'מדיניות פרטיות',
+  'about.privacyA11y': 'מדיניות פרטיות',
+  'about.privacyHint': 'נפתח בדפדפן',
 };

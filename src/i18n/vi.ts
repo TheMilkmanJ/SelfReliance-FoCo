@@ -545,4 +545,13 @@ export const vi: Record<keyof typeof en, string> = {
   'trash.landfill24': 'Đường dây 24 giờ bãi rác 970-498-5770',
   'trash.landfillSite': 'Bãi rác Larimer County',
   'trash.atlas': 'Atlas Unlimited phía bắc quận 970-881-2262',
+
+  'about.open': 'Giới thiệu',
+  'about.openA11y': 'Giới thiệu',
+  'about.title': 'Giới thiệu',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'Danh bạ trợ giúp quận Larimer. Không cần tài khoản.',
+  'about.privacy': 'Chính sách quyền riêng tư',
+  'about.privacyA11y': 'Chính sách quyền riêng tư',
+  'about.privacyHint': 'Mở trong trình duyệt',
 };
