@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { AboutEntry } from './AboutScreen';
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Chip } from '../components/Chip';
 import { ChipRow } from '../components/ChipRow';
@@ -67,6 +68,7 @@ type Props = {
   onOpenNow: () => void;
   onGiveNeed: () => void;
   onOfflineMaps: () => void;
+  onAbout: () => void;
 };
 
 export function HomeScreen({
@@ -78,6 +80,7 @@ export function HomeScreen({
   onOpenNow,
   onGiveNeed,
   onOfflineMaps,
+  onAbout,
 }: Props) {
   const { colors } = useTheme();
   const largePrint = useLargePrint();
@@ -189,7 +192,9 @@ export function HomeScreen({
     return (
       <View style={[styles.screen, { backgroundColor: colors.bg }]}>
         <Header title={t(catKey(openCat, 'label'))} subtitle={t(catKey(openCat, 'blurb'))} />
+        <AboutEntry onPress={onAbout} />
         <FlatList
+          style={styles.listFill}
           data={catResources}
           keyExtractor={(r) => r.id}
           renderItem={({ item }) => <ResourceCard resource={item} onPress={onSelect} showCategory={false} />}
@@ -306,7 +311,9 @@ export function HomeScreen({
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
       <Header title={t('app.title')} subtitle={t(largePrint ? 'app.subtitleShort' : 'app.subtitle')} />
+      <AboutEntry onPress={onAbout} />
       <FlatList
+        style={styles.listFill}
         data={searching ? results : []}
         keyExtractor={(r) => r.id}
         renderItem={({ item }) => <ResourceCard resource={item} onPress={onSelect} />}
@@ -393,6 +400,7 @@ function CategoryTile({ category, count, onPress }: { category: Category; count:
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
+  listFill: { flex: 1 },
   list: { paddingBottom: spacing.xxl },
   top: { paddingTop: spacing.lg, gap: spacing.lg },
   count: { paddingHorizontal: spacing.lg, fontSize: 13 },

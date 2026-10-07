@@ -542,4 +542,13 @@ export const zh: Record<keyof typeof en, string> = {
   'trash.landfill24': '填埋场 24 小时热线 970-498-5770',
   'trash.landfillSite': 'Larimer County 填埋场',
   'trash.atlas': 'Atlas Unlimited 北部县 970-881-2262',
+
+  'about.open': '关于',
+  'about.openA11y': '关于',
+  'about.title': '关于',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': '拉里默县帮助名录。无需账户。',
+  'about.privacy': '隐私政策',
+  'about.privacyA11y': '隐私政策',
+  'about.privacyHint': '在浏览器中打开',
 };

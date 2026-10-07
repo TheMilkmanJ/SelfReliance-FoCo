@@ -546,4 +546,13 @@ export const hi: Record<keyof typeof en, string> = {
   'trash.landfill24': 'लैंडफिल 24-घंटे लाइन 970-498-5770',
   'trash.landfillSite': 'Larimer County लैंडफिल',
   'trash.atlas': 'Atlas Unlimited उत्तर काउंटी 970-881-2262',
+
+  'about.open': 'परिचय',
+  'about.openA11y': 'परिचय',
+  'about.title': 'परिचय',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'लारिमर काउंटी की मदद की निर्देशिका। कोई खाता नहीं।',
+  'about.privacy': 'गोपनीयता नीति',
+  'about.privacyA11y': 'गोपनीयता नीति',
+  'about.privacyHint': 'ब्राउज़र में खुलता है',
 };

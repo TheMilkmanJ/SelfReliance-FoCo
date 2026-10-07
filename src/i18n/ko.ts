@@ -545,4 +545,13 @@ export const ko: Record<keyof typeof en, string> = {
   'trash.landfill24': '매립장 24시간 회선 970-498-5770',
   'trash.landfillSite': 'Larimer County 매립장',
   'trash.atlas': 'Atlas Unlimited 북부 카운티 970-881-2262',
+
+  'about.open': '정보',
+  'about.openA11y': '정보',
+  'about.title': '정보',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': '래리머 카운티 도움 안내. 계정 없음.',
+  'about.privacy': '개인정보 처리방침',
+  'about.privacyA11y': '개인정보 처리방침',
+  'about.privacyHint': '브라우저에서 열림',
 };

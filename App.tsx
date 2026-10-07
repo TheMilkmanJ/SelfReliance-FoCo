@@ -14,6 +14,7 @@ import { useBackLayer } from './src/lib/backStack';
 import { useDenverNow } from './src/lib/denverClock';
 import { useLargePrint } from './src/lib/fontScale';
 import { statusFor } from './src/lib/openNowStatus';
+import { AboutScreen } from './src/screens/AboutScreen';
 import { GiveNeedScreen } from './src/screens/GiveNeedScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { OfflineMapsScreen } from './src/screens/OfflineMapsScreen';
@@ -24,7 +25,7 @@ import { LanguageProvider, useI18n } from './src/i18n';
 import { clearSavedTrashRegion, loadSavedTrashRegionId, saveTrashRegionId } from './src/lib/trashPrefs';
 import { ThemeProvider, useTheme } from './src/theme';
 
-type HomeTool = 'trash' | 'openNow' | 'giveNeed' | 'offlineMaps' | null;
+type HomeTool = 'trash' | 'openNow' | 'giveNeed' | 'offlineMaps' | 'about' | null;
 
 const AREA_KEY = 'foco-area-filter';
 const AREAS: AreaFilter[] = ['All', 'Fort Collins', 'Loveland', 'Estes Park', 'Berthoud', 'Wellington'];
@@ -74,7 +75,8 @@ function AppShell() {
       <StatusBar style="light" />
       <View style={[styles.root, { backgroundColor: colors.bg }]}>
         <View style={styles.body}>
-          {tab === 'home' && tool === 'trash' ? (
+          {tool === 'about' ? <AboutScreen onBack={() => setTool(null)} /> : null}
+          {tool !== 'about' && tab === 'home' && tool === 'trash' ? (
             <TrashDayScreen
               area={area}
               onAreaChange={setArea}
@@ -83,7 +85,7 @@ function AppShell() {
               onBack={() => setTool(null)}
             />
           ) : null}
-          {tab === 'home' && tool === 'openNow' ? (
+          {tool !== 'about' && tab === 'home' && tool === 'openNow' ? (
             <OpenNowScreen
               area={area}
               onAreaChange={setArea}
@@ -91,7 +93,7 @@ function AppShell() {
               onSelect={setOpenPlace}
             />
           ) : null}
-          {tab === 'home' && tool === 'giveNeed' ? (
+          {tool !== 'about' && tab === 'home' && tool === 'giveNeed' ? (
             <GiveNeedScreen
               area={area}
               onAreaChange={setArea}
@@ -99,10 +101,10 @@ function AppShell() {
               onSelect={setSelected}
             />
           ) : null}
-          {tab === 'home' && tool === 'offlineMaps' ? (
+          {tool !== 'about' && tab === 'home' && tool === 'offlineMaps' ? (
             <OfflineMapsScreen area={area} onAreaChange={setArea} onBack={() => setTool(null)} />
           ) : null}
-          {tab === 'home' && !tool ? (
+          {tool !== 'about' && tab === 'home' && !tool ? (
             <HomeScreen
               onSelect={setSelected}
               area={area}
@@ -112,9 +114,10 @@ function AppShell() {
               onOpenNow={() => setTool('openNow')}
               onGiveNeed={() => setTool('giveNeed')}
               onOfflineMaps={() => setTool('offlineMaps')}
+              onAbout={() => setTool('about')}
             />
           ) : null}
-          {tab === 'students' ? (
+          {tool !== 'about' && tab === 'students' ? (
             <ResourceListScreen
               title={t('students.title')}
               subtitle={t(largePrint ? 'students.subtitleShort' : 'students.subtitle')}
@@ -124,9 +127,10 @@ function AppShell() {
               area={area}
               onAreaChange={setArea}
               showStudentFilters
+              onAbout={() => setTool('about')}
             />
           ) : null}
-          {tab === 'homeless' ? (
+          {tool !== 'about' && tab === 'homeless' ? (
             <ResourceListScreen
               title={t('homeless.title')}
               subtitle={t(largePrint ? 'homeless.subtitleShort' : 'homeless.subtitle')}
@@ -136,9 +140,10 @@ function AppShell() {
               area={area}
               onAreaChange={setArea}
               showHomelessFilters
+              onAbout={() => setTool('about')}
             />
           ) : null}
-          {tab === 'disability' ? (
+          {tool !== 'about' && tab === 'disability' ? (
             <ResourceListScreen
               title={t(largePrint ? 'disability.titleShort' : 'disability.title')}
               subtitle={t(largePrint ? 'disability.subtitleShort' : 'disability.subtitle')}
@@ -148,6 +153,7 @@ function AppShell() {
               area={area}
               onAreaChange={setArea}
               showDisabilityFilters
+              onAbout={() => setTool('about')}
             />
           ) : null}
         </View>

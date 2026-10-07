@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import { AboutEntry } from './AboutScreen';
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Chip } from '../components/Chip';
 import { ChipRow } from '../components/ChipRow';
@@ -54,6 +55,7 @@ type Props = {
   showStudentFilters?: boolean;
   /** Homeless tab: overnight, day help, food, housing, families, youth. */
   showHomelessFilters?: boolean;
+  onAbout?: () => void;
 };
 
 export function ResourceListScreen({
@@ -69,6 +71,7 @@ export function ResourceListScreen({
   showDisabilityFilters = false,
   showStudentFilters = false,
   showHomelessFilters = false,
+  onAbout,
 }: Props) {
   const { colors } = useTheme();
   const { t } = useI18n();
@@ -144,7 +147,9 @@ export function ResourceListScreen({
   return (
     <View style={[styles.screen, { backgroundColor: colors.bg }]}>
       <Header title={title} subtitle={subtitle} />
+      {onAbout ? <AboutEntry onPress={onAbout} /> : null}
       <FlatList
+        style={styles.listFill}
         data={results}
         keyExtractor={(r) => r.id}
         renderItem={({ item }) => <ResourceCard resource={item} onPress={onSelect} />}
@@ -267,6 +272,7 @@ export function ResourceListScreen({
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
+  listFill: { flex: 1 },
   list: { paddingBottom: spacing.xxl },
   controls: { paddingTop: spacing.lg, gap: spacing.md, marginBottom: spacing.sm },
   count: { paddingHorizontal: spacing.lg, fontSize: 13 },

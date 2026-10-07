@@ -545,4 +545,13 @@ export const ar: Record<keyof typeof en, string> = {
   'trash.landfill24': 'خط المكب على مدار الساعة 970-498-5770',
   'trash.landfillSite': 'مكب مقاطعة Larimer',
   'trash.atlas': 'Atlas Unlimited شمال المقاطعة 970-881-2262',
+
+  'about.open': 'حول التطبيق',
+  'about.openA11y': 'حول التطبيق',
+  'about.title': 'حول التطبيق',
+  'about.subtitle': 'Self-Reliance FoCo',
+  'about.lede': 'دليل مساعدة مقاطعة Larimer. بلا حساب.',
+  'about.privacy': 'سياسة الخصوصية',
+  'about.privacyA11y': 'سياسة الخصوصية',
+  'about.privacyHint': 'يُفتح في المتصفح',
 };
